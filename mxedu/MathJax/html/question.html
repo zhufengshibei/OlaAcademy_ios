@@ -1,0 +1,316 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="telephone=no, user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                               messageStyle: "none",
+                               tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+                               });
+            </script>
+        
+        <script type="text/javascript" src="../MathJax.js?config=TeX-AMS_HTML-full"></script>
+        <script type="text/javascript" src="../jquery.js"></script>
+        
+        <style type='text/css'>
+            .optionLine { border-bottom:5px solid #f0f0f0; padding:10px 2px; font-size:16px; line-height:30px;}
+            .blueContent{color:#0099FF; }
+            input[type="radio"] {
+                -webkit-appearance: none;
+                height: 24px;
+                vertical-align: middle;
+                width: 24px;
+                border-width:0px;
+            }
+            input[type="radio"]:checked {
+                background: #fff url(icon_selected.png) no-repeat;
+                background-size:contain;
+            }
+            input[type="radio"]:not(:checked){
+                background: #fff url(icon_unselect.png) no-repeat;
+                background-size:contain;
+            }
+            .center {
+                text-align:center
+            }
+            .auto_image { max-height:120px; max-width:320px;
+                autoimg:expression(onload=function(){this.style.width=(this.offsetWidth > 320)?"320px":"auto"});
+            }
+            .button {
+                display: inline-block;
+                width: 100%;
+                outline: none;
+                cursor: pointer;
+                text-align: center;
+                text-decoration: none;
+                color: #fff;
+                font: 14px/100% Arial, Helvetica, sans-serif;
+                padding: .5em 2em .55em;
+                text-shadow: 0 1px 1px rgba(0,0,0,.3);
+                -webkit-border-radius: .5em;
+                -moz-border-radius: .5em;
+                border-color: #0099ff;
+                border-radius: .5em;
+                -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+                -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+                box-shadow: 0 1px 2px rgba(0,0,0,.2);
+                background: #0099ff;
+            }
+            .button:hover {
+                text-decoration: none;
+            }
+            .button:active {
+                position: relative;
+                top: 1px;
+            }
+        </style>
+</head>
+
+<body>
+
+    <script>
+        
+    var obj;
+        
+    // 加载试题
+    function loadQuestion(data) {
+        
+        obj = eval ("(" + JSON.stringify(data) + ")");
+        
+        //题目
+        var questionDIV = document.getElementById('question');
+        questionDIV.className = 'optionLine';
+        questionDIV.innerHTML = obj.title;
+        // 重新加载
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,questionDIV]);
+        
+        //选项A
+        var optionDIV1 = document.getElementById('option1');
+        optionDIV1.innerHTML = 'A. '+ obj.option1;
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,optionDIV1]);
+        //选项B
+        var optionDIV2 = document.getElementById('option2');
+        optionDIV2.innerHTML = 'B. '+ obj.option2;
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,optionDIV2]);
+        //选项C
+        if(obj.option3!=null){
+            document.getElementById('line3').style.display="";
+            document.getElementById('divider3').style.display="";
+            var optionDIV3 = document.getElementById('option3');
+            optionDIV3.innerHTML = 'C. '+ obj.option3;
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub,optionDIV3]);
+        }else{
+            document.getElementById('line3').style.display="none";
+            document.getElementById('divider3').style.display="none";
+        }
+        
+        //选项D
+        if(obj.option4!=null){
+            document.getElementById('line4').style.display="";
+            document.getElementById('divider4').style.display="";
+            var optionDIV4 = document.getElementById('option4');
+            optionDIV4.innerHTML = 'D. '+ obj.option4;
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub,optionDIV4]);
+        }else{
+            document.getElementById('line4').style.display="none";
+            document.getElementById('divider4').style.display="none";
+        }
+        
+        //选项E
+        if(obj.option5!=null){
+            document.getElementById('line5').style.display="";
+            document.getElementById('divider5').style.display="";
+            var optionDIV5 = document.getElementById('option5');
+            optionDIV5.innerHTML = 'E. '+ obj.option5;
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub,optionDIV5]);
+        }else{
+            document.getElementById('line5').style.display="none";
+            document.getElementById('divider5').style.display="none";
+        }
+        
+        
+        //选中
+        var i=0;
+        $("[name='radio']").each(function(){
+                                 if(obj.currentChoice!=null&&i++==obj.currentChoice){
+                                    $(this).prop("checked",true);
+                                 }else{
+                                    $(this).prop("checked",false);
+                                 }
+                        })
+        
+        
+        //图片
+        var questionImage = document.getElementById("img");
+        if(obj.pic.length>0){
+            questionImage.style.display="";
+            questionImage.src = obj.pic;
+        }else{
+            questionImage.style.display="none";
+        }
+        
+        
+        //答案
+        var answerDIV = document.getElementById('answer');
+        answerDIV.innerHTML = '正确答案: <span class="blueContent">'+ String.fromCharCode(obj.rightanswer)+'</span>'; //ascii码砖字符
+        
+        //解析
+        var analysisDIV = document.getElementById('analysis');
+        analysisDIV.innerHTML = obj.hint;
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,analysisDIV]);
+        
+        //解析图片
+        var hintImage = document.getElementById("hintimg");
+        hintImage.src = obj.hintpic;
+        
+        if(obj.showAnswer=='1'){
+            document.getElementById("showBtn").style.display="none";
+            var correctDIV  = document.getElementById("answerCorrect");
+            if(obj.type=='2'){
+                correctDIV.style.display="";
+                if(obj.answerCorrect=='1'){
+                    correctDIV.innerHTML = '答案正确';
+                    correctDIV.style.color = "#0099ff";
+                }else{
+                    correctDIV.innerHTML = '答案错误';
+                    correctDIV.style.color = "red";
+                }
+            }
+            if(obj.hintpic.length>0){
+                hintImage.style.display="";
+                hintImage.src = obj.hintpic;
+            }else{
+                hintImage.style.display="none";
+            }
+            document.getElementById("answer").style.display="";
+            document.getElementById("label").style.display="none";
+            document.getElementById("analysis").style.display="";
+        }else{
+            if(obj.type=='1'){
+                document.getElementById("showBtn").style.display="";
+            }else{
+                document.getElementById("showBtn").style.display="none";
+            }
+            hintImage.style.display="none";
+            document.getElementById("answer").style.display="none";
+            document.getElementById("label").style.display="none";
+            document.getElementById("analysis").style.display="none";
+        }
+    }
+    
+    //显示答案
+    function showAnswer(){
+        document.getElementById("showBtn").style.display="none";
+        if(obj.option3==null&&obj.option4==null&&obj.option5==null){  //主观题 无标准答案
+            document.getElementById("answer").style.display="none";
+        }else{
+            document.getElementById("answer").style.display="";
+        }
+        document.getElementById("hintimg").style.display="";
+        document.getElementById("label").style.display="none";
+        document.getElementById("analysis").style.display="";
+    }
+    
+    // js与ios交互
+    function setupWebViewJavascriptBridge(callback) {
+        if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+        if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+        window.WVJBCallbacks = [callback];
+        var WVJBIframe = document.createElement('iframe');
+        WVJBIframe.style.display = 'none';
+        WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+        document.documentElement.appendChild(WVJBIframe);
+        setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+    }
+    
+    setupWebViewJavascriptBridge(function(bridge) {
+                                 
+                                 bridge.registerHandler('javascriptHandler', function(data, responseCallback) {
+                                                            loadQuestion(data)
+                                                            // 成功后返回
+                                                            var responseData = { 'Javascript Says':'Success!' }
+                                                            responseCallback(responseData)
+                                                        })
+                                 
+                                 bridge.registerHandler('nextClickHandler', function(data, responseCallback) {
+                                                        clickNext(data)
+                                                        })
+                                 
+                                 //上一题目
+                                 function clickPrevious(){
+                                 
+                                 }
+                                 
+                                 //下一题
+                                 function clickNext(data){
+                                    //选中的答案
+                                    var optionIndex=$('input:radio[name="radio"]:checked').val();
+                                    bridge.callHandler('mathObjcCallback', {'optionIndex': optionIndex}, function(response) {
+                                                    })
+                                 
+                                 }
+                                 
+
+                                 })
+    
+    </script>
+    
+    <div id='question'></div>
+    
+    <table style="width: 100%; border: 0px">
+        <tr>
+            <td align='left'><div id='option1' /></td>
+            <td align='right'><input type='radio' name='radio' value='0'/></td>
+        </tr>
+        <tr>
+            <td colspan='2'><hr color="#f0f0f0" size="5" width="100%" /></td>
+        </tr>
+        <tr>
+            <td align='left'><div id='option2' /></td>
+            <td align='right'><input type='radio' name='radio' value='1'/></td>
+        </tr>
+        <tr>
+            <td colspan='2'><hr color="#f0f0f0" size="5" width="100%" /></td>
+        </tr>
+        <tr id='line3'>
+            <td align='left'><div id='option3' /></td>
+            <td align='right'><input type='radio' name='radio' value='2'/></td>
+        </tr>
+        <tr id='divider3'>
+            <td colspan='2'><hr color="#f0f0f0" size="5" width="100%" /></td>
+        </tr>
+        <tr id='line4'>
+            <td align='left'><div id='option4' /></td>
+            <td align='right'><input type='radio' name='radio' value='3'/></td>
+        </tr>
+        <tr id='divider4'>
+            <td colspan='2'><hr color="#f0f0f0" size="5" width="100%" /></td>
+        </tr>
+        <tr id='line5'>
+            <td align='left'><div id='option5' /></td>
+            <td align='right'><input type='radio' name='radio' value='4'/></td>
+        </tr>
+        <tr id='divider5'>
+            <td colspan='2'><hr color="#f0f0f0" size="5" width="100%" /></td>
+        </tr>
+        
+    </table>
+    
+    <div class="center">
+        <img class="auto_image" id="img"/>
+    </div>
+    <div>
+        <button id="showBtn" class="button" onclick="showAnswer()">显示答案及解析</button>
+        <div id='answerCorrect' style="display: none"></div>
+        <div id='answer' style="display: none"></div>
+        <div id='label' style="display: none">解析:</div>
+        <div id='analysis' style="line-height:30px; display: none"></div>
+        <div class="center">
+            <img id="hintimg" class="auto_image" />
+        </div>
+    </div>
+    
+</body>
+</html>
