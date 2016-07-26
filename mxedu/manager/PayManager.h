@@ -11,6 +11,7 @@
 #import "PayReqResult.h"
 #import "AliPayResult.h"
 #import "StatusResult.h"
+#import "CommonResult.h"
 
 @interface PayManager : NSObject
 
@@ -40,5 +41,14 @@
                        goodsId:(NSString*)goodsId
                        Success:(void(^)(AliPayResult*))success
                        Failure:(void(^)(NSError* error))failure;
+
+/**
+ * 检验苹果IAP支付结果，并更新VIP状态
+ */
+-(void)updateVIPByIAPWithUserId:(NSString*)userId
+                        Receipt:(NSString*)receipt
+                      ProductId:(NSString*)productId
+                        Success:(void(^)(CommonResult*))success
+                        Failure:(void(^)(NSError* error))failure;
 
 @end

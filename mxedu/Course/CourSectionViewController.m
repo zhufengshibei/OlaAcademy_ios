@@ -19,18 +19,24 @@
 #import "LoginViewController.h"
 #import "CourBuyViewController.h"
 #import "CommodityPayVC.h"
+#import "IAPVIPController.h"
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 #import "AppDelegate.h"
 #import "Reachability.h"
+#import "ShareSheetView.h"
 
 #import "DownloadModal.h"
 #import "DownloadManager.h"
 
-@interface CourSectionViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
+#import "PayManager.h"
+
+@interface CourSectionViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,ShareSheetDelegate,UMSocialUIDelegate>
 
 @property (nonatomic) UIView *playView;
+
+@property (nonatomic) int payStatus; //0 iap支付 1 支付宝 微信支付
 
 @end
 
@@ -40,6 +46,7 @@
     
     UIButton *collectionButton;
     UIButton *downloadButton;
+    UIButton *shareButton;
     
     UIView *playerView;
     UIView *operationView;
@@ -71,6 +78,7 @@
     [self setupBottomView];
     
     [self setupData];
+    [self fetchPayModuleStatus];
     
     [self.view bringSubviewToFront:_playView];
     
@@ -87,6 +95,16 @@
         [self fetchCommodityStatus];
     }
     
+}
+
+// 后台控制是否显示支付相关功能
+-(void)fetchPayModuleStatus{
+    PayManager *pm = [[PayManager alloc]init];
+    [pm fetchPayModuleStatusSuccess:^(StatusResult *result) {
+        _payStatus = result.status;
+    } Failure:^(NSError *error) {
+        
+    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -179,7 +197,7 @@
 
 -(void)setupBottomView{
     downloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [downloadButton setImage:[UIImage imageNamed:@"ic_download"] forState:UIControlStateNormal];
+    [downloadButton setImage:[UIImage imageNamed:@"ic_downloaded"] forState:UIControlStateNormal];
     [downloadButton sizeToFit];
     [downloadButton addTarget:self action:@selector(downloadVideo) forControlEvents:UIControlEventTouchDown];
     
@@ -187,6 +205,11 @@
     [collectionButton setImage:[UIImage imageNamed:@"ic_collect"] forState:UIControlStateNormal];
     [collectionButton sizeToFit];
     [collectionButton addTarget:self action:@selector(collectCourse) forControlEvents:UIControlEventTouchDown];
+    
+    shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [shareButton setImage:[UIImage imageNamed:@"icon_share"] forState:UIControlStateNormal];
+    [shareButton sizeToFit];
+    [shareButton addTarget:self action:@selector(shareCourse) forControlEvents:UIControlEventTouchDown];
     
     UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [buyButton setBackgroundImage:[UIImage imageNamed:@"btn_buy"] forState:UIControlStateNormal];
@@ -202,15 +225,21 @@
     if (_type==1) {
         [operationView addSubview:downloadButton];
         [operationView addSubview:collectionButton];
+        [operationView addSubview:shareButton];
         
-        [collectionButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        [shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(operationView.mas_right).offset(-20);
             make.centerY.equalTo(operationView);
         }];
         
         [downloadButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(operationView);
-            make.right.equalTo(collectionButton.mas_left).offset(-20);
+            make.right.equalTo(shareButton.mas_left).offset(-20);
+        }];
+        
+        [collectionButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(downloadButton.mas_left).offset(-20);
+            make.centerY.equalTo(operationView);
         }];
     }else{
         [operationView addSubview:buyButton];
@@ -388,6 +417,23 @@
     [self loadPromptImage];//添加加入队列提示框
 }
 
+-(void)shareCourse{
+    if (!_player.isPrepared) { //视频未加载完成，不允许跳转
+        return;
+    }
+    // 暂停
+    [self.player.player.player pause];
+    
+    NSArray *shareButtonTitleArray = [[NSArray alloc] init];
+    NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
+    
+    shareButtonTitleArray = @[@"微信好友",@"微信朋友圈",@"新浪微博",@"QQ好友",@"QQ空间"];
+    shareButtonImageNameArray = @[@"wechat",@"wetimeline",@"sina",@"qq",@"qzone"];
+    
+    ShareSheetView *lxActivity = [[ShareSheetView alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
+    [lxActivity showInView:self.view];
+}
+
 //点击下载时弹出提示框
 -(void)loadPromptImage
 {
@@ -453,13 +499,23 @@
         }else if (alertView.tag == 1002) {
             [self.player.player.player pause];
             if(_type==1){
-                VIPSubController *vipVC =[[VIPSubController alloc]init];
-                vipVC.isSingleView = 1;
-                vipVC.callbackBlock = ^{
-                    [self fetchSectionVideo];
-                };
-                vipVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vipVC animated:YES];
+                if (_payStatus==0) {
+                    IAPVIPController *iapVC =[[IAPVIPController alloc]init];
+                    iapVC.isSingleView = 1;
+                    iapVC.callbackBlock = ^{
+                        [self fetchSectionVideo];
+                    };
+                    iapVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:iapVC animated:YES];
+                }else{
+                    VIPSubController *vipVC =[[VIPSubController alloc]init];
+                    vipVC.isSingleView = 1;
+                    vipVC.callbackBlock = ^{
+                        [self fetchSectionVideo];
+                    };
+                    vipVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vipVC animated:YES];
+                }
             }else{
                 CommodityPayVC *payVC = [[CommodityPayVC alloc]init];
                 payVC.commodity = _commodity;
@@ -482,6 +538,63 @@
     UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:loginViewCon];
     [self presentViewController:rootNav animated:YES completion:^{}
      ];
+}
+
+#pragma mark - LXActivityDelegate
+
+- (void)didClickOnImageIndex:(NSInteger *)imageIndex
+{
+    UIImage *image = [UIImage imageNamed:@"ic_logo"];
+    NSString *content = currentVideo.name;
+    NSString *url = [NSString stringWithFormat: @"http://api.olaxueyuan.com/course.html?courseId=%@",_objectId];
+    
+    switch((int)imageIndex){
+        case 0:
+            [UMSocialData defaultData].extConfig.wechatSessionData.title = @"欧拉联考";
+            [UMSocialData defaultData].extConfig.wechatSessionData.url = url;
+            [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+            }];
+            break;
+        case 1:
+            [UMSocialData defaultData].extConfig.wechatTimelineData.title = @"欧拉联考";
+            [UMSocialData defaultData].extConfig.wechatTimelineData.url = url;
+            [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+            }];
+            break;
+        case 2:
+            [[UMSocialData defaultData].urlResource setResourceType:UMSocialUrlResourceTypeWeb url:url];
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSina] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+            }];
+            break;
+        case 3:
+            [UMSocialData defaultData].extConfig.qqData.title = @"欧拉联考";
+            [UMSocialData defaultData].extConfig.qqData.url =url;
+            [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeDefault;
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+            }];
+            break;
+        case 4:
+            // QQ空间分享只支持图文分享（图片文字缺一不可）
+            [UMSocialData defaultData].extConfig.qzoneData.title = @"欧拉联考";
+            [UMSocialData defaultData].extConfig.qzoneData.url = url;
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+            }];
+            break;
+    }
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

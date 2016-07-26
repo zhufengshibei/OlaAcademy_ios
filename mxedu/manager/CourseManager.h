@@ -174,17 +174,6 @@
                           Failure:(void(^)(NSError* error))failure;
 
 /**
- *  视频观看记录列表
- *
- *  @param success <#success description#>
- *  @param failure <#failure description#>
- */
--(void)fetchVideoHistoryListWithVideoLogId:(NSString*)videoId
-                                  PageSize:(NSString*)pageSize
-                                   Success:(void(^)(VideoHistoryResult *result))success
-                                   Failure:(void(^)(NSError* error))failure;
-
-/**
  *  知识型谱 知识点做题结果统计
  *
  *  @param success <#success description#>

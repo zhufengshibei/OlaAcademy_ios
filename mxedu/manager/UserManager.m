@@ -54,6 +54,7 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
 -(void)registerUserWithMobile:(NSString*)mobile
                  IdentityCode:(NSString*)identityCode
                           Pwd:(NSString*)pwd
+                       Status:(NSString*)status
                       Success:(void(^)())success
                       Failure:(void(^)(NSError* error))failure{
     DataMappingManager *dm = GetDataManager();

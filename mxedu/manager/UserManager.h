@@ -21,10 +21,12 @@
                            Failure:(void(^)(NSError* error))failure;
 /**
  * 注册
+ * status 1 ios 2 android
  */
 -(void)registerUserWithMobile:(NSString*)mobile
                  IdentityCode:(NSString*)identityCode
                           Pwd:(NSString*)pwd
+                       Status:(NSString*)status
                       Success:(void(^)())success
                       Failure:(void(^)(NSError* error))failure;
 

@@ -10,8 +10,8 @@
 
 @interface UploadManager : NSObject
 
+@property (nonatomic,retain) NSString* imageGid;
 @property (nonatomic,retain) NSMutableArray* imageGids;
-@property (nonatomic,retain) NSString* imageName;
 
 /*
  * 多张图片

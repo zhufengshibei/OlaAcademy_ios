@@ -21,14 +21,7 @@
                  success:(void (^)())success
                  failure:(void (^)(NSError*))failure
 {
-    AuthManager* am = [[AuthManager alloc]init];
     _imageGids = [NSMutableArray arrayWithCapacity:0];
-    if (!am.isAuthenticated)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"警告" message:@"请先登录" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
-        [alert show];
-        return;
-    }
     
     NSMutableArray* pendingImageDatas = [NSMutableArray arrayWithArray:imageDatas];
     
@@ -104,17 +97,17 @@
     DataMappingManager *dm = GetDataManager();
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.uploadResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
     
-    NSURL* rootURL = [NSURL URLWithString:@"http://api.olaxueyuan.com"];
+    NSURL* rootURL = [NSURL URLWithString:@"http://upload.olaxueyuan.com"];
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:rootURL];
     [objectManager addResponseDescriptor:responseDescriptor];
     
     request = [objectManager multipartFormRequestWithObject:nil
                                                      method:RKRequestMethodPOST
-                                                       path:@"/ola/user/fileUpload"
+                                                       path:@"/SDpic/common/picUpload"
                                                  parameters:params
                                   constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                       [formData appendPartWithFileData:imageData
-                                                                  name:@"file"
+                                                                  name:@"imgData"
                                                               fileName:@"uploading-image.jpg"
                                                               mimeType:@"application/octet-stream"];
                                   }];
@@ -124,7 +117,8 @@
                                                          success:^(RKObjectRequestOperation* o, RKMappingResult* result) {
                                                              
                                                              UploadResult *uploadResult = result.firstObject;
-                                                             _imageName = uploadResult.imgName;
+                                                             _imageGid = uploadResult.imgGid;
+                                                            [_imageGids addObject: _imageGid];
                                                              
                                                              if (success != nil)
                                                              {

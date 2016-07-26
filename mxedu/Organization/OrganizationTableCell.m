@@ -150,7 +150,7 @@
     OrganizationManager *om =[[OrganizationManager alloc]init];
     [om checkInWithOrgId:_organiztion.orgId CheckinTime:[self currentDate] UserPhone:am.userInfo.phone UserLocal:@"" Type:@"1" Success:^(CommonResult *result) {
          _checkinButton.enabled = YES;
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"报名成功" message:@"报名成功，报名信息已发往幂学" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"报名成功" message:@"报名成功，报名信息已发往欧拉学院" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
         if (_delegate) {
             _organiztion.checkedIn = @"1";

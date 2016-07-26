@@ -12,5 +12,4 @@
 
 @interface MainViewController : UITabBarController<SKSplashDelegate>
 
-@property (strong, nonatomic) IBOutlet UITabBar *tabbar;
 @end

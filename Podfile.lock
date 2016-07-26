@@ -9,6 +9,7 @@ PODS:
     - RKValueTransformers (~> 1.1.0)
   - JMStaticContentTableViewController (0.3.1)
   - JSONKit (1.4)
+  - JSONModel (1.2.0)
   - Masonry (0.6.4)
   - ReactiveCocoa (2.5):
     - ReactiveCocoa/UI (= 2.5)
@@ -59,6 +60,7 @@ DEPENDENCIES:
   - FSMediaPicker
   - JMStaticContentTableViewController
   - JSONKit
+  - JSONModel
   - Masonry
   - ReactiveCocoa
   - RestKit
@@ -77,6 +79,7 @@ SPEC CHECKSUMS:
   ISO8601DateFormatterValueTransformer: 52da467d6ec899d6aedda8e48280ac92e8ee97e6
   JMStaticContentTableViewController: 297c320abe692c46b73d94175b82d2120495c687
   JSONKit: 5b69e804ea54d99293eed0fd2ce596c5703fefb0
+  JSONModel: 12523685c4b623553ccf844bbbf7007624317b2c
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   REFormattedNumberField: be3d55dd709f65541fb26b7e1709da07903147f8

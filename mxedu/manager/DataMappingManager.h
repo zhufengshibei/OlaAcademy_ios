@@ -57,6 +57,10 @@
 @property (nonatomic, strong, readonly) RKObjectMapping* historyListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* statisticsListResultMapping;
 
+@property (nonatomic, strong, readonly) RKObjectMapping* commentListResultMapping;
+@property (nonatomic, strong, readonly) RKObjectMapping* messageListResultMapping;
+@property (nonatomic, strong, readonly) RKObjectMapping* unreadMessageResultMapping;
+
 @property (nonatomic, strong, readonly) RKObjectMapping* statusResultMapping;
 
 -(id)init;

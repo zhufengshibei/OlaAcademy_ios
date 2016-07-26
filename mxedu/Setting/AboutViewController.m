@@ -61,7 +61,7 @@
     
     [versionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
-        make.bottom.equalTo(self.view.mas_bottom).offset(-80);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-90);
     }];
     
     UILabel *rightsLabel = [UILabel new];
@@ -72,7 +72,18 @@
     
     [rightsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
-        make.bottom.equalTo(self.view.mas_bottom).offset(-50);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-60);
+    }];
+    
+    UILabel *contactLabel = [UILabel new];
+    contactLabel.text = @"contact@olaxueyuan.com";
+    contactLabel.textColor = RGBCOLOR(153, 153, 153);
+    [contactLabel sizeToFit];
+    [self.view addSubview:contactLabel];
+    
+    [contactLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view.mas_centerX);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-30);
     }];
 }
 

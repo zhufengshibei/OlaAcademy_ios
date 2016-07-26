@@ -10,16 +10,21 @@
 
 #import "AuthManager.h"
 #import "CourseManager.h"
+#import "MessageManager.h"
 #import "Course.h"
 #import "QuestionWebController.h"
 #import "BannerWebViewController.h"
 
 #import "FilterView.h"
 #import "MJRefresh.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "MessageViewController.h"
+#import "LoginViewController.h"
 
 @interface QuestionViewController ()<FilterChooseDelegate>
 
 @property (nonatomic) UIButton *titleBtn;
+@property (nonatomic) UIImageView *messageBtn;
 
 @property (nonatomic) NSArray *dataArray;
 @property (nonatomic) UIImageView *headView;
@@ -37,11 +42,17 @@
 
 #pragma mark - Class lifecycle
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBarHidden = NO;
+    [self fetchMessageCount]; //消息提醒
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [self setupNavBar];
+    [self setupRightButton];
     _subjectId = @"1";
     
     subItemsAmt = [[NSMutableDictionary alloc] initWithDictionary:nil];
@@ -82,6 +93,18 @@
     self.navigationItem.titleView = _titleBtn;
 }
 
+-(void)setupRightButton{
+    _messageBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
+    _messageBtn.image = [UIImage imageNamed:@"icon_message"];
+    _messageBtn.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showMessageView)];
+    [_messageBtn addGestureRecognizer:singleTap];
+    [_messageBtn sizeToFit];
+    
+    UIBarButtonItem *rightCunstomButtonView = [[UIBarButtonItem alloc] initWithCustomView:_messageBtn];
+    self.navigationItem.rightBarButtonItem = rightCunstomButtonView;
+}
+
 -(void)setupData{
     NSString *userId = @"";
     AuthManager *am = [[AuthManager alloc]init];
@@ -91,6 +114,9 @@
     CourseManager *cm = [[CourseManager alloc]init];
     [cm fetchCourseListWithID:_subjectId Type:@"1" UserId:userId Success:^(CourseListResult *result) {
         _currentCourse = result.course;
+        if(_currentCourse.bannerPic){
+            [_headView sd_setImageWithURL:[NSURL URLWithString: _currentCourse.bannerPic] placeholderImage:[UIImage imageNamed:@"ic_head_question"]];
+        }
         _dataArray = result.course.subList;
         [self.tableView.header endRefreshing];
         [self.tableView reloadData];
@@ -99,11 +125,29 @@
     }];
 }
 
+-(void)fetchMessageCount{
+    AuthManager *am = [[AuthManager alloc]init];
+    if (am.isAuthenticated) {
+        MessageManager *mm = [[MessageManager alloc]init];
+        [mm fetchUnreadCountWithUserId:am.userInfo.userId Success:^(MessageUnreadResult *result) {
+            if (result.code==10000&result.count>0) {
+                _messageBtn.image = [UIImage imageNamed:@"icon_message_tip"];
+            }else{
+                _messageBtn.image = [UIImage imageNamed:@"icon_message"];
+            }
+        } Failure:^(NSError *error) {
+            
+        }];
+    }
+}
+
 -(void)showWebView{
-    BannerWebViewController *webVC = [[BannerWebViewController alloc]init];
-    webVC.url = @"http://mp.weixin.qq.com/s?__biz=MzIwMzI4MjE0OA==&mid=100000167&idx=1&sn=2739a8d7771b27d5addb8559d8e84cdf#rd";
-    webVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:webVC animated:YES];
+    if(_currentCourse){
+        BannerWebViewController *webVC = [[BannerWebViewController alloc]init];
+        webVC.url = _currentCourse.address;
+        webVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:webVC animated:YES];
+    }
 }
 
 #pragma 下拉筛选
@@ -133,6 +177,24 @@
     [_titleBtn setImage:[UIImage imageNamed:@"ic_pulldown"] forState:UIControlStateNormal];
     _subjectId = [NSString stringWithFormat:@"%ld",button.tag+1];
     [self setupData];
+}
+
+-(void)showMessageView{
+    AuthManager *am = [[AuthManager alloc]init];
+    if (!am.isAuthenticated) {
+        [self showLoginView];
+        return;
+    }
+    MessageViewController *messageVC = [[MessageViewController alloc]init];
+    messageVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:messageVC animated:YES];
+}
+
+-(void)showLoginView{
+    LoginViewController* loginViewCon = [[LoginViewController alloc] init];
+    UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:loginViewCon];
+    [self presentViewController:rootNav animated:YES completion:^{}
+     ];
 }
 
 #pragma mark - TableView delegation

@@ -467,42 +467,6 @@
 }
 
 /**
- *  视频观看记录列表
- *
- *  @param success <#success description#>
- *  @param failure <#failure description#>
- */
--(void)fetchVideoHistoryListWithVideoLogId:(NSString*)videoId
-                                  PageSize:(NSString*)pageSize
-                                    Success:(void(^)(VideoHistoryResult *result))success
-                                   Failure:(void(^)(NSError* error))failure{
-    DataMappingManager *dm = GetDataManager();
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.historyListResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
-    // 通过shareManager 共享 baseurl及请求头等
-    RKObjectManager* om = [RKObjectManager sharedManager];
-    
-    [om addResponseDescriptor:responseDescriptor];
-    // 采用post方式，get方式可能产生中文乱码
-    [om postObject:nil path:@"/ola/cour/getHistoryList" parameters:@{@"videoId": videoId,
-                                                                     @"pageSize": pageSize
-                                                                     }
-           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-               if ([mappingResult.firstObject isKindOfClass:[VideoHistoryResult class]]) {
-                   VideoHistoryResult *result = mappingResult.firstObject;
-                   if (success != nil) {
-                       success(result);
-                   }
-               }
-               
-           }
-           failure:^(RKObjectRequestOperation *operation, NSError *error) {
-               if (failure != nil) {
-                   failure(error);
-               }
-           }];
-
-}
-/**
  *  知识型谱 知识点做题结果统计
  *
  *  @param success <#success description#>

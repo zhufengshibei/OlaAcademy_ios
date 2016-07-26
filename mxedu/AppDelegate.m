@@ -29,7 +29,14 @@
 #import "DataManager.h"
 #import "DownloadManager.h"
 
+#import "UMessage.h"
+
+#import "BannerWebViewController.h"
+
 @interface AppDelegate ()<WXApiDelegate>
+
+@property (nonatomic) MainViewController * mainVC;
+@property (nonatomic) int appInUse;
 
 @end
 
@@ -37,10 +44,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
     
-    [self setup];
-    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
     
     // 是否第一次登录
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -62,7 +68,31 @@
         [self setupRootView];
     }
     
+    [self setup];
+    [self setupUMPush:launchOptions];
+
     return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSLog(@"%@",[[[[deviceToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                  stringByReplacingOccurrencesOfString: @">" withString: @""]
+                 stringByReplacingOccurrencesOfString: @" " withString: @""]);
+    // 1.2.7版本开始不需要用户再手动注册devicetoken，SDK会自动注册
+    //[UMessage registerDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    //关闭友盟自带的弹出框
+    [UMessage setAutoAlert:NO];
+    
+    [UMessage didReceiveRemoteNotification:userInfo];
+    if (_appInUse == 0) { //如果app已经在运行，则不跳转页面
+        [self dealWithPushMessage:userInfo];
+    }
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -71,8 +101,7 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    _appInUse = 0;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -80,7 +109,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    _appInUse = 1;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -116,6 +145,7 @@
 {
     [self setupNavigationBar];
     [self setupManagers];
+    [self setupUMAnalysis];
     [self setupUMShare];
     [self setupWXPay];
 }
@@ -131,21 +161,11 @@
 }
 
 -(void)setupRootView{
-//    AuthManager *am = [[AuthManager alloc]init];
-//    if (!am.isAuthenticated) {
-//        IndexViewController *indexVC = [[IndexViewController alloc]init];
-//        UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:indexVC];
-//        self.window.rootViewController = navController;
-//
-//    }else{
-        UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main"bundle:nil];
-        MainViewController * mainVC = [board instantiateViewControllerWithIdentifier:@"mainView"];
-        [mainVC setSelectedIndex:0];
-        
-        [self.window setRootViewController:mainVC];
-        [self.window makeKeyAndVisible];
-//    }
+
+    _mainVC = [[MainViewController alloc]init];
     
+    [self.window setRootViewController:_mainVC];
+    [self.window makeKeyAndVisible];
 }
 
 -(void)setupRootViewWithSlide{
@@ -156,11 +176,8 @@
         self.window.rootViewController = navController;
         
     }else{
-        UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main"bundle:nil];
-        MainViewController * main = [board instantiateViewControllerWithIdentifier:@"mainView"];
+        MainViewController * main = [[MainViewController alloc]init];
         RightViewController * right = [[RightViewController alloc]init];
-        
-        [main setSelectedIndex:0];
         
         _slideViewController = [[SideslipViewController alloc]initWithMainView:main andRightView:right andBackgroundImage:[UIImage imageNamed:@"background"]];
         _slideViewController.isShowingMain = YES;
@@ -185,6 +202,18 @@
     
     [self setupRootView];
     
+}
+
+//友盟推送
+-(void)setupUMPush:(NSDictionary *)launchOptions{
+    //设置 AppKey 及 LaunchOptions
+    [UMessage startWithAppkey:@"57414ca367e58edccb000cdc" launchOptions:launchOptions];
+    
+    //1.3.0版本开始简化初始化过程。如不需要交互式的通知，下面用下面一句话注册通知即可。
+    [UMessage registerForRemoteNotifications];
+    
+    //log
+    //[UMessage setLogEnabled:YES];
 }
 
 // 友盟分析
@@ -242,6 +271,25 @@
         //                break;
         //            }
         //        }
+    }
+}
+
+//收到推送消息的逻辑处理
+-(void)dealWithPushMessage:(NSDictionary*)userInfo{
+
+    NSString *type = [userInfo objectForKey:@"type"];
+    if ([type isEqualToString:@"2"]) {
+        CourSectionViewController *courseVC = [[CourSectionViewController alloc]init];
+        courseVC.type = 1;
+        courseVC.objectId = [userInfo objectForKey:@"courseId"];
+        courseVC.hidesBottomBarWhenPushed = YES;
+        [self.mainVC.selectedViewController pushViewController:courseVC animated:YES];
+        
+    }else if([type isEqualToString:@"3"]){
+        BannerWebViewController *bannerVC = [[BannerWebViewController alloc]init];
+        bannerVC.url = [userInfo objectForKey:@"url"];
+        bannerVC.hidesBottomBarWhenPushed = YES;
+        [self.mainVC.selectedViewController pushViewController:bannerVC animated:YES];
     }
 }
 

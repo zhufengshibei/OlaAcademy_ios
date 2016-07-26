@@ -21,5 +21,5 @@
 @property (nonatomic, strong) UIButton *collectButton;
 
 -(void)refreshUserInfo;
--(void)showPayModule;
+
 @end

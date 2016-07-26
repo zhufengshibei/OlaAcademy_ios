@@ -21,6 +21,7 @@
 #import "Correctness.h"
 #import "JRPlayerViewController.h"
 #import "QuestionResultViewController.h"
+#import "MobClick.h"
 #import <WebViewJavascriptBridge.h>
 
 @interface QuestionWebController ()
@@ -52,6 +53,14 @@
     self.title = _titleName;
     self.view.backgroundColor = [UIColor whiteColor];
     [self setupNavButton];
+    
+    //友盟统计
+    if(_type==1){
+        [MobClick event:@"enter_point"];
+    }else if(_type==2){
+        [MobClick event:@"enter_point"];
+    }
+    
     
     articleText = [[UITextView alloc]init];
     articleText.editable = NO;

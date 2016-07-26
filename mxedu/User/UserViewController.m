@@ -24,6 +24,7 @@
 #import "CourseBuySubController.h"
 #import "CollectionSubController.h"
 #import "VIPSubController.h"
+#import "IAPVIPController.h"
 
 #import "CourseManager.h"
 #import "PayManager.h"
@@ -39,6 +40,7 @@
     CollectionSubController *collectionVC;
     CourseBuySubController *courseVC;
     VIPSubController *vipVC;
+    IAPVIPController *iapVipVC;
 }
 
 @end
@@ -77,7 +79,7 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
     
     [self setupRightButton];
     
-    [self setupViewPager];
+    [self setupSegmentedControl];
     
     [self fetchPayModuleStatus];
     
@@ -115,7 +117,7 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
 -(void)fetchPayModuleStatus{
     PayManager *pm = [[PayManager alloc]init];
     [pm fetchPayModuleStatusSuccess:^(StatusResult *result) {
-        [self setupSegmentedControl:result.status];
+        [self setupViewPager:result.status];
     } Failure:^(NSError *error) {
         
     }];
@@ -124,15 +126,10 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
 /**
  *  分类视图
  */
-- (void)setupSegmentedControl:(int)payStatus
+- (void)setupSegmentedControl
 {
     HMSegmentedControl *segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, GENERAL_SIZE(240), SCREEN_WIDTH, GENERAL_SIZE(60))];
-    if(payStatus==1){
-        [_userView showPayModule];
-        segmentedControl.sectionTitles = @[@"知识型谱",@"课程收藏", @"VIP会员", @"购买课程"];
-    }else{
-        segmentedControl.sectionTitles = @[@"知识型谱",@"课程收藏"];
-    }
+    segmentedControl.sectionTitles = @[@"知识型谱",@"课程收藏", @"VIP会员", @"购买课程"];
     segmentedControl.selectedSegmentIndex = 0;
     
     segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName : LabelFont(28)};
@@ -155,7 +152,7 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
 }
 
 
-- (void)setupViewPager
+- (void)setupViewPager:(int)payStatus
 {
     _scrollView = [[UIScrollView alloc]init];
     [self.view addSubview:_scrollView];
@@ -166,14 +163,23 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
     collectionVC = [[CollectionSubController alloc] init];
     [self addChildViewController:collectionVC];
     
-    vipVC = [[VIPSubController alloc] init];
-    [self addChildViewController:vipVC];
-    
     courseVC = [[CourseBuySubController alloc] init];
     [self addChildViewController:courseVC];
-
-    _viewPagerPageViews = @[knowledgeVC.view,collectionVC.view,vipVC.view, courseVC.view];
-   
+    
+    if(payStatus==0){
+        iapVipVC = [[IAPVIPController alloc] init];
+        __weak UserViewController* wself = self;
+        iapVipVC.callbackBlock = ^{
+            [wself.userView refreshUserInfo];
+        };
+        [self addChildViewController:iapVipVC];
+        _viewPagerPageViews = @[knowledgeVC.view,collectionVC.view,iapVipVC.view, courseVC.view];
+    }else{
+        vipVC = [[VIPSubController alloc] init];
+        [self addChildViewController:vipVC];
+        _viewPagerPageViews = @[knowledgeVC.view,collectionVC.view,vipVC.view, courseVC.view];
+    }
+    
     _scrollView.frame = CGRectMake(0, GENERAL_SIZE(300), SCREEN_WIDTH, SCREEN_HEIGHT-GENERAL_SIZE(300));
     _scrollView.contentSize = CGSizeMake(SCREEN_WIDTH * _viewPagerPageViews.count, SCREEN_HEIGHT);
     

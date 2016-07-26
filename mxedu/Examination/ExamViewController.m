@@ -17,10 +17,12 @@
 
 #import "AuthManager.h"
 #import "ExamManager.h"
+#import "PayManager.h"
 
 #import "Masonry.h"
 #import "ExamFilterView.h"
 #import "LoginViewController.h"
+#import "IAPVIPController.h"
 
 @interface ExamViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate,FilterChooseDelegate>
 
@@ -37,9 +39,15 @@
 
 @property (nonatomic) NSArray *examArray;
 
+@property (nonatomic) int payStatus; //0 iap支付 1 支付宝 微信支付
+
 @end
 
 @implementation ExamViewController
+
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBarHidden = NO;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -71,10 +79,22 @@
     [self.view addSubview:_collectionView];
     
     [self fetchExamList];
+    [self fetchPayModuleStatus];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchExamList) name:@"NEEDREFRESH" object:nil];
     
 }
+
+// 后台控制是否显示支付相关功能
+-(void)fetchPayModuleStatus{
+    PayManager *pm = [[PayManager alloc]init];
+    [pm fetchPayModuleStatusSuccess:^(StatusResult *result) {
+        _payStatus = result.status;
+    } Failure:^(NSError *error) {
+        
+    }];
+}
+
 
 -(void)setupNavBar{
     _titleBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -307,13 +327,24 @@
 #pragma alertview delegate
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex==1) {
-        VIPSubController *vipVC =[[VIPSubController alloc]init];
-        vipVC.isSingleView = 1;
-        vipVC.callbackBlock = ^{
-            [self fetchExamList];
-        };
-        vipVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vipVC animated:YES];
+        if (_payStatus==0) {
+            IAPVIPController *iapVC =[[IAPVIPController alloc]init];
+            iapVC.isSingleView = 1;
+            iapVC.callbackBlock = ^{
+                [self fetchExamList];
+            };
+            iapVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:iapVC animated:YES];
+        }else{
+            VIPSubController *vipVC =[[VIPSubController alloc]init];
+            vipVC.isSingleView = 1;
+            vipVC.callbackBlock = ^{
+                [self fetchExamList];
+            };
+            vipVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vipVC animated:YES];
+        }
+        
     }
 }
 

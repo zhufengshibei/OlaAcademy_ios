@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="ImageCell">
+            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="R9H-UD-r7x">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="R9H-UD-r7x" secondAttribute="bottom" id="1jo-yA-11s"/>
+                <constraint firstAttribute="trailing" secondItem="R9H-UD-r7x" secondAttribute="trailing" id="9rk-Ok-PGu"/>
+                <constraint firstItem="R9H-UD-r7x" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="CgW-Wc-rzV"/>
+                <constraint firstItem="R9H-UD-r7x" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="nHW-qf-mEH"/>
+            </constraints>
+            <connections>
+                <outlet property="imageView" destination="R9H-UD-r7x" id="CvP-qE-gZR"/>
+            </connections>
+            <point key="canvasLocation" x="179" y="40"/>
+        </collectionViewCell>
+    </objects>
+</document>

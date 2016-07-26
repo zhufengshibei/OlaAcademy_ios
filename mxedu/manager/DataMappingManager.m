@@ -62,9 +62,16 @@
 #import "AliPayInfo.h"
 #import "AliPayResult.h"
 
-#import "VideoHistory.h"
+#import "OlaCircle.h"
 #import "VideoHistoryResult.h"
 #import "StatisticsListResult.h"
+
+#import "Comment.h"
+#import "CommentListResult.h"
+
+#import "Message.h"
+#import "MessageListResult.h"
+#import "MessageUnreadResult.h"
 
 @implementation DataMappingManager
 
@@ -114,9 +121,12 @@
     [self setupPayReqResultMapping];
     [self setupAliPayResultMapping];
     [self setupVideoHistoryListMapping];
+    [self setupCommentListMapping];
     [self setupStatisticsListMapping];
     [self setupBannerList];
     [self setupStatusMapping];
+    [self setupMessageListMapping];
+    [self setupUnreadMessageMapping];
 }
 
 
@@ -175,9 +185,9 @@
 -(void)setupUploadMappings{
     _uploadResultMapping = [RKObjectMapping mappingForClass:[UploadResult class]];
     [_uploadResultMapping addAttributeMappingsFromDictionary:@{
-                                                               @"apicode":   @"code",
+                                                               @"code":   @"code",
                                                                @"message":   @"message",
-                                                               @"result":   @"imgName"
+                                                               @"imgGid":   @"imgGid"
                                                                }];
 }
 
@@ -223,7 +233,8 @@
                                                           @"profile":    @"profile",
                                                           @"address":    @"address",
                                                           @"subNum":     @"subNum",
-                                                          @"subAllNum":  @"subAllNum"
+                                                          @"subAllNum":  @"subAllNum",
+                                                          @"bannerPic":  @"bannerPic"
                                                           }];
     [_courseMapping2 addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"child" toKeyPath:@"subList" withMapping:_courseMapping1]];
     
@@ -579,15 +590,20 @@
 
 -(void)setupVideoHistoryListMapping{
     
-    RKObjectMapping* _historyMapping = [RKObjectMapping mappingForClass:[VideoHistory class]];
+    RKObjectMapping* _historyMapping = [RKObjectMapping mappingForClass:[OlaCircle class]];
     [_historyMapping addAttributeMappingsFromDictionary:@{
-                                                          @"logId": @"logId",
+                                                          @"circleId": @"circleId",
                                                           @"userName": @"userName",
                                                           @"userAvatar": @"userAvatar",
                                                           @"videoId": @"videoId",
-                                                          @"videoName": @"videoName",
+                                                          @"courseId": @"courseId",
+                                                          @"title": @"title",
+                                                          @"content": @"content",
+                                                          @"imageGids": @"imageGids",
+                                                          @"location": @"location",
+                                                          @"praiseNumber": @"praiseNumber",
                                                           @"time": @"time",
-                                                          @"courseId": @"courseId"
+                                                          @"type": @"type"
                                                           }];
     
     _historyListResultMapping = [RKObjectMapping mappingForClass:[VideoHistoryResult class]];
@@ -596,6 +612,64 @@
                                                                     @"message": @"message"
                                                                     }];
     [_historyListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"historyArray" withMapping:_historyMapping]];
+}
+
+-(void)setupCommentListMapping{
+    RKObjectMapping *commentMapping = [RKObjectMapping mappingForClass:[Comment class]];
+    [commentMapping addAttributeMappingsFromDictionary:@{
+                                                          @"commentId":         @"data_id",
+                                                          @"userId":       @"userId",
+                                                          @"userName":       @"username",
+                                                          @"content":      @"content",
+                                                          @"location" : @"local",
+                                                          @"praiseNumber" :@"like_count",
+                                                          @"userAvatar":    @"profile_image",
+                                                          @"time":      @"passtime",
+                                                          @"toUserId":      @"rpyToUserId",
+                                                          @"toUserName":    @"rpyToUserName",
+                                                          @"praiseReply" :@"isPraised"
+                                                          }];
+    
+    _commentListResultMapping = [RKObjectMapping mappingForClass:[CommentListResult class]];
+    [_commentListResultMapping addAttributeMappingsFromDictionary:@{
+                                                                @"message":     @"message",
+                                                                @"apicode":     @"code"
+                                                                }];
+    [_commentListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"commentArray" withMapping:commentMapping]];
+
+}
+
+-(void)setupMessageListMapping{
+    RKObjectMapping *messageMapping = [RKObjectMapping mappingForClass:[Message class]];
+    [messageMapping addAttributeMappingsFromDictionary:@{
+                                                         @"id":         @"messageId",
+                                                         @"title":       @"title",
+                                                         @"content":      @"content",
+                                                         @"otherId" :   @"otherId",
+                                                         @"url" :   @"url",
+                                                         @"type":    @"type",
+                                                         @"time":      @"time",
+                                                         @"imageUrl":    @"imageUrl",
+                                                         @"status" :    @"status"
+                                                         }];
+    
+    _messageListResultMapping = [RKObjectMapping mappingForClass:[MessageListResult class]];
+    [_messageListResultMapping addAttributeMappingsFromDictionary:@{
+                                                                    @"message":     @"message",
+                                                                    @"apicode":     @"code"
+                                                                    }];
+    [_messageListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"messageArray" withMapping:messageMapping]];
+    
+}
+
+-(void)setupUnreadMessageMapping{
+    
+    _unreadMessageResultMapping = [RKObjectMapping mappingForClass:[MessageUnreadResult class]];
+    [_unreadMessageResultMapping addAttributeMappingsFromDictionary:@{
+                                                                    @"message":     @"message",
+                                                                    @"apicode":     @"code",
+                                                                    @"result":      @"count"
+                                                                    }];
 }
 
 -(void)setupStatisticsListMapping{

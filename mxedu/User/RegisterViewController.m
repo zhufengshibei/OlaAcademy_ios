@@ -355,6 +355,7 @@ int ns=0;
     [userManger registerUserWithMobile:phoneTextField.text
                           IdentityCode:codeTextField.text
                                    Pwd:passTextField.text
+                                Status:@"1"
                                Success:^{
                                    // 保存用户名密码
                                    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];

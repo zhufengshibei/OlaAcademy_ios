@@ -373,7 +373,9 @@
 -(void)fetchAliPayInfo{
     AuthManager *am = [[AuthManager alloc]init];
     if (!am.isAuthenticated) {
-        [SVProgressHUD showInfoWithStatus:@"您尚未登录"];
+        LoginViewController* loginViewCon = [[LoginViewController alloc] init];
+        UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:loginViewCon];
+        [self.navigationController presentViewController:rootNav animated:YES completion:nil];
         return;
     }
     PayManager *pm = [[PayManager alloc]init];
@@ -400,7 +402,9 @@
 -(void)fetchPayReqInfo{
     AuthManager *am = [[AuthManager alloc]init];
     if (!am.isAuthenticated) {
-        [SVProgressHUD showInfoWithStatus:@"您尚未登录"];
+        LoginViewController* loginViewCon = [[LoginViewController alloc] init];
+        UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:loginViewCon];
+        [self.navigationController presentViewController:rootNav animated:YES completion:nil];
         return;
     }
     PayManager *pm = [[PayManager alloc]init];

@@ -21,5 +21,6 @@
 @property (nonatomic, copy) NSString* subNum;  //已完成答题数
 @property (nonatomic, copy) NSString* subAllNum; // 题目或视频总数
 @property (nonatomic, copy) NSString* totalTime;
+@property (nonatomic, copy) NSString* bannerPic;
 
 @end

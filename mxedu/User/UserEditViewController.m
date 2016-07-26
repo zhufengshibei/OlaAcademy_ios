@@ -114,7 +114,11 @@ NSMutableArray *provinces, *cities; // 本地plist中的地区信息
     [photoImage sizeToFit];
     avatarImage = [[UIImageView alloc]initWithFrame:CGRectMake(15, 20, 60, 60)];
     if (userInfo.avatar) {
-        [avatarImage sd_setImageWithURL:[NSURL URLWithString: [BASIC_IMAGE_URL stringByAppendingString:userInfo.avatar]] placeholderImage:[UIImage imageNamed:@"ic_photo"]];
+        if ([userInfo.avatar rangeOfString:@".jpg"].location == NSNotFound) {
+            [avatarImage sd_setImageWithURL:[NSURL URLWithString: [BASIC_IMAGE_URL stringByAppendingString:userInfo.avatar]] placeholderImage:[UIImage imageNamed:@"ic_photo"]];
+        }else{
+            [avatarImage sd_setImageWithURL:[NSURL URLWithString: [@"http://api.olaxueyuan.com/upload/" stringByAppendingString:userInfo.avatar]] placeholderImage:[UIImage imageNamed:@"ic_photo"]];
+        }
     }else{
         [avatarImage setImage:[UIImage imageNamed:@"ic_photo"]];
     }
@@ -313,20 +317,20 @@ NSMutableArray *provinces, *cities; // 本地plist中的地区信息
     UploadManager* um = [[UploadManager alloc]init];
      NSData* imageData = UIImageJPEGRepresentation(selectedImage, 0.8);
     [um uploadImageData:imageData angles:nil success:^{
-        NSString *imageName =  um.imageName;
-        [self updateUserInfo:imageName];
+        NSString *imageGid =  um.imageGid;
+        [self updateUserInfo:imageGid];
     } failure:^(NSError *error) {
         [saveBtn setTitleColor:RGBCOLOR(01, 139, 232) forState:UIControlStateNormal];
     }];
 }
 
--(void)updateUserInfo:(NSString*)imageName{
+-(void)updateUserInfo:(NSString*)imageGid{
     NSString *userLocation = _cityPicker.value!=nil?[[[_cityPicker.value objectAtIndex:0]stringByAppendingString:@","] stringByAppendingString:[_cityPicker.value objectAtIndex:1]]:@"";
     NSString *sex = [[_sexPicker.value objectAtIndex:0] isEqualToString:@"男"]?@"1":@"2";
     NSString *descript = editText.text;
     UserManager *um = [[UserManager alloc]init];
     [um updateUserWithUserId:userInfo.userId Name:_nameItem.value sex:sex local:userLocation descript:descript
-                      avatar:imageName Success:^{
+                      avatar:imageGid Success:^{
                           [SVProgressHUD showSuccessWithStatus:@"更新成功"];
                           if (_successFunc != nil)
                           {

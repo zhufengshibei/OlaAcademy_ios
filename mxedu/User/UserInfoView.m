@@ -101,9 +101,6 @@ typedef enum
             make.height.equalTo(@20);
         }];
         
-        _localLabel.hidden = YES;
-        _vipLabel.hidden = YES;
-        
         //[self setupLocltionManager];
         
     }
@@ -147,11 +144,6 @@ typedef enum
     
 }
 
--(void)showPayModule{
-    _localLabel.hidden = NO;
-    _vipLabel.hidden = NO;
-}
-
 - (void)updateWithUser:(User*)user
 {
     //开始定位
@@ -164,13 +156,11 @@ typedef enum
     
     _avatarImageview.layer.cornerRadius = 20;
     if(user.avatar){
-        NSString *avatarUrl = [BASIC_IMAGE_URL stringByAppendingString:user.avatar];
-        [[SDWebImageManager sharedManager]downloadImageWithURL:[NSURL URLWithString:avatarUrl] options:SDWebImageHighPriority progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            if (image != nil)
-            {
-                _avatarImageview.image = image;
-            }
-        }];
+        if ([user.avatar rangeOfString:@".jpg"].location == NSNotFound) {
+            [_avatarImageview sd_setImageWithURL:[NSURL URLWithString: [BASIC_IMAGE_URL stringByAppendingString:user.avatar]] placeholderImage:[UIImage imageNamed:@"ic_avatar"]];
+        }else{
+            [_avatarImageview sd_setImageWithURL:[NSURL URLWithString: [@"http://api.olaxueyuan.com/upload/" stringByAppendingString:user.avatar]] placeholderImage:[UIImage imageNamed:@"ic_avatar"]];
+        }
     }else{
         _avatarImageview.image = [UIImage imageNamed:@"ic_avatar"];
     }

@@ -12,6 +12,6 @@
 
 @property (nonatomic) int code;
 @property (nonatomic) NSString *message;
-@property (nonatomic) NSString *imgName;
+@property (nonatomic) NSString *imgGid;
 
 @end
