@@ -15,6 +15,7 @@
 #import "MessageTableCell.h"
 #import "CourSectionViewController.h"
 #import "BannerWebViewController.h"
+#import "CommodityViewController.h"
 
 @interface MessageViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -129,11 +130,14 @@
         BannerWebViewController *bannerVC = [[BannerWebViewController alloc]init];
         bannerVC.url = message.url;
         [self.navigationController pushViewController:bannerVC animated:YES];
+    }else if ([message.type isEqualToString:@"4"]) {
+        CommodityViewController *commodityVC = [[CommodityViewController alloc]init];
+        [self.navigationController pushViewController:commodityVC animated:YES];
     }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return GENERAL_SIZE(140);
+    return GENERAL_SIZE(160);
 }
 
 - (void)didReceiveMemoryWarning {

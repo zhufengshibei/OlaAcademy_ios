@@ -53,8 +53,9 @@
         [self addSubview:lineView1];
         
         _orgLabel = [UILabel new];
+        _orgLabel.numberOfLines = 0;
         _orgLabel.textColor = RGBCOLOR(101, 101, 101);
-        _orgLabel.font = LabelFont(30);
+        _orgLabel.font = LabelFont(28);
         [self addSubview:_orgLabel];
         
         _checkinButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -82,8 +83,10 @@
         }];
         
         [_orgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.mas_bottom).offset(-15);
+            make.top.equalTo(_nameLabel.mas_bottom).offset(5);
+            make.bottom.equalTo(self.mas_bottom).offset(-5);
             make.left.equalTo(_avatarImage.mas_right).offset(10);
+            make.right.equalTo(self.mas_right).offset(-10);
         }];
         
         [_checkinButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -100,11 +103,7 @@
     _nameLabel.text = message.title;
     _orgLabel.text = message.content;
     if(message.imageUrl){
-        if ([message.imageUrl rangeOfString:@".jpg"].location == NSNotFound) {
-            [_avatarImage sd_setImageWithURL:[NSURL URLWithString: [BASIC_IMAGE_URL stringByAppendingString:message.imageUrl]] placeholderImage:[UIImage imageNamed:@"ic_avatar"]];
-        }else{
-            [_avatarImage sd_setImageWithURL:[NSURL URLWithString: [@"http://api.olaxueyuan.com/upload/" stringByAppendingString:message.imageUrl]] placeholderImage:[UIImage imageNamed:@"ic_avatar"]];
-        }
+        [_avatarImage sd_setImageWithURL:[NSURL URLWithString:message.imageUrl] placeholderImage:[UIImage imageNamed:@"ic_avatar"]];
     }else{
         _avatarImage.image = [UIImage imageNamed:@"ic_avatar"];
     }

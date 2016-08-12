@@ -68,7 +68,7 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
 -(void) viewDidLoad{
     [super viewDidLoad];
     
-    self.title = @"我";
+    self.navigationItem.title = @"我";
     
     _userView = [[UserInfoView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, GENERAL_SIZE(240))];
     UITapGestureRecognizer *tabGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showUserView)];

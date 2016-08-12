@@ -256,7 +256,10 @@
     if (am.isAuthenticated) {
         CourseManager *cm = [[CourseManager alloc]init];
         NSString *answerJson = [self jsonStringFromDictionary];
-        [cm submitQuestionAnswerWithId:am.userInfo.userId answer:answerJson type:@"1" Success:^(QuestionListResult *result) {
+        [cm submitQuestionAnswerWithId:am.userInfo.userId answer:answerJson type:[NSString stringWithFormat:@"%d",_type] Success:^(CommonResult *result) {
+            if(_callbackBlock){
+                _callbackBlock();
+            }
             
         } Failure:^(NSError *error) {
             

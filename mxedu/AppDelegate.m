@@ -32,6 +32,7 @@
 #import "UMessage.h"
 
 #import "BannerWebViewController.h"
+#import "CommodityViewController.h"
 
 @interface AppDelegate ()<WXApiDelegate>
 
@@ -290,6 +291,10 @@
         bannerVC.url = [userInfo objectForKey:@"url"];
         bannerVC.hidesBottomBarWhenPushed = YES;
         [self.mainVC.selectedViewController pushViewController:bannerVC animated:YES];
+    }else if([type isEqualToString:@"4"]){
+        CommodityViewController *commodityVC = [[CommodityViewController alloc]init];
+        commodityVC.hidesBottomBarWhenPushed = YES;
+        [self.mainVC.selectedViewController pushViewController:commodityVC animated:YES];
     }
 }
 

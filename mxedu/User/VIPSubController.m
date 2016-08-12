@@ -42,12 +42,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     int scrollViewHeight = SCREEN_HEIGHT-220;
-    int scrollContentHeight = 610;
+    int scrollContentHeight = 550;
     if (iPhone6) {
-        scrollContentHeight = 625;
+        scrollContentHeight = 565;
     }
     if (iPhone6Plus) {
-        scrollContentHeight = 640;
+        scrollContentHeight = 580;
     }
     if(_isSingleView==1){
         [self setupBackButton];
@@ -286,35 +286,6 @@
     VIPView *vipView = [[VIPView alloc]initWithFrame:CGRectMake(0, 310, SCREEN_WIDTH, 120)];
     [_scrollView addSubview:vipView];
     
-    
-    if (_isSingleView==0) {
-        UIView *lineView9 = [[UIView alloc]initWithFrame:CGRectMake(0, 430, SCREEN_WIDTH, 10)];
-        lineView9.backgroundColor = RGBCOLOR(236, 236, 236);
-        [_scrollView addSubview:lineView9];
-        
-        UILabel *typeLabel3 = [[UILabel alloc]initWithFrame:CGRectMake(10, 440, SCREEN_WIDTH, 40)];
-        typeLabel3.text = @"VIP会员免费领取";
-        typeLabel3.font = LabelFont(32);
-        [_scrollView addSubview:typeLabel3];
-        
-        UIView *lineView10 = [[UIView alloc]initWithFrame:CGRectMake(0, 480, SCREEN_WIDTH, 1)];
-        lineView10.backgroundColor = RGBCOLOR(236, 236, 236);
-        [_scrollView addSubview:lineView10];
-        
-        UILabel *freeVIP = [[UILabel alloc]initWithFrame:CGRectMake(10, 481, 200, 40)];
-        freeVIP.text = @"登录领取5天VIP";
-        freeVIP.font = LabelFont(32);
-        [_scrollView addSubview:freeVIP];
-        
-        obtainVIP = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        
-        [obtainVIP.layer setCornerRadius:5];
-        [obtainVIP setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        obtainVIP.frame = CGRectMake(SCREEN_WIDTH-70, 495, 60, 20);
-        [_scrollView addSubview:obtainVIP];
-        [self updateVIPState];
-    }
-    
     _payButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_payButton setBackgroundImage:[UIImage imageNamed:@"ic_btn_background"] forState:UIControlStateNormal];
     [_payButton setTitle:@"开通会员" forState:UIControlStateNormal];
@@ -324,11 +295,7 @@
     [_scrollView addSubview:_payButton];
     
     [_payButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        if (_isSingleView==0) {
-            make.top.equalTo(obtainVIP.mas_bottom).offset(15);
-        }else{
-            make.top.equalTo(vipView.mas_bottom).offset(15);
-        }
+        make.top.equalTo(vipView.mas_bottom).offset(15);
         if(iPhone5){
             make.height.equalTo(@35);
         }else{

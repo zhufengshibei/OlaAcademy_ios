@@ -437,7 +437,7 @@
 -(void)submitQuestionAnswerWithId:(NSString*)userId
                            answer:(NSString*)answer
                              type:(NSString*)type
-                          Success:(void(^)(QuestionListResult *result))success
+                          Success:(void(^)(CommonResult *result))success
                           Failure:(void(^)(NSError* error))failure{
     DataMappingManager *dm = GetDataManager();
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.commonResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
@@ -451,8 +451,8 @@
                                                                    @"type" : type
                                                                      }
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-               if ([mappingResult.firstObject isKindOfClass:[QuestionListResult class]]) {
-                   QuestionListResult *result = mappingResult.firstObject;
+               if ([mappingResult.firstObject isKindOfClass:[CommonResult class]]) {
+                   CommonResult *result = mappingResult.firstObject;
                    if (success != nil) {
                        success(result);
                    }

@@ -73,6 +73,8 @@
 #import "MessageListResult.h"
 #import "MessageUnreadResult.h"
 
+#import "HomeworkListResult.h"
+
 @implementation DataMappingManager
 
 - (id)init
@@ -116,6 +118,7 @@
     [self setupCheckInMapping];
     [self setupCheckInListMapping];
     [self setupQuestionListMapping];
+    [self setupHomeworkListMapping];
     [self setupExamListMapping];
     [self setupCommodityListMapping];
     [self setupPayReqResultMapping];
@@ -236,6 +239,19 @@
                                                           @"subAllNum":  @"subAllNum",
                                                           @"bannerPic":  @"bannerPic"
                                                           }];
+    RKObjectMapping* homeworkMapping = [RKObjectMapping mappingForClass:[Homework class]];
+    [homeworkMapping addAttributeMappingsFromDictionary:@{
+                                                          @"id":         @"homeworkId",
+                                                          @"name":       @"name",
+                                                          @"userName":   @"userName",
+                                                          @"avatar":     @"avatar",
+                                                          @"groupId":    @"groupId",
+                                                          @"groupName":  @"groupName",
+                                                          @"count":      @"count",
+                                                          @"finishedCount": @"finishedCount",
+                                                          @"time":       @"time"
+                                                          }];
+    [_courseMapping2 addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"homework" toKeyPath:@"homework" withMapping:homeworkMapping]];
     [_courseMapping2 addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"child" toKeyPath:@"subList" withMapping:_courseMapping1]];
     
     _courseListResultMapping = [RKObjectMapping mappingForClass:[CourseListResult class]];
@@ -244,6 +260,28 @@
                                                                   @"message": @"message"
                                                                   }];
     [_courseListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"course" withMapping:_courseMapping2]];
+}
+
+-(void)setupHomeworkListMapping{
+    RKObjectMapping* homeworkMapping = [RKObjectMapping mappingForClass:[Homework class]];
+    [homeworkMapping addAttributeMappingsFromDictionary:@{
+                                                          @"id":         @"homeworkId",
+                                                          @"name":       @"name",
+                                                          @"userName":   @"userName",
+                                                          @"avatar":     @"avatar",
+                                                          @"groupId":    @"groupId",
+                                                          @"groupName":  @"groupName",
+                                                          @"count":      @"count",
+                                                          @"finishedCount": @"finishedCount",
+                                                          @"time":       @"time"
+                                                          }];
+    _homeworkListResultMapping = [RKObjectMapping mappingForClass:[HomeworkListResult class]];
+    [_homeworkListResultMapping addAttributeMappingsFromDictionary:@{
+                                                                   @"apicode": @"code",
+                                                                   @"message": @"message"
+                                                                   }];
+    [_homeworkListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"homeworkArray" withMapping:homeworkMapping]];
+
 }
 
 -(void)setupBannerList{

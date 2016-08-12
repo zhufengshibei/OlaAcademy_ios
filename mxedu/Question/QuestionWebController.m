@@ -10,6 +10,7 @@
 
 #import "CourseManager.h"
 #import "ExamManager.h"
+#import "HomeworkManager.h"
 #import "Question.h"
 #import "QuestionOption.h"
 #import "SysCommon.h"
@@ -56,9 +57,11 @@
     
     //友盟统计
     if(_type==1){
-        [MobClick event:@"enter_point"];
+        [MobClick event:@"enter_point_ios"];
     }else if(_type==2){
-        [MobClick event:@"enter_point"];
+        [MobClick event:@"enter_exam_ios"];
+    }else if(_type==3){
+        [MobClick event:@"enter_homework_ios"];
     }
     
     
@@ -109,6 +112,11 @@
                     [self setupQuestion:_questionArray Index:_currentIndex];
                 };
             }
+            resultVC.callbackBlock = ^{
+                if(_callbackBlock){
+                    _callbackBlock(); //刷新首页答题情况
+                }
+            };
             resultVC.answerArray = _correctnessArray;
             [self.navigationController pushViewController:resultVC animated:YES];
         }
@@ -218,7 +226,7 @@
         } Failure:^(NSError *error) {
             
         }];
-    }else{
+    }else if(_type==2){
         ExamManager *em = [[ExamManager alloc]init];
         [em fetchQuestionWithExamId:_objectId Success:^(QuestionListResult *result) {
             _questionArray = [NSMutableArray arrayWithArray:result.questionArray];
@@ -232,6 +240,22 @@
                 _correctnessArray = [NSMutableArray arrayWithCapacity:[_questionArray count]];
             }
         } Failure:^(NSError *error) {
+        }];
+    }else if(_type==3){
+        HomeworkManager *hm = [[HomeworkManager alloc]init];
+        [hm fetchQuestionWithHomeworkId:_objectId Success:^(QuestionListResult *result) {
+            _questionArray = [NSMutableArray arrayWithArray:result.questionArray];
+            if ([_questionArray count]>0) {
+                if([_questionArray count]==1){
+                    [nextButton setTitle:@"提交" forState:UIControlStateNormal];
+                }
+                [self loadExamplePage:_webView];
+                [self setupQuestion:_questionArray Index:_currentIndex];
+                subjectNoLabel.text = [NSString stringWithFormat:@"%d/%ld",_currentIndex+1,[_questionArray count]];
+                _correctnessArray = [NSMutableArray arrayWithCapacity:[_questionArray count]];
+            }
+        } Failure:^(NSError *error) {
+            
         }];
     }
     

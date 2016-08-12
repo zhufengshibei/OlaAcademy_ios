@@ -100,6 +100,7 @@
     _titleBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [_titleBtn setFrame:CGRectMake(0, 0, 50, 20)];
     [_titleBtn setTitle:@"数学" forState:UIControlStateNormal];
+    _titleBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
     [_titleBtn setImage:[UIImage imageNamed:@"ic_pulldown"] forState:UIControlStateNormal];
     [_titleBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -20, 0, 20)];
     [_titleBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 30, 0, -30)];

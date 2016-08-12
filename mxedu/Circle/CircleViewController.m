@@ -41,12 +41,12 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden = NO;
+    [self setupNavBar];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setupNavBar];
     [self setupRightButton];
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-100)];
@@ -77,6 +77,7 @@
     _titleBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [_titleBtn setFrame:CGRectMake(0, 0, 60, 20)];
     [_titleBtn setTitle:@"欧拉圈" forState:UIControlStateNormal];
+    _titleBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
     [_titleBtn setImage:[UIImage imageNamed:@"ic_pulldown"] forState:UIControlStateNormal];
     [_titleBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -20, 0, 20)];
     [_titleBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 40, 0, -40)];
@@ -135,9 +136,9 @@
     SAFE_ARC_RELEASE(popover); _popover=nil;
     
     //the controller we want to present as a popover
-    PopContentTabeVIew *controller = [[PopContentTabeVIew alloc] initWithStyle:UITableViewStylePlain];
-    controller.delegate = self;
-    _popover = [[PopViewController alloc] initWithViewController:controller];
+    PopContentTabeVIew *popview = [[PopContentTabeVIew alloc] initWithStyle:UITableViewStylePlain];
+    popview.delegate = self;
+    _popover = [[PopViewController alloc] initWithViewController:popview];
     _popover.tint = FPPopoverWhiteTint;
     _popover.keyboardHeight = 0;
     

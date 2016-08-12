@@ -31,6 +31,10 @@
 #import "DownloadManager.h"
 
 #import "PayManager.h"
+#import "YzdHUDBackgroundView.h"
+#import "YzdHUDLabel.h"
+#import "YzdHUDImageView.h"
+#import "YzdHUDIndicator.h"
 
 @interface CourSectionViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,ShareSheetDelegate,UMSocialUIDelegate>
 
@@ -155,6 +159,12 @@
         
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
         delegate.vc = nil;
+        
+        //移除提示视图，否则影响下拉列表
+        [[YzdHUDBackgroundView shareHUDView] removeFromSuperview];
+        [[YzdHUDLabel shareHUDView] removeFromSuperview];
+        [[YzdHUDImageView shareHUDView] removeFromSuperview];
+        [[YzdHUDIndicator shareHUDView] removeFromSuperview];
         
         [self.navigationController popViewControllerAnimated:YES];
     }

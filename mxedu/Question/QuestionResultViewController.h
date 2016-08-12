@@ -13,7 +13,9 @@
 @property (nonatomic) NSArray *answerArray;
 @property (nonatomic) NSString *objectId;
 @property (nonatomic) NSString *url; //教材购买链接
-@property (nonatomic) int type; // 1课程 2 题库
+@property (nonatomic) int type; // 1课程 2 题库 3作业
 @property (nonatomic, strong) void (^analysisCallback)();
+
+@property (nonatomic) void(^callbackBlock)(); //答题完成刷新答题情况
 
 @end

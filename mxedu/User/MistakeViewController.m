@@ -270,7 +270,7 @@
     if (am.isAuthenticated) {
         CourseManager *cm = [[CourseManager alloc]init];
         NSString *answerJson = [self jsonStringFromDictionary];
-        [cm submitQuestionAnswerWithId:am.userInfo.userId answer:answerJson type:@"1" Success:^(QuestionListResult *result) {
+        [cm submitQuestionAnswerWithId:am.userInfo.userId answer:answerJson type:@"1" Success:^(CommonResult *result) {
             
         } Failure:^(NSError *error) {
             

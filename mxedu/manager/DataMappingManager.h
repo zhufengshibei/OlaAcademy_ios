@@ -32,6 +32,7 @@
 @property (nonatomic, strong, readonly) RKObjectMapping* bannerListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* examListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* questionListResultMapping;
+@property (nonatomic, strong, readonly) RKObjectMapping* homeworkListResultMapping;
 
 @property (nonatomic, strong, readonly) RKObjectMapping* orgListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* teacherListResultMapping;

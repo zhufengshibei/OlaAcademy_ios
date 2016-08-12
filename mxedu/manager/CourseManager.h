@@ -170,7 +170,7 @@
 -(void)submitQuestionAnswerWithId:(NSString*)userId
                            answer:(NSString*)answer
                              type:(NSString*)type
-                          Success:(void(^)(QuestionListResult *result))success
+                          Success:(void(^)(CommonResult *result))success
                           Failure:(void(^)(NSError* error))failure;
 
 /**
