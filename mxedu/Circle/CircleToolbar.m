@@ -68,9 +68,7 @@
     if (_delegate) {
         [_delegate didClickLove:_circle];
     }
-    NSString *selectText =[NSString stringWithFormat:@"%d",button.titleLabel.text.intValue + 1];
     [button setImage:[UIImage imageNamed:@"contributeDingClick"] forState:UIControlStateDisabled];
-    [button setTitle:selectText forState:UIControlStateDisabled];
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
     [self setupAddone:CGRectMake(button.center.x, button.center.y*0.3,20, 8)];
     [self.repostsBtn setImage:[UIImage imageNamed:@"contributeShareN"] forState:UIControlStateDisabled];

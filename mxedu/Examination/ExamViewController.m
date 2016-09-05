@@ -39,7 +39,7 @@
 
 @property (nonatomic) NSArray *examArray;
 
-@property (nonatomic) int payStatus; //0 iap支付 1 支付宝 微信支付
+@property (nonatomic) ThirdPay *thirdPay; //用于判断现实IAP还是微信支付宝
 
 @end
 
@@ -88,8 +88,8 @@
 // 后台控制是否显示支付相关功能
 -(void)fetchPayModuleStatus{
     PayManager *pm = [[PayManager alloc]init];
-    [pm fetchPayModuleStatusSuccess:^(StatusResult *result) {
-        _payStatus = result.status;
+    [pm fetchPayModuleStatusSuccess:^(ThirdPayResult *result) {
+        _thirdPay = result.thirdPay;
     } Failure:^(NSError *error) {
         
     }];
@@ -181,7 +181,7 @@
 
 -(void)fetchExamList{
     NSString *userId = @"";
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
         userId = am.userInfo.userId;
     }
@@ -327,8 +327,9 @@
 
 #pragma alertview delegate
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     if (buttonIndex==1) {
-        if (_payStatus==0) {
+        if ([_thirdPay.version isEqualToString:[infoDictionary objectForKey:@"CFBundleShortVersionString"]]&&[_thirdPay.thirdPay isEqualToString:@"0"]) {
             IAPVIPController *iapVC =[[IAPVIPController alloc]init];
             iapVC.isSingleView = 1;
             iapVC.callbackBlock = ^{

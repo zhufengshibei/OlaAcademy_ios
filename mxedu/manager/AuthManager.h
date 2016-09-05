@@ -14,7 +14,9 @@
 @property (nonatomic, assign, readonly) BOOL isAuthenticated;
 @property (nonatomic, strong, readonly) User* userInfo;
 
--(void)load;
++ (instancetype)sharedInstance;
+
+- (void)load;
 
 - (void)authWithMobile:(NSString*)mobile
               password:(NSString*)psd

@@ -17,6 +17,10 @@
 #import "LocationResult.h"
 #import "SysCommon.h"
 
+#import "Banner.h"
+#import "HomeDataList.h"
+#import "HomeListResult.h"
+
 #import "Course.h"
 #import "CourseListResult.h"
 #import "CoursePoint.h"
@@ -26,6 +30,9 @@
 #import "Question.h"
 #import "QuestionOption.h"
 #import "QuestionListResult.h"
+
+#import "Group.h"
+#import "GroupListResult.h"
 
 #import "Examination.h"
 #import "ExamListRsult.h"
@@ -62,8 +69,12 @@
 #import "AliPayInfo.h"
 #import "AliPayResult.h"
 
+#import "ThirdPay.h"
+#import "ThirdPayResult.h"
+
 #import "OlaCircle.h"
 #import "VideoHistoryResult.h"
+#import "CircleDetailResult.h"
 #import "StatisticsListResult.h"
 
 #import "Comment.h"
@@ -73,6 +84,7 @@
 #import "MessageListResult.h"
 #import "MessageUnreadResult.h"
 
+#import "Consult.h"
 #import "HomeworkListResult.h"
 
 @implementation DataMappingManager
@@ -105,8 +117,9 @@
     [self setupUserMappings];
     [self setupUploadMappings];
     [self setupLoactionResultMapping];
-    
+    [self setupHomeDataListMapping];
     [self setupCourseListMapping];
+    [self setupGroupListMapping];
     [self setupKeywordListMapping];
     [self setupVideoInfoMapping];
     [self setupVideoBoxMapping];
@@ -124,10 +137,12 @@
     [self setupPayReqResultMapping];
     [self setupAliPayResultMapping];
     [self setupVideoHistoryListMapping];
+    [self setupCircleDetailMapping];
     [self setupCommentListMapping];
     [self setupStatisticsListMapping];
     [self setupBannerList];
     [self setupStatusMapping];
+    [self setupThirdPayResultMapping];
     [self setupMessageListMapping];
     [self setupUnreadMessageMapping];
 }
@@ -143,6 +158,7 @@
                                                           @"avator":     @"avatar",
                                                           @"age":        @"age",
                                                           @"sex":        @"sex",
+                                                          @"isActive":   @"isActive",
                                                           @"sign":       @"signature"
                                                           }];
     
@@ -172,6 +188,7 @@
                                                           @"avator":   @"avatar",
                                                           @"local":      @"local",
                                                           @"phone":    @"phone",
+                                                          @"isActive": @"isActive",
                                                           @"vipTime":    @"vipTime",
                                                           @"sign":    @"signature"
                                                           }];
@@ -208,6 +225,73 @@
                                                                       @"message": @"message"
                                                                       }];
     [_loacationResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result_data" toKeyPath:@"locationArray" withMapping:_locationMapping]];
+}
+
+-(void)setupHomeDataListMapping{
+    RKObjectMapping *bannerMapping = [RKObjectMapping mappingForClass:[Banner class]];
+    [bannerMapping addAttributeMappingsFromDictionary:@{
+                                                        @"id":         @"bannerId",
+                                                        @"name":       @"name",
+                                                        @"objectId":   @"objectId",
+                                                        @"type":       @"type",
+                                                        @"pic":        @"pic",
+                                                        @"url":        @"url",
+                                                        }];
+    
+    RKObjectMapping *consultMapping = [RKObjectMapping mappingForClass:[Consult class]];
+    [consultMapping addAttributeMappingsFromDictionary:@{
+                                                        @"id":         @"consultId",
+                                                        @"content":    @"content",
+                                                        @"number":     @"number",
+                                                        @"time":       @"time",
+                                                        }];
+    
+    RKObjectMapping* commodityMapping = [RKObjectMapping mappingForClass:[Commodity class]];
+    [commodityMapping addAttributeMappingsFromDictionary:@{
+                                                           @"id":           @"comId",
+                                                           @"name":         @"name",
+                                                           @"detail":       @"detail",
+                                                           @"org":      @"org",
+                                                           @"attentionnum": @"attentionnum",
+                                                           @"paynum":    @"paynum",
+                                                           @"price":     @"price",
+                                                           @"status":    @"status",
+                                                           @"type":      @"type",
+                                                           @"totaltime":    @"totaltime",
+                                                           @"videonum":    @"videonum",
+                                                           @"suitto":    @"suitto",
+                                                           @"leanstage":    @"leanstage",
+                                                           @"image":        @"image",
+                                                           @"url":        @"url"
+                                                           }];
+    
+    RKObjectMapping* courseMapping = [RKObjectMapping mappingForClass:[Course class]];
+    [courseMapping addAttributeMappingsFromDictionary:@{
+                                                          @"id":         @"courseId",
+                                                          @"name":       @"name",
+                                                          @"pid":        @"pid",
+                                                          @"profile":    @"profile",
+                                                          @"address":    @"address",
+                                                          @"type":       @"type",
+                                                          @"subNum":     @"subNum",
+                                                          @"subAllNum":  @"subAllNum",
+                                                          @"playcount":  @"playcount",
+                                                          @"totalTime":  @"totalTime"
+                                                          }];
+    
+    RKObjectMapping *homeDataListMapping = [RKObjectMapping mappingForClass:[HomeDataList class]];
+    [homeDataListMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"bannerList" toKeyPath:@"bannerArray" withMapping:bannerMapping]];
+    [homeDataListMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"questionList" toKeyPath:@"consultArray" withMapping:consultMapping]];
+    [homeDataListMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"goodsList" toKeyPath:@"comodityArray" withMapping:commodityMapping]];
+    [homeDataListMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"courseList" toKeyPath:@"courseArray" withMapping:courseMapping]];
+    
+    _homeListResultMapping = [RKObjectMapping mappingForClass:[HomeListResult class]];
+    [_homeListResultMapping addAttributeMappingsFromDictionary:@{
+                                                                   @"apicode": @"code",
+                                                                   @"message": @"message"
+                                                                   }];
+    [_homeListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"homeData" withMapping:homeDataListMapping]];
+
 }
 
 -(void)setupCourseListMapping{
@@ -260,6 +344,26 @@
                                                                   @"message": @"message"
                                                                   }];
     [_courseListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"course" withMapping:_courseMapping2]];
+}
+
+-(void)setupGroupListMapping{
+    RKObjectMapping* groupMapping = [RKObjectMapping mappingForClass:[Group class]];
+    [groupMapping addAttributeMappingsFromDictionary:@{
+                                                       @"id":         @"groupId",
+                                                       @"name":       @"name",
+                                                       @"profile":    @"profile",
+                                                       @"avatar":     @"avatar",
+                                                       @"createUser": @"createUserId",
+                                                       @"isMember":   @"isMember",
+                                                       @"number":     @"number",
+                                                       @"time":       @"time"
+                                                       }];
+    _groupListResultMapping = [RKObjectMapping mappingForClass:[GroupListResult class]];
+    [_groupListResultMapping addAttributeMappingsFromDictionary:@{
+                                                                  @"apicode": @"code",
+                                                                  @"message": @"message"
+                                                                  }];
+    [_groupListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"groupArray" withMapping:groupMapping]];
 }
 
 -(void)setupHomeworkListMapping{
@@ -324,8 +428,8 @@
     
     _videoInfoResultMapping = [RKObjectMapping mappingForClass:[VideoInfoResult class]];
     [_videoInfoResultMapping addAttributeMappingsFromDictionary:@{
-                                                                         @"apicode": @"code",
-                                                                         @"message": @"message"
+                                                                @"apicode": @"code",
+                                                                @"message": @"message"
                                                                          }];
     [_videoInfoResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"video" withMapping:_videoMapping]];
 }
@@ -530,6 +634,22 @@
     [_commodityListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"commodityArray" withMapping:commodityMapping]];
 }
 
+-(void)setupThirdPayResultMapping{
+    
+    RKObjectMapping* thirdPayMapping = [RKObjectMapping mappingForClass:[ThirdPay class]];
+    [thirdPayMapping addAttributeMappingsFromDictionary:@{
+                                                           @"version":      @"version",
+                                                           @"thirdPay":     @"thirdPay"
+                                                           }];
+    
+    _thirdPayResultMapping = [RKObjectMapping mappingForClass:[ThirdPayResult class]];
+    [_thirdPayResultMapping addAttributeMappingsFromDictionary:@{
+                                                               @"apicode": @"code",
+                                                               @"message": @"message"
+                                                               }];
+    [_thirdPayResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"thirdPay" withMapping:thirdPayMapping]];
+}
+
 -(void)setupStatusMapping{
     
     _statusResultMapping = [RKObjectMapping mappingForClass:[StatusResult class]];
@@ -650,6 +770,31 @@
                                                                     @"message": @"message"
                                                                     }];
     [_historyListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"historyArray" withMapping:_historyMapping]];
+}
+
+-(void)setupCircleDetailMapping{
+    RKObjectMapping* circleMapping = [RKObjectMapping mappingForClass:[OlaCircle class]];
+    [circleMapping addAttributeMappingsFromDictionary:@{
+                                                          @"id":       @"circleId",
+                                                          @"userName": @"userName",
+                                                          @"userAvatar": @"userAvatar",
+                                                          @"videoId": @"videoId",
+                                                          @"courseId": @"courseId",
+                                                          @"title": @"title",
+                                                          @"content": @"content",
+                                                          @"imageGids": @"imageGids",
+                                                          @"location": @"location",
+                                                          @"praiseNumber": @"praiseNumber",
+                                                          @"time": @"time",
+                                                          @"type": @"type"
+                                                          }];
+    _circleDetailResultMapping = [RKObjectMapping mappingForClass:[CircleDetailResult class]];
+    [_circleDetailResultMapping addAttributeMappingsFromDictionary:@{
+                                                                    @"message":   @"message",
+                                                                    @"apicode":   @"code"
+                                                                    }];
+    [_circleDetailResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"circleDetail" withMapping:circleMapping]];
+    
 }
 
 -(void)setupCommentListMapping{

@@ -116,8 +116,8 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
 // 后台控制是否显示支付相关功能
 -(void)fetchPayModuleStatus{
     PayManager *pm = [[PayManager alloc]init];
-    [pm fetchPayModuleStatusSuccess:^(StatusResult *result) {
-        [self setupViewPager:result.status];
+    [pm fetchPayModuleStatusSuccess:^(ThirdPayResult *result) {
+        [self setupViewPager:result.thirdPay];
     } Failure:^(NSError *error) {
         
     }];
@@ -152,7 +152,7 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
 }
 
 
-- (void)setupViewPager:(int)payStatus
+- (void)setupViewPager:(ThirdPay*)thirdPay
 {
     _scrollView = [[UIScrollView alloc]init];
     [self.view addSubview:_scrollView];
@@ -166,7 +166,8 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
     courseVC = [[CourseBuySubController alloc] init];
     [self addChildViewController:courseVC];
     
-    if(payStatus==0){
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    if ([thirdPay.version isEqualToString:[infoDictionary objectForKey:@"CFBundleShortVersionString"]]&&[thirdPay.thirdPay isEqualToString:@"0"]){
         iapVipVC = [[IAPVIPController alloc] init];
         __weak UserViewController* wself = self;
         iapVipVC.callbackBlock = ^{
@@ -234,7 +235,7 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
     };
     editViewCon.hidesBottomBarWhenPushed = YES;
     // 判断是否登录
-    AuthManager *authManager = [[AuthManager alloc]init];
+    AuthManager *authManager = [AuthManager sharedInstance];
     if(authManager.isAuthenticated){
         [self.navigationController pushViewController:editViewCon animated:YES];
     }else {
@@ -245,7 +246,7 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
 
 // 查看报名历史
 -(void)showEnrollIn{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
         MyEnrollViewController *myEnrollVC = [[MyEnrollViewController alloc]init];
         myEnrollVC.hidesBottomBarWhenPushed = YES;

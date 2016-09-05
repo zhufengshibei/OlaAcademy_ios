@@ -34,7 +34,6 @@
 @property (nonatomic,strong)NSString *toUserId; //被回复人id
 
 @property (assign, nonatomic) int tapIndex;
-@property (nonatomic) OlaCircle *channelPost;
 @property (nonatomic,assign) NSIndexPath *indexPath;
 @property (nonatomic) OlaCircle *sharedCircle;
 
@@ -45,15 +44,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"欧拉分享";
+    self.title = @"详情";
     [self setupBackButton];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = RGBCOLOR(224, 224, 224);
     
-    [self setupInputView];
     
-    [self loadCommentData];
+    if (_circleFrame) {
+        [self setupInputView];
+        [self loadCommentData];
+    }else{
+        [self loadCircleDetail];
+    }
+    
     
     self.tapIndex = 0;
     
@@ -72,7 +76,7 @@
 - (void)setupBackButton
 {
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back_white"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
     [backBtn sizeToFit];
     [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
@@ -99,7 +103,7 @@
         if (wself.toUserId==nil) {
             wself.toUserId = @"";
         }
-        AuthManager *am = [[AuthManager alloc]init];
+        AuthManager *am = [AuthManager sharedInstance];
         if (!am.isAuthenticated) {
             UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"提示" message:@"您尚未登录" delegate:wself cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
@@ -154,6 +158,20 @@
 
 
 #pragma method
+
+-(void)loadCircleDetail{
+    CircleManager *cm = [[CircleManager alloc] init];
+    [cm fetchCircleDetailWithId:_postId Success:^(CircleDetailResult *result) {
+        CircleFrame *frame = [[CircleFrame alloc]init];
+        frame.result = result.circleDetail;
+        self.circleFrame = frame;
+        
+        [self setupInputView];
+        [self loadCommentData];
+    } Failure:^(NSError *error) {
+        
+    }];
+}
 
 -(void)loadCommentData{
     CommentManager *cm = [[CommentManager alloc] init];
@@ -263,7 +281,7 @@
     UITableViewCellEditingStyle result = UITableViewCellEditingStyleNone;//默认没有编辑风格
     if (indexPath.section==1) {
         Comment *comment = self.datas[indexPath.row];
-        AuthManager *am = [[AuthManager alloc]init];
+        AuthManager *am = [AuthManager sharedInstance];
         //        if ([comment.userId isEqualToString:am.accessToken.userId]||_statusFrame.result.isAllowed) {
         //            result = UITableViewCellEditingStyleDelete;//设置编辑风格为删除风格
         //        }
@@ -291,7 +309,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];// 取消选中
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated && indexPath.section==1) {
          Comment *comment = self.datas[indexPath.row];
         if (![am.userInfo.userId isEqualToString:comment.userId]) {
@@ -385,10 +403,14 @@
 // 点赞
 -(void) didClickLove:(OlaCircle *)circle{
     CircleManager *cm = [[CircleManager alloc]init];
-    [cm praiseCirclePostWithCircle:circle.circleId Success:^(CommonResult *result) {\
+    [cm praiseCirclePostWithCircle:circle.circleId Success:^(CommonResult *result) {
         OlaCircle *circle = _circleFrame.result;
         if (_successFunc) {
             _successFunc(circle,1);
+        }else{
+            // 首页进入详情
+            circle.praiseNumber = [NSString stringWithFormat:@"%d",[circle.praiseNumber intValue]+1];
+            _circleFrame.result = circle;
         }
         [_tableView reloadData];
     } Failure:^(NSError *error) {
@@ -412,7 +434,7 @@
 }
 
 -(void) didClickComment:(OlaCircle *)circle{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated) {
         UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"提示" message:@"您尚未登录" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];

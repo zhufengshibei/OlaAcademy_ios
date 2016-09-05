@@ -22,6 +22,7 @@
 -(void)fetchHomeworkListWithHomeworkId:(NSString*)homeworkId
                               PageSize:(NSString*)pageSize
                                 UserId:(NSString*)userId
+Type:(NSString*)type
                                Success:(void(^)(HomeworkListResult *result))success
                                Failure:(void(^)(NSError* error))failure;
 

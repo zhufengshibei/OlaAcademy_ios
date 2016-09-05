@@ -20,4 +20,7 @@
 @property (nonatomic) NSString *finishedCount;
 @property (nonatomic) NSString *time;
 
+@property (nonatomic, copy) NSString *month;
+@property (nonatomic, copy) NSString *day;
+
 @end

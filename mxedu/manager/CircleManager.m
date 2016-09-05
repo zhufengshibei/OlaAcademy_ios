@@ -93,6 +93,40 @@
 }
 
 /**
+ *  帖子详情
+ *
+ *  @param success <#success description#>
+ *  @param failure <#failure description#>
+ */
+-(void)fetchCircleDetailWithId:(NSString*)circleId
+                       Success:(void(^)(CircleDetailResult *result))success
+                       Failure:(void(^)(NSError* error))failure{
+    DataMappingManager *dm = GetDataManager();
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.circleDetailResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
+    // 通过shareManager 共享 baseurl及请求头等
+    RKObjectManager* om = [RKObjectManager sharedManager];
+    
+    [om addResponseDescriptor:responseDescriptor];
+    // 采用post方式，get方式可能产生中文乱码
+    [om postObject:nil path:@"/ola/circle/queryCircleDetail" parameters:@{@"circleId": circleId
+                                                                         }
+           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+               if ([mappingResult.firstObject isKindOfClass:[CircleDetailResult class]]) {
+                   CircleDetailResult *result = mappingResult.firstObject;
+                   if (success != nil) {
+                       success(result);
+                   }
+               }
+               
+           }
+           failure:^(RKObjectRequestOperation *operation, NSError *error) {
+               if (failure != nil) {
+                   failure(error);
+               }
+           }];
+}
+
+/**
  *  欧拉圈帖子点赞
  *
  *  @param success <#success description#>

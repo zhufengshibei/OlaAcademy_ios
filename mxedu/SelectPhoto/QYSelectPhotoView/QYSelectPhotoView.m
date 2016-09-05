@@ -396,7 +396,7 @@ static CGFloat const kSpace = 15;
         UIButton * backButton = [UIButton buttonWithType:UIButtonTypeCustom];
         backButton.backgroundColor = [UIColor clearColor];
         backButton.frame = CGRectMake(20, 28, 20, 20);
-        [backButton setBackgroundImage:[UIImage imageNamed:@"ic_back_white"] forState:UIControlStateNormal];
+        [backButton setBackgroundImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
         [backButton addTarget:self action:@selector(backFromPhotoViewButton) forControlEvents:UIControlEventTouchUpInside];
         [_navBarView addSubview:backButton];
         

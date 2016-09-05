@@ -20,6 +20,7 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* containerViewBottomConstraint;
 
 @property (nonatomic,strong) CircleFrame *circleFrame;
+
 @property (nonatomic,strong) NSString *postId;
 
 @property (nonatomic,strong) NSString *gdId; // 发帖人或回复人的骨典号

@@ -40,7 +40,7 @@
 
 @property (nonatomic) UIView *playView;
 
-@property (nonatomic) int payStatus; //0 iap支付 1 支付宝 微信支付
+@property (nonatomic) ThirdPay *thirdPay; //iap支付 还是 支付宝 微信支付
 
 @end
 
@@ -104,15 +104,19 @@
 // 后台控制是否显示支付相关功能
 -(void)fetchPayModuleStatus{
     PayManager *pm = [[PayManager alloc]init];
-    [pm fetchPayModuleStatusSuccess:^(StatusResult *result) {
-        _payStatus = result.status;
+    [pm fetchPayModuleStatusSuccess:^(ThirdPayResult *result) {
+        _thirdPay = result.thirdPay;
     } Failure:^(NSError *error) {
         
     }];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    self.navigationController.navigationBar.hidden = YES;
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    self.navigationController.navigationBar.hidden = NO;
 }
 
 -(void)setupPlayerView{
@@ -265,7 +269,7 @@
 
 -(void)fetchCommodityStatus{
     CommodityManager *cm = [[CommodityManager alloc]init];
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
         [cm fetchCommodityStautsWithGoodsId:_objectId UserId:am.userInfo.userId Success:^(StatusResult *result) {
             if (result.status==1||[_commodity.price isEqualToString:@"0"]) {
@@ -285,7 +289,7 @@
  *  获取课程下的所有章节视频
  */
 -(void)fetchSectionVideo{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     NSString *userId = @"";
     if (am.isAuthenticated) {
         userId = am.userInfo.userId;
@@ -316,7 +320,7 @@
 // 成套视频
 -(void)fetchCommodityVideoList{
     NSString *userId = @"";
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
         userId = am.userInfo.userId;
     }
@@ -352,7 +356,7 @@
 }
 
 -(void)collectCourse{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated) {
         return;
     }
@@ -376,7 +380,7 @@
 }
 
 -(void)downloadVideo{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated) {
         [self showLoginView];
         return;
@@ -487,7 +491,7 @@
             [self playWithUrl:videoInfo.address];
         }
     }else{
-        AuthManager *am =[[AuthManager alloc]init];
+        AuthManager *am = [AuthManager sharedInstance];
         if(!am.isAuthenticated)
         {
             [self showLoginView];
@@ -509,7 +513,8 @@
         }else if (alertView.tag == 1002) {
             [self.player.player.player pause];
             if(_type==1){
-                if (_payStatus==0) {
+                NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                if ([_thirdPay.version isEqualToString:[infoDictionary objectForKey:@"CFBundleShortVersionString"]]&&[_thirdPay.thirdPay isEqualToString:@"0"]){
                     IAPVIPController *iapVC =[[IAPVIPController alloc]init];
                     iapVC.isSingleView = 1;
                     iapVC.callbackBlock = ^{

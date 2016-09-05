@@ -142,7 +142,7 @@
 - (void)setupBackButton
 {
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back_white"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
     [backBtn sizeToFit];
     [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
@@ -156,7 +156,7 @@
 
 -(void)fetchWrongSubjectList{
     NSString *userId = @"";
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
         userId = am.userInfo.userId;
     }
@@ -266,7 +266,7 @@
 
 // 提交答案
 -(void)submitAnswerToServer{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
         CourseManager *cm = [[CourseManager alloc]init];
         NSString *answerJson = [self jsonStringFromDictionary];

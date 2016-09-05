@@ -50,7 +50,7 @@ NSMutableArray *provinces, *cities; // 本地plist中的地区信息
     [self setNavBar];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     
     userInfo = am.userInfo;
     
@@ -86,7 +86,7 @@ NSMutableArray *provinces, *cities; // 本地plist中的地区信息
 //    saveBtn.layer.borderWidth = 1.0;
 //    saveBtn.layer.cornerRadius = 4.5;
 //    saveBtn.layer.borderColor = [RGBCOLOR(01, 139, 232)CGColor];
-    [saveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [saveBtn setTitleColor:COMMONBLUECOLOR forState:UIControlStateNormal];
     [saveBtn setTitle:@"保存" forState:UIControlStateNormal];
     
     [saveBtn addTarget:self action:@selector(saveUserInfo) forControlEvents:UIControlEventTouchUpInside];
@@ -94,7 +94,7 @@ NSMutableArray *provinces, *cities; // 本地plist中的地区信息
     self.navigationItem.rightBarButtonItem = rightbtn;
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setBackgroundImage:[UIImage imageNamed:@"ic_back_white"] forState:UIControlStateNormal];
+    [backBtn setBackgroundImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
     [backBtn sizeToFit];
     [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     

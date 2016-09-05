@@ -60,7 +60,7 @@
     [self setupBackButton];
     
     isCheckedIn = NO;
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
         userInfo = am.userInfo;
         phoneText.text = userInfo.phone;
@@ -103,7 +103,7 @@
 - (void)setupBackButton
 {
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back_white"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
     [backBtn sizeToFit];
     [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     

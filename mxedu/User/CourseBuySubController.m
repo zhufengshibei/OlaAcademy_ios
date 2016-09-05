@@ -93,7 +93,7 @@
 
 -(void)fetchCourseVideo{
     CommodityManager *cm = [[CommodityManager alloc]init];
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
         [cm fetchBuyCommodityListWithUserId:am.userInfo.userId Success:^(CommodityListRsult *result) {
             commodityArray = result.commodityArray;

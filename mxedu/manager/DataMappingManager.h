@@ -28,11 +28,15 @@
 @property (nonatomic, strong, readonly) RKObjectMapping* userMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* userInfoResultMapping;
 
+@property (nonatomic, strong, readonly) RKObjectMapping* homeListResultMapping;
+
 @property (nonatomic, strong, readonly) RKObjectMapping* courseListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* bannerListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* examListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* questionListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* homeworkListResultMapping;
+
+@property (nonatomic, strong, readonly) RKObjectMapping* groupListResultMapping;
 
 @property (nonatomic, strong, readonly) RKObjectMapping* orgListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* teacherListResultMapping;
@@ -56,6 +60,7 @@
 @property (nonatomic, strong, readonly) RKObjectMapping* aliPayResultMapping;
 
 @property (nonatomic, strong, readonly) RKObjectMapping* historyListResultMapping;
+@property (nonatomic, strong, readonly) RKObjectMapping* circleDetailResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* statisticsListResultMapping;
 
 @property (nonatomic, strong, readonly) RKObjectMapping* commentListResultMapping;
@@ -63,6 +68,7 @@
 @property (nonatomic, strong, readonly) RKObjectMapping* unreadMessageResultMapping;
 
 @property (nonatomic, strong, readonly) RKObjectMapping* statusResultMapping;
+@property (nonatomic, strong, readonly) RKObjectMapping* thirdPayResultMapping;
 
 -(id)init;
 

@@ -10,7 +10,7 @@
 
 #import "PayReqResult.h"
 #import "AliPayResult.h"
-#import "StatusResult.h"
+#import "ThirdPayResult.h"
 #import "CommonResult.h"
 
 @interface PayManager : NSObject
@@ -18,7 +18,7 @@
 /**
  * 服务器控制是否显示支付相关功能
  */
--(void)fetchPayModuleStatusSuccess:(void(^)(StatusResult*))success
+-(void)fetchPayModuleStatusSuccess:(void(^)(ThirdPayResult*))success
                            Failure:(void(^)(NSError* error))failure;
 
 

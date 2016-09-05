@@ -42,7 +42,7 @@
 
 -(void)setupData{
     NSString *userId = @"";
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
         userId = am.userInfo.userId;
     }

@@ -78,9 +78,9 @@ BOOL uploadOrignalImage;
     
     [self setNavBar];
     
-    label = [[UILabel alloc]initWithFrame:CGRectMake(3, 5, 160, 20)];
+    label = [[UILabel alloc]initWithFrame:CGRectMake(3, 5, 180, 20)];
     label.enabled = NO;
-    label.text = @"说说您的备考经验";
+    label.text = @"说说您的备考问题／经验";
     label.font =  [UIFont systemFontOfSize:16];
     label.textColor = [UIColor blackColor];
     
@@ -190,7 +190,7 @@ BOOL uploadOrignalImage;
 - (void)setupBackButton
 {
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back_white"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
     [backBtn sizeToFit];
     [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
@@ -208,13 +208,13 @@ BOOL uploadOrignalImage;
 
 -(void)setNavBar
 {
-    [self.navigationItem setTitle:@"欧拉分享"];
+    [self.navigationItem setTitle:@"欧拉动态"];
     [self setupBackButton];
     
     //发布按钮
     rights=[UIButton buttonWithType:UIButtonTypeCustom];
     rights.frame=CGRectMake(0, 0, 40, 24);
-    [rights setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rights setTitleColor:COMMONBLUECOLOR forState:UIControlStateNormal];
     [rights setTitle:@"发布" forState:UIControlStateNormal];
     rights.titleLabel.font = LabelFont(28);
     
@@ -512,7 +512,7 @@ BOOL uploadOrignalImage;
 
 - (void)uploadByImageDatas:(NSArray*)imageDatas
 {
-    AuthManager* am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"警告" message:@"请先登录" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
@@ -560,7 +560,7 @@ BOOL uploadOrignalImage;
 }
 
 -(void)savePostInfo:(NSString*) lstPic{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     CircleManager* cm = [[CircleManager alloc]init];
     [cm addOlaCircleWithUserId:am.userInfo.userId Title:@"欧拉圈" content:editText.text imageGids:lstPic Location:locationString==nil?@"":locationString Type:@"2" Success:^(CommonResult *result) {
         if (_doneAction) {

@@ -10,6 +10,7 @@
 
 #import "CommonResult.h"
 #import "VideoHistoryResult.h"
+#import "CircleDetailResult.h"
 
 @interface CircleManager : NSObject
 
@@ -33,6 +34,16 @@
                                       Type:(NSString*)type
                                    Success:(void(^)(VideoHistoryResult *result))success
                                    Failure:(void(^)(NSError* error))failure;
+
+/**
+ *  帖子详情
+ *
+ *  @param success <#success description#>
+ *  @param failure <#failure description#>
+ */
+-(void)fetchCircleDetailWithId:(NSString*)circleId
+                       Success:(void(^)(CircleDetailResult *result))success
+                       Failure:(void(^)(NSError* error))failure;
 
 /**
  *  欧拉圈帖子点赞

@@ -53,7 +53,7 @@
 - (void)setupBackButton
 {
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back_white"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
     [backBtn sizeToFit];
     [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
@@ -96,7 +96,7 @@
     numberLabel.textColor = RGBCOLOR(143, 143, 143);
     [orderView addSubview:numberLabel];
     
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 80, 300, 30)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 80, SCREEN_WIDTH-10, 30)];
     titleLabel.text = [NSString stringWithFormat:@"购买商品：%@",_commodity.name];
     titleLabel.font = LabelFont(30);
     titleLabel.textColor = RGBCOLOR(143, 143, 143);
@@ -227,7 +227,7 @@
 
 // 服务器获取支付宝支付信息
 -(void)fetchAliPayInfo{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated) {
         [SVProgressHUD showInfoWithStatus:@"您尚未登录"];
         return;
@@ -253,7 +253,7 @@
 
 // 服务器获取微信支付信息
 -(void)fetchPayReqInfo{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated) {
         [SVProgressHUD showInfoWithStatus:@"您尚未登录"];
         return;

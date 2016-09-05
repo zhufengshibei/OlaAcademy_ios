@@ -60,7 +60,7 @@
 - (void)setupBackButton
 {
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back_white"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
     [backBtn sizeToFit];
     [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
@@ -73,7 +73,7 @@
 }
 
 -(void)setupData:(NSString*)messageId{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     MessageManager *mm = [[MessageManager alloc]init];
     [mm fetchMessageListWithMessageId:messageId UserId:am.userInfo.userId PageSize:@"20" Success:^(MessageListResult *result) {
         if ([messageId isEqualToString:@""]) {
@@ -90,7 +90,7 @@
 }
 
 -(void)updateReadStatus:(NSString*)messageIds Index:(NSInteger)index{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     MessageManager *mm = [[MessageManager alloc]init];
     [mm updateReadStatusWithUserId:am.userInfo.userId MessageIds:messageIds Success:^(CommonResult *result) {
         if (result.code==10000) {
@@ -132,6 +132,7 @@
         [self.navigationController pushViewController:bannerVC animated:YES];
     }else if ([message.type isEqualToString:@"4"]) {
         CommodityViewController *commodityVC = [[CommodityViewController alloc]init];
+        commodityVC.currentType = @"1";
         [self.navigationController pushViewController:commodityVC animated:YES];
     }
 }

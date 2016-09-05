@@ -68,7 +68,7 @@
     self.navigationController.navigationBarHidden = NO;
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back_white"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
     [backBtn sizeToFit];
     [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
@@ -338,7 +338,7 @@
 
 // 服务器获取支付宝支付信息
 -(void)fetchAliPayInfo{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated) {
         LoginViewController* loginViewCon = [[LoginViewController alloc] init];
         UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:loginViewCon];
@@ -367,7 +367,7 @@
 
 // 服务器获取微信支付信息
 -(void)fetchPayReqInfo{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated) {
         LoginViewController* loginViewCon = [[LoginViewController alloc] init];
         UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:loginViewCon];
@@ -390,7 +390,7 @@
 }
 
 -(void)obtainVIP{
-    if ([[AuthManager alloc]init].isAuthenticated) {
+    if ([AuthManager sharedInstance].isAuthenticated) {
         return;
     }
     LoginViewController* loginViewCon = [[LoginViewController alloc] init];
@@ -400,7 +400,7 @@
 }
 
 -(void)updateVIPState{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
         [obtainVIP setTitle:@"已领取" forState:UIControlStateNormal];
         obtainVIP.backgroundColor = RGBCOLOR(225, 225, 225);

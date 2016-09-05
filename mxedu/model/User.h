@@ -19,6 +19,7 @@
 @property (nonatomic, copy) NSString* phone;
 @property (nonatomic, copy) NSString* email;
 @property (nonatomic, copy) NSString* local;
+@property (nonatomic, copy) NSString* isActive; //1 学生 2 老师
 @property (nonatomic, copy) NSString* vipTime;
 
 @end

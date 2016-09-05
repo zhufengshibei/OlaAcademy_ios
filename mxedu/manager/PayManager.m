@@ -15,18 +15,18 @@
 /**
  * 服务器控制是否显示支付相关功能
  */
--(void)fetchPayModuleStatusSuccess:(void(^)(StatusResult*))success
+-(void)fetchPayModuleStatusSuccess:(void(^)(ThirdPayResult*))success
                            Failure:(void(^)(NSError* error))failure{
     DataMappingManager *dm = GetDataManager();
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.statusResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.thirdPayResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
     // 通过shareManager 共享 baseurl及请求头等
     RKObjectManager* om = [RKObjectManager sharedManager];
     
     [om addResponseDescriptor:responseDescriptor];
-    [om postObject:nil path:@"/ola/pay/showPayModule" parameters:nil
+    [om postObject:nil path:@"/ola/pay/showPayModuleWithVersion" parameters:nil
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-               if ([mappingResult.firstObject isKindOfClass:[StatusResult class]]) {
-                   StatusResult *result = mappingResult.firstObject;
+               if ([mappingResult.firstObject isKindOfClass:[ThirdPayResult class]]) {
+                   ThirdPayResult *result = mappingResult.firstObject;
                    if (success != nil) {
                        success(result);
                    }

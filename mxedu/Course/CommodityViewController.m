@@ -21,7 +21,6 @@
 @property (nonatomic) UIButton *titleBtn;
 
 @property (nonatomic) CommodityFilterView *filterView;// 遮罩筛选视图
-@property (nonatomic) NSString *currentType;
 
 @property (nonatomic) UITableView *tableView;
 
@@ -41,9 +40,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setupNavBar];
+    //[self setupNavBar];
     
-    _currentType = @"1";
+    [self setupBackButton];
+    if([_currentType isEqualToString: @"1"]){
+        self.title = @"精品课程";
+    }else{
+        self.title = @"资料库";
+    }
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-UI_NAVIGATION7_BAR_HEIGHT) style:UITableViewStylePlain];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -62,6 +66,20 @@
     [self fetchCommodityList];
 }
 
+- (void)setupBackButton
+{
+    self.navigationController.navigationBarHidden = NO;
+    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
+    [backBtn sizeToFit];
+    [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+}
+
+
 -(void)setupNavBar{
     _titleBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     _titleBtn.transform = CGAffineTransformMakeScale(-1.0, 1.0);
@@ -74,15 +92,13 @@
     self.navigationItem.titleView = _titleBtn;
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back_white"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
     [backBtn sizeToFit];
     [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     self.navigationItem.leftBarButtonItem = backButtonItem;
 }
-
-
 
 // 筛选视图
 -(void)showFilterView:(UIButton*)btn{

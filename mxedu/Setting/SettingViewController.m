@@ -51,7 +51,7 @@
     [self setupEvaluationSection];
     [self setupAboutSection];
     
-    if ([[AuthManager alloc]init].isAuthenticated) {
+    if ([AuthManager sharedInstance].isAuthenticated) {
         [self setupLogout];
     }
 }
@@ -62,7 +62,7 @@
     self.navigationController.navigationBar.translucent = NO;
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back_white"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
     [backBtn sizeToFit];
     [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
@@ -303,7 +303,7 @@
 }
 
 -(void)logout{
-    AuthManager *authManager = [[AuthManager alloc]init];
+    AuthManager *authManager = [AuthManager sharedInstance];
     [authManager logoutSuccess:^{
         if (_logoutSuccess) {
             _logoutSuccess();

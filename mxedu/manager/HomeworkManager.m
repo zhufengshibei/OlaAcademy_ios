@@ -15,12 +15,14 @@
 /**
  *  作业列表
  *
+ *  @param type 1 学生 2 老师
  *  @param success <#success description#>
  *  @param failure <#failure description#>
  */
 -(void)fetchHomeworkListWithHomeworkId:(NSString*)homeworkId
                               PageSize:(NSString*)pageSize
                                 UserId:(NSString*)userId
+                                  Type:(NSString*)type
                                Success:(void(^)(HomeworkListResult *result))success
                                Failure:(void(^)(NSError* error))failure{
     DataMappingManager *dm = GetDataManager();
@@ -33,7 +35,8 @@
     [om postObject:nil path:@"/ola/homework/getHomeworkList"
         parameters:@{@"homeworkId": homeworkId,
                      @"pageSize": pageSize,
-                     @"userId": userId
+                     @"userId": userId,
+                     @"type": type
                      }
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                if ([mappingResult.firstObject isKindOfClass:[HomeworkListResult class]]) {

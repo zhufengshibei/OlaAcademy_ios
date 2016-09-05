@@ -59,7 +59,7 @@
     self.navigationController.navigationBarHidden = NO;
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back_white"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
     [backBtn sizeToFit];
     [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
@@ -219,7 +219,7 @@
 }
 
 -(void)pay{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated) {
         LoginViewController* loginViewCon = [[LoginViewController alloc] init];
         UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:loginViewCon];
@@ -326,7 +326,7 @@
     
     [SVProgressHUD dismiss];
     
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     PayManager *pm = [[PayManager alloc]init];
     
     NSString * productIdentifier = [[NSString alloc] initWithData:transaction.transactionReceipt encoding:NSUTF8StringEncoding];

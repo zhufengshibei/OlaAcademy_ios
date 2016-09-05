@@ -32,7 +32,7 @@
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) NSMutableArray *dataArray;
 @property (nonatomic) NSMutableArray *circleFrames;
-@property (assign, nonatomic) int tapIndex;
+
 @property (nonatomic) OlaCircle *sharedCircle;
 
 @end
@@ -41,7 +41,11 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden = NO;
-    [self setupNavBar];
+    if(_isFromHomePage==0){
+        [self setupNavBar];
+    }else{
+        [self setupBackButton];
+    }
 }
 
 - (void)viewDidLoad {
@@ -49,7 +53,7 @@
     
     [self setupRightButton];
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-100)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-60)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
@@ -67,10 +71,13 @@
         }
     }];
     
-    _type = @"";
-    [self setupData:@""];
+    if (_isFromHomePage==1) {
+        _type = @"2";
+    }else{
+        _type = @"";
+    }
     
-    self.tapIndex = 0;
+    [self setupData:@""];
 }
 
 -(void)setupNavBar{
@@ -86,6 +93,22 @@
     self.navigationItem.titleView = _titleBtn;
 }
 
+- (void)setupBackButton
+{
+    self.title = @"欧拉问答";
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
+    [backBtn sizeToFit];
+    [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+}
+
+-(void)backButtonClicked{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 -(void)setupRightButton{
     UIImageView *slideBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
     slideBtn.image = [UIImage imageNamed:@"ic_add_circle"];
@@ -99,7 +122,7 @@
 }
 
 -(void)showDeployView{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated) {
         [self showLoginView];
         return;
@@ -277,10 +300,9 @@
     NSArray *shareButtonTitleArray = [[NSArray alloc] init];
     NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
     
-    if (self.tapIndex == 0) {
-        shareButtonTitleArray = @[@"微信好友",@"微信朋友圈",@"新浪微博",@"QQ好友",@"QQ空间"];
-        shareButtonImageNameArray = @[@"wechat",@"wetimeline",@"sina",@"qq",@"qzone"];
-    }
+    shareButtonTitleArray = @[@"微信好友",@"微信朋友圈",@"新浪微博",@"QQ好友",@"QQ空间"];
+    shareButtonImageNameArray = @[@"wechat",@"wetimeline",@"sina",@"qq",@"qzone"];
+    
     ShareSheetView *lxActivity = [[ShareSheetView alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
     [lxActivity showInView:self.view];
 }

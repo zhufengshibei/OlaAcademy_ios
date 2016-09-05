@@ -124,7 +124,7 @@ typedef enum
 }
 
 -(void)refreshUserInfo{
-    AuthManager *authManager = [[AuthManager alloc]init];
+    AuthManager *authManager = [AuthManager sharedInstance];
     if (authManager.isAuthenticated) {
         UserManager *userManager = [[UserManager alloc]init];
         [userManager fetchUserWithUserId:authManager.userInfo.userId Success:^{

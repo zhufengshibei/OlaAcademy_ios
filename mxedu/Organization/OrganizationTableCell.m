@@ -141,7 +141,7 @@
     if ([_organiztion.checkedIn isEqualToString:@"1"]) {
         return;
     }
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated) {
         [self showLoginView];
         return;

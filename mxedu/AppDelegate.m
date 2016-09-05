@@ -58,7 +58,7 @@
         [self.window makeKeyAndVisible];
     }else{
         //判断用户账号有本地存储
-        AuthManager *am =[[AuthManager alloc]init];\
+        AuthManager *am =[AuthManager sharedInstance];
         if(am.isAuthenticated)
         {
             [[DataManager sharedDataManager] readDownloadVideo];
@@ -155,10 +155,10 @@
     UINavigationBar * appearance = [UINavigationBar appearance];
     appearance.translucent = NO;
     //设置显示的颜色
-    appearance.barTintColor = COMMONBLUECOLOR;
+    appearance.barTintColor = RGBCOLOR(248, 248, 248);
     //设置字体颜色
-    appearance.tintColor = [UIColor whiteColor];
-    [appearance setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    appearance.tintColor = RGBCOLOR(81, 84, 93);
+    [appearance setTitleTextAttributes:@{NSForegroundColorAttributeName : RGBCOLOR(81, 84, 93)}];
 }
 
 -(void)setupRootView{
@@ -170,7 +170,7 @@
 }
 
 -(void)setupRootViewWithSlide{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated) {
         IndexViewController *indexVC = [[IndexViewController alloc]init];
         UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:indexVC];
@@ -293,6 +293,7 @@
         [self.mainVC.selectedViewController pushViewController:bannerVC animated:YES];
     }else if([type isEqualToString:@"4"]){
         CommodityViewController *commodityVC = [[CommodityViewController alloc]init];
+        commodityVC.currentType = @"1";
         commodityVC.hidesBottomBarWhenPushed = YES;
         [self.mainVC.selectedViewController pushViewController:commodityVC animated:YES];
     }

@@ -98,7 +98,7 @@
  */
 -(void)fetchCourseVideo{
     CourseManager *cm = [[CourseManager alloc]init];
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
         [cm fetchVideoListWithUserId:am.userInfo.userId Success:^(CollectionListResult *result) {
             videoArray = result.collectionArray;
@@ -153,7 +153,7 @@
 }
 
 -(void)removeAllCollection{
-    AuthManager *am = [[AuthManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
         CourseManager *cm = [[CourseManager alloc]init];
         [cm removeCollectionWithUserId:am.userInfo.userId Success:^(CommonResult *result) {
