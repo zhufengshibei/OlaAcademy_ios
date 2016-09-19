@@ -331,7 +331,7 @@
     
     switch((int)imageIndex){
         case 0:
-            [UMSocialData defaultData].extConfig.wechatSessionData.title = @"欧拉联考";
+            [UMSocialData defaultData].extConfig.wechatSessionData.title = @"欧拉MBA";
             [UMSocialData defaultData].extConfig.wechatSessionData.url = url;
             [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
@@ -340,7 +340,7 @@
             }];
             break;
         case 1:
-            [UMSocialData defaultData].extConfig.wechatTimelineData.title = @"欧拉联考";
+            [UMSocialData defaultData].extConfig.wechatTimelineData.title = @"欧拉MBA";
             [UMSocialData defaultData].extConfig.wechatTimelineData.url = url;
             [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
@@ -356,7 +356,7 @@
             }];
             break;
         case 3:
-            [UMSocialData defaultData].extConfig.qqData.title = @"欧拉联考";
+            [UMSocialData defaultData].extConfig.qqData.title = @"欧拉MBA";
             [UMSocialData defaultData].extConfig.qqData.url =url;
             [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeDefault;
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
@@ -366,7 +366,7 @@
             break;
         case 4:
             // QQ空间分享只支持图文分享（图片文字缺一不可）
-            [UMSocialData defaultData].extConfig.qzoneData.title = @"欧拉联考";
+            [UMSocialData defaultData].extConfig.qzoneData.title = @"欧拉MBA";
             [UMSocialData defaultData].extConfig.qzoneData.url = url;
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
                 if (response.responseCode == UMSResponseCodeSuccess) {

@@ -119,6 +119,9 @@ NSUserDomainMask, YES) objectAtIndex:0]
 #define kImgDataPath    @"/Images"
 #define kImgListPath    @"/Images/ImageList"
 
+// 讲义路径
+#define kPDFDataPath  @"/PDF"
+
 
 
 #define kShareVideoActionDataPath   @"/Actions/video"

@@ -127,7 +127,7 @@
 }
 
 -(void)apply{
-    NSString* strIdentifier = @"http://www.chenxingplan.com/cxinfo/hzfreg.aspx?recommend=欧拉联考";
+    NSString* strIdentifier = @"http://www.chenxingplan.com/cxinfo/hzfreg.aspx?recommend=欧拉MBA";
     strIdentifier = [strIdentifier stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     BOOL isExsit = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:strIdentifier]];
     if(isExsit) {

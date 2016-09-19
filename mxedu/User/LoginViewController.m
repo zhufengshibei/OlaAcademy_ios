@@ -46,7 +46,7 @@ UITextField *passTextField;
     [self setupBackButton];
 
     tipLabel = [[UILabel alloc]init];
-    tipLabel.text = @"登录欧拉联考";
+    tipLabel.text = @"登录欧拉MBA";
     [tipLabel sizeToFit];
     tipLabel.font = [UIFont systemFontOfSize:20.0];
     tipLabel.textColor = RGBCOLOR(128, 128, 128);

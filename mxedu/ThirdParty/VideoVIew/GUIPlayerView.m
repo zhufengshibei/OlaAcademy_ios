@@ -411,10 +411,10 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:(duration >= 3600 ? @"hh:mm:ss": @"mm:ss")];
     
-    NSDate *currentTime = [NSDate dateWithTimeIntervalSince1970:current];
+    NSDate *currTime = [NSDate dateWithTimeIntervalSince1970:current];
     NSDate *remainingTime = [NSDate dateWithTimeIntervalSince1970:(duration - current)];
     
-    [currentTimeLabel setText:[formatter stringFromDate:currentTime]];
+    [currentTimeLabel setText:[formatter stringFromDate:currTime]];
     [remainingTimeLabel setText:[NSString stringWithFormat:@"-%@", [formatter stringFromDate:remainingTime]]];
     
     [progressIndicator setHidden:NO];

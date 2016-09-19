@@ -9,7 +9,6 @@
 #import "CourseListTableCell.h"
 
 #import "SysCommon.h"
-#import "Util.h"
 #import "UIImageView+WebCache.h"
 
 #import "UIImageView+AsyncDownload.h"
@@ -57,7 +56,10 @@
     [[SDWebImageManager sharedManager]downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",course.address]] options:SDWebImageHighPriority progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
         if (image != nil)
         {
-            [_videoImage setImage:[Util imageBy:image withWidth:GENERAL_SIZE(260) withHight:GENERAL_SIZE(160)]];
+            // 图片剪裁
+            CGRect rect = CGRectMake(0, 0, CGImageGetHeight([image CGImage])*260/160,CGImageGetHeight([image CGImage]));
+            CGImageRef imagePartRef = CGImageCreateWithImageInRect([image CGImage], rect);
+            [_videoImage setImage:[UIImage imageWithCGImage:imagePartRef]];
         }else{
             _videoImage.image = [UIImage imageNamed:@"ic_video"];
         }

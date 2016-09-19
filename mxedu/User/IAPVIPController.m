@@ -38,16 +38,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self setupBackButton];
     
-    int scrollViewHeight = SCREEN_HEIGHT-220;
-    int scrollContentHeight = 610;
-    if (iPhone6) {
-        scrollContentHeight = 625;
-    }
-    if (iPhone6Plus) {
-        scrollContentHeight = 640;
-    }
-    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, scrollViewHeight)];
-    _scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, scrollContentHeight);
+    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    _scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
     [self setupSubView];
     [self.view addSubview:_scrollView];
     

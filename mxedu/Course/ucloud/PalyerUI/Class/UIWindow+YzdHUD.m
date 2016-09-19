@@ -172,6 +172,7 @@
     }
     
     [YzdHUDLabel shareHUDView].text = text;
+    [YzdHUDLabel shareHUDView].textColor = [UIColor lightGrayColor];
     [[YzdHUDIndicator shareHUDView] stopAnimating];
     [YzdHUDImageView shareHUDView].alpha = 0;
     

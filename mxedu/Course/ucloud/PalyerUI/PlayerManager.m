@@ -50,13 +50,6 @@
 {
     
     self.vc.view.autoresizingMask = UIViewAutoresizingNone;
-    
-//    [self.player.player.view mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(0, 0, 0, 0));
-//    }];
-//    [self.vc.view mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(0, 0, 0, 0));
-//    }];
 
     NSMutableArray *cons = [NSMutableArray array];
     self.p = [NSMutableArray array];
@@ -485,6 +478,10 @@ static bool showing = NO;
                 
                 //重绘画面
                 [self.player refreshView];
+                
+                if (_didClickFullScreen) {
+                    _didClickFullScreen(self.isFullscreen);
+                }
             }];
             
         }];
@@ -580,21 +577,7 @@ static bool showing = NO;
     if(!self.isFullscreen)
     {
         UIDeviceOrientation deviceOr = [UIDevice currentDevice].orientation;
-        if (deviceOr == UIInterfaceOrientationLandscapeRight)
-        {
-            self.supportInterOrtation = UIInterfaceOrientationMaskLandscapeRight;
-            [self awakeSupportInterOrtation:self.viewContorller completion:^() {
-                
-                [self turnToRight:^{
-                    self.supportInterOrtation = UIInterfaceOrientationMaskAllButUpsideDown;
-                    [self.player.player play];
-                    self.currentOrientation = UIInterfaceOrientationLandscapeRight;
-                    //重绘画面
-                    [self.player refreshView];
-                }];
-            }];
-        }
-        else
+        if (deviceOr == UIDeviceOrientationLandscapeRight)
         {
             self.supportInterOrtation = UIInterfaceOrientationMaskLandscapeLeft;
             [self awakeSupportInterOrtation:self.viewContorller completion:^() {
@@ -605,6 +588,28 @@ static bool showing = NO;
                     self.currentOrientation = UIInterfaceOrientationLandscapeLeft;
                     //重绘画面
                     [self.player refreshView];
+                    
+                    if (_didClickFullScreen) {
+                        _didClickFullScreen(self.isFullscreen);
+                    }
+                }];
+            }];
+        }
+        else
+        {
+            self.supportInterOrtation = UIInterfaceOrientationMaskLandscapeRight;
+            [self awakeSupportInterOrtation:self.viewContorller completion:^() {
+                
+                [self turnToRight:^{
+                    self.supportInterOrtation = UIInterfaceOrientationMaskAllButUpsideDown;
+                    [self.player.player play];
+                    self.currentOrientation = UIInterfaceOrientationLandscapeRight;
+                    //重绘画面
+                    [self.player refreshView];
+                    
+                    if (_didClickFullScreen) {
+                        _didClickFullScreen(self.isFullscreen);
+                    }
                 }];
             }];
         }
@@ -620,6 +625,10 @@ static bool showing = NO;
                 
                 //重绘画面
                 [self.player refreshView];
+                
+                if (_didClickFullScreen) {
+                    _didClickFullScreen(self.isFullscreen);
+                }
             }];
             
         }];

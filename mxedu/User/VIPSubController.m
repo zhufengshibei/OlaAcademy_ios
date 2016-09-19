@@ -40,44 +40,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    int scrollViewHeight = SCREEN_HEIGHT-220;
-    int scrollContentHeight = 550;
-    if (iPhone6) {
-        scrollContentHeight = 565;
-    }
-    if (iPhone6Plus) {
-        scrollContentHeight = 580;
-    }
-    if(_isSingleView==1){
-        [self setupBackButton];
-        self.view.backgroundColor = [UIColor whiteColor];
-        scrollViewHeight = SCREEN_HEIGHT;
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(payRefresh) name:@"ORDER_PAY_NOTIFICATION" object:nil];
-    }
-    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, scrollViewHeight)];
-    _scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, scrollContentHeight);
+    
+    self.title = @"欧拉会员";
+    self.view.backgroundColor = [UIColor whiteColor];
+
+    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    _scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
     [self setupSubView];
     [self.view addSubview:_scrollView];
-}
-
-- (void)setupBackButton
-{
-    self.title = @"欧拉会员";
-    self.navigationController.navigationBarHidden = NO;
-    
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
-    [backBtn sizeToFit];
-    [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
-}
-
--(void)backButtonClicked{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //支付成功后刷新
@@ -399,30 +369,9 @@
      ];
 }
 
--(void)updateVIPState{
-    AuthManager *am = [AuthManager sharedInstance];
-    if (am.isAuthenticated) {
-        [obtainVIP setTitle:@"已领取" forState:UIControlStateNormal];
-        obtainVIP.backgroundColor = RGBCOLOR(225, 225, 225);
-    }else{
-        [obtainVIP setTitle:@"领取" forState:UIControlStateNormal];
-        obtainVIP.backgroundColor = COMMONBLUECOLOR;
-        [obtainVIP addTarget:self action:@selector(obtainVIP) forControlEvents:UIControlEventTouchDown];
-    }
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

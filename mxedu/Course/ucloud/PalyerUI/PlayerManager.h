@@ -47,4 +47,7 @@
 - (void)rotateBegain:(UIInterfaceOrientation)noti;
 - (void)rotateEnd;
 - (void)awakeSupportInterOrtation:(UIViewController *)showVC completion:(void(^)(void))block;
+
+// 全屏
+@property (nonatomic, strong) void (^didClickFullScreen)(BOOL fullScreen);
 @end

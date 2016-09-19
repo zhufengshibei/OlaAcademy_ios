@@ -81,7 +81,7 @@
         cell.nameLabel.text = commodity.name;
         cell.markLabel.text = @"热门";
         cell.timeLabel.text = [NSString stringWithFormat:@"%@分钟",commodity.totaltime];
-        cell.visitLabel.text = [NSString stringWithFormat:@"%@观看",commodity.attentionnum];
+        cell.visitLabel.text = [NSString stringWithFormat:@"%@购买",commodity.paynum];
     }else if([data isKindOfClass:[Course class]]){
         Course *course = (Course*)data;
         NSString *imageUrl = course.address;

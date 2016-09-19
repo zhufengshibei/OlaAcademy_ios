@@ -569,7 +569,9 @@
                                                         @"weight":     @"weight",
                                                         @"orgname":    @"orgName",
                                                         @"pic":        @"pic",
-                                                        @"isfree":     @"isfree"
+                                                        @"isfree":     @"isfree",
+                                                        @"attachmentId":@"attachmentId",
+                                                        @"url":     @"url"
                                                         }];
     [_videoBoxMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"videoList" toKeyPath:@"videoList" withMapping:_videoMapping]];
     
@@ -594,14 +596,17 @@
                                                           @"weight":     @"weight",
                                                           @"orgname":    @"orgName",
                                                           @"pic":        @"pic",
-                                                          @"isfree":     @"isfree"
+                                                          @"isfree":     @"isfree",
+                                                          @"attachmentId":@"attachmentId",
+                                                          @"url":     @"url"
                                                           }];
     
     _videoListResultMapping = [RKObjectMapping mappingForClass:[VideoListResult class]];
     [_videoListResultMapping addAttributeMappingsFromDictionary:@{
-                                                                    @"apicode": @"code",
-                                                                    @"message": @"message"
-                                                                    }];
+                                                                @"apicode": @"code",
+                                                                @"message": @"message",
+                                                                @"orderStatus":@"orderStatus"
+                                                                }];
     [_videoListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"videoList" withMapping:_videoMapping]];
 }
 

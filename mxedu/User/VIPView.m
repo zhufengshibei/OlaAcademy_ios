@@ -33,7 +33,7 @@
         
         [self addSubview:_teamView];
         
-        _patientView = [self viewWithName:@"全免费" Pic:@"ic_free" Type:1];
+        _patientView = [self viewWithName:@"课程库免费" Pic:@"ic_free" Type:1];
         _patientView.frame = CGRectMake(SCREEN_WIDTH/4, 0, SCREEN_WIDTH/4, SCREEN_WIDTH/4);
         
         [self addSubview:_patientView];
@@ -86,14 +86,13 @@
     [view addGestureRecognizer:tap];
     
     [icon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(view.mas_top).offset(GENERAL_SIZE(40));
         make.centerX.equalTo(view.mas_centerX).offset(0);
+        make.centerY.equalTo(view).offset(-GENERAL_SIZE(40));
     }];
     
     [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(view.mas_centerX).offset(0);
-        make.top.equalTo(icon.mas_bottom).offset(GENERAL_SIZE(30));
-        make.bottom.equalTo(view.mas_top).offset(GENERAL_SIZE(190));
+        make.centerY.equalTo(view).offset(GENERAL_SIZE(40));
     }];
     
     return view;

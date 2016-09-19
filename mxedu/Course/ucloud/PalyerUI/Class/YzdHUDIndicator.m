@@ -22,7 +22,7 @@ static YzdHUDIndicator *_shareHUDView = nil;
 
 +(YzdHUDIndicator *)shareHUDView{
     if (!_shareHUDView) {
-        _shareHUDView = [[YzdHUDIndicator alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        _shareHUDView = [[YzdHUDIndicator alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     }
     return _shareHUDView;
 }

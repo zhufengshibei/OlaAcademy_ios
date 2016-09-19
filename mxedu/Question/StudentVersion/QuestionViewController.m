@@ -505,7 +505,6 @@
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         if ([_thirdPay.version isEqualToString:[infoDictionary objectForKey:@"CFBundleShortVersionString"]]&&[_thirdPay.thirdPay isEqualToString:@"0"]){
             IAPVIPController *iapVC =[[IAPVIPController alloc]init];
-            iapVC.isSingleView = 1;
             iapVC.callbackBlock = ^{
                 [self setupData];
             };
@@ -513,14 +512,12 @@
             [self.navigationController pushViewController:iapVC animated:YES];
         }else{
             VIPSubController *vipVC =[[VIPSubController alloc]init];
-            vipVC.isSingleView = 1;
             vipVC.callbackBlock = ^{
                 [self setupData];
             };
             vipVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vipVC animated:YES];
         }
-        
     }
 }
 
