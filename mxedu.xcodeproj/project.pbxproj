@@ -250,6 +250,12 @@
 		3D92FDFA1D03CF86008E602F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D92FDF91D03CF86008E602F /* libsqlite3.tbd */; };
 		3D92FDFC1D03CFAA008E602F /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D92FDFB1D03CFAA008E602F /* libstdc++.tbd */; };
 		3D9BF4DE1C94398A00702B9A /* MathJax in Resources */ = {isa = PBXBuildFile; fileRef = 3D9BF4DD1C94398A00702B9A /* MathJax */; };
+		3D9CB7831D916BC900A3C9A1 /* OtherUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB7821D916BC900A3C9A1 /* OtherUserController.m */; };
+		3D9CB7861D93D25000A3C9A1 /* SignInManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB7851D93D25000A3C9A1 /* SignInManager.m */; };
+		3D9CB7891D93E0B700A3C9A1 /* SignInPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB7881D93E0B700A3C9A1 /* SignInPopoverView.m */; };
+		3D9CB78C1D9409A800A3C9A1 /* AttentionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB78B1D9409A800A3C9A1 /* AttentionManager.m */; };
+		3D9CB7931D94C9EF00A3C9A1 /* UITabBar+badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB7921D94C9EF00A3C9A1 /* UITabBar+badge.m */; };
+		3D9CB7961D94F64D00A3C9A1 /* OtherHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB7951D94F64D00A3C9A1 /* OtherHeadView.m */; };
 		3D9D296A1CE0B6B900F58E57 /* ExamFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D29691CE0B6B900F58E57 /* ExamFilterView.m */; };
 		3D9D35B51C01E9FB007CE085 /* PopPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D35B41C01E9FB007CE085 /* PopPickerView.m */; };
 		3D9D35BD1C058195007CE085 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D35BB1C058195007CE085 /* AboutViewController.m */; };
@@ -948,6 +954,18 @@
 		3D92FDF91D03CF86008E602F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		3D92FDFB1D03CFAA008E602F /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		3D9BF4DD1C94398A00702B9A /* MathJax */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MathJax; sourceTree = "<group>"; };
+		3D9CB7811D916BC900A3C9A1 /* OtherUserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherUserController.h; sourceTree = "<group>"; };
+		3D9CB7821D916BC900A3C9A1 /* OtherUserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherUserController.m; sourceTree = "<group>"; };
+		3D9CB7841D93D25000A3C9A1 /* SignInManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInManager.h; sourceTree = "<group>"; };
+		3D9CB7851D93D25000A3C9A1 /* SignInManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInManager.m; sourceTree = "<group>"; };
+		3D9CB7871D93E0B700A3C9A1 /* SignInPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInPopoverView.h; sourceTree = "<group>"; };
+		3D9CB7881D93E0B700A3C9A1 /* SignInPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInPopoverView.m; sourceTree = "<group>"; };
+		3D9CB78A1D9409A800A3C9A1 /* AttentionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttentionManager.h; sourceTree = "<group>"; };
+		3D9CB78B1D9409A800A3C9A1 /* AttentionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttentionManager.m; sourceTree = "<group>"; };
+		3D9CB7911D94C9EF00A3C9A1 /* UITabBar+badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBar+badge.h"; sourceTree = "<group>"; };
+		3D9CB7921D94C9EF00A3C9A1 /* UITabBar+badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+badge.m"; sourceTree = "<group>"; };
+		3D9CB7941D94F64D00A3C9A1 /* OtherHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherHeadView.h; sourceTree = "<group>"; };
+		3D9CB7951D94F64D00A3C9A1 /* OtherHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherHeadView.m; sourceTree = "<group>"; };
 		3D9D29681CE0B6B900F58E57 /* ExamFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExamFilterView.h; sourceTree = "<group>"; };
 		3D9D29691CE0B6B900F58E57 /* ExamFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExamFilterView.m; sourceTree = "<group>"; };
 		3D9D35B31C01E9FB007CE085 /* PopPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopPickerView.h; sourceTree = "<group>"; };
@@ -1862,6 +1880,8 @@
 				3D68CD9E1D642FB8005CA17F /* HomeHeadView.m */,
 				3D68CDC31D6BF383005CA17F /* ConsultTableCell.h */,
 				3D68CDC41D6BF384005CA17F /* ConsultTableCell.m */,
+				3D9CB7871D93E0B700A3C9A1 /* SignInPopoverView.h */,
+				3D9CB7881D93E0B700A3C9A1 /* SignInPopoverView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2109,6 +2129,8 @@
 				3DA2AE301D34D02E00C5C9CA /* CommentController.xib */,
 				3D1D242F1D2A3A9500A7F418 /* DeployViewController.h */,
 				3D1D24301D2A3A9500A7F418 /* DeployViewController.m */,
+				3D9CB7811D916BC900A3C9A1 /* OtherUserController.h */,
+				3D9CB7821D916BC900A3C9A1 /* OtherUserController.m */,
 			);
 			path = Circle;
 			sourceTree = "<group>";
@@ -2213,6 +2235,8 @@
 				3D7169E01D339D02004B3ED6 /* CommentCell.m */,
 				3D0C49811D3499F400E752B1 /* CustomInputView.h */,
 				3D0C49821D3499F400E752B1 /* CustomInputView.m */,
+				3D9CB7941D94F64D00A3C9A1 /* OtherHeadView.h */,
+				3D9CB7951D94F64D00A3C9A1 /* OtherHeadView.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -2417,6 +2441,15 @@
 				3D92FDE01D03CEEA008E602F /* WXApiObject.h */,
 			);
 			path = Wechat;
+			sourceTree = "<group>";
+		};
+		3D9CB78D1D94C90D00A3C9A1 /* UITabBar+badge */ = {
+			isa = PBXGroup;
+			children = (
+				3D9CB7911D94C9EF00A3C9A1 /* UITabBar+badge.h */,
+				3D9CB7921D94C9EF00A3C9A1 /* UITabBar+badge.m */,
+			);
+			path = "UITabBar+badge";
 			sourceTree = "<group>";
 		};
 		3D9D35B21C01E605007CE085 /* view */ = {
@@ -2952,6 +2985,10 @@
 				3DAF99321CCE2107007835E3 /* PayManager.m */,
 				3D68CDD61D741C42005CA17F /* GroupManager.h */,
 				3D68CDD71D741C42005CA17F /* GroupManager.m */,
+				3D9CB7841D93D25000A3C9A1 /* SignInManager.h */,
+				3D9CB7851D93D25000A3C9A1 /* SignInManager.m */,
+				3D9CB78A1D9409A800A3C9A1 /* AttentionManager.h */,
+				3D9CB78B1D9409A800A3C9A1 /* AttentionManager.m */,
 			);
 			path = manager;
 			sourceTree = "<group>";
@@ -3208,6 +3245,7 @@
 		3DFB6D301B6DCAF10072D175 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				3D9CB78D1D94C90D00A3C9A1 /* UITabBar+badge */,
 				3D79DD0B1C1FDC1100D34DD7 /* UIButton+Extension */,
 				3DFB6D3C1B6DD4B30072D175 /* UIView+Positioning */,
 				3DFB6D3B1B6DD4A90072D175 /* UIColor+HexColor */,
@@ -3787,6 +3825,7 @@
 				3D1D245F1D2A3B9B00A7F418 /* CXBrowserToolBarView.m in Sources */,
 				3DFB6D761B6DD5AA0072D175 /* UserInfoResult.m in Sources */,
 				3DFB6C2E1B6DC92F0072D175 /* UserManager.m in Sources */,
+				3D9CB7961D94F64D00A3C9A1 /* OtherHeadView.m in Sources */,
 				3DFB6C2F1B6DC92F0072D175 /* UploadManager.m in Sources */,
 				3D36D9781D12EF4A00FA6570 /* ApplePayVIPController.m in Sources */,
 				3D2830DA1C9EC70B00C2326D /* ExamViewController.m in Sources */,
@@ -3965,6 +4004,7 @@
 				3D31C35A1D3E5E5B008882C3 /* Message.m in Sources */,
 				3DFB6D8B1B6DD5B50072D175 /* Location.m in Sources */,
 				3DFB6C481B6DCA7C0072D175 /* UIImage+Scaling.m in Sources */,
+				3D9CB7931D94C9EF00A3C9A1 /* UITabBar+badge.m in Sources */,
 				3D68CE231D77C872005CA17F /* CorrectTableCell.m in Sources */,
 				3D44E4631CBDD82200B34990 /* Examination.m in Sources */,
 				3D1D24681D2A3B9B00A7F418 /* AlbumListController.m in Sources */,
@@ -4004,6 +4044,7 @@
 				3D68CDAD1D6447FE005CA17F /* Banner.m in Sources */,
 				3D0AA3871D51FC1100D73D81 /* HomeworkListResult.m in Sources */,
 				3DFB6D031B6DCAC40072D175 /* BSPhotosController.m in Sources */,
+				3D9CB7861D93D25000A3C9A1 /* SignInManager.m in Sources */,
 				3DA372DE1CD8E4BE0075F93C /* CommodityFilterView.m in Sources */,
 				3DFB6CFA1B6DCAC40072D175 /* BSPhotosController+BSItemsModel.m in Sources */,
 				3DBBE3B61CF6FA970038F29E /* DownloadCheckNetwork.m in Sources */,
@@ -4033,6 +4074,7 @@
 				3D6E72051CE31B03003ABA1C /* UIView+MJExtension.m in Sources */,
 				3D1D24621D2A3B9B00A7F418 /* CXPhotoLoadingView.m in Sources */,
 				3DAF02831CC206AD004295BC /* CommodityListRsult.m in Sources */,
+				3D9CB7831D916BC900A3C9A1 /* OtherUserController.m in Sources */,
 				3D6E71FE1CE31B03003ABA1C /* MJRefreshGifHeader.m in Sources */,
 				3DBBE46E1CF6FE2C0038F29E /* myCustomerImageView.m in Sources */,
 				3D12ABE61D8FBBC400F66447 /* HMSegmentedControl.m in Sources */,
@@ -4063,6 +4105,7 @@
 				3D31C3641D3F7124008882C3 /* MessageUnreadResult.m in Sources */,
 				3DFB6CF81B6DCAC40072D175 /* BSCollectionController+BSItemsModel.m in Sources */,
 				3D0C497C1D33D3D900E752B1 /* CommentListResult.m in Sources */,
+				3D9CB78C1D9409A800A3C9A1 /* AttentionManager.m in Sources */,
 				3DFB6CF61B6DCAC40072D175 /* ALAsset+BSEqual.m in Sources */,
 				3D11D5801BD487A200789D1F /* CourseTableCell.m in Sources */,
 				3D31C3521D3E2888008882C3 /* MessageManager.m in Sources */,
@@ -4114,6 +4157,7 @@
 				3D1D24631D2A3B9B00A7F418 /* CXTapDetectingImageView.m in Sources */,
 				3DFB6D041B6DCAC40072D175 /* BSPreviewController.m in Sources */,
 				3D1D24311D2A3A9500A7F418 /* DeployViewController.m in Sources */,
+				3D9CB7891D93E0B700A3C9A1 /* SignInPopoverView.m in Sources */,
 				3DA93C341D0EC10200EC83DB /* UCloudProgressView.m in Sources */,
 				3DB121FA1BD73DBA003D9437 /* CoursePoint.m in Sources */,
 				3DA372D21CD252510075F93C /* VideoHistoryResult.m in Sources */,

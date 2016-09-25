@@ -11,6 +11,7 @@
 @interface OlaCircle : NSObject
 
 @property (nonatomic) NSString *circleId;
+@property (nonatomic) NSString *userId;
 @property (nonatomic) NSString *userName;
 @property (nonatomic) NSString *userAvatar;
 @property (nonatomic) NSString *videoId;

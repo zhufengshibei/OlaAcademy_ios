@@ -15,4 +15,7 @@
 @property (nonatomic, strong) NSMutableArray  *dataSource;
 @property (nonatomic) UserInfoView *userView;
 
+@property (nonatomic) BOOL showSignIn;
+@property (nonatomic) void (^signInBlock)();
+
 @end

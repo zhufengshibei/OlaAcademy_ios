@@ -11,6 +11,13 @@
 #import "CircleToolbar.h"
 
 @class CircleFrame;
+@class User;
+
+@protocol CircleViewDelegate <NSObject>
+
+-(void)didClickUserAvatar:(User*)userInfo;
+
+@end
 
 @interface CircleDetailView : UIView
 
@@ -38,5 +45,7 @@
 
 /**frame模型*/
 @property (nonatomic,strong) CircleFrame *statusFrame;
+
+@property (nonatomic) id<CircleViewDelegate> delegate;
 
 @end

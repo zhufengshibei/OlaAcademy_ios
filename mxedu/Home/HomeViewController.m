@@ -90,6 +90,8 @@
     }];
 }
 
+#pragma tablview
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 3;
 }

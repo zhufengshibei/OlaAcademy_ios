@@ -18,11 +18,12 @@
 #import "CommentController.h"
 #import "ShareSheetView.h"
 #import "LoginViewController.h"
+#import "OtherUserController.h"
 
 #import "PopViewController.h"
 #import "PopContentTabeVIew.h"
 
-@interface CircleViewController ()<UITableViewDataSource,UITableViewDelegate,UMSocialUIDelegate,ShareSheetDelegate,CircleToolbarDelegate>
+@interface CircleViewController ()<UITableViewDataSource,UITableViewDelegate,UMSocialUIDelegate,ShareSheetDelegate,CircleViewDelegate,CircleToolbarDelegate>
 
 @property (nonatomic) UIButton *titleBtn;
 
@@ -227,6 +228,7 @@
     CircleTableViewCell *cell = [CircleTableViewCell cellWithTableView:tableView];
     CircleFrame *circleFrame = self.circleFrames[indexPath.row];
     cell.detailView.toolBar.delegate = self;
+    cell.detailView.delegate = self;
     cell.statusFrame = circleFrame;
     return cell;
 }
@@ -268,6 +270,15 @@
         [frames addObject:frame];
     }
     return frames;
+}
+
+#pragma CircleDetailView Delegate
+// 点击头像
+-(void)didClickUserAvatar:(User *)userInfo{
+    OtherUserController * otherVC = [[OtherUserController alloc]init];
+    otherVC.userInfo = userInfo;
+    otherVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:otherVC animated:YES];
 }
 
 #pragma Toolbar Delegate

@@ -26,9 +26,11 @@
 
 #import "UserTableCell.h"
 #import "ModelConfig.h"
+#import "SignInPopoverView.h"
 
 #import "CourseManager.h"
 #import "PayManager.h"
+#import "SignInManager.h"
 
 #import "Masonry.h"
 #import "UIColor+HexColor.h"
@@ -49,6 +51,9 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
     self.navigationController.navigationBarHidden = YES;
     if (_userView) {
         [_userView refreshUserInfo];
+    }
+    if (_showSignIn) {
+        [self showSignInView];
     }
 }
 
@@ -78,6 +83,33 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
 //支付成功后刷新
 -(void)payRefresh{
     [_userView refreshUserInfo];
+}
+
+// 签到页面
+-(void)showSignInView{
+    SignInPopoverView *signInView = [[SignInPopoverView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    [signInView setCancelButtonBlock:^{
+        if (_signInBlock) {
+            [self signIn];
+            _signInBlock();
+        }
+    }];
+    
+    [signInView show];
+}
+
+// 签到
+-(void)signIn{
+    AuthManager *am = [AuthManager sharedInstance];
+    if (!am.isAuthenticated) {
+        return;
+    }
+    SignInManager *sm = [[SignInManager alloc]init];
+    [sm signInWithUserId:am.userInfo.userId success:^(CommonResult *result) {
+        
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 // 后台控制是否显示支付相关功能

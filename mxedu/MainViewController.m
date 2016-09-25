@@ -10,7 +10,10 @@
 
 #import "SKSplashIcon.h"
 #import "AuthManager.h"
+#import "SignInManager.h"
 #import "SysCommon.h"
+
+#import "UITabBar+badge.h"
 
 #import "HomeworkController.h"
 #import "QuestionViewController.h"
@@ -92,6 +95,9 @@
     [self setupTabContent];
     self.selectedIndex = 2;
     
+    // 每日签到状态
+    [self fetchSignInStatus];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupTabContent) name:@"NEEDREFRESH" object:nil];
     
 }
@@ -105,19 +111,29 @@
     }
 }
 
+-(void)fetchSignInStatus{
+    SignInManager *sm =[[SignInManager alloc]init];
+    AuthManager *am = [AuthManager sharedInstance];
+    if (am.isAuthenticated) {
+        __weak MainViewController *weakSelf = self;
+        [sm fetchSignInStatusWithUserId:am.userInfo.userId Success:^(StatusResult *result) {
+            if (result.status==0) {
+                _userVC.showSignIn = YES;
+                _userVC.signInBlock = ^{
+                    weakSelf.userVC.showSignIn = NO;
+                    [weakSelf.tabBar hideBadgeOnItemIndex:4];
+                };
+                [self.tabBar showBadgeOnItemIndex:4];
+            }
+        } Failure:^(NSError *error) {
+            
+        }];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -756,6 +756,7 @@
     RKObjectMapping* _historyMapping = [RKObjectMapping mappingForClass:[OlaCircle class]];
     [_historyMapping addAttributeMappingsFromDictionary:@{
                                                           @"circleId": @"circleId",
+                                                          @"userId": @"userId",
                                                           @"userName": @"userName",
                                                           @"userAvatar": @"userAvatar",
                                                           @"videoId": @"videoId",

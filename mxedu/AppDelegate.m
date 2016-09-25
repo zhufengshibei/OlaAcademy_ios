@@ -49,6 +49,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
+    [self setup];
+    [self setupUMPush:launchOptions];
+    
     // 是否第一次登录
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
    	BOOL is = [userDefaults integerForKey:@"alreadyUsed"];
@@ -69,9 +72,6 @@
         [self setupRootView];
     }
     
-    [self setup];
-    [self setupUMPush:launchOptions];
-
     return YES;
 }
 

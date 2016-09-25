@@ -127,7 +127,14 @@ AuthManager *am;
 
 
 -(void)didClickHeadImage{
-    
+    OlaCircle *circle = _statusFrame.result;
+    User *userInfo = [[User alloc]init];
+    userInfo.userId = circle.userId;
+    userInfo.avatar = circle.userAvatar;
+    userInfo.name = circle.userName;
+    if (_delegate) {
+        [_delegate didClickUserAvatar:userInfo];
+    }
 }
 
 - (void)setStatusFrame:(CircleFrame *)statusFrame
