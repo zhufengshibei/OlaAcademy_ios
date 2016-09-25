@@ -256,6 +256,7 @@
 		3D9CB78C1D9409A800A3C9A1 /* AttentionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB78B1D9409A800A3C9A1 /* AttentionManager.m */; };
 		3D9CB7931D94C9EF00A3C9A1 /* UITabBar+badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB7921D94C9EF00A3C9A1 /* UITabBar+badge.m */; };
 		3D9CB7961D94F64D00A3C9A1 /* OtherHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB7951D94F64D00A3C9A1 /* OtherHeadView.m */; };
+		3D9CB79F1D9781DB00A3C9A1 /* libUCloudMediaPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D9CB79D1D9781DB00A3C9A1 /* libUCloudMediaPlayer.a */; };
 		3D9D296A1CE0B6B900F58E57 /* ExamFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D29691CE0B6B900F58E57 /* ExamFilterView.m */; };
 		3D9D35B51C01E9FB007CE085 /* PopPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D35B41C01E9FB007CE085 /* PopPickerView.m */; };
 		3D9D35BD1C058195007CE085 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D35BB1C058195007CE085 /* AboutViewController.m */; };
@@ -316,7 +317,6 @@
 		3DA93C321D0EC10200EC83DB /* UCloudMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA93C131D0EC10200EC83DB /* UCloudMediaViewController.m */; };
 		3DA93C331D0EC10200EC83DB /* UCloudMediaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DA93C141D0EC10200EC83DB /* UCloudMediaViewController.xib */; };
 		3DA93C341D0EC10200EC83DB /* UCloudProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA93C161D0EC10200EC83DB /* UCloudProgressView.m */; };
-		3DA93C3A1D0EC17900EC83DB /* libUCloudMediaPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DA93C361D0EC17900EC83DB /* libUCloudMediaPlayer.a */; };
 		3DA967261D87A1CD001217C5 /* UserCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA967251D87A1CD001217C5 /* UserCellModel.m */; };
 		3DA967291D87A6E5001217C5 /* UserTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA967281D87A6E5001217C5 /* UserTableCell.m */; };
 		3DA9672C1D87ACFC001217C5 /* ModelConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA9672B1D87ACFC001217C5 /* ModelConfig.m */; };
@@ -966,6 +966,8 @@
 		3D9CB7921D94C9EF00A3C9A1 /* UITabBar+badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+badge.m"; sourceTree = "<group>"; };
 		3D9CB7941D94F64D00A3C9A1 /* OtherHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherHeadView.h; sourceTree = "<group>"; };
 		3D9CB7951D94F64D00A3C9A1 /* OtherHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherHeadView.m; sourceTree = "<group>"; };
+		3D9CB79D1D9781DB00A3C9A1 /* libUCloudMediaPlayer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUCloudMediaPlayer.a; sourceTree = "<group>"; };
+		3D9CB79E1D9781DB00A3C9A1 /* UCloudMediaModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCloudMediaModule.h; sourceTree = "<group>"; };
 		3D9D29681CE0B6B900F58E57 /* ExamFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExamFilterView.h; sourceTree = "<group>"; };
 		3D9D29691CE0B6B900F58E57 /* ExamFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExamFilterView.m; sourceTree = "<group>"; };
 		3D9D35B31C01E9FB007CE085 /* PopPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopPickerView.h; sourceTree = "<group>"; };
@@ -1065,7 +1067,6 @@
 		3DA93C141D0EC10200EC83DB /* UCloudMediaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UCloudMediaViewController.xib; sourceTree = "<group>"; };
 		3DA93C151D0EC10200EC83DB /* UCloudProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCloudProgressView.h; sourceTree = "<group>"; };
 		3DA93C161D0EC10200EC83DB /* UCloudProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCloudProgressView.m; sourceTree = "<group>"; };
-		3DA93C361D0EC17900EC83DB /* libUCloudMediaPlayer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUCloudMediaPlayer.a; sourceTree = "<group>"; };
 		3DA93C371D0EC17900EC83DB /* UCloudMediaPlayback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCloudMediaPlayback.h; sourceTree = "<group>"; };
 		3DA93C381D0EC17900EC83DB /* UCloudMediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCloudMediaPlayer.h; sourceTree = "<group>"; };
 		3DA93C391D0EC17900EC83DB /* UCloudPlayback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCloudPlayback.h; sourceTree = "<group>"; };
@@ -1377,6 +1378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D36D97D1D19094F00FA6570 /* StoreKit.framework in Frameworks */,
+				3D9CB79F1D9781DB00A3C9A1 /* libUCloudMediaPlayer.a in Frameworks */,
 				3D92FDFC1D03CFAA008E602F /* libstdc++.tbd in Frameworks */,
 				3D6F6C8F1CAEAC3500097DD0 /* CoreTelephony.framework in Frameworks */,
 				3D92FDFA1D03CF86008E602F /* libsqlite3.tbd in Frameworks */,
@@ -1398,7 +1400,6 @@
 				3D92FDF31D03CEEA008E602F /* libWeChatSDK.a in Frameworks */,
 				3D79DD491C2507D900D34DD7 /* libMobClickLibrary.a in Frameworks */,
 				3D6F6C751CAEA75E00097DD0 /* AlipaySDK.framework in Frameworks */,
-				3DA93C3A1D0EC17900EC83DB /* libUCloudMediaPlayer.a in Frameworks */,
 				3D92FDEC1D03CEEA008E602F /* libSocialSinaSSO.a in Frameworks */,
 				3D92FDF01D03CEEA008E602F /* TencentOpenAPI.framework in Frameworks */,
 				3D31C3441D3DF043008882C3 /* libUMessage_Sdk_1.3.0.a in Frameworks */,
@@ -2578,7 +2579,8 @@
 		3DA93C351D0EC17900EC83DB /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				3DA93C361D0EC17900EC83DB /* libUCloudMediaPlayer.a */,
+				3D9CB79D1D9781DB00A3C9A1 /* libUCloudMediaPlayer.a */,
+				3D9CB79E1D9781DB00A3C9A1 /* UCloudMediaModule.h */,
 				3DA93C371D0EC17900EC83DB /* UCloudMediaPlayback.h */,
 				3DA93C381D0EC17900EC83DB /* UCloudMediaPlayer.h */,
 				3DA93C391D0EC17900EC83DB /* UCloudPlayback.h */,

@@ -520,7 +520,7 @@ static bool centerBug;
     
     
     PlayerManager *vc = (PlayerManager *)self.delegateAction;
-    if (vc.player.defaultDecodeMethod == DecodeMthodHard)
+    if (vc.mediaPlayer.defaultDecodeMethod == DecodeMthodHard)
     {
         MPMovieLoadState loadState = [self.delegatePlayer loadState];
         MPMoviePlaybackState backState = [self.delegatePlayer playbackState];

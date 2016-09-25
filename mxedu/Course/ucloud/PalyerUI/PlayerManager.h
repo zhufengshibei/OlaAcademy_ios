@@ -10,10 +10,10 @@
 #import "UCloudMediaViewController.h"
 
 @interface PlayerManager : NSObject
-@property(strong, nonatomic) UCloudMediaPlayer *player;
+@property(strong, nonatomic) UCloudMediaPlayer *mediaPlayer;
 @property(assign, nonatomic) UIInterfaceOrientationMask supportInterOrtation;
 
-@property (strong, nonatomic) UCloudMediaViewController *vc;
+@property (strong, nonatomic) UCloudMediaViewController *controlVC;
 
 @property (assign, nonatomic) BOOL isFullscreen;                             //是否横屏
 @property (assign, nonatomic) UIInterfaceOrientation currentOrientation;     //当前屏幕方向
@@ -43,7 +43,7 @@
  */
 @property (assign, nonatomic) BOOL supportAngleChange;
 
-- (void)buildPlayer:(NSString *)path;
+- (void)buildMediaPlayer:(NSString *)path;
 - (void)rotateBegain:(UIInterfaceOrientation)noti;
 - (void)rotateEnd;
 - (void)awakeSupportInterOrtation:(UIViewController *)showVC completion:(void(^)(void))block;

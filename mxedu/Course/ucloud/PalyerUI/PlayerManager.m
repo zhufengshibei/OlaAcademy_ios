@@ -24,20 +24,29 @@
 @end
 
 @implementation PlayerManager
-- (void)buildPlayer:(NSString *)path
-{
-    [self addNotification];
-    
-    NSURL *theMovieURL = [NSURL URLWithString:path];
-    self.player = [[UCloudMediaPlayer alloc] init];
-    [self.player setUrl:theMovieURL];
-    
-    __weak PlayerManager *weakSelf = self;
-    [self.player showInview:self.view definition:^(NSInteger defaultNum, NSArray *data) {
-        
-        [weakSelf buildMediaControl:defaultNum data:data];
-        [weakSelf configurePlayer];
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self addNotification];
+    }
+    return self;
+}
+
+- (void)buildMediaPlayer:(NSString *)path
+{
+    __weak PlayerManager *weakSelf = self;
+    //新版的初始化播放方式
+    //多个实例播放器模式
+    //self.mediaPlayer = [[UCloudMediaPlayer alloc] init];
+    //单例模式
+    self.mediaPlayer = [UCloudMediaPlayer ucloudMediaPlayer];
+    [self.mediaPlayer showMediaPlayer:path urltype:UrlTypeAuto frame:CGRectNull view:self.view completion:^(NSInteger defaultNum, NSArray *data) {
+        if (self.mediaPlayer) {
+            [weakSelf buildMediaControl:defaultNum data:data];
+            [weakSelf configurePlayer];
+        }
     }];
 }
 
@@ -49,15 +58,15 @@
 - (void)configurePlayer
 {
     
-    self.vc.view.autoresizingMask = UIViewAutoresizingNone;
+    self.controlVC.view.autoresizingMask = UIViewAutoresizingNone;
 
     NSMutableArray *cons = [NSMutableArray array];
     self.p = [NSMutableArray array];
     self.l = [NSMutableArray array];
-    [self addConstraintForView:self.player.player.view inView:self.view constraint:cons p:self.p l:self.l];
+    [self addConstraintForView:self.mediaPlayer.player.view inView:self.view constraint:cons p:self.p l:self.l];
     
     self.playerContraints = [NSArray arrayWithArray:cons];
-    self.vcBottomConstraint = [self addConstraintForView:self.vc.view inView:self.view constraint:nil];
+    self.vcBottomConstraint = [self addConstraintForView:self.controlVC.view inView:self.view constraint:nil];
 }
 
 - (void)addConstraintForView:(UIView *)subView inView:(UIView *)view constraint:(NSMutableArray *)contraints p:(NSMutableArray *)p l:(NSMutableArray *)l
@@ -131,53 +140,53 @@
     float centerX = self.playerCenterXContraint.constant;
     [self.view removeConstraints:@[self.playerCenterXContraint, self.playerHeightContraint]];
     
-    self.vc.delegatePlayer = self.player.player;
+    self.controlVC.delegatePlayer = self.mediaPlayer.player;
     
-    self.player.player.view.frame = self.vc.view.bounds;
-    [self.view addSubview:self.player.player.view];
+    self.mediaPlayer.player.view.frame = self.controlVC.view.bounds;
+    [self.view addSubview:self.mediaPlayer.player.view];
     
     
     NSMutableArray *cons = [NSMutableArray array];
     self.p = [NSMutableArray array];
     self.l = [NSMutableArray array];
-    [self addConstraintForView:self.player.player.view inView:self.view constraint:cons p:self.p l:self.l];
+    [self addConstraintForView:self.mediaPlayer.player.view inView:self.view constraint:cons p:self.p l:self.l];
     self.playerHeightContraint.constant = height;
     self.playerCenterXContraint.constant = centerX;
     self.playerContraints = [NSArray arrayWithArray:cons];
     
     self.isPrepared = NO;
     
-    [self.view bringSubviewToFront:self.vc.view];
-    [self.vc setRightPanelHidden:YES];
+    [self.view bringSubviewToFront:self.controlVC.view];
+    [self.controlVC setRightPanelHidden:YES];
 
 }
 
 - (void)buildMediaControl:(NSInteger)defaultNum data:(NSArray *)data
 {
     UCloudMediaViewController *vc = [[UCloudMediaViewController alloc] initWithNibName:@"UCloudMediaViewController" bundle:nil];
-    self.vc = vc;
-    self.vc.center = self.view.center;
-    self.vc.defultQingXiDu = defaultNum;
-    if (self.player.defaultDecodeMethod == DecodeMthodHard)
+    self.controlVC = vc;
+    self.controlVC.center = self.view.center;
+    self.controlVC.defultQingXiDu = defaultNum;
+    if (self.mediaPlayer.defaultDecodeMethod == DecodeMthodHard)
     {
-        self.vc.defultJieMaQi = 0;
+        self.controlVC.defultJieMaQi = 0;
     }
-    else if (self.player.defaultDecodeMethod == DecodeMthodSoft)
+    else if (self.mediaPlayer.defaultDecodeMethod == DecodeMthodSoft)
     {
-        self.vc.defultJieMaQi = 1;
+        self.controlVC.defultJieMaQi = 1;
     }
-    self.vc.urlType = self.player.urlType;
+    self.controlVC.urlType = self.mediaPlayer.urlType;
     
-    self.vc.defultHuaFu = 2;
-    self.player.player.scalingMode = MPMovieScalingModeAspectFit;
+    self.controlVC.defultHuaFu = 2;
+    self.mediaPlayer.player.scalingMode = MPMovieScalingModeAspectFit;
     
-    self.vc.fileName = @"Test";
-    self.vc.movieInfos = data;
-    self.vc.view.frame = CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width);
-    self.vc.delegateAction = self;
-    self.vc.delegatePlayer = self.player.player;
+    self.controlVC.fileName = @"Test";
+    self.controlVC.movieInfos = data;
+    self.controlVC.view.frame = CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width);
+    self.controlVC.delegateAction = self;
+    self.controlVC.delegatePlayer = self.mediaPlayer.player;
     
-    [self.view addSubview:self.vc.view];
+    [self.view addSubview:self.controlVC.view];
 }
 
 
@@ -220,7 +229,7 @@
 //屏幕方向改变
 -(void)deviceOrientationChanged:(UIInterfaceOrientation)interfaceOrientation
 {
-    [self.vc setRightPanelHidden:YES];
+    [self.controlVC setRightPanelHidden:YES];
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
     {
@@ -262,11 +271,11 @@
     //调整缓冲提示的位置
     if (shouldChangeFrame)
     {
-        [self.vc.view.window changeFrame:interfaceOrientation];
+        [self.controlVC.view.window changeFrame:interfaceOrientation];
     }
     
     //重绘画面
-    [self.player refreshView];
+    [self.mediaPlayer refreshView];
 }
 
 - (void)rotateBegain:(UIInterfaceOrientation)noti
@@ -277,20 +286,20 @@
 - (void)rotateEnd
 {
     //重绘画面
-    [self.player refreshView];
-    [self.vc setRightPanelHidden:NO];
+    [self.mediaPlayer refreshView];
+    [self.controlVC setRightPanelHidden:NO];
     
-    [self.vc refreshProgressView];
+    [self.controlVC refreshProgressView];
 }
 
 -(void)turnToPortraint:(void(^)(void))block
 {
     self.view.frame = CGRectMake(0, UI_STATUS_BAR_HEIGHT, UISCREEN_WIDTH, UISCREEN_WIDTH*9.0/16.0);
     
-    [self.player refreshView];
+    [self.mediaPlayer refreshView];
     self.isFullscreen = NO;
     
-    [self.vc hideMenu];
+    [self.controlVC hideMenu];
     if (block)
     {
         block();
@@ -301,7 +310,7 @@
 {
     self.view.frame = CGRectMake(0, 0, UISCREEN_HEIGHT, UISCREEN_WIDTH);
 
-    [self.player refreshView];
+    [self.mediaPlayer refreshView];
     self.isFullscreen = YES;
     if (block)
     {
@@ -313,7 +322,7 @@
 {
     self.view.frame = CGRectMake(0, 0, UISCREEN_HEIGHT, UISCREEN_WIDTH);
     
-    [self.player refreshView];
+    [self.mediaPlayer refreshView];
     self.isFullscreen = YES;
     if (block)
     {
@@ -353,7 +362,7 @@ static bool showing = NO;
         
         CGAffineTransform trans = self.view.transform;
         
-        [self.vc.view.window showHUDWithText:@"加载中" Type:ShowLoading Enabled:NO transForm:trans];
+        [self.controlVC.view.window showHUDWithText:@"加载中" Type:ShowLoading Enabled:NO transForm:trans];
     }
 }
 
@@ -361,7 +370,7 @@ static bool showing = NO;
 {
     showing = NO;
     CGAffineTransform trans = self.view.transform;
-    [self.vc.view.window showHUDWithText:@"加载成功" Type:ShowPhotoYes Enabled:YES transForm:trans];
+    [self.controlVC.view.window showHUDWithText:@"加载成功" Type:ShowPhotoYes Enabled:YES transForm:trans];
 }
 
 #pragma mark - notification
@@ -401,22 +410,22 @@ static bool showing = NO;
     NSLog(@"%@", noti.name);
     if ([noti.name isEqualToString:UCloudPlaybackIsPreparedToPlayDidChangeNotification])
     {
-        [self.vc refreshMediaControl];
+        [self.controlVC refreshMediaControl];
         
         if (self.current != 0)
         {
-            [self.player.player setCurrentPlaybackTime:self.current];
+            [self.mediaPlayer.player setCurrentPlaybackTime:self.current];
             self.current = 0;
         }
     }
     else if ([noti.name isEqualToString:UCloudPlayerLoadStateDidChangeNotification])
     {
-        if ([self.player.player loadState] == MPMovieLoadStateStalled)
+        if ([self.mediaPlayer.player loadState] == MPMovieLoadStateStalled)
         {
             //网速不好，开始缓冲
             [self showLoadingView];
         }
-        else if ([self.player.player loadState] == (MPMovieLoadStatePlayable|MPMovieLoadStatePlaythroughOK))
+        else if ([self.mediaPlayer.player loadState] == (MPMovieLoadStatePlayable|MPMovieLoadStatePlaythroughOK))
         {
             //缓冲完毕
             [self hideLoadingView];
@@ -428,15 +437,15 @@ static bool showing = NO;
     }
     else if ([noti.name isEqualToString:UCloudPlayerPlaybackStateDidChangeNotification])
     {
-        NSLog(@"backState:%ld", (long)[self.player.player playbackState]);
+        NSLog(@"backState:%ld", (long)[self.mediaPlayer.player playbackState]);
         if (!self.isPrepared)
         {
             self.isPrepared = YES;
-            [self.player.player play];
+            [self.mediaPlayer.player play];
             
-            if (![self.player.player isPlaying])
+            if (![self.mediaPlayer.player isPlaying])
             {
-                [self.vc refreshCenterState];
+                [self.controlVC refreshCenterState];
             }
         }
     }
@@ -445,7 +454,7 @@ static bool showing = NO;
         MPMovieFinishReason reson = [[noti.userInfo objectForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey] integerValue];
         if (reson == MPMovieFinishReasonPlaybackEnded)
         {
-            [self.vc stop];
+            [self.controlVC stop];
         }
         else if (reson == MPMovieFinishReasonPlaybackError)
         {
@@ -474,10 +483,10 @@ static bool showing = NO;
             
             [self turnToPortraint:^{
                 self.supportInterOrtation = UIInterfaceOrientationMaskAllButUpsideDown;
-                [self.player.player play];
+                [self.mediaPlayer.player play];
                 
                 //重绘画面
-                [self.player refreshView];
+                [self.mediaPlayer refreshView];
                 
                 if (_didClickFullScreen) {
                     _didClickFullScreen(self.isFullscreen);
@@ -486,10 +495,10 @@ static bool showing = NO;
             
         }];
     } else {
-        [self.player.player.view removeFromSuperview];
-        [self.vc.view removeFromSuperview];
-        [self.player.player shutdown];
-        self.player = nil;
+        [self.mediaPlayer.player.view removeFromSuperview];
+        [self.controlVC.view removeFromSuperview];
+        [self.mediaPlayer.player shutdown];
+        self.mediaPlayer = nil;
         
         [[NSNotificationCenter defaultCenter] postNotificationName:UCloudMoviePlayerClickBack object:self];
     }
@@ -497,12 +506,12 @@ static bool showing = NO;
 
 - (void)onClickPlay:(id)sender
 {
-    [self.player.player play];
+    [self.mediaPlayer.player play];
 }
 
 - (void)onClickPause:(id)sender
 {
-    [self.player.player pause];
+    [self.mediaPlayer.player pause];
 }
 
 - (void)durationSliderTouchBegan:(id)delta
@@ -512,10 +521,10 @@ static bool showing = NO;
 
 - (void)durationSliderTouchEnded:(id)delta
 {
-    CGFloat del = self.player.player.duration * [delta floatValue];
-    del = self.player.player.currentPlaybackTime + del;
-    [self.player.player setCurrentPlaybackTime:floor(del)];
-    [self.player.player prepareToPlay];
+    CGFloat del = self.mediaPlayer.player.duration * [delta floatValue];
+    del = self.mediaPlayer.player.currentPlaybackTime + del;
+    [self.mediaPlayer.player setCurrentPlaybackTime:floor(del)];
+    [self.mediaPlayer.player prepareToPlay];
 }
 
 - (void)durationSliderValueChanged:(id)delta
@@ -535,8 +544,8 @@ static bool showing = NO;
 
 - (void)clickShot:(id)sender
 {
-    self.current = [self.player.player currentPlaybackTime];
-    UIImage *image = [self.player.player thumbnailImageAtCurrentTime];
+    self.current = [self.mediaPlayer.player currentPlaybackTime];
+    UIImage *image = [self.mediaPlayer.player thumbnailImageAtCurrentTime];
     [self saveImageToPhotos:image];
 }
 /**
@@ -544,27 +553,27 @@ static bool showing = NO;
  */
 - (void)selectedDecodeMthod:(DecodeMthod)decodeMthod
 {
-    self.current = [self.player.player currentPlaybackTime];
-    [self.player selectDecodeMthod:decodeMthod];
+    self.current = [self.mediaPlayer.player currentPlaybackTime];
+    [self.mediaPlayer selectDecodeMthod:decodeMthod];
     [self reConfigurePlayer:0];
-    [self.player.player setCurrentPlaybackTime:self.current];
+    [self.mediaPlayer.player setCurrentPlaybackTime:self.current];
 }
 /**
  * 清晰度
  */
 - (void)selectedDefinition:(Definition)definition
 {
-    self.current = [self.player.player currentPlaybackTime];
-    [self.player selectDefinition:definition];
+    self.current = [self.mediaPlayer.player currentPlaybackTime];
+    [self.mediaPlayer selectDefinition:definition];
     [self reConfigurePlayer:0];
-    [self.player.player setCurrentPlaybackTime:self.current];
+    [self.mediaPlayer.player setCurrentPlaybackTime:self.current];
 }
 /**
  * 画幅大小
  */
 - (void)selectedScalingMode:(MPMovieScalingMode)scalingMode
 {
-    self.player.player.scalingMode = scalingMode;
+    self.mediaPlayer.player.scalingMode = scalingMode;
     [self reConfigurePlayer:0];
 }
 /**
@@ -572,7 +581,7 @@ static bool showing = NO;
  */
 - (void)clickFull:(UCoudWebBlock)block
 {
-    [self.player.player pause];
+    [self.mediaPlayer.player pause];
     
     if(!self.isFullscreen)
     {
@@ -584,10 +593,10 @@ static bool showing = NO;
                 
                 [self turnToLeft:^{
                     self.supportInterOrtation = UIInterfaceOrientationMaskAllButUpsideDown;
-                    [self.player.player play];
+                    [self.mediaPlayer.player play];
                     self.currentOrientation = UIInterfaceOrientationLandscapeLeft;
                     //重绘画面
-                    [self.player refreshView];
+                    [self.mediaPlayer refreshView];
                     
                     if (_didClickFullScreen) {
                         _didClickFullScreen(self.isFullscreen);
@@ -602,10 +611,10 @@ static bool showing = NO;
                 
                 [self turnToRight:^{
                     self.supportInterOrtation = UIInterfaceOrientationMaskAllButUpsideDown;
-                    [self.player.player play];
+                    [self.mediaPlayer.player play];
                     self.currentOrientation = UIInterfaceOrientationLandscapeRight;
                     //重绘画面
-                    [self.player refreshView];
+                    [self.mediaPlayer refreshView];
                     
                     if (_didClickFullScreen) {
                         _didClickFullScreen(self.isFullscreen);
@@ -621,10 +630,10 @@ static bool showing = NO;
             
             [self turnToPortraint:^{
                 self.supportInterOrtation = UIInterfaceOrientationMaskAllButUpsideDown;
-                [self.player.player play];
+                [self.mediaPlayer.player play];
                 
                 //重绘画面
-                [self.player refreshView];
+                [self.mediaPlayer refreshView];
                 
                 if (_didClickFullScreen) {
                     _didClickFullScreen(self.isFullscreen);
@@ -667,11 +676,11 @@ static bool showing = NO;
     _supportAutomaticRotation = supportAutomaticRotation;
     if (_supportAutomaticRotation)
     {
-        [self.vc setFullBtnState:NO];
+        [self.controlVC setFullBtnState:NO];
     }
     else
     {
-        [self.vc setFullBtnState:YES];
+        [self.controlVC setFullBtnState:YES];
     }
 }
 

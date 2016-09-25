@@ -208,8 +208,8 @@
 
 -(void)playWithUrl:(NSString*)url{
     if (self.player) {
-        [self.player.player.player pause];
-        [self.player.player.player shutdown];
+        [self.player.mediaPlayer.player pause];
+        [self.player.mediaPlayer.player shutdown];
         self.player = nil;
     }
     self.player = [[PlayerManager alloc] init];
@@ -220,7 +220,7 @@
     [self.player setSupportAngleChange:YES];
     
     NSString *path = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [self.player buildPlayer:path];
+    [self.player buildMediaPlayer:path];
     
     __weak CourSectionViewController *weakSelf =self;
     self.player.didClickFullScreen = ^void(BOOL fullScreen){
@@ -276,7 +276,7 @@
 
 -(void)applicationWillResignActive{
     // 暂停
-    [self.player.player.player pause];
+    [self.player.mediaPlayer.player pause];
 }
 
 /**
@@ -439,7 +439,7 @@
         return;
     }
     // 暂停
-    [self.player.player.player pause];
+    [self.player.mediaPlayer.player pause];
 
     CourBuyViewController *buyVC = [[CourBuyViewController alloc]init];
     buyVC.commodity = _commodity;
@@ -527,7 +527,7 @@
         return;
     }
     // 暂停
-    [self.player.player.player pause];
+    [self.player.mediaPlayer.player pause];
     
     NSArray *shareButtonTitleArray = [[NSArray alloc] init];
     NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
@@ -602,7 +602,7 @@
             [defaults setInteger:2 forKey:@"download_type"];
             [self downloadVideo];
         }else if (alertView.tag == 1002) {
-            [self.player.player.player pause];
+            [self.player.mediaPlayer.player pause];
             if(_type==1){
                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                 if ([_thirdPay.version isEqualToString:[infoDictionary objectForKey:@"CFBundleShortVersionString"]]&&[_thirdPay.thirdPay isEqualToString:@"0"]){
@@ -630,7 +630,7 @@
 }
 
 -(void)showLoginView{
-    [self.player.player.player pause];
+    [self.player.mediaPlayer.player pause];
     LoginViewController* loginViewCon = [[LoginViewController alloc] init];
     loginViewCon.successFunc = ^{
         if (_type==1) {
