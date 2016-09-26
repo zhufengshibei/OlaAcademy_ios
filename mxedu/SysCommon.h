@@ -79,6 +79,11 @@ extern "C" {
 
 #define UI_MAINSCREEN_HEIGHT_ROTATE     (SCREEN_HEIGHT - UI_STATUS_BAR_HEIGHT)
 
+#define kBottomViewHeight_V             42
+#define TopReturnBtnViewWidth           50
+#define TopViewHeight                   44
+#define kBottomViewHeight_H             72
+
 //判断是否登陆宏
 #define  OLA_LOGIN   AuthManager *am =[AuthManager sharedInstance];\
 if(!am.isAuthenticated)\

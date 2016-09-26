@@ -278,7 +278,7 @@
     OtherUserController * otherVC = [[OtherUserController alloc]init];
     otherVC.userInfo = userInfo;
     otherVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:otherVC animated:YES];
+    //[self.navigationController pushViewController:otherVC animated:YES];
 }
 
 #pragma Toolbar Delegate

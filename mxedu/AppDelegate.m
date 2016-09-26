@@ -299,19 +299,5 @@
     }
 }
 
-// 视频的横竖屏
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
-{
-    /**
-     *  这里移动要注意，条件判断成功的是在播放器播放过程中返回的
-     下面的是播放器没有弹出来的所支持的设备方向
-     */
-    if (self.vc){
-        return self.vc.player.supportInterOrtation;
-    }else{
-        return UIInterfaceOrientationMaskPortrait;
-    }
-}
-
 
 @end

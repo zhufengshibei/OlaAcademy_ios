@@ -12,7 +12,7 @@
 #import "VIPSubController.h"
 #import "AuthManager.h"
 #import "CommodityManager.h"
-#import "PlayerManager.h"
+#import "SDMediaPlayerVC.h"
 
 #import "Masonry.h"
 #import "CourSectionTableCell.h"
@@ -31,18 +31,13 @@
 #import "DownloadManager.h"
 
 #import "PayManager.h"
-#import "YzdHUDBackgroundView.h"
-#import "YzdHUDLabel.h"
-#import "YzdHUDImageView.h"
-#import "YzdHUDIndicator.h"
 
 #import "PDFView.h"
 #import "HMSegmentedControl.h"
 #import "SVProgressHUD.h"
 
-@interface CourSectionViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,ShareSheetDelegate,UMSocialUIDelegate>
+@interface CourSectionViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,MyMediaPlayerDelegate,MyMediaPlayerDataSource,ShareSheetDelegate,UMSocialUIDelegate>
 
-@property (nonatomic) UIView *playView;
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) HMSegmentedControl *segmentedControl;
 @property (nonatomic) UIView *operationView;
@@ -55,6 +50,9 @@
 @property (nonatomic) int currentIndex;
 @property (nonatomic) CourseVideo *currentVideo;
 
+@property(nonatomic ,strong) SDMediaPlayerVC *myMediaPlayer; //视频播放控件
+@property(nonatomic ,strong) UIView *bgView;
+
 
 @end
 
@@ -65,6 +63,8 @@
     UIButton *collectionButton;
     UIButton *downloadButton;
     UIButton *shareButton;
+    
+    BOOL vidioFinishLoad;
     
     /**
      *  数据源
@@ -89,9 +89,6 @@
     [self setupData];
     [self fetchPayModuleStatus];
     
-    //返回按钮监听
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti:) name:UCloudMoviePlayerClickBack object:nil];
-    
 }
 
 -(void)initView{
@@ -102,7 +99,7 @@
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(0, 0, 50, UI_NAVIGATION_BAR_HEIGHT);
     [backBtn setImage:[UIImage imageNamed:@"ic_back_white"] forState:UIControlStateNormal];
-    [backBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchDown];
+    [backBtn addTarget:self action:@selector(backClicked) forControlEvents:UIControlEventTouchDown];
     [titleView addSubview:backBtn];
     
     [SVProgressHUD showWithStatus:@"加载中..."];
@@ -110,9 +107,9 @@
 
 -(void)setupData{
     if (_type==1) {
-        [self fetchSectionVideo];
+        [self fetchSectionVideoWithVideoRefresh:YES];
     }else{
-        [self fetchCommodityVideoList];
+        [self fetchCommodityVideoListWithVideoRefresh:YES];
     }
     
 }
@@ -136,27 +133,96 @@
     [SVProgressHUD dismiss];
 }
 
--(void)setupPlayerView{
-    _playView = [[UIView alloc]initWithFrame:CGRectMake(0, UI_STATUS_BAR_HEIGHT, SCREEN_WIDTH, SCREEN_WIDTH*9.0/16.0)];
-    [self.view addSubview:_playView];
+#pragma mark 加载视频播放控件
+-(void)setupPlayerView
+{
+    if (_bgView == nil) {
+        _bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, kVedioHeight)];
+        _bgView.backgroundColor = [UIColor blackColor];
+    }
+    if ([_bgView isDescendantOfView:self.view] == NO) {
+        [self.view addSubview:_bgView];
+    }
+    
+    if (_myMediaPlayer != nil) {
+        _myMediaPlayer = nil;
+    }
+    
+//    if(self.localOrOnLine)
+//    {
+//        NSString* filePath = [_localModal stringDownloadPath];
+//        if ([filePath hasPrefix:@"/var"]) {
+//            NSRange range = [filePath rangeOfString:kVedioListPath];
+//            if (range.location != NSNotFound && range.length) {
+//                NSString* subPathString = [filePath substringFromIndex:range.location];
+//                filePath = [kDocPath stringByAppendingString:subPathString];
+//            }
+//        }
+//        else
+//        {
+//            filePath = [kDocPath stringByAppendingString:filePath];
+//        }
+//        filePath =[filePath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//        
+//        _myMediaPlayer = [[SDMediaPlayerVC alloc] initLocalMyMediaPlayerWithURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@",kDocPath,_localModal.henhaoPath]] coverImageURL:_localModal.stringShowImageURL movieTitle:_localModal.stringVideoName videoId:_localModal.stringSourseId];
+//        _myMediaPlayer.ECAPath = _localModal.henhaoPath;
+//    }
+//    else
+//    {
+        // 网络视频
+        _myMediaPlayer = [[SDMediaPlayerVC alloc] initNetworkMyMediaPlayerWithURL:[NSURL URLWithString:_currentVideo.address] coverImageURL:@"" movieTitle:_currentVideo.name videoId:_currentVideo.videoId];
+//    }
+    _myMediaPlayer.fullScrenType = 1;//用于视频播放器的列表
+    _myMediaPlayer.dataArray = dataArray;
+    _myMediaPlayer.nomalFrame = CGRectMake(0, 0, SCREEN_WIDTH, kVedioHeight);
+    _myMediaPlayer.cutFullModeFrame = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
+    _myMediaPlayer.delegate = self;
+    _myMediaPlayer.datasource = self;
+    if ([_myMediaPlayer.view isDescendantOfView:_bgView] == NO) {
+        [_bgView addSubview:_myMediaPlayer.view];
+    }
+    
+    vidioFinishLoad = NO;
+    // 监听视频加载状态
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti:) name:PlaybackIsPreparedToPlayDidChangeNotification  object:nil];
+    // 监听返回按钮
+    [self addVideoCutObserver];
     
     [self setupSegment];
     [self setupTableView];
     [self setupPDFView];
     
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    delegate.vc = self;
-    
-    [self playWithUrl:_currentVideo.address];
-    
-    // 程序退到后台监听
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive)
-                                                 name:UIApplicationWillResignActiveNotification object:nil];
+}
+
+-(void)noti:(NSNotification *)noty
+{
+    // 视频加载成功后允许页面跳转
+    if ([noty.name isEqualToString:PlaybackIsPreparedToPlayDidChangeNotification])
+    {
+        vidioFinishLoad = YES;
+    }
+}
+
+
+- (void)addVideoCutObserver
+{
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"cutFullModeBtnClick" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification* notification) {
+        
+        [self.view bringSubviewToFront:_bgView];
+        _myMediaPlayer.isFullScreen = ! _myMediaPlayer.isFullScreen;
+        if (_myMediaPlayer.isFullScreen) {
+            _bgView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+            [_myMediaPlayer adjustVideoWithOrientation:UIDeviceOrientationLandscapeLeft];
+        }
+        else {
+            _bgView.frame = CGRectMake(0, 20, SCREEN_WIDTH, kVedioHeight);
+            [_myMediaPlayer adjustVideoWithOrientation:UIDeviceOrientationPortrait];
+        }
+    }];
 }
 
 -(void)setupSegment{
-    _segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(_playView.frame), SCREEN_WIDTH-60, GENERAL_SIZE(80))];
+    _segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(_myMediaPlayer.nomalFrame)+UI_STATUS_BAR_HEIGHT, SCREEN_WIDTH-60, GENERAL_SIZE(80))];
     _segmentedControl.sectionTitles = @[@"目录",@"讲义"];
     _segmentedControl.selectedSegmentIndex = 0;
     
@@ -206,111 +272,54 @@
     [self.view addSubview:_pdfView];
 }
 
--(void)playWithUrl:(NSString*)url{
-    if (self.player) {
-        [self.player.mediaPlayer.player pause];
-        [self.player.mediaPlayer.player shutdown];
-        self.player = nil;
-    }
-    self.player = [[PlayerManager alloc] init];
-    self.player.view = _playView;
-    self.player.viewContorller = self;
-    
-    [self.player setSupportAutomaticRotation:YES];
-    [self.player setSupportAngleChange:YES];
-    
-    NSString *path = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [self.player buildMediaPlayer:path];
-    
-    __weak CourSectionViewController *weakSelf =self;
-    self.player.didClickFullScreen = ^void(BOOL fullScreen){
-        [weakSelf hideContentView:fullScreen];
-    };
-}
+#pragma MyMediaPlayerDelegate 播放器代理
 
-//全屏隐藏其他视图
--(void)hideContentView:(BOOL)fullScreen{
-    if (fullScreen) {
-        _tableView.hidden = YES;
-        _segmentedControl.hidden = YES;
-        _operationView.hidden = YES;
-        _pdfView.hidden = YES;
-    }else{
-        _tableView.hidden = NO;
-        _segmentedControl.hidden = NO;
-        if ([_commodity.price intValue]>0&&![_orderStatus isEqualToString:@"1"]) {
-            _operationView.hidden = NO;
-        }
-        if (_currentIndex==1) {
-            _pdfView.hidden = NO;
-        }
-    }
-}
-
-- (void)noti:(NSNotification *)noti
+-(void)movieQuickLogIn
 {
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    if ([noti.name isEqualToString:UCloudMoviePlayerClickBack])
-    {
-        [self back];
-    }
+    OLA_LOGIN;
 }
 
--(void)back{
-    /**
-     *  一定要置空
-     */
-    self.player = nil;
-    
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    delegate.vc = nil;
-    
-    //移除提示视图，否则影响下拉列表
-    [[YzdHUDBackgroundView shareHUDView] removeFromSuperview];
-    [[YzdHUDLabel shareHUDView] removeFromSuperview];
-    [[YzdHUDImageView shareHUDView] removeFromSuperview];
-    [[YzdHUDIndicator shareHUDView] removeFromSuperview];
-    
+-(void)backClicked
+{
     [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)applicationWillResignActive{
-    // 暂停
-    [self.player.mediaPlayer.player pause];
-}
-
-/**
- *  以下方法必须实现
- */
--(UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    if (self.player)
-    {
-        return self.player.supportInterOrtation;
-    }
-    else
-    {
-        /**
-         *  这个在播放之外的程序支持的设备方向
-         */
-        return UIInterfaceOrientationMaskPortrait;
+    if (_myMediaPlayer) {
+        [_myMediaPlayer popView];
+        [_myMediaPlayer.view removeFromSuperview];
     }
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [self.player rotateEnd];
-    
+-(void)didPlayeSelectRowAtIndexPathModal:(id)object viewController:(SDMediaPlayerVC *)PlayerVC indexPath:(NSIndexPath *)path{
+    [self switchCurrentVideo:path];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+#pragma MyMediaPlayerDataSource (上一个 下一个 方法 还需完善)
+
+- (NSDictionary*)previousMovieURLAndTitleToTheCurrentMovie
 {
-    [self.player rotateBegain:toInterfaceOrientation];
-    if (toInterfaceOrientation==UIDeviceOrientationLandscapeLeft||toInterfaceOrientation==UIDeviceOrientationLandscapeRight) {
-        [self hideContentView:YES];
-    }else{
-        [self hideContentView:NO];
-    }
+    return nil;
+}
+
+-(NSDictionary*)nextMovieURLAndTitleToTheCurrentMovie{
+    return nil;
+}
+
+- (BOOL)isHaveNextMovie
+{
+    return NO;
+}
+
+- (BOOL)isHavePreviousMovie
+{
+    return NO;
+}
+
+- (BOOL)shouldPlay{
+    return YES;
+}
+
+// 显示提示框
+- (BOOL)shouldShowAlert{
+    return YES;
 }
 
 
@@ -378,7 +387,7 @@
 /**
  *  获取课程下的所有章节视频
  */
--(void)fetchSectionVideo{
+-(void)fetchSectionVideoWithVideoRefresh:(BOOL)refresh{
     AuthManager *am = [AuthManager sharedInstance];
     NSString *userId = @"";
     if (am.isAuthenticated) {
@@ -399,7 +408,9 @@
             _currentVideo = dataArray[0];
             _currentVideo.isChosen = 1;
             [dataArray replaceObjectAtIndex:0 withObject:_currentVideo]; //当前正在播放的视频
-            [self setupPlayerView];
+            if (refresh) {
+                [self setupPlayerView];
+            }
         }
         [SVProgressHUD dismiss];
         [_tableView reloadData];
@@ -408,7 +419,7 @@
     }];
 }
 // 成套视频
--(void)fetchCommodityVideoList{
+-(void)fetchCommodityVideoListWithVideoRefresh:(BOOL)refresh{
     NSString *userId = @"";
     AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
@@ -435,11 +446,9 @@
 }
 
 -(void)buyCourse{
-    if (!_player.isPrepared) { //视频未加载完成，不允许跳转
+    if (!vidioFinishLoad) { //视频未加载完成，不允许跳转
         return;
     }
-    // 暂停
-    [self.player.mediaPlayer.player pause];
 
     CourBuyViewController *buyVC = [[CourBuyViewController alloc]init];
     buyVC.commodity = _commodity;
@@ -523,11 +532,9 @@
 }
 
 -(void)shareCourse{
-    if (!_player.isPrepared) { //视频未加载完成，不允许跳转
+    if (!vidioFinishLoad) { //视频未加载完成，不允许跳转
         return;
     }
-    // 暂停
-    [self.player.mediaPlayer.player pause];
     
     NSArray *shareButtonTitleArray = [[NSArray alloc] init];
     NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
@@ -561,12 +568,17 @@
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [self switchCurrentVideo:indexPath];
+}
+
+// 切换视频
+-(void)switchCurrentVideo:(NSIndexPath *)indexPath{
     if (indexPath.row==currentRow) {
         return;
     }
     CourseVideo *videoInfo = [dataArray objectAtIndex:indexPath.row];
     if(videoInfo.isfree==1){
-        if (!_player.isPrepared) { //上一个视频加载中不允许切换
+        if (!vidioFinishLoad) { //上一个视频加载中不允许切换
             return;
         }
         _currentVideo.isChosen = 0; //取消上一个的选中效果
@@ -577,9 +589,10 @@
         _currentVideo = videoInfo;
         _currentVideo.isChosen = 1;
         [dataArray replaceObjectAtIndex:indexPath.row withObject:_currentVideo]; //当前正在播放的视频
-        [tableView reloadData];
+        _myMediaPlayer.dataArray = dataArray;
+        [_tableView reloadData];
         if (videoInfo.address) {
-            [self playWithUrl:videoInfo.address];
+            [_myMediaPlayer changeVedioByURL:videoInfo.address coverImageURL:@"" vedioTitle:videoInfo.name videoId:videoInfo.videoId];
         }
     }else{
         AuthManager *am = [AuthManager sharedInstance];
@@ -602,20 +615,19 @@
             [defaults setInteger:2 forKey:@"download_type"];
             [self downloadVideo];
         }else if (alertView.tag == 1002) {
-            [self.player.mediaPlayer.player pause];
             if(_type==1){
                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                 if ([_thirdPay.version isEqualToString:[infoDictionary objectForKey:@"CFBundleShortVersionString"]]&&[_thirdPay.thirdPay isEqualToString:@"0"]){
                     IAPVIPController *iapVC =[[IAPVIPController alloc]init];
                     iapVC.callbackBlock = ^{
-                        [self fetchSectionVideo];
+                        [self fetchSectionVideoWithVideoRefresh:NO];
                     };
                     iapVC.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:iapVC animated:YES];
                 }else{
                     VIPSubController *vipVC =[[VIPSubController alloc]init];
                     vipVC.callbackBlock = ^{
-                        [self fetchSectionVideo];
+                        [self fetchSectionVideoWithVideoRefresh:NO];
                     };
                     vipVC.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vipVC animated:YES];
@@ -630,13 +642,13 @@
 }
 
 -(void)showLoginView{
-    [self.player.mediaPlayer.player pause];
+    [_myMediaPlayer pause];
     LoginViewController* loginViewCon = [[LoginViewController alloc] init];
     loginViewCon.successFunc = ^{
         if (_type==1) {
-            [self fetchSectionVideo];
+            [self fetchSectionVideoWithVideoRefresh:NO];
         }else{
-            [self fetchCommodityVideoList];
+            [self fetchCommodityVideoListWithVideoRefresh:NO];
         }
     };
     UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:loginViewCon];

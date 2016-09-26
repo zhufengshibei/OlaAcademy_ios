@@ -96,7 +96,7 @@
     self.selectedIndex = 2;
     
     // 每日签到状态
-    [self fetchSignInStatus];
+    // [self fetchSignInStatus];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupTabContent) name:@"NEEDREFRESH" object:nil];
     
