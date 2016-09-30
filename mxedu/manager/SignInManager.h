@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "StatusResult.h"
+#import "SignInStatusResult.h"
 #import "CommonResult.h"
 
 @interface SignInManager : NSObject
@@ -20,7 +20,7 @@
  *  @param failure <#failure description#>
  */
 -(void)fetchSignInStatusWithUserId:(NSString*)userId
-                           Success:(void(^)(StatusResult *result))success
+                           Success:(void(^)(SignInStatusResult *result))success
                            Failure:(void(^)(NSError* error))failure;
 
 /*

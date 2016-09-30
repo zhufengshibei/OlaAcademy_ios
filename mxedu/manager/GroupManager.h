@@ -37,10 +37,12 @@
 
 /*
  * 创建群
+ * type 1 数学 2 英语 3 逻辑 4 写作
  */
 -(void)createGroupWithUserId:(NSString*)userId
                         Name:(NSString*)name
                       Avatar:(NSString*)avatar
+                        Type:(NSString*)type
                      success:(void (^)(CommonResult *result))success
                      failure:(void (^)(NSError*))failure;
 

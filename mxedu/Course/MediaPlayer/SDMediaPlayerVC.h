@@ -35,7 +35,7 @@ static NSString * PlaybackIsPreparedToPlayDidChangeNotification = @"PlaybackIsPr
 - (NSDictionary *)previousMovieURLAndTitleToTheCurrentMovie;
 - (BOOL)isHaveNextMovie;
 - (BOOL)isHavePreviousMovie;
-- (BOOL)shouldPlay;
+- (BOOL)allowPlay;
 - (BOOL)shouldShowAlert;
 @end
 

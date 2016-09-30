@@ -27,6 +27,8 @@
 
 @property (nonatomic, strong, readonly) RKObjectMapping* userMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* userInfoResultMapping;
+// 签到状态
+@property (nonatomic, strong, readonly) RKObjectMapping* signInStatusResultMapping;
 
 @property (nonatomic, strong, readonly) RKObjectMapping* homeListResultMapping;
 

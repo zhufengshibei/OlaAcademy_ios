@@ -313,7 +313,7 @@
     return NO;
 }
 
-- (BOOL)shouldPlay{
+- (BOOL)allowPlay{
     return YES;
 }
 

@@ -1,12 +1,12 @@
 //
-//  TeachHomeworkController.m
+//  StuHomeworkController.m
 //  mxedu
 //
-//  Created by 田晓鹏 on 16/8/29.
+//  Created by 田晓鹏 on 16/9/30.
 //  Copyright © 2016年 田晓鹏. All rights reserved.
 //
 
-#import "HomeworkController.h"
+#import "StuHomeworkController.h"
 
 #import "SysCommon.h"
 #import "HomeworkTableViewObject.h"
@@ -19,7 +19,7 @@
 #import "GroupViewController.h"
 #import "QuestionWebController.h"
 
-@interface HomeworkController ()<MeetingTableViewDelegate>
+@interface StuHomeworkController ()<MeetingTableViewDelegate>
 
 @property (nonatomic) UIImageView *groupBtn;
 
@@ -30,19 +30,13 @@
 
 @end
 
-@implementation HomeworkController
+@implementation StuHomeworkController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if ([_type isEqualToString:@"1"]) {
-        self.navigationItem.title = @"我的作业";
-        [self setupBackButton];
-    } else {
-        self.navigationItem.title = @"老师版";
-        [self setupRightButton];
-    }
-    
+    self.navigationItem.title = @"我的作业";
+    [self setupBackButton];
     
     AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
@@ -50,8 +44,6 @@
         _userId = am.userInfo.userId;
         _dataSource = [[NSMutableArray alloc] init];
         [_tableView.header beginRefreshing];
-    }else{
-        
     }
 }
 
@@ -68,24 +60,6 @@
 
 -(void)backButtonClicked{
     [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)setupRightButton{
-    _groupBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
-    _groupBtn.image = [UIImage imageNamed:@"ic_group"];
-    _groupBtn.userInteractionEnabled = YES;
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showGroupView)];
-    [_groupBtn addGestureRecognizer:singleTap];
-    [_groupBtn sizeToFit];
-    
-    UIBarButtonItem *rightCunstomButtonView = [[UIBarButtonItem alloc] initWithCustomView:_groupBtn];
-    self.navigationItem.rightBarButtonItem = rightCunstomButtonView;
-}
-
--(void)showGroupView{
-    GroupViewController *groupVC = [[GroupViewController alloc]init];
-    groupVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:groupVC animated:YES];
 }
 
 /**
@@ -111,7 +85,7 @@
 - (void)setupDataWithId:(NSString*)homeworkId
 {
     HomeworkManager *hm = [[HomeworkManager alloc]init];
-    [hm fetchHomeworkListWithHomeworkId:homeworkId PageSize:@"20" UserId:_userId Type:_type Success:^(HomeworkListResult *result) {
+    [hm fetchHomeworkListWithHomeworkId:homeworkId PageSize:@"20" UserId:_userId Type:@"1" Success:^(HomeworkListResult *result) {
         
         if ([homeworkId isEqualToString:@""]) {
             [_dataSource removeAllObjects];
@@ -174,16 +148,14 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowWithModel:(Homework *)model{
-    if ([_type isEqualToString:@"1"]) {
-        QuestionWebController *questionVC = [[QuestionWebController alloc]init];
-        questionVC.titleName = model.name;
-        questionVC.objectId = model.homeworkId;
-        questionVC.type = 3;
-        questionVC.callbackBlock = ^{
-            [self setupDataWithId:@""];
-        };
-        [self.navigationController pushViewController:questionVC animated:YES];
-    }
+    QuestionWebController *questionVC = [[QuestionWebController alloc]init];
+    questionVC.titleName = model.name;
+    questionVC.objectId = model.homeworkId;
+    questionVC.type = 3;
+    questionVC.callbackBlock = ^{
+        [self setupDataWithId:@""];
+    };
+    [self.navigationController pushViewController:questionVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -89,6 +89,7 @@
 -(void)createGroupWithUserId:(NSString*)userId
                         Name:(NSString*)name
                       Avatar:(NSString*)avatar
+                        Type:(NSString*)type
                      success:(void (^)(CommonResult *result))success
                      failure:(void (^)(NSError*))failure
 {
@@ -101,7 +102,8 @@
     // 采用post方式，get方式可能产生中文乱码
     [om postObject:nil path:@"/ola/homework/createGroup" parameters:@{@"userId": userId,
                                                                     @"name": name,
-                                                                    @"avatar": avatar
+                                                                    @"avatar": avatar,
+                                                                    @"type": type
                                                                     }
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                if ([mappingResult.firstObject isKindOfClass:[CommonResult class]]) {

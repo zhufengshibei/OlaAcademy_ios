@@ -21,5 +21,6 @@
 @property (nonatomic, copy) NSString* local;
 @property (nonatomic, copy) NSString* isActive; //1 学生 2 老师
 @property (nonatomic, copy) NSString* vipTime;
+@property (nonatomic, copy) NSString* signInDays; // 累积签到
 
 @end

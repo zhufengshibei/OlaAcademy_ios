@@ -9,7 +9,7 @@
 #import "CollectionSubController.h"
 
 #import "CourseManager.h"
-#import "CollectionTableCell.h"
+#import "CourseTableViewCell.h"
 
 #import "SysCommon.h"
 #import "AuthManager.h"
@@ -127,19 +127,19 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    CollectionTableCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    CourseTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (cell == nil) {
-        cell = [[CollectionTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"collectionCell"];
+        cell = [[CourseTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"collectionCell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     CollectionVideo *video = [videoArray objectAtIndex:indexPath.row];
-    [cell setupCellWithModel:video];
+    [cell setupCell:video];
     
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 75;
+     return GENERAL_SIZE(230);
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -15,7 +15,7 @@
 
 #import "UITabBar+badge.h"
 
-#import "HomeworkController.h"
+#import "TeaHomeworkController.h"
 #import "QuestionViewController.h"
 #import "HomeViewController.h"
 #import "CourseViewController.h"
@@ -26,7 +26,7 @@
 
 @property (strong, nonatomic) SKSplashView *splashView;
 
-@property (strong, nonatomic) HomeworkController *teachVC;
+@property (strong, nonatomic) TeaHomeworkController *teachVC;
 @property (strong, nonatomic) QuestionViewController *questionVC;
 @property (strong, nonatomic) HomeViewController *homeVC;
 @property (strong, nonatomic) CourseViewController *courseVC;
@@ -59,8 +59,7 @@
     questionNav.tabBarItem.image = [UIImage imageNamed:@"ic_point_normal"];
     questionNav.tabBarItem.selectedImage = [[UIImage imageNamed:@"ic_point_selected"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    _teachVC = [[HomeworkController alloc]init];
-    _teachVC.type = @"2";
+    _teachVC = [[TeaHomeworkController alloc]init];
     UINavigationController *teachNav = [[UINavigationController alloc]initWithRootViewController:_teachVC];
     teachNav.title = @"考点";
     teachNav.tabBarItem.image = [UIImage imageNamed:@"ic_point_normal"];
@@ -96,7 +95,7 @@
     self.selectedIndex = 2;
     
     // 每日签到状态
-    // [self fetchSignInStatus];
+    [self fetchSignInStatus];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupTabContent) name:@"NEEDREFRESH" object:nil];
     
@@ -116,8 +115,8 @@
     AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
         __weak MainViewController *weakSelf = self;
-        [sm fetchSignInStatusWithUserId:am.userInfo.userId Success:^(StatusResult *result) {
-            if (result.status==0) {
+        [sm fetchSignInStatusWithUserId:am.userInfo.userId Success:^(SignInStatusResult *result) {
+            if (result.signInStatus.status==0) {
                 _userVC.showSignIn = YES;
                 _userVC.signInBlock = ^{
                     weakSelf.userVC.showSignIn = NO;

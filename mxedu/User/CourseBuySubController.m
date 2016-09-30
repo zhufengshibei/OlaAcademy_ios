@@ -9,7 +9,7 @@
 #import "CourseBuySubController.h"
 
 #import "CommodityManager.h"
-#import "BuyTableCell.h"
+#import "CourseTableViewCell.h"
 
 #import "SysCommon.h"
 #import "AuthManager.h"
@@ -123,19 +123,19 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    BuyTableCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    CourseTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (cell == nil) {
-        cell = [[BuyTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"buyCell"];
+        cell = [[CourseTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"buyCell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     Commodity *commodity = [commodityArray objectAtIndex:indexPath.row];
-    [cell setupCellWithModel:commodity];
+    [cell setupCell:commodity];
     
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 75;
+    return GENERAL_SIZE(230);
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

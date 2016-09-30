@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SignInViewDelegate <NSObject>
+
+- (void)didClickOnImageIndex:(NSInteger)imageIndex;
+
+@end
+
 typedef void (^PopoverViewButtonBlock)();
 
 @interface SignInPopoverView : UIView
+
+@property (nonatomic) id<SignInViewDelegate> delegate;
 
 //展示界面
 - (void)show;

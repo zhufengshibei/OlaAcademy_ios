@@ -67,12 +67,172 @@ static const char * const kZSYPopoverListButtonClickForCancel = "kZSYPopoverList
         make.centerY.equalTo(_backIV).offset(-GENERAL_SIZE(10));
     }];
     
+    UIImageView *tipIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ic_signIn_tip"]];
+    [self addSubview:tipIV];
+    
+    [tipIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(avatarIV);
+        make.bottom.equalTo(avatarIV).offset(-GENERAL_SIZE(20));
+    }];
+    
+    UILabel *signL = [[UILabel alloc] init];
+    signL.text = @"签到活得欧拉币";
+    signL.textColor = [UIColor whiteColor];
+    signL.font = LabelFont(20);
+    [tipIV addSubview:signL];
+    
+    [signL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(tipIV);
+    }];
+    
     UIImageView *bottomIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg_signIn_bottom"]];
     [self addSubview:bottomIV];
     
     [bottomIV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self);
         make.top.equalTo(_backIV.mas_bottom);
+    }];
+    
+    UILabel *tipL = [[UILabel alloc] init];
+    tipL.text = @"快分享给小伙伴吧";
+    tipL.textColor = RGBCOLOR(81, 83, 93);
+    tipL.font = LabelFont(20);
+    [bottomIV addSubview:tipL];
+    
+    [tipL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(bottomIV);
+        make.top.equalTo(bottomIV).offset(GENERAL_SIZE(24));
+    }];
+    
+    UIView *diveder1 = [[UIView alloc]init];
+    diveder1.backgroundColor = RGBCOLOR(235, 235, 235);
+    [bottomIV addSubview:diveder1];
+    
+    [diveder1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(tipL);
+        make.left.equalTo(bottomIV).offset(GENERAL_SIZE(30));
+        make.right.equalTo(tipL.mas_left).offset(-GENERAL_SIZE(15));
+        make.height.equalTo(@1);
+    }];
+    
+    UIView *diveder2 = [[UIView alloc]init];
+    diveder2.backgroundColor = RGBCOLOR(235, 235, 235);
+    [bottomIV addSubview:diveder2];
+    
+    [diveder2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(tipL);
+        make.left.equalTo(tipL.mas_right).offset(GENERAL_SIZE(15));
+        make.right.equalTo(bottomIV.mas_right).offset(-GENERAL_SIZE(30));
+         make.height.equalTo(@1);
+    }];
+    
+    UIButton *qqIV = [UIButton buttonWithType:UIButtonTypeCustom];
+    [qqIV setImage:[UIImage imageNamed:@"ic_qq"] forState:UIControlStateNormal];
+    qqIV.tag = 1003;
+    [qqIV addTarget:self action:@selector(didClickShareButton:) forControlEvents:UIControlEventTouchDown];
+    [self addSubview:qqIV];
+    
+    [qqIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(bottomIV);
+    }];
+    
+    UILabel *qqL = [[UILabel alloc]init];
+    qqL.text = @"QQ好友";
+    qqL.font = LabelFont(16);
+    qqL.textColor = RGBCOLOR(81, 83, 93);
+    [self addSubview:qqL];
+    
+    [qqL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(qqIV.mas_bottom).offset(GENERAL_SIZE(10));
+        make.centerX.equalTo(qqIV);
+    }];
+    
+    UIButton *wechatIV = [UIButton buttonWithType:UIButtonTypeCustom];
+    wechatIV.tag = 1001;
+    [wechatIV addTarget:self action:@selector(didClickShareButton:) forControlEvents:UIControlEventTouchDown];
+    [wechatIV setImage:[UIImage imageNamed:@"ic_wechat"] forState:UIControlStateNormal];
+    [self addSubview:wechatIV];
+    
+    [wechatIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(bottomIV).offset(GENERAL_SIZE(32));
+        make.centerY.equalTo(bottomIV);
+    }];
+    
+    UILabel *wechatL = [[UILabel alloc]init];
+    wechatL.text = @"微信";
+    wechatL.font = LabelFont(16);
+    wechatL.textColor = RGBCOLOR(81, 83, 93);
+    [self addSubview:wechatL];
+    
+    [wechatL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(wechatIV.mas_bottom).offset(GENERAL_SIZE(10));
+        make.centerX.equalTo(wechatIV);
+    }];
+    
+    UIButton *timelineIV = [UIButton buttonWithType:UIButtonTypeCustom];
+    [timelineIV setImage:[UIImage imageNamed:@"ic_timeline"] forState:UIControlStateNormal];
+    timelineIV.tag = 1002;
+    [timelineIV addTarget:self action:@selector(didClickShareButton:) forControlEvents:UIControlEventTouchDown];
+    [self addSubview:timelineIV];
+    
+    [timelineIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(wechatIV.mas_right).offset(GENERAL_SIZE(32));
+        make.centerY.equalTo(bottomIV);
+    }];
+    
+    UILabel *timelineL = [[UILabel alloc]init];
+    timelineL.text = @"朋友圈";
+    timelineL.font = LabelFont(16);
+    timelineL.textColor = RGBCOLOR(81, 83, 93);
+    [self addSubview:timelineL];
+    
+    [timelineL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(timelineIV.mas_bottom).offset(GENERAL_SIZE(10));
+        make.centerX.equalTo(timelineIV);
+    }];
+    
+    UIButton *sinaIV = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sinaIV setImage:[UIImage imageNamed:@"ic_sina"] forState:UIControlStateNormal];
+    sinaIV.tag = 1005;
+    [sinaIV addTarget:self action:@selector(didClickShareButton:) forControlEvents:UIControlEventTouchDown];
+    [self addSubview:sinaIV];
+    
+    [sinaIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(bottomIV.mas_right).offset(-GENERAL_SIZE(32));
+        make.centerY.equalTo(bottomIV);
+    }];
+    
+    UILabel *sinaL = [[UILabel alloc]init];
+    sinaL.text = @"微博";
+    sinaL.font = LabelFont(16);
+    sinaL.textColor = RGBCOLOR(81, 83, 93);
+    [self addSubview:sinaL];
+    
+    [sinaL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(sinaIV.mas_bottom).offset(GENERAL_SIZE(10));
+        make.centerX.equalTo(sinaIV);
+    }];
+    
+    UIButton *qzoneIV = [UIButton buttonWithType:UIButtonTypeCustom];
+    [qzoneIV setImage:[UIImage imageNamed:@"ic_qzone"] forState:UIControlStateNormal];
+    qzoneIV.tag = 1004;
+    [qzoneIV addTarget:self action:@selector(didClickShareButton:) forControlEvents:UIControlEventTouchDown];
+    [self addSubview:qzoneIV];
+    
+    [qzoneIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(sinaIV.mas_left).offset(-GENERAL_SIZE(32));
+        make.centerY.equalTo(bottomIV);
+    }];
+
+    UILabel *qzoneL = [[UILabel alloc]init];
+    qzoneL.text = @"QQ空间";
+    qzoneL.font = LabelFont(16);
+    qzoneL.textColor = RGBCOLOR(81, 83, 93);
+    [self addSubview:qzoneL];
+    
+    [qzoneL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(qzoneIV.mas_bottom).offset(GENERAL_SIZE(10));
+        make.centerX.equalTo(qzoneIV);
     }];
 
 }
@@ -155,5 +315,12 @@ static const char * const kZSYPopoverListButtonClickForCancel = "kZSYPopoverList
 - (void)touchForDismissSelf:(id)sender
 {
     [self animatedOut];
+}
+
+-(void)didClickShareButton:(UIButton*)btn{
+    [self animatedOut];
+    if (_delegate) {
+        [_delegate didClickOnImageIndex:btn.tag];
+    }
 }
 @end

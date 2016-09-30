@@ -1498,7 +1498,7 @@ static   SDMediaPlayerVC * sharedMyMediaPlayer = nil;
 
 - (void)showNoNetAlert
 {
-    if(_datasource && [_datasource respondsToSelector:@selector(shouldPlay)])
+    if(_datasource && [_datasource respondsToSelector:@selector(allowPlay)])
     {
         BOOL shouldShowAlert = [_datasource shouldShowAlert];
         if(!shouldShowAlert)
@@ -1537,7 +1537,7 @@ static   SDMediaPlayerVC * sharedMyMediaPlayer = nil;
 
 - (void)showAllow3GPlayBackAlert
 {
-    if(_datasource && [_datasource respondsToSelector:@selector(shouldPlay)])
+    if(_datasource && [_datasource respondsToSelector:@selector(allowPlay)])
     {
         BOOL shouldShowAlert = [_datasource shouldShowAlert];
         if(!shouldShowAlert)
@@ -1575,7 +1575,7 @@ static   SDMediaPlayerVC * sharedMyMediaPlayer = nil;
 
 - (void)showDoNotAllow3GPlayBackAlert
 {
-    if(_datasource && [_datasource respondsToSelector:@selector(shouldPlay)])
+    if(_datasource && [_datasource respondsToSelector:@selector(allowPlay)])
     {
         BOOL shouldShowAlert = [_datasource shouldShowAlert];
         if(!shouldShowAlert)
@@ -1625,7 +1625,7 @@ static   SDMediaPlayerVC * sharedMyMediaPlayer = nil;
 
 - (void)showConnectNetAlert
 {
-    if(_datasource && [_datasource respondsToSelector:@selector(shouldPlay)])
+    if(_datasource && [_datasource respondsToSelector:@selector(allowPlay)])
     {
         BOOL shouldShowAlert = [_datasource shouldShowAlert];
         if(!shouldShowAlert)
@@ -1738,10 +1738,10 @@ static   SDMediaPlayerVC * sharedMyMediaPlayer = nil;
     {
         return;
     }
-    if(_datasource && [_datasource respondsToSelector:@selector(shouldPlay)])
+    if(_datasource && [_datasource respondsToSelector:@selector(allowPlay)])
     {
-        BOOL shouldPlay = [_datasource shouldPlay];
-        if(!shouldPlay)
+        BOOL allowPlay = [_datasource allowPlay];
+        if(!allowPlay)
         {
             return;
         }

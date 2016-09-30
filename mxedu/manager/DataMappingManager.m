@@ -13,6 +13,7 @@
 #import "UploadResult.h"
 #import "User.h"
 #import "UserInfoResult.h"
+#import "SignInStatusResult.h"
 #import "Location.h"
 #import "LocationResult.h"
 #import "SysCommon.h"
@@ -115,6 +116,7 @@
     [self setupAuthTokenMappings];
     [self setupCommonMappings];
     [self setupUserMappings];
+    [self setupSignInStatusResultMapping];
     [self setupUploadMappings];
     [self setupLoactionResultMapping];
     [self setupHomeDataListMapping];
@@ -190,7 +192,8 @@
                                                           @"phone":    @"phone",
                                                           @"isActive": @"isActive",
                                                           @"vipTime":    @"vipTime",
-                                                          @"sign":    @"signature"
+                                                          @"sign":    @"signature",
+                                                          @"signInDays":  @"signInDays"
                                                           }];
     
     _userInfoResultMapping = [RKObjectMapping mappingForClass:[UserInfoResult class]];
@@ -200,6 +203,22 @@
                                                                 }];
     [_userInfoResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"data" toKeyPath:@"userInfo" withMapping:_userMapping]];
     
+}
+
+- (void)setupSignInStatusResultMapping
+{
+    RKObjectMapping *signInStatus = [RKObjectMapping mappingForClass:[SignInStatus class]];
+    [signInStatus addAttributeMappingsFromDictionary:@{
+                                                        @"status":        @"status",
+                                                        @"lastSignIn":    @"lastSignIn",
+                                                        @"signInDays":    @"signInDays"
+                                                           }];
+    _signInStatusResultMapping = [RKObjectMapping mappingForClass:[SignInStatusResult class]];
+    [_signInStatusResultMapping addAttributeMappingsFromDictionary:@{
+                                                                  @"code": @"code",
+                                                                  @"message": @"message"
+                                                                  }];
+    [_signInStatusResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"signInStatus" withMapping:signInStatus]];
 }
 
 -(void)setupUploadMappings{

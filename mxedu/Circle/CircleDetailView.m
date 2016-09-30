@@ -292,7 +292,15 @@ AuthManager *am;
                 if (image != nil)
                 {
                     if (_imageArray.count==1) {
-                        cell.imageView.image = [Util imageBy:image withWidth:SCREEN_WIDTH-100  withHight:(SCREEN_WIDTH-100)*9/16];
+                        // 图片剪裁
+                        CGFloat width = CGImageGetWidth([image CGImage]);
+                        CGFloat height = CGImageGetHeight([image CGImage]);
+                        CGRect rect = CGRectMake(0, 0, width,width*9/16);
+                        if (width*9/16.0<height) {
+                            rect = CGRectMake(0, (height-width*9/16.0)/2.0, width,width*9/16);
+                        }
+                        CGImageRef imagePartRef = CGImageCreateWithImageInRect([image CGImage], rect);
+                        [cell.imageView setImage:[UIImage imageWithCGImage:imagePartRef]];
                     }else{
                         cell.imageView.image = [Util imageBy:image withWidth:SCREEN_WIDTH/4 withHight:SCREEN_WIDTH/4];
                     }

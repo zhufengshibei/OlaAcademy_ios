@@ -31,7 +31,6 @@
     
     self.title = @"群管理";
     [self setupRightButton];
-    [self setupBackButton];
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-UI_NAVIGATION_BAR_HEIGHT)];
     _tableView.dataSource = self;
@@ -61,21 +60,6 @@
 -(void)showCreateView{
     CreateGroupController *createVC = [[CreateGroupController alloc]init];
     [self.navigationController pushViewController:createVC animated:YES];
-}
-
-- (void)setupBackButton
-{
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
-    [backBtn sizeToFit];
-    [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
-}
-
--(void)backButtonClicked{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)setupData{

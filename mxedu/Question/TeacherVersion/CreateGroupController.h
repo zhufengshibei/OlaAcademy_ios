@@ -10,4 +10,6 @@
 
 @interface CreateGroupController : UIViewController
 
+@property (nonatomic) void(^groupCreateBlock)();
+
 @end

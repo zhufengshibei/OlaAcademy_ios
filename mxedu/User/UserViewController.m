@@ -35,7 +35,7 @@
 #import "Masonry.h"
 #import "UIColor+HexColor.h"
 
-@interface UserViewController() <UITableViewDelegate,UITableViewDataSource>
+@interface UserViewController() <UITableViewDelegate,UITableViewDataSource,SignInViewDelegate>
 
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) NSMutableArray *dataArray;
@@ -88,6 +88,7 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
 // 签到页面
 -(void)showSignInView{
     SignInPopoverView *signInView = [[SignInPopoverView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    signInView.delegate = self;
     [signInView setCancelButtonBlock:^{
         if (_signInBlock) {
             [self signIn];
@@ -243,5 +244,61 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController pushViewController:settingVC animated:YES];
 }
+
+#pragma SignInView Delegate
+
+- (void)didClickOnImageIndex:(NSInteger)imageIndex
+{
+    UIImage *image = [UIImage imageNamed:@"ic_logo"];
+    NSString *content = @"我正在欧拉学院学习MBA课程，一起来吧！";
+    NSString *url = [NSString stringWithFormat: @"http://app.olaxueyuan.com"];
+    
+    switch((int)imageIndex){
+        case 1001:
+            [UMSocialData defaultData].extConfig.wechatSessionData.title = @"欧拉MBA";
+            [UMSocialData defaultData].extConfig.wechatSessionData.url = url;
+            [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+            }];
+            break;
+        case 1002:
+            [UMSocialData defaultData].extConfig.wechatTimelineData.title = content;
+            [UMSocialData defaultData].extConfig.wechatTimelineData.url = url;
+            [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+            }];
+            break;
+        case 1003:
+            [UMSocialData defaultData].extConfig.qqData.title = @"欧拉MBA";
+            [UMSocialData defaultData].extConfig.qqData.url =url;
+            [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeDefault;
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+            }];
+            break;
+        case 1004:
+            // QQ空间分享只支持图文分享（图片文字缺一不可）
+            [UMSocialData defaultData].extConfig.qzoneData.title = @"欧拉MBA";
+            [UMSocialData defaultData].extConfig.qzoneData.url = url;
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+            }];
+            break;
+        case 1005:
+            [[UMSocialData defaultData].urlResource setResourceType:UMSocialUrlResourceTypeWeb url:url];
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSina] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                }
+            }];
+            break;
+    }
+}
+
 
 @end

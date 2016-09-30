@@ -19,10 +19,10 @@
  *  @param failure <#failure description#>
  */
 -(void)fetchSignInStatusWithUserId:(NSString*)userId
-                           Success:(void(^)(StatusResult *result))success
+                           Success:(void(^)(SignInStatusResult *result))success
                            Failure:(void(^)(NSError* error))failure{
     DataMappingManager *dm = GetDataManager();
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.statusResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.signInStatusResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
     // 通过shareManager 共享 baseurl及请求头等
     RKObjectManager* om = [RKObjectManager sharedManager];
     
@@ -32,8 +32,8 @@
         parameters:@{@"userId": userId
                      }
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-               if ([mappingResult.firstObject isKindOfClass:[StatusResult class]]) {
-                   StatusResult *result = mappingResult.firstObject;
+               if ([mappingResult.firstObject isKindOfClass:[SignInStatusResult class]]) {
+                   SignInStatusResult *result = mappingResult.firstObject;
                    if (success != nil) {
                        success(result);
                    }

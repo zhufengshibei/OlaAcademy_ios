@@ -25,7 +25,8 @@ typedef enum
 @interface UserInfoView ()
 {
     UIImageView *_avatarImageview;
-    UILabel *_vipLabel;
+    UILabel *_signInLabel;
+    UIView *lineView;
     UILabel *_localLabel;
 }
 
@@ -61,15 +62,14 @@ typedef enum
         _nameLabel.textColor = [UIColor whiteColor];
         [self addSubview:_nameLabel];
         
-        _vipLabel = [[UILabel alloc]init];
-        _vipLabel.text = @"VIP会员";
-        _vipLabel.layer.masksToBounds = YES;
-        _vipLabel.layer.cornerRadius = 5.0;
-        _vipLabel.backgroundColor =  RGBCOLOR(255, 5, 0);
-        _vipLabel.textColor = [UIColor whiteColor];
-        _vipLabel.textAlignment = NSTextAlignmentCenter;
-        _vipLabel.font = LabelFont(24);
-        [self addSubview:_vipLabel];
+        _signInLabel = [[UILabel alloc]init];
+        _signInLabel.textColor = [UIColor whiteColor];
+        _signInLabel.font = LabelFont(28);
+        [self addSubview:_signInLabel];
+        
+        lineView = [[UIView alloc]init];
+        lineView.backgroundColor = [UIColor whiteColor];
+        [self addSubview:lineView];
         
         _localLabel = [[UILabel alloc]init];
         _localLabel.textColor = [UIColor whiteColor];
@@ -92,20 +92,6 @@ typedef enum
         [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_avatarImageview.mas_top).offset(5);
             make.left.equalTo(_avatarImageview.mas_right).offset(10);
-            make.width.equalTo(@200);
-            make.height.equalTo(@20);
-        }];
-        
-        [_vipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_avatarImageview.mas_right).offset(10);
-            make.top.equalTo(_nameLabel.mas_bottom).offset(GENERAL_SIZE(30));
-            make.width.equalTo(@(GENERAL_SIZE(120)));
-            make.height.equalTo(@(GENERAL_SIZE(36)));
-        }];
-        
-        [_localLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_vipLabel.mas_right).offset(8);
-            make.top.equalTo(_nameLabel.mas_bottom).offset(GENERAL_SIZE(30));
             make.width.equalTo(@200);
             make.height.equalTo(@20);
         }];
@@ -161,7 +147,25 @@ typedef enum
     _user = user;
     
     [self updateNickname:user.name];
+    [self updateSignInDays:user.signInDays];
     [self updateLocal:user.vipTime];
+    
+    [_signInLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_avatarImageview.mas_right).offset(10);
+        make.top.equalTo(_nameLabel.mas_bottom).offset(GENERAL_SIZE(30));
+    }];
+    
+    [lineView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_signInLabel.mas_right).offset(5);
+        make.centerY.equalTo(_signInLabel);
+        make.height.equalTo(@(GENERAL_SIZE(24)));
+        make.width.equalTo(@1);
+    }];
+    
+    [_localLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(lineView.mas_right).offset(5);
+        make.top.equalTo(_nameLabel.mas_bottom).offset(GENERAL_SIZE(30));
+    }];
     
     if(user.avatar){
         if ([user.avatar rangeOfString:@".jpg"].location == NSNotFound) {
@@ -217,16 +221,28 @@ typedef enum
     }
 }
 
+- (void)updateSignInDays:(NSString*)days
+{
+    if (days != nil)
+    {
+        _signInLabel.text = [NSString stringWithFormat:@"%@天累签",days];
+    }
+    else
+    {
+        _signInLabel.text = @"0天签到";
+    }
+}
+
 - (void)updateLocal:(NSString*)local
 {
     if (local != nil)
     {
         //_localLabel.text = local;
-        _localLabel.text = [NSString stringWithFormat:@"还剩%@天",local];
+        _localLabel.text = [NSString stringWithFormat:@"%@天会员",local];
     }
     else
     {
-        _localLabel.text = @"还剩0天";
+        _localLabel.text = @"0天会员";
         //_localLabel.text = @"北京";
     }
 }

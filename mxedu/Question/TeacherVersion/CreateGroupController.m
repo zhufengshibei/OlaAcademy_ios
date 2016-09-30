@@ -10,9 +10,14 @@
 
 #import "SysCommon.h"
 #import "Masonry.h"
+#import "SVProgressHUD.h"
+#import "FSMediaPicker.h"
+#import "AuthManager.h"
 #import "GroupManager.h"
+#import "UploadManager.h"
+#import "UserProcotolViewController.h"
 
-@interface CreateGroupController ()<UITextViewDelegate>
+@interface CreateGroupController ()<UITextViewDelegate,FSMediaPickerDelegate>
 
 
 @end
@@ -21,6 +26,8 @@
     
     UIImageView *avatarView;
     
+    UIImage *selectedImage;
+    
     UILabel *title; //title 的 placehoder
     UITextView *editTitle;
     
@@ -28,6 +35,13 @@
     UITextView *editText;
     
     UIImageView *checkIV;
+    
+    UIButton *createBtn;
+    NSString *titleString;
+    
+    NSString *subjectType;
+    
+    UITapGestureRecognizer *wholeTap;
 }
 
 - (void)viewDidLoad {
@@ -37,7 +51,11 @@
     self.view.backgroundColor = RGBCOLOR(235, 235, 235);
     [self setupBackButton];
     
+    subjectType = @"2";
+    
     [self setupView];
+    
+    wholeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
 }
 
 - (void)setupBackButton
@@ -57,12 +75,18 @@
 
 -(void)setupView{
     
-    avatarView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg_group_create"]];
+    avatarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, GENERAL_SIZE(144), GENERAL_SIZE(144))];
+    avatarView.center = CGPointMake(SCREEN_WIDTH/2, GENERAL_SIZE(203));
+    avatarView.image = [UIImage imageNamed:@"bg_group_create"];
+    avatarView.layer.masksToBounds = YES;
+    avatarView.layer.cornerRadius = GENERAL_SIZE(72);
     [self.view addSubview:avatarView];
     
-    avatarView.center = CGPointMake(SCREEN_WIDTH/2, GENERAL_SIZE(203));
+    UITapGestureRecognizer *singleRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseImage)];
+    avatarView.userInteractionEnabled = YES;
+    [avatarView addGestureRecognizer:singleRecognizer];
     
-    title = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, 200, 40)];
+    title = [[UILabel alloc]initWithFrame:CGRectMake(3, 5, 200, 40)];
     title.enabled = NO;
     title.text = @"填写群名称（2-10个字）";
     title.font =  LabelFont(24);
@@ -101,6 +125,10 @@
     UILabel *protocolL = [[UILabel alloc]initWithFrame:CGRectMake(GENERAL_SIZE(220), CGRectGetMaxY(editText.frame)+GENERAL_SIZE(40), GENERAL_SIZE(380), GENERAL_SIZE(30))];
     protocolL.text = @"我已阅读并同意服务声明";
     [self.view addSubview:protocolL];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(browseProcotol)];
+    protocolL.userInteractionEnabled = YES;
+    [protocolL addGestureRecognizer:tap];
 
     checkIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon_choice"]];
     [self.view addSubview:checkIV];
@@ -110,7 +138,7 @@
         make.right.equalTo(protocolL.mas_left).offset(-10);
     }];
     
-    UIButton *createBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    createBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     createBtn.frame = CGRectMake(GENERAL_SIZE(70), CGRectGetMaxY(protocolL.frame)+GENERAL_SIZE(40), SCREEN_WIDTH-GENERAL_SIZE(140), GENERAL_SIZE(80));
     [createBtn setTitle:@"创 建 群" forState:UIControlStateNormal];
     [createBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -120,6 +148,78 @@
     [createBtn addTarget:self action:@selector(createGroup) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:createBtn];
 
+}
+
+-(void)chooseImage{
+    FSMediaPicker *mediaPicker = [[FSMediaPicker alloc] init];
+    mediaPicker.mediaType = FSMediaTypePhoto;
+    mediaPicker.editMode = FSMediaTypePhoto;
+    mediaPicker.delegate = self;
+    [mediaPicker showFromView:self.view];
+}
+
+// 上传图片成后后保存群信息
+-(void)createGroup{
+    titleString = [editTitle.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (titleString.length<2||titleString.length>10) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"标题字数为2-10个字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
+
+    [createBtn setTitleColor:RGBCOLOR(153, 153, 153) forState:UIControlStateNormal];
+    if (selectedImage) {
+        [self uploadImage];
+    }else{
+        [self createGroup:@""];
+    }
+}
+
+- (void)uploadImage
+{
+    [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"保存中，请稍后..."]];
+    
+    UploadManager* um = [[UploadManager alloc]init];
+    NSData* imageData = UIImageJPEGRepresentation(selectedImage, 0.8);
+    [um uploadImageData:imageData angles:nil success:^{
+        NSString *imageGid =  um.imageGid;
+        [self createGroup:imageGid];
+    } failure:^(NSError *error) {
+        [createBtn setTitleColor:RGBCOLOR(01, 139, 232) forState:UIControlStateNormal];
+    }];
+}
+
+-(void)createGroup:(NSString*)imgGid{
+    AuthManager * am = [[AuthManager alloc]init];
+    if (!am.isAuthenticated) {
+        return;
+    }
+    GroupManager *gm = [[GroupManager alloc]init];
+    [gm createGroupWithUserId:am.userInfo.userId Name:editTitle.text Avatar:imgGid Type:subjectType success:^(CommonResult *result) {
+        if (result.code==10000) {
+            if (_groupCreateBlock) {
+                _groupCreateBlock();
+            }
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            [SVProgressHUD showInfoWithStatus:result.message];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+//查看协议
+-(void)browseProcotol
+{
+    UserProcotolViewController *procotolVC = [[UserProcotolViewController alloc]init];
+    [self.navigationController pushViewController:procotolVC animated:YES];
+}
+
+#pragma UITextView
+
+-(void)textViewDidBeginEditing:(UITextView *)textView{
+    [self.view addGestureRecognizer:wholeTap];
 }
 
 -(void)textViewDidChange:(UITextView *)textView
@@ -140,15 +240,38 @@
     
 }
 
--(void)createGroup{
-    GroupManager *gm = [[GroupManager alloc]init];
-    [gm createGroupWithUserId:@"" Name:editTitle.text Avatar:@"" success:^(CommonResult *result) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } failure:^(NSError *error) {
-        
-    }];
+#pragma mediaPicker delegate
+
+- (void)mediaPicker:(FSMediaPicker *)mediaPicker didFinishWithMediaInfo:(NSDictionary *)mediaInfo
+{
+    if (mediaPicker.editMode == FSEditModeNone) {
+        selectedImage = mediaInfo.originalImage;
+    } else {
+        selectedImage = mediaPicker.editMode == FSEditModeCircular? mediaInfo.circularEditedImage:mediaInfo.editedImage;
+    }
+    [avatarView setImage:selectedImage];
 }
 
+- (void)mediaPickerDidCancel:(FSMediaPicker *)mediaPicker{
+}
+
+
+/**
+ *  隐藏键盘
+ */
+-(void)dismissKeyboard {
+    NSArray *subviews = [self.view subviews];
+    for (id objInput in subviews) {
+        if ([objInput isKindOfClass:[UITextField class]]) {
+            UITextField *theTextField = objInput;
+            if ([objInput isFirstResponder]) {
+                [theTextField resignFirstResponder];
+            }
+        }
+    }
+    [self.view endEditing:YES];
+    [self.view removeGestureRecognizer:wholeTap];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

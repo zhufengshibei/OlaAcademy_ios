@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GroupViewController : UIViewController
+#import "UIBaseViewController.h"
+
+@interface GroupViewController : UIBaseViewController
 
 @end

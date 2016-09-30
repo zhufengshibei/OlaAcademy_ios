@@ -27,7 +27,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "MessageViewController.h"
 #import "LoginViewController.h"
-#import "HomeworkController.h"
+#import "StuHomeworkController.h"
 #import "IAPVIPController.h"
 #import "VIPSubController.h"
 
@@ -451,8 +451,7 @@
 #pragma HomeworkViewDelegate
 -(void)didClickBrowseMore{
     OLA_LOGIN;
-    HomeworkController *homeworkV = [[HomeworkController alloc]init];
-    homeworkV.type = @"1";
+    StuHomeworkController *homeworkV = [[StuHomeworkController alloc]init];
     homeworkV.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:homeworkV animated:YES];
 }
