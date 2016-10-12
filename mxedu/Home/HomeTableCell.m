@@ -79,7 +79,11 @@
         NSString *imageUrl = commodity.url;
         [cell.imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
         cell.nameLabel.text = commodity.name;
-        cell.markLabel.text = @"热门";
+        if (indexPath.row==0) {
+            cell.markLabel.text = @"热门";
+        }else{
+            cell.markLabel.text = @"最新";
+        }
         cell.timeLabel.text = [NSString stringWithFormat:@"%@分钟",commodity.totaltime];
         cell.visitLabel.text = [NSString stringWithFormat:@"%@购买",commodity.paynum];
     }else if([data isKindOfClass:[Course class]]){
@@ -88,7 +92,11 @@
         [cell.imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
         cell.nameLabel.text = course.name;
         cell.timeLabel.text = course.totalTime;
-        cell.markLabel.text = @"最新";
+        if (indexPath.row==0) {
+            cell.markLabel.text = @"热门";
+        }else{
+            cell.markLabel.text = @"最新";
+        }
         cell.visitLabel.text = [NSString stringWithFormat:@"%@观看",course.playcount];
     }
     

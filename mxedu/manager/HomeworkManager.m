@@ -13,6 +13,48 @@
 @implementation HomeworkManager
 
 /**
+ *  发布作业
+ *
+ *  @param subjectIds 题目Id串 逗号分隔
+ *  @param success <#success description#>
+ *  @param failure <#failure description#>
+ */
+-(void)deployHomeworkWithGroupId:(NSString*)groupId
+                       GroupName:(NSString*)name
+                      SubjectIds:(NSString*)subjectIds
+                        Success:(void(^)(CommonResult *result))success
+                        Failure:(void(^)(NSError* error))failure{
+    DataMappingManager *dm = GetDataManager();
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.commonResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
+    // 通过shareManager 共享 baseurl及请求头等
+    RKObjectManager* om = [RKObjectManager sharedManager];
+    
+    [om addResponseDescriptor:responseDescriptor];
+    // 采用post方式，get方式可能产生中文乱码
+    [om postObject:nil path:@"/ola/homework/deployHomework"
+        parameters:@{@"groupId": groupId,
+                     @"name": name,
+                     @"subjectIds": subjectIds
+                     }
+           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+               if ([mappingResult.firstObject isKindOfClass:[CommonResult class]]) {
+                   CommonResult *result = mappingResult.firstObject;
+                   if (success != nil) {
+                       success(result);
+                   }
+               }
+               
+           }
+           failure:^(RKObjectRequestOperation *operation, NSError *error) {
+               if (failure != nil) {
+                   failure(error);
+               }
+           }];
+    
+}
+
+
+/**
  *  作业列表
  *
  *  @param type 1 学生 2 老师

@@ -32,8 +32,8 @@
 #define TopReturnBtnViewHeight      44
 
 #define kListButtonWidth            40
-#define kPlaybtnWidth               40
-#define kPlaybtnHeight              40
+#define kPlaybtnWidth               50
+#define kPlaybtnHeight              50
 #define kCutFramebtnWidth           40
 #define kCutFramebtnHeight          40
 #define kCurrentTimeWidth           60
@@ -1367,7 +1367,7 @@ static   SDMediaPlayerVC * sharedMyMediaPlayer = nil;
         !CGRectContainsPoint(_topView.frame, point))
     {
         // 轻拍手势 隐藏/显示状态栏
-        [UIView animateWithDuration:1 animations:^{
+        [UIView animateWithDuration:0.1 animations:^{
             
             if (_isFullScreen == NO)
             {
@@ -1433,7 +1433,7 @@ static   SDMediaPlayerVC * sharedMyMediaPlayer = nil;
 
 - (void)hidenControlBar
 {
-    [UIView animateWithDuration:1 animations:^{
+    [UIView animateWithDuration:0.1 animations:^{
         if (_isHide == NO)
         {
             _bottomView.alpha = 0;

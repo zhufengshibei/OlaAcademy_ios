@@ -278,6 +278,9 @@
 		3D9CB81F1D9E02C400A3C9A1 /* StuHomeworkController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB81E1D9E02C400A3C9A1 /* StuHomeworkController.m */; };
 		3D9CB8221D9E171D00A3C9A1 /* HomeworkChooseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB8211D9E171D00A3C9A1 /* HomeworkChooseController.m */; };
 		3D9CB8261D9E67AA00A3C9A1 /* DWBubbleMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB8251D9E67A900A3C9A1 /* DWBubbleMenuButton.m */; };
+		3D9CB82C1DAA3EE800A3C9A1 /* ChosenWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB82B1DAA3EE800A3C9A1 /* ChosenWebController.m */; };
+		3D9CB82F1DAA837500A3C9A1 /* ChooseGroupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB82E1DAA837500A3C9A1 /* ChooseGroupController.m */; };
+		3D9CB8321DAB434100A3C9A1 /* ChooseGroupTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB8311DAB434100A3C9A1 /* ChooseGroupTableCell.m */; };
 		3D9D296A1CE0B6B900F58E57 /* ExamFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D29691CE0B6B900F58E57 /* ExamFilterView.m */; };
 		3D9D35B51C01E9FB007CE085 /* PopPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D35B41C01E9FB007CE085 /* PopPickerView.m */; };
 		3D9D35BD1C058195007CE085 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D35BB1C058195007CE085 /* AboutViewController.m */; };
@@ -717,8 +720,8 @@
 		3D68CE0B1D77C845005CA17F /* QuestionWebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionWebController.m; sourceTree = "<group>"; };
 		3D68CE0F1D77C868005CA17F /* SubjectTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SubjectTableCell.h; path = StudentVersion/SubjectTableCell.h; sourceTree = "<group>"; };
 		3D68CE101D77C868005CA17F /* SubjectTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubjectTableCell.m; path = StudentVersion/SubjectTableCell.m; sourceTree = "<group>"; };
-		3D68CE111D77C868005CA17F /* ZSYPopoverListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSYPopoverListView.h; path = StudentVersion/ZSYPopoverListView.h; sourceTree = "<group>"; };
-		3D68CE121D77C868005CA17F /* ZSYPopoverListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSYPopoverListView.m; path = StudentVersion/ZSYPopoverListView.m; sourceTree = "<group>"; };
+		3D68CE111D77C868005CA17F /* ZSYPopoverListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZSYPopoverListView.h; path = ../StudentVersion/ZSYPopoverListView.h; sourceTree = "<group>"; };
+		3D68CE121D77C868005CA17F /* ZSYPopoverListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZSYPopoverListView.m; path = ../StudentVersion/ZSYPopoverListView.m; sourceTree = "<group>"; };
 		3D68CE151D77C872005CA17F /* ChoiceTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChoiceTableCell.h; path = StudentVersion/ChoiceTableCell.h; sourceTree = "<group>"; };
 		3D68CE161D77C872005CA17F /* ChoiceTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChoiceTableCell.m; path = StudentVersion/ChoiceTableCell.m; sourceTree = "<group>"; };
 		3D68CE171D77C872005CA17F /* CorrectCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CorrectCollectionCell.h; path = StudentVersion/CorrectCollectionCell.h; sourceTree = "<group>"; };
@@ -994,6 +997,12 @@
 		3D9CB8211D9E171D00A3C9A1 /* HomeworkChooseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeworkChooseController.m; sourceTree = "<group>"; };
 		3D9CB8241D9E67A900A3C9A1 /* DWBubbleMenuButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DWBubbleMenuButton.h; path = mxedu/DWBubbleMenuButton.h; sourceTree = SOURCE_ROOT; };
 		3D9CB8251D9E67A900A3C9A1 /* DWBubbleMenuButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DWBubbleMenuButton.m; path = mxedu/DWBubbleMenuButton.m; sourceTree = SOURCE_ROOT; };
+		3D9CB82A1DAA3EE800A3C9A1 /* ChosenWebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChosenWebController.h; sourceTree = "<group>"; };
+		3D9CB82B1DAA3EE800A3C9A1 /* ChosenWebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChosenWebController.m; sourceTree = "<group>"; };
+		3D9CB82D1DAA837500A3C9A1 /* ChooseGroupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseGroupController.h; sourceTree = "<group>"; };
+		3D9CB82E1DAA837500A3C9A1 /* ChooseGroupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseGroupController.m; sourceTree = "<group>"; };
+		3D9CB8301DAB434100A3C9A1 /* ChooseGroupTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseGroupTableCell.h; sourceTree = "<group>"; };
+		3D9CB8311DAB434100A3C9A1 /* ChooseGroupTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseGroupTableCell.m; sourceTree = "<group>"; };
 		3D9D29681CE0B6B900F58E57 /* ExamFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExamFilterView.h; sourceTree = "<group>"; };
 		3D9D29691CE0B6B900F58E57 /* ExamFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExamFilterView.m; sourceTree = "<group>"; };
 		3D9D35B31C01E9FB007CE085 /* PopPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopPickerView.h; sourceTree = "<group>"; };
@@ -1871,10 +1880,14 @@
 				3D68CE011D77C7FB005CA17F /* CreateGroupController.m */,
 				3D68CE021D77C7FB005CA17F /* GroupViewController.h */,
 				3D68CE031D77C7FB005CA17F /* GroupViewController.m */,
-				3D9CB8171D9CC46600A3C9A1 /* HomeworkWebController.h */,
-				3D9CB8181D9CC46600A3C9A1 /* HomeworkWebController.m */,
 				3D9CB8201D9E171D00A3C9A1 /* HomeworkChooseController.h */,
 				3D9CB8211D9E171D00A3C9A1 /* HomeworkChooseController.m */,
+				3D9CB8171D9CC46600A3C9A1 /* HomeworkWebController.h */,
+				3D9CB8181D9CC46600A3C9A1 /* HomeworkWebController.m */,
+				3D9CB82A1DAA3EE800A3C9A1 /* ChosenWebController.h */,
+				3D9CB82B1DAA3EE800A3C9A1 /* ChosenWebController.m */,
+				3D9CB82D1DAA837500A3C9A1 /* ChooseGroupController.h */,
+				3D9CB82E1DAA837500A3C9A1 /* ChooseGroupController.m */,
 			);
 			path = TeacherVersion;
 			sourceTree = "<group>";
@@ -1902,6 +1915,8 @@
 			children = (
 				3D68CDD21D740B01005CA17F /* GroupTableCell.h */,
 				3D68CDD31D740B01005CA17F /* GroupTableCell.m */,
+				3D9CB8301DAB434100A3C9A1 /* ChooseGroupTableCell.h */,
+				3D9CB8311DAB434100A3C9A1 /* ChooseGroupTableCell.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -1936,6 +1951,8 @@
 		3D68CDEF1D77C758005CA17F /* view */ = {
 			isa = PBXGroup;
 			children = (
+				3D68CE111D77C868005CA17F /* ZSYPopoverListView.h */,
+				3D68CE121D77C868005CA17F /* ZSYPopoverListView.m */,
 				3D68CDF01D77C776005CA17F /* HomeworkTableCell.h */,
 				3D68CDF11D77C776005CA17F /* HomeworkTableCell.m */,
 				3D68CDF21D77C776005CA17F /* HomeworkTableViewObject.h */,
@@ -2776,8 +2793,6 @@
 			children = (
 				3D68CE0F1D77C868005CA17F /* SubjectTableCell.h */,
 				3D68CE101D77C868005CA17F /* SubjectTableCell.m */,
-				3D68CE111D77C868005CA17F /* ZSYPopoverListView.h */,
-				3D68CE121D77C868005CA17F /* ZSYPopoverListView.m */,
 				3D06A61D1CA7A26D00DA379E /* SDGroupCell.h */,
 				3D06A61E1CA7A26D00DA379E /* SDGroupCell.m */,
 				3D06A61F1CA7A26D00DA379E /* SDGroupCell.xib */,
@@ -3845,6 +3860,7 @@
 				3DF69E0A1C9995A2002F33DC /* THProgressView.m in Sources */,
 				3D3C46D81CF7E28E00BF66CD /* SDMyStrokeControl.m in Sources */,
 				3D910C431BD6154B007B092E /* CourseManager.m in Sources */,
+				3D9CB8321DAB434100A3C9A1 /* ChooseGroupTableCell.m in Sources */,
 				3D68CE131D77C868005CA17F /* SubjectTableCell.m in Sources */,
 				3D0AA3771D51DC7200D73D81 /* Homework.m in Sources */,
 				3D11D5C61BD4D9AD00789D1F /* ASIFormDataRequest.m in Sources */,
@@ -3949,6 +3965,7 @@
 				3DFB6C481B6DCA7C0072D175 /* UIImage+Scaling.m in Sources */,
 				3D9CB7931D94C9EF00A3C9A1 /* UITabBar+badge.m in Sources */,
 				3D68CE231D77C872005CA17F /* CorrectTableCell.m in Sources */,
+				3D9CB82C1DAA3EE800A3C9A1 /* ChosenWebController.m in Sources */,
 				3D44E4631CBDD82200B34990 /* Examination.m in Sources */,
 				3D1D24681D2A3B9B00A7F418 /* AlbumListController.m in Sources */,
 				3D1D246B1D2A3B9B00A7F418 /* AlbumTableViewCell.m in Sources */,
@@ -3962,6 +3979,7 @@
 				3DFB6DF51B6E02770072D175 /* RightViewController.m in Sources */,
 				3D9D35D01C06A766007CE085 /* LeslieImageCache.m in Sources */,
 				3D1D246C1D2A3B9B00A7F418 /* PhotoCollectionViewCell.m in Sources */,
+				3D9CB82F1DAA837500A3C9A1 /* ChooseGroupController.m in Sources */,
 				3DFB6C371B6DC9850072D175 /* NTFont.m in Sources */,
 				3DFB6C1C1B6DC91A0072D175 /* SysCommon.m in Sources */,
 				3DAF99301CCE209F007835E3 /* AliPayResult.m in Sources */,

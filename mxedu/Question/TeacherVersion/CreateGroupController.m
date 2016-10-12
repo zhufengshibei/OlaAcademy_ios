@@ -12,12 +12,19 @@
 #import "Masonry.h"
 #import "SVProgressHUD.h"
 #import "FSMediaPicker.h"
+#import "ZSYPopoverListView.h"
+#import "ChoiceTableCell.h"
 #import "AuthManager.h"
 #import "GroupManager.h"
 #import "UploadManager.h"
 #import "UserProcotolViewController.h"
 
-@interface CreateGroupController ()<UITextViewDelegate,FSMediaPickerDelegate>
+@interface CreateGroupController ()<UITextViewDelegate,FSMediaPickerDelegate,ZSYPopoverListDatasource, ZSYPopoverListDelegate>
+
+@property (nonatomic) ZSYPopoverListView *listView; //选择科目
+
+@property (nonatomic) NSArray *choiceArray;
+@property (nonatomic) NSInteger selectedIndex;
 
 
 @end
@@ -34,6 +41,8 @@
     UILabel *label; //content 的 placehoder
     UITextView *editText;
     
+    UILabel *subjectL;
+    
     UIImageView *checkIV;
     
     UIButton *createBtn;
@@ -49,29 +58,16 @@
     
     self.title = @"群创建";
     self.view.backgroundColor = RGBCOLOR(235, 235, 235);
-    [self setupBackButton];
     
-    subjectType = @"2";
+    subjectType = @"1";
+    
+    _choiceArray = [NSArray arrayWithObjects:@"数学",@"英语",@"逻辑",@"写作", nil];
     
     [self setupView];
     
     wholeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
 }
 
-- (void)setupBackButton
-{
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
-    [backBtn sizeToFit];
-    [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
-}
-
--(void)backButtonClicked{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 -(void)setupView{
     
@@ -103,7 +99,48 @@
     [editTitle addSubview:title];
     [self.view addSubview:editTitle];
     
-    UIView *dividerLine2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(editTitle.frame), SCREEN_WIDTH, 1)];
+    UIView *dividerLine1 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(editTitle.frame), SCREEN_WIDTH, 1)];
+    dividerLine1.backgroundColor = BACKGROUNDCOLOR;
+    [self.view addSubview:dividerLine1];
+    
+    UIView *subjectView = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(dividerLine1.frame), SCREEN_WIDTH-10, 45)];
+    subjectView.backgroundColor = [UIColor whiteColor];
+    subjectView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showChoiceView)];
+    [subjectView addGestureRecognizer:tapGes];
+    [self.view addSubview:subjectView];
+    
+    UILabel *subject = [[UILabel alloc]initWithFrame:CGRectMake(3, 0, 200, 45)];
+    subject.enabled = NO;
+    subject.text = @"科目类别";
+    subject.font =  LabelFont(24);
+    subject.textColor = [UIColor blackColor];
+    [subjectView addSubview:subject];
+    
+    UIImageView *nextIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ic_next"]];
+    [subjectView addSubview:nextIV];
+    
+    [nextIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(subjectView);
+        make.right.equalTo(subjectView.mas_right).offset(-5);
+    }];
+    
+    
+    subjectL = [[UILabel alloc]init];
+    subjectL.textAlignment = NSTextAlignmentRight;
+    subjectL.enabled = NO;
+    subjectL.text = @"数学";
+    subjectL.font =  LabelFont(24);
+    subjectL.textColor = [UIColor blackColor];
+    [subjectView addSubview:subjectL];
+    
+    [subjectL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(subjectView);
+        make.right.equalTo(nextIV.mas_left).offset(-5);
+    }];
+
+    
+    UIView *dividerLine2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(subjectView.frame), SCREEN_WIDTH, 1)];
     dividerLine2.backgroundColor = BACKGROUNDCOLOR;
     [self.view addSubview:dividerLine2];
     
@@ -216,6 +253,14 @@
     [self.navigationController pushViewController:procotolVC animated:YES];
 }
 
+// 选择科目
+-(void)showChoiceView{
+    _listView = [[ZSYPopoverListView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    _listView.datasource = self;
+    _listView.delegate = self;
+    [_listView show];
+}
+
 #pragma UITextView
 
 -(void)textViewDidBeginEditing:(UITextView *)textView{
@@ -255,6 +300,48 @@
 - (void)mediaPickerDidCancel:(FSMediaPicker *)mediaPicker{
 }
 
+
+#pragma mark -
+- (NSInteger)popoverListView:(ZSYPopoverListView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [_choiceArray count];
+}
+
+- (UITableViewCell *)popoverListView:(ZSYPopoverListView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identifier = @"identifier";
+    ChoiceTableCell *cell = [tableView dequeueReusablePopoverCellWithIdentifier:identifier];
+    if (nil == cell)
+    {
+        cell = [[ChoiceTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    if ( self.selectedIndex==indexPath.row)
+    {
+        cell.choiceIV.image = [UIImage imageNamed:@"icon_mark"];
+    }
+    else
+    {
+        cell.choiceIV.image = [UIImage imageNamed:@""];
+    }
+    cell.nameL.text = [_choiceArray objectAtIndex:indexPath.row];
+    return cell;
+}
+
+- (void)popoverListView:(ZSYPopoverListView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+}
+
+- (void)popoverListView:(ZSYPopoverListView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ChoiceTableCell *cell = (ChoiceTableCell*)[tableView popoverCellForRowAtIndexPath:indexPath];
+    cell.choiceIV.image = [UIImage imageNamed:@"icon_mark"];
+    
+    self.selectedIndex = indexPath.row;
+    subjectL.text = [_choiceArray objectAtIndex:indexPath.row];
+    subjectType = [NSString stringWithFormat:@"%ld",indexPath.row+1];
+    [_listView dismiss];
+    
+}
 
 /**
  *  隐藏键盘

@@ -8,10 +8,28 @@
 
 #import <UIKit/UIKit.h>
 
-#import "UIBaseViewController.h"
+#import "SysCommon.h"
+#import "UIColor+HexColor.h"
+#import "SDGroupCell.h"
 
-@interface HomeworkChooseController : UIBaseViewController
 
-@property (nonatomic) int subjectType;
+@class SDGroupCell;
+
+@interface HomeworkChooseController : UITableViewController
+{
+    NSMutableDictionary *expandedIndexes;
+}
+
+@property (nonatomic) NSString *subjectId;//当前科目ID
+
+#pragma mark - Internal
+
+@property (assign) int mainItemsAmt;
+@property (strong) NSMutableDictionary *subItemsAmt;
+
+@property (assign) SDGroupCell *groupCell;
+
+- (void) collapsableButtonTapped: (UIControl *)button withEvent: (UIEvent *)event;
+- (void) groupCell:(SDGroupCell *)cell didSelectSubCell:(SDGroupCell *)subCell withIndexPath: (NSIndexPath *)indexPath;
 
 @end

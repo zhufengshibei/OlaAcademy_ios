@@ -1,7 +1,7 @@
 <!--
 	作者：forevertxp@gmail.com
 	时间：2016-07-14
-	描述：布置作业选择题目页面
+	描述：布置作业已选择题目编辑页面
 -->
 <!DOCTYPE html>
 <html>
@@ -22,26 +22,6 @@
 				padding: 10px 2px;
 				font-size: 16px;
 				line-height: 30px;
-			}
-			
-			input[type="checkbox"] {
-				-webkit-appearance: none;
-				height: 20px;
-				vertical-align: middle;
-				width: 20px;
-				border-width: 0px;
-			}
-			
-			input[type="checkbox"]:checked {
-				outline: none;
-				background: #fff url(ic_selected.png) no-repeat;
-				background-size: contain;
-			}
-			
-			input[type="checkbox"]:not(:checked) {
-				outline: none;
-				background: #fff url(ic_unselect.png) no-repeat;
-				background-size: contain;
 			}
 			
 		</style>
@@ -69,23 +49,6 @@
                                                             responseCallback(responseData)
                                                             })
                                          
-                                    bridge.registerHandler('nextClickHandler', function(data, responseCallback) {
-                                                            clickNext(data)
-                                                            })
-                                         
-                                    //下一步
-                                    function clickNext(data){
-                                         //选中的题目
-                                         var optionIndex="";
-                                         $('input:checkbox[name="checkbox"]:checked').each(
-                                                    function() {
-                                                        optionIndex = optionIndex+$(this).val()+",";
-                                                    }
-                                                );
-                                         bridge.callHandler('mathObjcCallback', {'optionIndex': optionIndex}, function(response) {
-                                                            })
-                                         
-                                    }
                                 })
             // 加载数据
 			function loadQuestion(data) {
@@ -94,7 +57,7 @@
                 for(var i=0;i<obj.count;i++){
                     var question = data["question"+i];
                     if(question.title != "") {
-                        html +="<tr><td align='left'><div id='option1'>"+ (i+1)+"、"+question.title +"</div></td><td align='right'><input type='checkbox' name='checkbox' value='"+i+"'/></td></tr><tr><td colspan='2'><hr color='#f0f0f0' size='2' width='100%' /></td></tr>";
+                        html +="<tr><td align='left'><div>"+ (i+1)+"、"+question.title +"</div></td><td align='right'><img src='icon_delete.png' height='20' size='20'  onclick='del("+i+")'/></td></tr><tr><td colspan='2'><hr color='#f0f0f0' size='2' width='100%' /></td></tr>";
                     }
                 }
                 html += "</table>"
@@ -106,6 +69,12 @@
 				questionDIV.innerHTML = html;
 				MathJax.Hub.Queue(["Typeset", MathJax.Hub, questionDIV]);
 			}
+        
+            function del(index){
+                WebViewJavascriptBridge.callHandler('mathObjcCallback', {'questionIndex': index}, function(response) {
+                })
+
+            }
 			
 		</script>
 	</head>

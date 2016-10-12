@@ -49,6 +49,8 @@
     [self setupDataWithId:@""];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"NEEDREFRESH" object:nil];
+    // 监听作业发布成功
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"DEPLOY_HOMEWORK" object:nil];
 }
 
 -(void)setupRightButton{
@@ -112,7 +114,7 @@
     _tableViewObject = [HomeworkTableViewObject new];
     _tableViewObject.delegate = self;
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,SCREEN_WIDTH, SCREEN_HEIGHT-UI_TAB_BAR_HEIGHT-UI_NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];
     _tableView.delegate = _tableViewObject;
     _tableView.dataSource = _tableViewObject;
     _tableView.backgroundColor = [UIColor whiteColor];
@@ -125,16 +127,16 @@
 }
 
 -(void)setupDeployView{
-    UILabel *homeLabel = [self createHomeButtonView];
+    UIView *homeLabel = [self createHomeButtonView];
     
     _upMenuView = [[DWBubbleMenuButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - homeLabel.frame.size.width - 20.f,
-                                                                                          self.view.frame.size.height - homeLabel.frame.size.height - 50.f,
+                                                                                          self.view.frame.size.height - homeLabel.frame.size.height - UI_TAB_BAR_HEIGHT - 20.0f,
                                                                                           homeLabel.frame.size.width,
                                                                                           homeLabel.frame.size.height)
                                                             expansionDirection:DirectionUp];
     _upMenuView.homeButtonView = homeLabel;
     
-    [_upMenuView addButtons:[self createDemoButtonArray]];
+    [_upMenuView addButtons:[self createButtonArray]];
     
     [self.view addSubview:_upMenuView];
 }
@@ -199,20 +201,41 @@
 }
 
 
-- (UILabel *)createHomeButtonView {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.f, 0.f, 60.f, 60.f)];
+- (UIView *)createHomeButtonView {
+    UIView *labelBG = [[UILabel alloc] initWithFrame:CGRectMake(0.f, 0.f, GENERAL_SIZE(130), GENERAL_SIZE(130))];
+    labelBG.layer.cornerRadius = labelBG.frame.size.height / 2.f;
+    labelBG.clipsToBounds = YES;
     
-    label.text = @"Tap";
+    
+    // 渐变色 创建 CAGradientLayer 对象
+    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+    gradientLayer.frame = labelBG.bounds;
+    
+    //  创建渐变色数组，需要转换为CGColor颜色
+    gradientLayer.colors = @[(id)[UIColor colorWhthHexString:@"#2196f3"].CGColor,
+                             (id)[UIColor  colorWhthHexString:@"#4285f4"].CGColor];
+    
+    //  设置三种颜色变化点，取值范围 0.0~1.0
+    gradientLayer.locations = @[@(0.5f) ,@(1.0f)];
+    
+    //  设置渐变颜色方向，左上点为(0,0), 右下点为(1,1)
+    gradientLayer.startPoint = CGPointMake(0, 0);
+    gradientLayer.endPoint = CGPointMake(0, 1);
+    
+    [labelBG.layer addSublayer:gradientLayer];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:labelBG.frame];
+    label.text = @"发布作业";
+    label.font = LabelFont(24);
     label.textColor = [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentCenter;
-    label.layer.cornerRadius = label.frame.size.height / 2.f;
-    label.backgroundColor =[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5f];
-    label.clipsToBounds = YES;
+    [labelBG addSubview:label];
+
     
-    return label;
+    return labelBG;
 }
 
-- (NSArray *)createDemoButtonArray {
+- (NSArray *)createButtonArray {
     NSMutableArray *buttonsMutable = [[NSMutableArray alloc] init];
     
     int i = 0;
@@ -224,7 +247,7 @@
         
         button.frame = CGRectMake(0.f, 0.f, 50.f, 50.f);
         button.layer.cornerRadius = button.frame.size.height / 2.f;
-        button.backgroundColor = [UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5f];
+        button.backgroundColor = [UIColor colorWhthHexString:@"#3196f3"];
         button.clipsToBounds = YES;
         button.tag = i++;
         
@@ -238,19 +261,9 @@
 
 - (void)deployHomework:(UIButton *)sender {
     HomeworkChooseController *chooseVC = [[HomeworkChooseController alloc]init];
-    chooseVC.subjectType = (int)sender.tag+1;
+    chooseVC.subjectId = [NSString stringWithFormat:@"%ld",sender.tag+1];
     chooseVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:chooseVC animated:YES];
-}
-
-- (UIButton *)createButtonWithName:(NSString *)imageName {
-    UIButton *button = [[UIButton alloc] init];
-    [button setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    [button sizeToFit];
-    
-    [button addTarget:self action:@selector(test:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return button;
 }
 
 

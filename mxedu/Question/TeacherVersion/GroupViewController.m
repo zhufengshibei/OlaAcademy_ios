@@ -59,6 +59,9 @@
 
 -(void)showCreateView{
     CreateGroupController *createVC = [[CreateGroupController alloc]init];
+    createVC.groupCreateBlock = ^{
+        [self setupData];
+    };
     [self.navigationController pushViewController:createVC animated:YES];
 }
 
@@ -91,6 +94,10 @@
     [groupCell setupCellWithModel:group];
     groupCell.selectionStyle = UITableViewCellSelectionStyleNone;
     return groupCell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 100;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -19,4 +19,6 @@
 @property (nonatomic, copy) NSString* isMember; // 是否已加入
 @property (nonatomic, copy) NSString* number;  //群成员数
 
+@property (nonatomic) int isChosen;
+
 @end

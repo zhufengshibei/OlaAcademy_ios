@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CreateGroupController : UIViewController
+#import "UIBaseViewController.h"
+
+@interface CreateGroupController : UIBaseViewController
 
 @property (nonatomic) void(^groupCreateBlock)();
 
