@@ -23,8 +23,6 @@
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) NSMutableArray *dataArray;
 
-@property (nonatomic) NSString *currentGroupId;
-
 @end
 
 @implementation ChooseGroupController{
@@ -138,14 +136,20 @@
         [alert show];
         return;
     }
-    if(!_currentGroupId){
+    NSString *groupIds = @"";
+    for (Group *group in _dataArray) {
+        if (group.isChosen == 1) {
+            groupIds = [[groupIds stringByAppendingString:group.groupId]stringByAppendingString:@","];
+        }
+    }
+    if([groupIds isEqualToString:@""]){
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请选择要发布的群" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alert show];
         return;
     }
     [SVProgressHUD showWithStatus:@"发布中,请稍后..." maskType:SVProgressHUDMaskTypeNone];
     HomeworkManager *hm = [[HomeworkManager alloc]init];
-    [hm deployHomeworkWithGroupId:_currentGroupId GroupName:titleString SubjectIds:_subjectIds Success:^(CommonResult *result) {
+    [hm deployHomeworkWithGroupIds:groupIds GroupName:titleString SubjectIds:_subjectIds Success:^(CommonResult *result) {
         [SVProgressHUD showInfoWithStatus:@"发布成功!"];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"DEPLOY_HOMEWORK" object:nil];
         [self.navigationController popToRootViewControllerAnimated:YES];
@@ -195,16 +199,9 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    for (int i=0; i<[_dataArray count]; i++) {
-        Group *group = _dataArray[i];
-        if (i == indexPath.row) {
-            _currentGroupId = group.groupId;
-            group.isChosen = 1;
-        }else{
-            group.isChosen = 0;
-        }
-        [_dataArray replaceObjectAtIndex:i withObject:group];
-    }
+    Group *group = [_dataArray objectAtIndex:indexPath.row];
+    group.isChosen = group.isChosen==0?1:0;
+    [_dataArray replaceObjectAtIndex:indexPath.row withObject:group];
     [tableView reloadData];
 }
 

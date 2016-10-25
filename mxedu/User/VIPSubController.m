@@ -318,7 +318,7 @@
     PayManager *pm = [[PayManager alloc]init];
     [SVProgressHUD showWithStatus:@"请求中，请稍后..."];
     
-    [pm fetchAliPayInfoWithUserId:am.userInfo.userId Type:[NSString stringWithFormat:@"%d",vipType] goodsId:@"" Success:^(AliPayResult *result) {
+    [pm fetchAliPayInfoWithUserId:am.userInfo.userId Type:[NSString stringWithFormat:@"%d",vipType] goodsId:@"" coin:@"0" Success:^(AliPayResult *result) {
         if (result.payInfo&&result.payInfo.orderInfo) {
             //应用注册scheme,在AlixPayDemo-Info.plist定义URL types
             NSString *appScheme = @"mcalipay";
@@ -346,7 +346,7 @@
     }
     PayManager *pm = [[PayManager alloc]init];
     [SVProgressHUD showWithStatus:@"请求中，请稍后..."];
-    [pm fetchPayReqInfoWithUserId:am.userInfo.userId Type:[NSString stringWithFormat:@"%d",vipType] goodsId:@"" Success:^(PayReqResult *result) {
+    [pm fetchPayReqInfoWithUserId:am.userInfo.userId Type:[NSString stringWithFormat:@"%d",vipType] goodsId:@"" coin:@"0" Success:^(PayReqResult *result) {
         PayReq *payReq = result.payReq;
         if (payReq) {
             [WXApi sendReq:payReq];

@@ -16,6 +16,7 @@
     UIImageView *_videoImage;
     UILabel *_nameLabel;
     UILabel *_descLabel;
+    UIImageView *_redIV;
     UIImageView *_nextIV;
 }
 
@@ -74,6 +75,21 @@
             make.right.equalTo(_nextIV.mas_left).offset(-GENERAL_SIZE(20));
             make.centerY.equalTo(_videoImage);
         }];
+        
+        _redIV = [[UIImageView alloc]init];
+        _redIV.backgroundColor = [UIColor redColor];
+        _redIV.layer.masksToBounds = YES;
+        _redIV.layer.cornerRadius = GENERAL_SIZE(6);
+        [self addSubview:_redIV];
+        _redIV.hidden = YES;
+        
+        [_redIV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_descLabel).offset(-GENERAL_SIZE(4));
+            make.left.equalTo(_descLabel.mas_right);
+            make.width.equalTo(@(GENERAL_SIZE(12)));
+            make.height.equalTo(@(GENERAL_SIZE(12)));
+        }];
+
     }
     return self;
 }
@@ -101,6 +117,11 @@
         _nextIV.hidden = YES;
     }else{
         _nextIV.hidden = NO;
+    }
+    if(model.showRedTip ==1){
+        _redIV.hidden = NO;
+    }else{
+        _redIV.hidden = YES;
     }
     _videoImage.image = [UIImage imageNamed:model.icon];
     [_videoImage sizeToFit];

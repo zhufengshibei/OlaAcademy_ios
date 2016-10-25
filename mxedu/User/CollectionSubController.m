@@ -146,7 +146,7 @@
     CollectionVideo *video = [videoArray objectAtIndex:indexPath.row];
     CourSectionViewController *sectionVC = [[CourSectionViewController alloc]init];
     sectionVC.objectId = video.courseId;
-    sectionVC.type = 1;
+    sectionVC.type = video.type?[video.type intValue]:1;
     sectionVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:sectionVC animated:YES];
     

@@ -460,7 +460,7 @@
 
 #pragma mark - LXActivityDelegate
 
-- (void)didClickOnImageIndex:(NSInteger *)imageIndex
+- (void)didClickOnImageIndex:(NSInteger)imageIndex
 {
     UIImage *image = [UIImage imageNamed:@"ic_logo"];
     NSString *content = _sharedCircle.content;

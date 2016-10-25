@@ -47,7 +47,7 @@
 
 -(void)setupRightButton{
     UIImageView *createBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
-    createBtn.image = [UIImage imageNamed:@"ic_add_circle"];
+    createBtn.image = [UIImage imageNamed:@"ic_group"];
     createBtn.userInteractionEnabled = YES;
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showCreateView)];
     [createBtn addGestureRecognizer:singleTap];

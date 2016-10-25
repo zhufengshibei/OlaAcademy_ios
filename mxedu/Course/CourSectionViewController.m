@@ -23,6 +23,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
+#import <MessageUI/MessageUI.h>
 #import "AppDelegate.h"
 #import "Reachability.h"
 #import "ShareSheetView.h"
@@ -36,7 +37,7 @@
 #import "HMSegmentedControl.h"
 #import "SVProgressHUD.h"
 
-@interface CourSectionViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,MyMediaPlayerDelegate,MyMediaPlayerDataSource,ShareSheetDelegate,UMSocialUIDelegate>
+@interface CourSectionViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,MFMailComposeViewControllerDelegate,PDFViewDelegate,MyMediaPlayerDelegate,MyMediaPlayerDataSource,ShareSheetDelegate,UMSocialUIDelegate>
 
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) HMSegmentedControl *segmentedControl;
@@ -253,9 +254,6 @@
 
 -(void)setupTableView{
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_segmentedControl.frame), SCREEN_WIDTH, SCREEN_HEIGHT-CGRectGetMaxY(_segmentedControl.frame)-43) style:UITableViewStylePlain];
-    if (_type==2&&([_orderStatus isEqualToString:@"1"]||[_commodity.price isEqualToString:@"0"])) {
-        _tableView.frame = CGRectMake(0, CGRectGetMaxY(_segmentedControl.frame), SCREEN_WIDTH, SCREEN_HEIGHT-CGRectGetMaxY(_segmentedControl.frame));
-    }
     _tableView.backgroundColor = RGBCOLOR(240, 240, 240);
     _tableView.separatorStyle = NO;
     _tableView.dataSource = self;
@@ -269,6 +267,7 @@
     _pdfView = [[PDFView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_segmentedControl.frame), SCREEN_WIDTH, SCREEN_HEIGHT-CGRectGetMaxY(_segmentedControl.frame))];
     _pdfView.backgroundColor = [UIColor whiteColor];
     _pdfView.hidden = YES;
+    _pdfView.delegate = self;
     [self.view addSubview:_pdfView];
 }
 
@@ -330,7 +329,11 @@
     [downloadButton addTarget:self action:@selector(downloadVideo) forControlEvents:UIControlEventTouchDown];
     
     collectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [collectionButton setImage:[UIImage imageNamed:@"ic_collect"] forState:UIControlStateNormal];
+    if(isCollected){
+        [collectionButton setImage:[UIImage imageNamed:@"ic_collected"] forState:UIControlStateNormal];
+    }else{
+        [collectionButton setImage:[UIImage imageNamed:@"ic_collect"] forState:UIControlStateNormal];
+    }
     [collectionButton sizeToFit];
     [collectionButton addTarget:self action:@selector(collectCourse) forControlEvents:UIControlEventTouchDown];
     
@@ -350,7 +353,14 @@
     _operationView.backgroundColor = RGBCOLOR(250, 250, 250);
     [self.view addSubview:_operationView];
     
-    if (_type==1) {
+    // 精品课程未购买则显示购买按钮
+    if(_type==2&&[_orderStatus isEqualToString:@"0"]&&![_commodity.price isEqualToString:@"0"]){
+        [_operationView addSubview:buyButton];
+        [buyButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(_operationView);
+            make.right.equalTo(_operationView.mas_right).offset(-10);
+        }];
+    }else{
         [_operationView addSubview:downloadButton];
         [_operationView addSubview:collectionButton];
         [_operationView addSubview:shareButton];
@@ -369,18 +379,6 @@
             make.right.equalTo(downloadButton.mas_left).offset(-20);
             make.centerY.equalTo(_operationView);
         }];
-    }else{
-        [_operationView addSubview:buyButton];
-        if ([_orderStatus isEqualToString:@"1"]||[_commodity.price isEqualToString:@"0"]) {
-            _operationView.hidden = YES;
-        }else{
-            _operationView.hidden = NO;
-        }
-        
-        [buyButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(_operationView);
-            make.right.equalTo(_operationView.mas_right).offset(-10);
-        }];
     }
 }
 
@@ -398,7 +396,6 @@
         [dataArray removeAllObjects];
         [dataArray addObjectsFromArray: result.videoBox.videoList];
         if ([result.videoBox.isCollect intValue]==1) {
-            [collectionButton setImage:[UIImage imageNamed:@"ic_collected"] forState:UIControlStateNormal];
             isCollected = YES;
         }
 
@@ -427,6 +424,9 @@
     }
     CommodityManager *cm = [[CommodityManager alloc]init];
     [cm fetchCommodityVideoListWithGoodsId:_objectId UserId:userId Success:^(VideoListResult *result) {
+        if (result.isCollect==1) {
+            isCollected = YES;
+        }
         [dataArray removeAllObjects];
         [dataArray addObjectsFromArray: result.videoList];
         if ([dataArray count]>0) {
@@ -449,7 +449,7 @@
     if (!vidioFinishLoad) { //视频未加载完成，不允许跳转
         return;
     }
-
+    [_myMediaPlayer pause];
     CourBuyViewController *buyVC = [[CourBuyViewController alloc]init];
     buyVC.commodity = _commodity;
     [self.navigationController pushViewController:buyVC animated:YES];
@@ -462,8 +462,8 @@
     }
     if (_objectId) {
         CourseManager *cm = [[CourseManager alloc]init];
-        int type = isCollected?0:1;
-        [cm addVideoToCollectionWithUserId:am.userInfo.userId VideoId:_currentVideo.videoId CourseId: _objectId State:[NSString stringWithFormat:@"%d",type] Success:^(CommonResult *result)  {
+        int state = isCollected?0:1;
+        [cm addVideoToCollectionWithUserId:am.userInfo.userId VideoId:_currentVideo.videoId CourseId: _objectId State:[NSString stringWithFormat:@"%d",state] Type:[NSString stringWithFormat:@"%d", _type] Success:^(CommonResult *result)  {
             if (isCollected) {
                 isCollected = NO;
                 [collectionButton setImage:[UIImage imageNamed:@"ic_collect"] forState:UIControlStateNormal];
@@ -601,7 +601,7 @@
             [self showLoginView];
             return;
         };
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"友情提示" message:@"购买后即可拥有" delegate:self cancelButtonTitle:@"取消" otherButtonTitles: @"去购买",nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"购买后即可拥有" delegate:self cancelButtonTitle:@"取消" otherButtonTitles: @"去购买",nil];
         alert.tag = 1002;
         [alert show];
     }
@@ -656,9 +656,80 @@
      ];
 }
 
+#pragma PDFView delegate
+-(void)didClickSendMail:(CourseVideo *)video{
+    [_myMediaPlayer pause];
+    [self sendMailInApp:video];
+}
+
+#pragma  发送邮件 以及 代理
+#pragma mark - 在应用内发送邮件
+//激活邮件功能
+- (void)sendMailInApp:(CourseVideo *)video
+{
+    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+    if (!mailClass) {
+        //[self alertWithMessage:@"当前系统版本不支持应用内发送邮件功能，您可以使用mailto方法代替"];
+        return;
+    }
+    if (![mailClass canSendMail]) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请先在设置中配置您的邮箱，再进行分享。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        alert.tag = 1003;
+        [alert show];
+        return;
+    }
+    [self displayMailPicker:video];
+}
+
+//调出邮件发送窗口
+- (void)displayMailPicker:(CourseVideo *)video
+{
+    MFMailComposeViewController *mailPicker = [[MFMailComposeViewController alloc] init];
+    mailPicker.mailComposeDelegate = self;
+    
+    [mailPicker setSubject: @"欧拉学院讲义"];
+    //添加收件人
+    //NSArray *toRecipients = [NSArray arrayWithObject: @"forevertxp@gmail.com"];
+    //[mailPicker setToRecipients: toRecipients];
+    
+    //NSString *emailBody = @"<h6><hr id='ht'></h6><div><sup>欧拉学院</sup></div><div><sup>北京市海淀区清华科技园清华x-lab</sup></div><div><sup>我们的征途是星辰和大海！</sup></div>";
+    //[mailPicker setMessageBody:emailBody isHTML:YES];
+    
+    //添加pdf附件
+    NSString *fileName = [NSString stringWithFormat:@"%@.pdf",video.attachmentId];
+    NSString* filepath = [[kDocPath stringByAppendingString:kPDFDataPath] stringByAppendingPathComponent:fileName];
+    NSData *pdf = [NSData dataWithContentsOfFile:filepath];
+    [mailPicker addAttachmentData:pdf mimeType:@"" fileName:video.name];
+
+    [self presentViewController: mailPicker animated:YES completion:nil];
+}
+
+#pragma mark - 实现 MFMailComposeViewControllerDelegate
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    //关闭邮件发送窗口
+    [self dismissViewControllerAnimated:YES completion:nil];
+    NSString *msg;
+    switch (result) {
+        case MFMailComposeResultCancelled:
+            msg = @"发送已取消";
+            break;
+        case MFMailComposeResultSaved:
+            msg = @"成功保存邮件";
+            break;
+        case MFMailComposeResultSent:
+            msg = @"邮件已发送";
+            break;
+        case MFMailComposeResultFailed:
+            msg = @"保存或者发送邮件失败";
+            break;
+    }
+    [SVProgressHUD showInfoWithStatus:msg];
+}
+
 #pragma mark - LXActivityDelegate
 
-- (void)didClickOnImageIndex:(NSInteger *)imageIndex
+- (void)didClickOnImageIndex:(NSInteger)imageIndex
 {
     UIImage *image = [UIImage imageNamed:@"ic_logo"];
     NSString *content = _currentVideo.name;

@@ -205,8 +205,6 @@
 		3D8600AA1C0E864D00C0C69C /* EnrollDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8600A91C0E864D00C0C69C /* EnrollDetailViewController.m */; };
 		3D8600B81C12CA1D00C0C69C /* SKSplashIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8600B51C12CA1D00C0C69C /* SKSplashIcon.m */; };
 		3D8600B91C12CA1D00C0C69C /* SKSplashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8600B71C12CA1D00C0C69C /* SKSplashView.m */; };
-		3D8600BB1C14144900C0C69C /* 晨星成长计划.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3D8600BA1C14144900C0C69C /* 晨星成长计划.pdf */; };
-		3D8600CC1C171A4800C0C69C /* 晨星成长计划Q&A.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3D8600CB1C171A4800C0C69C /* 晨星成长计划Q&A.pdf */; };
 		3D8600CE1C171A5900C0C69C /* 服务协议.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3D8600CD1C171A5900C0C69C /* 服务协议.pdf */; };
 		3D8600D01C171A6100C0C69C /* 隐私政策.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3D8600CF1C171A6100C0C69C /* 隐私政策.pdf */; };
 		3D8600E51C1BC1C800C0C69C /* UserPrivacyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8600E41C1BC1C800C0C69C /* UserPrivacyViewController.m */; };
@@ -218,6 +216,7 @@
 		3D910C431BD6154B007B092E /* CourseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D910C421BD6154B007B092E /* CourseManager.m */; };
 		3D910C471BD61698007B092E /* CourseListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D910C461BD61698007B092E /* CourseListResult.m */; };
 		3D910C4E1BD61A6C007B092E /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D910C4D1BD61A6C007B092E /* Course.m */; };
+		3D92CD781DBC709600953357 /* 欧拉群服务协议.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3D92CD771DBC709600953357 /* 欧拉群服务协议.pdf */; };
 		3D92FDE11D03CEEA008E602F /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D92FDA91D03CEEA008E602F /* UMSocialLocalizable.strings */; };
 		3D92FDE21D03CEEA008E602F /* libUMSocial_Sdk_5.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D92FDB71D03CEEA008E602F /* libUMSocial_Sdk_5.2.1.a */; };
 		3D92FDE31D03CEEA008E602F /* UMSCommentDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D92FDB91D03CEEA008E602F /* UMSCommentDetailController.xib */; };
@@ -281,6 +280,13 @@
 		3D9CB82C1DAA3EE800A3C9A1 /* ChosenWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB82B1DAA3EE800A3C9A1 /* ChosenWebController.m */; };
 		3D9CB82F1DAA837500A3C9A1 /* ChooseGroupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB82E1DAA837500A3C9A1 /* ChooseGroupController.m */; };
 		3D9CB8321DAB434100A3C9A1 /* ChooseGroupTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB8311DAB434100A3C9A1 /* ChooseGroupTableCell.m */; };
+		3D9CB8341DB0DD2900A3C9A1 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D9CB8331DB0DD2900A3C9A1 /* MessageUI.framework */; };
+		3D9CB8371DB1DCA700A3C9A1 /* ExchangeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB8361DB1DCA600A3C9A1 /* ExchangeManager.m */; };
+		3D9CB83D1DB1EA7C00A3C9A1 /* HomeworkStatisticsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB83C1DB1EA7C00A3C9A1 /* HomeworkStatisticsController.m */; };
+		3D9CB8401DB47EB000A3C9A1 /* WorkStatistics.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB83F1DB47EB000A3C9A1 /* WorkStatistics.m */; };
+		3D9CB8431DB47F2D00A3C9A1 /* StatisticsUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB8421DB47F2C00A3C9A1 /* StatisticsUser.m */; };
+		3D9CB8491DB482C500A3C9A1 /* WorkStatisticsListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB8481DB482C500A3C9A1 /* WorkStatisticsListResult.m */; };
+		3D9CB84C1DB49C0500A3C9A1 /* WorkStatisticsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9CB84B1DB49C0500A3C9A1 /* WorkStatisticsTableCell.m */; };
 		3D9D296A1CE0B6B900F58E57 /* ExamFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D29691CE0B6B900F58E57 /* ExamFilterView.m */; };
 		3D9D35B51C01E9FB007CE085 /* PopPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D35B41C01E9FB007CE085 /* PopPickerView.m */; };
 		3D9D35BD1C058195007CE085 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D35BB1C058195007CE085 /* AboutViewController.m */; };
@@ -459,6 +465,13 @@
 		3DFB6DF51B6E02770072D175 /* RightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFB6DF41B6E02770072D175 /* RightViewController.m */; };
 		3DFB6DFA1B6E04B30072D175 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFB6DF81B6E04B30072D175 /* IntroViewController.m */; };
 		3DFB6DFB1B6E04B30072D175 /* IntroViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DFB6DF91B6E04B30072D175 /* IntroViewController.xib */; };
+		3DFD14EF1DB4FB380061F1EB /* OlaCoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD14EE1DB4FB380061F1EB /* OlaCoinViewController.m */; };
+		3DFD14F21DB759C10061F1EB /* CoinHistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD14F11DB759C10061F1EB /* CoinHistoryController.m */; };
+		3DFD14F51DB759DC0061F1EB /* CoinRuleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD14F41DB759DC0061F1EB /* CoinRuleController.m */; };
+		3DFD14F81DB7A46F0061F1EB /* CoinManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD14F71DB7A46F0061F1EB /* CoinManager.m */; };
+		3DFD14FB1DB7A4950061F1EB /* CoinHistoryListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD14FA1DB7A4950061F1EB /* CoinHistoryListResult.m */; };
+		3DFD14FE1DB7A4C70061F1EB /* CoinHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD14FD1DB7A4C70061F1EB /* CoinHistory.m */; };
+		3DFD15011DB8C0310061F1EB /* CoinHistoryTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD15001DB8C0310061F1EB /* CoinHistoryTableCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -849,8 +862,6 @@
 		3D8600B51C12CA1D00C0C69C /* SKSplashIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSplashIcon.m; sourceTree = "<group>"; };
 		3D8600B61C12CA1D00C0C69C /* SKSplashView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSplashView.h; sourceTree = "<group>"; };
 		3D8600B71C12CA1D00C0C69C /* SKSplashView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSplashView.m; sourceTree = "<group>"; };
-		3D8600BA1C14144900C0C69C /* 晨星成长计划.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "晨星成长计划.pdf"; sourceTree = "<group>"; };
-		3D8600CB1C171A4800C0C69C /* 晨星成长计划Q&A.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "晨星成长计划Q&A.pdf"; sourceTree = "<group>"; };
 		3D8600CD1C171A5900C0C69C /* 服务协议.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "服务协议.pdf"; sourceTree = "<group>"; };
 		3D8600CF1C171A6100C0C69C /* 隐私政策.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "隐私政策.pdf"; sourceTree = "<group>"; };
 		3D8600E31C1BC1C700C0C69C /* UserPrivacyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPrivacyViewController.h; sourceTree = "<group>"; };
@@ -871,6 +882,7 @@
 		3D910C461BD61698007B092E /* CourseListResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseListResult.m; sourceTree = "<group>"; };
 		3D910C4C1BD61A6C007B092E /* Course.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Course.h; sourceTree = "<group>"; };
 		3D910C4D1BD61A6C007B092E /* Course.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Course.m; sourceTree = "<group>"; };
+		3D92CD771DBC709600953357 /* 欧拉群服务协议.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "欧拉群服务协议.pdf"; sourceTree = "<group>"; };
 		3D92FDAA1D03CEEA008E602F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
 		3D92FDAC1D03CEEA008E602F /* UMSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocial.h; sourceTree = "<group>"; };
 		3D92FDAD1D03CEEA008E602F /* UMSocialAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialAccountManager.h; sourceTree = "<group>"; };
@@ -1003,6 +1015,19 @@
 		3D9CB82E1DAA837500A3C9A1 /* ChooseGroupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseGroupController.m; sourceTree = "<group>"; };
 		3D9CB8301DAB434100A3C9A1 /* ChooseGroupTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseGroupTableCell.h; sourceTree = "<group>"; };
 		3D9CB8311DAB434100A3C9A1 /* ChooseGroupTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseGroupTableCell.m; sourceTree = "<group>"; };
+		3D9CB8331DB0DD2900A3C9A1 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		3D9CB8351DB1DCA600A3C9A1 /* ExchangeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangeManager.h; sourceTree = "<group>"; };
+		3D9CB8361DB1DCA600A3C9A1 /* ExchangeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExchangeManager.m; sourceTree = "<group>"; };
+		3D9CB83B1DB1EA7C00A3C9A1 /* HomeworkStatisticsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeworkStatisticsController.h; sourceTree = "<group>"; };
+		3D9CB83C1DB1EA7C00A3C9A1 /* HomeworkStatisticsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeworkStatisticsController.m; sourceTree = "<group>"; };
+		3D9CB83E1DB47EAF00A3C9A1 /* WorkStatistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkStatistics.h; sourceTree = "<group>"; };
+		3D9CB83F1DB47EB000A3C9A1 /* WorkStatistics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkStatistics.m; sourceTree = "<group>"; };
+		3D9CB8411DB47F2C00A3C9A1 /* StatisticsUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticsUser.h; sourceTree = "<group>"; };
+		3D9CB8421DB47F2C00A3C9A1 /* StatisticsUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticsUser.m; sourceTree = "<group>"; };
+		3D9CB8471DB482C500A3C9A1 /* WorkStatisticsListResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkStatisticsListResult.h; sourceTree = "<group>"; };
+		3D9CB8481DB482C500A3C9A1 /* WorkStatisticsListResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkStatisticsListResult.m; sourceTree = "<group>"; };
+		3D9CB84A1DB49C0500A3C9A1 /* WorkStatisticsTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkStatisticsTableCell.h; sourceTree = "<group>"; };
+		3D9CB84B1DB49C0500A3C9A1 /* WorkStatisticsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkStatisticsTableCell.m; sourceTree = "<group>"; };
 		3D9D29681CE0B6B900F58E57 /* ExamFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExamFilterView.h; sourceTree = "<group>"; };
 		3D9D29691CE0B6B900F58E57 /* ExamFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExamFilterView.m; sourceTree = "<group>"; };
 		3D9D35B31C01E9FB007CE085 /* PopPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopPickerView.h; sourceTree = "<group>"; };
@@ -1340,6 +1365,20 @@
 		3DFB6DF71B6E04B30072D175 /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroViewController.h; sourceTree = "<group>"; };
 		3DFB6DF81B6E04B30072D175 /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroViewController.m; sourceTree = "<group>"; };
 		3DFB6DF91B6E04B30072D175 /* IntroViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroViewController.xib; sourceTree = "<group>"; };
+		3DFD14ED1DB4FB380061F1EB /* OlaCoinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OlaCoinViewController.h; sourceTree = "<group>"; };
+		3DFD14EE1DB4FB380061F1EB /* OlaCoinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OlaCoinViewController.m; sourceTree = "<group>"; };
+		3DFD14F01DB759C10061F1EB /* CoinHistoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoinHistoryController.h; sourceTree = "<group>"; };
+		3DFD14F11DB759C10061F1EB /* CoinHistoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoinHistoryController.m; sourceTree = "<group>"; };
+		3DFD14F31DB759DC0061F1EB /* CoinRuleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoinRuleController.h; sourceTree = "<group>"; };
+		3DFD14F41DB759DC0061F1EB /* CoinRuleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoinRuleController.m; sourceTree = "<group>"; };
+		3DFD14F61DB7A46F0061F1EB /* CoinManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoinManager.h; sourceTree = "<group>"; };
+		3DFD14F71DB7A46F0061F1EB /* CoinManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoinManager.m; sourceTree = "<group>"; };
+		3DFD14F91DB7A4950061F1EB /* CoinHistoryListResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoinHistoryListResult.h; sourceTree = "<group>"; };
+		3DFD14FA1DB7A4950061F1EB /* CoinHistoryListResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoinHistoryListResult.m; sourceTree = "<group>"; };
+		3DFD14FC1DB7A4C70061F1EB /* CoinHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoinHistory.h; sourceTree = "<group>"; };
+		3DFD14FD1DB7A4C70061F1EB /* CoinHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoinHistory.m; sourceTree = "<group>"; };
+		3DFD14FF1DB8C0310061F1EB /* CoinHistoryTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoinHistoryTableCell.h; sourceTree = "<group>"; };
+		3DFD15001DB8C0310061F1EB /* CoinHistoryTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoinHistoryTableCell.m; sourceTree = "<group>"; };
 		6E6F1B37F787F7E058AF8789 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		75D2527A35C8627F4FF53FD6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A1637B2E5C404FE6BC5180B3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1350,6 +1389,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D9CB8341DB0DD2900A3C9A1 /* MessageUI.framework in Frameworks */,
 				3D36D97D1D19094F00FA6570 /* StoreKit.framework in Frameworks */,
 				3D92FDFC1D03CFAA008E602F /* libstdc++.tbd in Frameworks */,
 				3D6F6C8F1CAEAC3500097DD0 /* CoreTelephony.framework in Frameworks */,
@@ -1399,6 +1439,7 @@
 		279170BD8F854FD447C42044 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3D9CB8331DB0DD2900A3C9A1 /* MessageUI.framework */,
 				3D36D97C1D19094F00FA6570 /* StoreKit.framework */,
 				3D92FDFB1D03CFAA008E602F /* libstdc++.tbd */,
 				3D92FDF91D03CF86008E602F /* libsqlite3.tbd */,
@@ -1431,6 +1472,10 @@
 			children = (
 				3D0AA3751D51DC7200D73D81 /* Homework.h */,
 				3D0AA3761D51DC7200D73D81 /* Homework.m */,
+				3D9CB83E1DB47EAF00A3C9A1 /* WorkStatistics.h */,
+				3D9CB83F1DB47EB000A3C9A1 /* WorkStatistics.m */,
+				3D9CB8411DB47F2C00A3C9A1 /* StatisticsUser.h */,
+				3D9CB8421DB47F2C00A3C9A1 /* StatisticsUser.m */,
 			);
 			path = homework;
 			sourceTree = "<group>";
@@ -1440,6 +1485,8 @@
 			children = (
 				3D0AA3851D51FC1100D73D81 /* HomeworkListResult.h */,
 				3D0AA3861D51FC1100D73D81 /* HomeworkListResult.m */,
+				3D9CB8471DB482C500A3C9A1 /* WorkStatisticsListResult.h */,
+				3D9CB8481DB482C500A3C9A1 /* WorkStatisticsListResult.m */,
 			);
 			path = homework;
 			sourceTree = "<group>";
@@ -1876,6 +1923,8 @@
 				3D68CDD51D740B09005CA17F /* view */,
 				3D9CB81A1D9E028E00A3C9A1 /* TeaHomeworkController.h */,
 				3D9CB81B1D9E028E00A3C9A1 /* TeaHomeworkController.m */,
+				3D9CB83B1DB1EA7C00A3C9A1 /* HomeworkStatisticsController.h */,
+				3D9CB83C1DB1EA7C00A3C9A1 /* HomeworkStatisticsController.m */,
 				3D68CE001D77C7FB005CA17F /* CreateGroupController.h */,
 				3D68CE011D77C7FB005CA17F /* CreateGroupController.m */,
 				3D68CE021D77C7FB005CA17F /* GroupViewController.h */,
@@ -1917,6 +1966,8 @@
 				3D68CDD31D740B01005CA17F /* GroupTableCell.m */,
 				3D9CB8301DAB434100A3C9A1 /* ChooseGroupTableCell.h */,
 				3D9CB8311DAB434100A3C9A1 /* ChooseGroupTableCell.m */,
+				3D9CB84A1DB49C0500A3C9A1 /* WorkStatisticsTableCell.h */,
+				3D9CB84B1DB49C0500A3C9A1 /* WorkStatisticsTableCell.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -2194,8 +2245,7 @@
 				3D68CE2B1D77DE20005CA17F /* Default-568h@2x.png */,
 				3D8600CF1C171A6100C0C69C /* 隐私政策.pdf */,
 				3D8600CD1C171A5900C0C69C /* 服务协议.pdf */,
-				3D8600BA1C14144900C0C69C /* 晨星成长计划.pdf */,
-				3D8600CB1C171A4800C0C69C /* 晨星成长计划Q&A.pdf */,
+				3D92CD771DBC709600953357 /* 欧拉群服务协议.pdf */,
 			);
 			name = Resource;
 			sourceTree = "<group>";
@@ -2952,6 +3002,10 @@
 				3D9CB7851D93D25000A3C9A1 /* SignInManager.m */,
 				3D9CB78A1D9409A800A3C9A1 /* AttentionManager.h */,
 				3D9CB78B1D9409A800A3C9A1 /* AttentionManager.m */,
+				3D9CB8351DB1DCA600A3C9A1 /* ExchangeManager.h */,
+				3D9CB8361DB1DCA600A3C9A1 /* ExchangeManager.m */,
+				3DFD14F61DB7A46F0061F1EB /* CoinManager.h */,
+				3DFD14F71DB7A46F0061F1EB /* CoinManager.m */,
 			);
 			path = manager;
 			sourceTree = "<group>";
@@ -3364,6 +3418,8 @@
 				3DA647D51D7D239000D808B4 /* ThirdPay.m */,
 				3D9CB8111D9A576800A3C9A1 /* SignInStatus.h */,
 				3D9CB8121D9A576800A3C9A1 /* SignInStatus.m */,
+				3DFD14FC1DB7A4C70061F1EB /* CoinHistory.h */,
+				3DFD14FD1DB7A4C70061F1EB /* CoinHistory.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -3397,6 +3453,8 @@
 				3DA647D21D7D237E00D808B4 /* ThirdPayResult.m */,
 				3D9CB80E1D9A574700A3C9A1 /* SignInStatusResult.h */,
 				3D9CB80F1D9A574700A3C9A1 /* SignInStatusResult.m */,
+				3DFD14F91DB7A4950061F1EB /* CoinHistoryListResult.h */,
+				3DFD14FA1DB7A4950061F1EB /* CoinHistoryListResult.m */,
 			);
 			path = result;
 			sourceTree = "<group>";
@@ -3451,6 +3509,12 @@
 				3D8600A91C0E864D00C0C69C /* EnrollDetailViewController.m */,
 				3DA372DF1CD8EC200075F93C /* MistakeViewController.h */,
 				3DA372E01CD8EC200075F93C /* MistakeViewController.m */,
+				3DFD14ED1DB4FB380061F1EB /* OlaCoinViewController.h */,
+				3DFD14EE1DB4FB380061F1EB /* OlaCoinViewController.m */,
+				3DFD14F01DB759C10061F1EB /* CoinHistoryController.h */,
+				3DFD14F11DB759C10061F1EB /* CoinHistoryController.m */,
+				3DFD14F31DB759DC0061F1EB /* CoinRuleController.h */,
+				3DFD14F41DB759DC0061F1EB /* CoinRuleController.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -3468,6 +3532,8 @@
 				3DA967281D87A6E5001217C5 /* UserTableCell.m */,
 				3D9CB8141D9BA09600A3C9A1 /* CourseTableViewCell.h */,
 				3D9CB8151D9BA09600A3C9A1 /* CourseTableViewCell.m */,
+				3DFD14FF1DB8C0310061F1EB /* CoinHistoryTableCell.h */,
+				3DFD15001DB8C0310061F1EB /* CoinHistoryTableCell.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -3659,7 +3725,6 @@
 				3DFB6C041B6DC23B0072D175 /* LaunchScreen.xib in Resources */,
 				3DB865B51CF58A070011F4EF /* forward_disable@2x.png in Resources */,
 				3D92FDE51D03CEEA008E602F /* UMSCommentInputControlleriPad.xib in Resources */,
-				3D8600CC1C171A4800C0C69C /* 晨星成长计划Q&A.pdf in Resources */,
 				3DB865B01CF58A070011F4EF /* backward_nor@2x.png in Resources */,
 				3DFB6D291B6DCADB0072D175 /* MJPhotoBrowser.bundle in Resources */,
 				3D92FDE71D03CEEA008E602F /* UMShareEditViewControlleriPad.xib in Resources */,
@@ -3681,7 +3746,6 @@
 				3D1D24781D2A3CD800A7F418 /* ImageCell.xib in Resources */,
 				3DB865BE1CF58A070011F4EF /* video_num_front@2x.png in Resources */,
 				3D92FDE41D03CEEA008E602F /* UMSCommentInputController.xib in Resources */,
-				3D8600BB1C14144900C0C69C /* 晨星成长计划.pdf in Resources */,
 				3DB865BB1CF58A070011F4EF /* progressThumb@2x.png in Resources */,
 				3DFB6DFB1B6E04B30072D175 /* IntroViewController.xib in Resources */,
 				3DB865B91CF58A070011F4EF /* play_disable@2x.png in Resources */,
@@ -3692,6 +3756,7 @@
 				3DB865B11CF58A070011F4EF /* fast_backward_disable@2x.png in Resources */,
 				3DB865BF1CF58A070011F4EF /* video_tips@2x.png in Resources */,
 				3D92FDEE1D03CEEA008E602F /* WeiboSDK.bundle in Resources */,
+				3D92CD781DBC709600953357 /* 欧拉群服务协议.pdf in Resources */,
 				3D8600D01C171A6100C0C69C /* 隐私政策.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3887,6 +3952,7 @@
 				3D9CB8101D9A574700A3C9A1 /* SignInStatusResult.m in Sources */,
 				3D68CE141D77C868005CA17F /* ZSYPopoverListView.m in Sources */,
 				3D31C3561D3E292B008882C3 /* MessageListResult.m in Sources */,
+				3D9CB84C1DB49C0500A3C9A1 /* WorkStatisticsTableCell.m in Sources */,
 				3DBBE3B71CF6FA970038F29E /* DownloadManager.m in Sources */,
 				3D31C3781D40795D008882C3 /* FPPopoverView.m in Sources */,
 				3D68CDD41D740B01005CA17F /* GroupTableCell.m in Sources */,
@@ -3920,11 +3986,13 @@
 				3D6F6C991CB2599800097DD0 /* CommodityViewController.m in Sources */,
 				3DFB6D0D1B6DCAC40072D175 /* BSCameraView.m in Sources */,
 				3DBC9CEF1C90591E00030A63 /* Question.m in Sources */,
+				3DFD14FE1DB7A4C70061F1EB /* CoinHistory.m in Sources */,
 				3D9CB7FA1D97AF0D00A3C9A1 /* RNCryptor.m in Sources */,
 				3D2F0BBB1CE21F8600C84CF0 /* VideoBox.m in Sources */,
 				3D9CB7A31D9797DA00A3C9A1 /* SDMediaPlayerVC.m in Sources */,
 				3D68CE211D77C872005CA17F /* ChoiceTableCell.m in Sources */,
 				3D9CB8261D9E67AA00A3C9A1 /* DWBubbleMenuButton.m in Sources */,
+				3D9CB83D1DB1EA7C00A3C9A1 /* HomeworkStatisticsController.m in Sources */,
 				3DFB6D5D1B6DD52C0072D175 /* UIBarButtonItem+Extension.m in Sources */,
 				3DFB6D731B6DD5AA0072D175 /* AuthResult.m in Sources */,
 				3DFB6C2D1B6DC92F0072D175 /* AuthManager.m in Sources */,
@@ -3974,14 +4042,17 @@
 				3DFB6DA91B6DE2C10072D175 /* ForgetPassViewController.m in Sources */,
 				3DAF99361CCE223C007835E3 /* AliPayInfo.m in Sources */,
 				3D44E4991CBF73C800B34990 /* WXUtil.mm in Sources */,
+				3D9CB8401DB47EB000A3C9A1 /* WorkStatistics.m in Sources */,
 				3DFB6DD51B6DE6720072D175 /* ShareSheetView.m in Sources */,
 				3DFB6DFA1B6E04B30072D175 /* IntroViewController.m in Sources */,
 				3DFB6DF51B6E02770072D175 /* RightViewController.m in Sources */,
 				3D9D35D01C06A766007CE085 /* LeslieImageCache.m in Sources */,
+				3DFD15011DB8C0310061F1EB /* CoinHistoryTableCell.m in Sources */,
 				3D1D246C1D2A3B9B00A7F418 /* PhotoCollectionViewCell.m in Sources */,
 				3D9CB82F1DAA837500A3C9A1 /* ChooseGroupController.m in Sources */,
 				3DFB6C371B6DC9850072D175 /* NTFont.m in Sources */,
 				3DFB6C1C1B6DC91A0072D175 /* SysCommon.m in Sources */,
+				3D9CB8371DB1DCA700A3C9A1 /* ExchangeManager.m in Sources */,
 				3DAF99301CCE209F007835E3 /* AliPayResult.m in Sources */,
 				3D9D296A1CE0B6B900F58E57 /* ExamFilterView.m in Sources */,
 				3DA372E41CDA285B0075F93C /* CollectionVideo.m in Sources */,
@@ -3992,6 +4063,7 @@
 				3DBC9CF21C905C3B00030A63 /* QuestionOption.m in Sources */,
 				3D3C46D21CF7E28E00BF66CD /* DownLoadSubViews.m in Sources */,
 				3D44E45B1CBD309800B34990 /* ExamManager.m in Sources */,
+				3DFD14EF1DB4FB380061F1EB /* OlaCoinViewController.m in Sources */,
 				3DFB6D541B6DD50F0072D175 /* NSObject+AutoCoding.m in Sources */,
 				3D6E71F51CE31B03003ABA1C /* MJRefreshComponent.m in Sources */,
 				3DFB6D011B6DCAC40072D175 /* BSCollectionController.m in Sources */,
@@ -4032,11 +4104,13 @@
 				3D3C46DF1CF9456400BF66CD /* CourBuyViewController.m in Sources */,
 				3D6E72051CE31B03003ABA1C /* UIView+MJExtension.m in Sources */,
 				3D1D24621D2A3B9B00A7F418 /* CXPhotoLoadingView.m in Sources */,
+				3DFD14F21DB759C10061F1EB /* CoinHistoryController.m in Sources */,
 				3DAF02831CC206AD004295BC /* CommodityListRsult.m in Sources */,
 				3D9CB7831D916BC900A3C9A1 /* OtherUserController.m in Sources */,
 				3D6E71FE1CE31B03003ABA1C /* MJRefreshGifHeader.m in Sources */,
 				3DBBE46E1CF6FE2C0038F29E /* myCustomerImageView.m in Sources */,
 				3D12ABE61D8FBBC400F66447 /* HMSegmentedControl.m in Sources */,
+				3D9CB8491DB482C500A3C9A1 /* WorkStatisticsListResult.m in Sources */,
 				3D9D361A1C0DA7E3007CE085 /* CheckIn.m in Sources */,
 				3D6E71F91CE31B03003ABA1C /* MJRefreshAutoNormalFooter.m in Sources */,
 				3DFB6D3F1B6DD4C00072D175 /* UIView+Positioning.m in Sources */,
@@ -4087,7 +4161,9 @@
 				3DB121FD1BD75C02003D9437 /* EnrollViewController.m in Sources */,
 				3D6F6C9C1CB25A2F00097DD0 /* CommodityTableCell.m in Sources */,
 				3D1D246E1D2A3B9B00A7F418 /* QYSelectPhotoCell.m in Sources */,
+				3DFD14FB1DB7A4950061F1EB /* CoinHistoryListResult.m in Sources */,
 				3D6E720F1CE466C7003ABA1C /* BannerWebViewController.m in Sources */,
+				3DFD14F81DB7A46F0061F1EB /* CoinManager.m in Sources */,
 				3D910C4E1BD61A6C007B092E /* Course.m in Sources */,
 				3DFB6DE41B6DE6C20072D175 /* MDRadialProgressLabel.m in Sources */,
 				3DA9672C1D87ACFC001217C5 /* ModelConfig.m in Sources */,
@@ -4106,6 +4182,7 @@
 				3D11D5C71BD4D9AE00789D1F /* ASIHTTPRequest.m in Sources */,
 				3D11D5CA1BD4D9AE00789D1F /* ASINSStringAdditions.m in Sources */,
 				3D9CB7A61D97985000A3C9A1 /* ChapterViewViewController.m in Sources */,
+				3D9CB8431DB47F2D00A3C9A1 /* StatisticsUser.m in Sources */,
 				3D8600B81C12CA1D00C0C69C /* SKSplashIcon.m in Sources */,
 				3D6E71F41CE31B03003ABA1C /* MJRefreshBackFooter.m in Sources */,
 				3D0C49831D3499F400E752B1 /* CustomInputView.m in Sources */,
@@ -4120,6 +4197,7 @@
 				3DB121FA1BD73DBA003D9437 /* CoursePoint.m in Sources */,
 				3DA372D21CD252510075F93C /* VideoHistoryResult.m in Sources */,
 				3D68CDD81D741C42005CA17F /* GroupManager.m in Sources */,
+				3DFD14F51DB759DC0061F1EB /* CoinRuleController.m in Sources */,
 				3DBBE3B81CF6FA970038F29E /* DownloadModal.m in Sources */,
 				3DD4B9301D2DEB74002FDC0E /* CircleDetailView.m in Sources */,
 				3D31C36D1D407244008882C3 /* PopContentTabeVIew.m in Sources */,

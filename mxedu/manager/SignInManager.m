@@ -79,5 +79,37 @@
            }];
 }
 
+/*
+ * 分享送欧拉币
+ */
+-(void)shareWithUserId:(NSString*)userId
+                success:(void (^)(CommonResult *result))success
+                failure:(void (^)(NSError*))failure
+{
+    DataMappingManager *dm = GetDataManager();
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.commonResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
+    // 通过shareManager 共享 baseurl及请求头等
+    RKObjectManager* om = [RKObjectManager sharedManager];
+    
+    [om addResponseDescriptor:responseDescriptor];
+    // 采用post方式，get方式可能产生中文乱码
+    [om postObject:nil path:@"/ola/dailyact/share" parameters:@{@"userId": userId
+                                                                  }
+           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+               if ([mappingResult.firstObject isKindOfClass:[CommonResult class]]) {
+                   CommonResult *result = mappingResult.firstObject;
+                   if (success != nil) {
+                       success(result);
+                   }
+               }
+               
+           }
+           failure:^(RKObjectRequestOperation *operation, NSError *error) {
+               if (failure != nil) {
+                   failure(error);
+               }
+           }];
+}
+
 
 @end

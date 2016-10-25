@@ -29,4 +29,11 @@
 -(void)signInWithUserId:(NSString*)userId
                 success:(void (^)(CommonResult *result))success
                 failure:(void (^)(NSError*))failure;
+
+/*
+ * 分享送欧拉币
+ */
+-(void)shareWithUserId:(NSString*)userId
+               success:(void (^)(CommonResult *result))success
+               failure:(void (^)(NSError*))failure;
 @end

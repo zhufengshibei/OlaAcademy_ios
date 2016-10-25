@@ -10,7 +10,15 @@
 
 #import "CourseVideo.h"
 
+@protocol PDFViewDelegate <NSObject>
+
+-(void)didClickSendMail:(CourseVideo*) video;
+
+@end
+
 @interface PDFView : UIView
+
+@property (nonatomic) id<PDFViewDelegate> delegate;
 
 -(void)loadPDF:(CourseVideo*)video;
 

@@ -41,10 +41,12 @@
 @implementation PDFView
 {
     CourseVideo *currentVideo;
+    UIButton *mailBtn;
     UIWebView *webView;
     THProgressView *progressView;
     UIImageView *tipIV;
     UILabel *tipL;
+    UIButton *shareImage;
     
     NSFileManager *fileManager;
     NSString *downloadPath;
@@ -62,7 +64,31 @@
             [fileManager createDirectoryAtPath:downloadPath withIntermediateDirectories:YES attributes:nil error:nil];
         }
         
-        webView = [[UIWebView alloc]initWithFrame:self.bounds];
+        shareImage = [UIButton buttonWithType:UIButtonTypeCustom];
+        [shareImage setImage:[UIImage imageNamed:@"ic_pdf_share"] forState:UIControlStateNormal];
+        [shareImage addTarget:self action:@selector(sendMail) forControlEvents:UIControlEventTouchDown];
+        [self addSubview:shareImage];
+        shareImage.hidden = YES;
+        
+        [shareImage mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.mas_top).offset(GENERAL_SIZE(60));
+            make.right.equalTo(self.mas_right).offset(-GENERAL_SIZE(50));
+        }];
+        
+        mailBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [mailBtn setTitle:@"存储为PDF发送至邮箱" forState:UIControlStateNormal];
+        [mailBtn setTitleColor:COMMONBLUECOLOR forState:UIControlStateNormal];
+        mailBtn.titleLabel.font = LabelFont(26);
+        [mailBtn addTarget:self action:@selector(sendMail) forControlEvents:UIControlEventTouchDown];
+        [self addSubview:mailBtn];
+        mailBtn.hidden = YES;
+        
+        [mailBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(shareImage);
+            make.right.equalTo(shareImage.mas_left).offset(-GENERAL_SIZE(20));
+        }];
+        
+        webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, GENERAL_SIZE(120), self.bounds.size.width, self.bounds.size.height-GENERAL_SIZE(120))];
         [webView setScalesPageToFit:YES];
         webView.backgroundColor = [UIColor whiteColor];
         [self addSubview:webView];
@@ -112,6 +138,8 @@
             [webView loadData:data MIMEType:@"application/pdf" textEncodingName:@"GBK" baseURL:nil];
             progressView.hidden = YES;
             tipL.hidden = YES;
+            mailBtn.hidden = NO;
+            shareImage.hidden = NO;
         }else{
             NSURL* url = [NSURL URLWithString:video.url];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:15];
@@ -128,6 +156,12 @@
         tipL.text = @"暂无讲义";
         progressView.hidden = YES;
         webView.hidden = YES;
+    }
+}
+
+-(void)sendMail{
+    if (_delegate) {
+        [_delegate didClickSendMail:currentVideo];
     }
 }
 
@@ -191,6 +225,8 @@
     tipIV.hidden = YES;
     tipL.hidden = YES;
     progressView.hidden = YES;
+    mailBtn.hidden = NO;
+    shareImage.hidden = NO;
     // 加载文件
     NSString *fileName = [NSString stringWithFormat:@"%@.pdf",currentVideo.attachmentId];
     NSString* filepath = [downloadPath stringByAppendingPathComponent:fileName];

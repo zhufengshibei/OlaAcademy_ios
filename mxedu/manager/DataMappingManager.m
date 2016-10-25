@@ -60,6 +60,9 @@
 #import "CheckInResult.h"
 #import "CheckInListResult.h"
 
+#import "CoinHistory.h"
+#import "CoinHistoryListResult.h"
+
 #import "Commodity.h"
 #import "CommodityListRsult.h"
 #import "StatusResult.h"
@@ -87,6 +90,9 @@
 
 #import "Consult.h"
 #import "HomeworkListResult.h"
+#import "StatisticsUser.h"
+#import "WorkStatistics.h"
+#import "WorkStatisticsListResult.h"
 
 @implementation DataMappingManager
 
@@ -134,6 +140,7 @@
     [self setupCheckInListMapping];
     [self setupQuestionListMapping];
     [self setupHomeworkListMapping];
+    [self setupWorkStatisticsListMapping];
     [self setupExamListMapping];
     [self setupCommodityListMapping];
     [self setupPayReqResultMapping];
@@ -147,6 +154,7 @@
     [self setupThirdPayResultMapping];
     [self setupMessageListMapping];
     [self setupUnreadMessageMapping];
+    [self setupCoinHistoryListResultMapping];
 }
 
 
@@ -156,12 +164,15 @@
     [_accessTokenMapping addAttributeMappingsFromDictionary:@{
                                                           @"id":         @"userId",
                                                           @"name":       @"name",
+                                                          @"realName":   @"realName",
                                                           @"phone":      @"phone",
                                                           @"avator":     @"avatar",
                                                           @"age":        @"age",
                                                           @"sex":        @"sex",
                                                           @"isActive":   @"isActive",
-                                                          @"sign":       @"signature"
+                                                          @"sign":       @"signature",
+                                                          @"coin":       @"coin",
+                                                          @"examtype":   @"examType"
                                                           }];
     
     _authResultMapping = [RKObjectMapping mappingForClass:[AuthResult class]];
@@ -185,6 +196,7 @@
     [_userMapping addAttributeMappingsFromDictionary:@{
                                                           @"id":         @"userId",
                                                           @"name":       @"name",
+                                                          @"realName":   @"realName",
                                                           @"age":      @"age",
                                                           @"sex":      @"sex",
                                                           @"avator":   @"avatar",
@@ -193,7 +205,8 @@
                                                           @"isActive": @"isActive",
                                                           @"vipTime":    @"vipTime",
                                                           @"sign":    @"signature",
-                                                          @"signInDays":  @"signInDays"
+                                                          @"coin":  @"coin",
+                                                          @"examtype":  @"examType"
                                                           }];
     
     _userInfoResultMapping = [RKObjectMapping mappingForClass:[UserInfoResult class]];
@@ -205,13 +218,19 @@
     
 }
 
+// 签到等任务状态
 - (void)setupSignInStatusResultMapping
 {
     RKObjectMapping *signInStatus = [RKObjectMapping mappingForClass:[SignInStatus class]];
     [signInStatus addAttributeMappingsFromDictionary:@{
                                                         @"status":        @"status",
                                                         @"lastSignIn":    @"lastSignIn",
-                                                        @"signInDays":    @"signInDays"
+                                                        @"signInDays":    @"signInDays",
+                                                        @"coin":          @"coin",
+                                                        @"todayCoin":     @"todayCoin",
+                                                        @"profileTask":   @"profileTask",
+                                                        @"vipTask":       @"vipTask",
+                                                        @"courseTask":    @"courseTask"
                                                            }];
     _signInStatusResultMapping = [RKObjectMapping mappingForClass:[SignInStatusResult class]];
     [_signInStatusResultMapping addAttributeMappingsFromDictionary:@{
@@ -219,6 +238,26 @@
                                                                   @"message": @"message"
                                                                   }];
     [_signInStatusResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"signInStatus" withMapping:signInStatus]];
+}
+
+//欧拉币明细
+- (void)setupCoinHistoryListResultMapping
+{
+    RKObjectMapping *coinHistory = [RKObjectMapping mappingForClass:[CoinHistory class]];
+    [coinHistory addAttributeMappingsFromDictionary:@{
+                                                       @"id":        @"historyId",
+                                                       @"userId":    @"userId",
+                                                       @"name":      @"name",
+                                                       @"type":      @"type",
+                                                       @"date":      @"date",
+                                                       @"dealNum":   @"dealNum"
+                                                       }];
+    _coinHistoryListResultMapping = [RKObjectMapping mappingForClass:[CoinHistoryListResult class]];
+    [_coinHistoryListResultMapping addAttributeMappingsFromDictionary:@{
+                                                                     @"code": @"code",
+                                                                     @"message": @"message"
+                                                                     }];
+    [_coinHistoryListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"historyArray" withMapping:coinHistory]];
 }
 
 -(void)setupUploadMappings{
@@ -396,6 +435,7 @@
                                                           @"groupName":  @"groupName",
                                                           @"count":      @"count",
                                                           @"finishedCount": @"finishedCount",
+                                                          @"finishedPercent": @"finishedPercent",
                                                           @"time":       @"time"
                                                           }];
     _homeworkListResultMapping = [RKObjectMapping mappingForClass:[HomeworkListResult class]];
@@ -405,6 +445,33 @@
                                                                    }];
     [_homeworkListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"homeworkArray" withMapping:homeworkMapping]];
 
+}
+
+-(void)setupWorkStatisticsListMapping{
+    RKObjectMapping* statisticsUserMapping = [RKObjectMapping mappingForClass:[StatisticsUser class]];
+    [statisticsUserMapping addAttributeMappingsFromDictionary:@{
+                                                          @"userId":     @"userId",
+                                                          @"userName":   @"userName",
+                                                          @"userAvatar": @"userAvatar",
+                                                          @"location":   @"location",
+                                                          @"finished":   @"finished"
+                                                          }];
+    
+    RKObjectMapping* workStatisticsMapping = [RKObjectMapping mappingForClass:[WorkStatistics class]];
+    [workStatisticsMapping addAttributeMappingsFromDictionary:@{
+                                                    @"unfinishedCount": @"unfinishedCount",
+                                                    @"finishedCount":   @"finishedCount",
+                                                    @"correctness":     @"correctness"
+                                                            }];
+    [workStatisticsMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"statisticsList" toKeyPath:@"statisticsList" withMapping:statisticsUserMapping]];
+    
+    _workStatisticsListResultMapping = [RKObjectMapping mappingForClass:[WorkStatisticsListResult class]];
+    [_workStatisticsListResultMapping addAttributeMappingsFromDictionary:@{
+                                                                     @"apicode": @"code",
+                                                                     @"message": @"message"
+                                                                     }];
+    [_workStatisticsListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"workStatistics" withMapping:workStatisticsMapping]];
+    
 }
 
 -(void)setupBannerList{
@@ -541,7 +608,8 @@
                                                         @"courseId":   @"courseId",
                                                         @"coursePic":  @"coursePic",
                                                         @"totalTime":  @"totalTime",
-                                                        @"subAllNum":  @"subAllNum"
+                                                        @"subAllNum":  @"subAllNum",
+                                                        @"type":  @"type"
                                                         }];
     
     _collectionListResultMapping = [RKObjectMapping mappingForClass:[CollectionListResult class]];
@@ -624,7 +692,8 @@
     [_videoListResultMapping addAttributeMappingsFromDictionary:@{
                                                                 @"apicode": @"code",
                                                                 @"message": @"message",
-                                                                @"orderStatus":@"orderStatus"
+                                                                @"orderStatus":@"orderStatus",
+                                                                @"isCollect":@"isCollect"
                                                                 }];
     [_videoListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"videoList" withMapping:_videoMapping]];
 }

@@ -316,7 +316,7 @@
 
 #pragma mark - LXActivityDelegate
 
-- (void)didClickOnImageIndex:(NSInteger *)imageIndex
+- (void)didClickOnImageIndex:(NSInteger)imageIndex
 {
     UIImage *image = [UIImage imageNamed:@"ic_logo"];
     NSString *content = @"欧拉MBA——中国最权威的管理类联考学习平台";

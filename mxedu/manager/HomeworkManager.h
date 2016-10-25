@@ -11,6 +11,7 @@
 #import "HomeworkListResult.h"
 #import "QuestionListResult.h"
 #import "CommonResult.h"
+#import "WorkStatisticsListResult.h"
 
 @interface HomeworkManager : NSObject
 
@@ -21,11 +22,11 @@
  *  @param success <#success description#>
  *  @param failure <#failure description#>
  */
--(void)deployHomeworkWithGroupId:(NSString*)groupId
-                       GroupName:(NSString*)name
-                      SubjectIds:(NSString*)subjectIds
-                         Success:(void(^)(CommonResult *result))success
-                         Failure:(void(^)(NSError* error))failure;
+-(void)deployHomeworkWithGroupIds:(NSString*)groupIds
+                        GroupName:(NSString*)name
+                       SubjectIds:(NSString*)subjectIds
+                          Success:(void(^)(CommonResult *result))success
+                          Failure:(void(^)(NSError* error))failure;
 
 /**
  *  作业列表
@@ -39,6 +40,19 @@
 Type:(NSString*)type
                                Success:(void(^)(HomeworkListResult *result))success
                                Failure:(void(^)(NSError* error))failure;
+
+/**
+ *  (老师版)学生作业完成情况
+ *
+ *  @param success <#success description#>
+ *  @param failure <#failure description#>
+ */
+-(void)fetchHomeworkStatisticsWithHomeworkId:(NSString*)homeworkId
+                                     GroupId:(NSString*)groupId
+                                   PageIndex:(NSString*)pageIndex
+                                    PageSize:(NSString*)pageSize
+                                     Success:(void(^)(WorkStatisticsListResult *result))success
+                                     Failure:(void(^)(NSError* error))failure;
 
 /**
  *  获取作业对应的试题

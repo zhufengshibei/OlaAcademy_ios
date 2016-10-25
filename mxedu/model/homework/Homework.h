@@ -18,6 +18,7 @@
 @property (nonatomic) NSString *groupName;
 @property (nonatomic) NSString *count;
 @property (nonatomic) NSString *finishedCount;
+@property (nonatomic) NSString *finishedPercent;
 @property (nonatomic) NSString *time;
 
 @property (nonatomic, copy) NSString *month;

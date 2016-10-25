@@ -14,7 +14,7 @@
 
 @implementation ChooseGroupTableCell{
     UILabel *_nameL;
-    UIButton *_chooseBtn;
+    UIImageView *_chooseBtn;
 }
 
 - (void)awakeFromNib {
@@ -49,7 +49,7 @@
             make.bottom.equalTo(self.mas_bottom);
         }];
         
-        _chooseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _chooseBtn = [[UIImageView alloc]init];
         [self addSubview:_chooseBtn];
         
         [_chooseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -63,9 +63,9 @@
 -(void)setupCellWithModel:(Group*)group{
     _nameL.text = group.name;
     if (group.isChosen == 1) {
-        [_chooseBtn setImage:[UIImage imageNamed:@"icon_choice"] forState:UIControlStateNormal];
+        [_chooseBtn setImage:[UIImage imageNamed:@"icon_choice"]];
     }else{
-        [_chooseBtn setImage:[UIImage imageNamed:@"icon_unchoice"] forState:UIControlStateNormal];
+        [_chooseBtn setImage:[UIImage imageNamed:@"icon_unchoice"]];
     }
 }
 

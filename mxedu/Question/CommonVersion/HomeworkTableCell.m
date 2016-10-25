@@ -132,8 +132,8 @@
     countLabel.text = [NSString stringWithFormat:@"%@道小题",homework.count];
     groupLabel.text = [NSString stringWithFormat:@" %@ ",homework.groupName];
     int progress = 0;
-    if (homework.finishedCount) {
-        progress = [homework.finishedCount intValue]*100/[homework.count intValue];
+    if (homework.finishedPercent) {
+        progress = [homework.finishedPercent intValue];
     }
     if (progress<30) {
         progressView.theme.completedColor = [UIColor colorWhthHexString:@"#f01c06"];

@@ -105,7 +105,7 @@
 /**
  *  收藏视频
  *
- *  @param type 1:收藏课程 2 收藏视频
+ *  @param type 1:course 2 goods
  *  @param state 0 取消收藏 1 收藏
  *  @param success <#success description#>
  *  @param failure <#failure description#>
@@ -114,6 +114,7 @@
                               VideoId:(NSString*)videoId
                              CourseId:(NSString*)courseId
                                 State:(NSString*)state
+                                 Type:(NSString*)type
                               Success:(void(^)(CommonResult *result))success
                               Failure:(void(^)(NSError* error))failure;
 
@@ -126,19 +127,6 @@
 -(void)fetchVideoListWithUserId:(NSString*)userId
                         Success:(void(^)(CollectionListResult *result))success
                         Failure:(void(^)(NSError* error))failure;
-
-/**
- *  获取收藏状态
- *
- *  @param type 1:课程 2 视频
- *  @param success <#success description#>
- *  @param failure <#failure description#>
- */
--(void)fetchCollectionStateWithUserId:(NSString*)userId
-                         CollectionId:(NSString*)collectionId
-                                 Type:(NSString*)type
-                              Success:(void(^)(VideoCollectionResult *result))success
-                              Failure:(void(^)(NSError* error))failuree;
 
 /**
  *  取消当前用户所有收藏

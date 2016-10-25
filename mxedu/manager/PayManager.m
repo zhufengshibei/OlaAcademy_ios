@@ -43,10 +43,11 @@
  * 获取微信支付信息
  */
 -(void)fetchPayReqInfoWithUserId:(NSString*)userId
-                          Type:(NSString*)type
-                       goodsId:(NSString*)goodsId
-                        Success:(void(^)(PayReqResult*))success
-                        Failure:(void(^)(NSError* error))failure{
+                            Type:(NSString*)type
+                         goodsId:(NSString*)goodsId
+                            coin:(NSString*)coin
+                         Success:(void(^)(PayReqResult*))success
+                         Failure:(void(^)(NSError* error))failure{
     DataMappingManager *dm = GetDataManager();
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.payReqResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
     // 通过shareManager 共享 baseurl及请求头等
@@ -54,8 +55,9 @@
     
     [om addResponseDescriptor:responseDescriptor];
     [om postObject:nil path:@"/ola/pay/getWXPayReq" parameters:@{ @"userId" : userId,
-                                                                    @"type" : type,
-                                                                    @"goodsId" : goodsId
+                                                                  @"type" : type,
+                                                                  @"goodsId" : goodsId,
+                                                                  @"coin" : coin
                                                                     }
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                if ([mappingResult.firstObject isKindOfClass:[PayReqResult class]]) {
@@ -75,10 +77,11 @@
  * 获取支付宝支付信息
  */
 -(void)fetchAliPayInfoWithUserId:(NSString*)userId
-                          Type:(NSString*)type
-                       goodsId:(NSString*)goodsId
-                       Success:(void(^)(AliPayResult*))success
-                       Failure:(void(^)(NSError* error))failure{
+                            Type:(NSString*)type
+                         goodsId:(NSString*)goodsId
+                            coin:(NSString*)coin
+                         Success:(void(^)(AliPayResult*))success
+                         Failure:(void(^)(NSError* error))failure{
     
     DataMappingManager *dm = GetDataManager();
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.aliPayResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
@@ -88,7 +91,8 @@
     [om addResponseDescriptor:responseDescriptor];
     [om postObject:nil path:@"/ola/pay/getAliOrderInfo"parameters:@{   @"userId" : userId,
                                                                        @"type" : type,
-                                                                       @"goodsId" : goodsId
+                                                                       @"goodsId" : goodsId,
+                                                                       @"coin" : coin
                                                                        }
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                if ([mappingResult.firstObject isKindOfClass:[AliPayResult class]]) {

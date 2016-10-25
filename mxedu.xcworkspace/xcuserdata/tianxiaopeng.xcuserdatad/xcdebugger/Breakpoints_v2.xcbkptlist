@@ -196,7 +196,7 @@
             startingLineNumber = "126"
             endingLineNumber = "126"
             landmarkName = "-fetchCommodityStautsWithGoodsId:UserId:Success:Failure:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -228,22 +228,6 @@
             startingLineNumber = "257"
             endingLineNumber = "257"
             landmarkName = "-onReq:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "mxedu/User/UserEditViewController.m"
-            timestampString = "496745691.337208"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
-            landmarkName = "-chooseImage"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -292,22 +276,6 @@
             startingLineNumber = "941"
             endingLineNumber = "941"
             landmarkName = "-showPlayerTableList"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "mxedu/Course/MediaPlayer/SDMediaPlayerVC.m"
-            timestampString = "497235346.595504"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "959"
-            endingLineNumber = "959"
-            landmarkName = "-pauseBtnClick"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

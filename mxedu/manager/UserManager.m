@@ -167,8 +167,10 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
  */
 -(void)updateUserWithUserId:(NSString*)userId
                        Name:(NSString*)name
+                   RealName:(NSString*)realName
                         sex:(NSString*)sex
                       local:(NSString*)local
+                   ExamType:(NSString*)examType
                    descript:(NSString*)descript
                      avatar:(NSString*)avatar
                     Success:(void(^)())success
@@ -182,9 +184,11 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
     [om addResponseDescriptor:responseDescriptor];
     [om postObject:nil path:@"/ola/user/updateInfo" parameters:@{@"id" : userId,
                                                                  @"name" : name,
+                                                                 @"realName" : realName,
                                                                  @"avator" : avatar,
                                                                  @"local" : local,
                                                                  @"sex" : sex,
+                                                                 @"examType" : examType,
                                                                  @"descript" : descript
                                                                  }
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {

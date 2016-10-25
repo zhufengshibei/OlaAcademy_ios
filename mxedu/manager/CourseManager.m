@@ -262,6 +262,7 @@
                               VideoId:(NSString*)videoId
                              CourseId:(NSString*)courseId
                                 State:(NSString*)state
+                                 Type:(NSString*)type
                          Success:(void(^)(CommonResult *result))success
                          Failure:(void(^)(NSError* error))failure{
     DataMappingManager *dm = GetDataManager();
@@ -271,10 +272,12 @@
     
     [om addResponseDescriptor:responseDescriptor];
     // 采用post方式，get方式可能产生中文乱码
-    [om postObject:nil path:@"/ola/collection/collectionVideo" parameters:@{ @"userId" : userId,
-                                                                             @"videoId" : videoId,
-                                                                             @"courseId" : courseId,
-                                                                             @"state" : state
+    [om postObject:nil path:@"/ola/collection/collectionVideo" parameters:@{
+                                                                        @"userId" : userId,
+                                                                        @"videoId" : videoId,
+                                                                        @"courseId": courseId,
+                                                                        @"state" : state,
+                                                                        @"type" : type
                                                                              }
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                if ([mappingResult.firstObject isKindOfClass:[CommonResult class]]) {
@@ -327,43 +330,6 @@
                }
            }];
 }
-
--(void)fetchCollectionStateWithUserId:(NSString*)userId
-                         CollectionId:(NSString*)collectionId
-                                 Type:(NSString*)type
-                        Success:(void(^)(VideoCollectionResult *result))success
-                        Failure:(void(^)(NSError* error))failure{
-    DataMappingManager *dm = GetDataManager();
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.collectionStateResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
-    // 通过shareManager 共享 baseurl及请求头等
-    RKObjectManager* om = [RKObjectManager sharedManager];
-    
-    [om addResponseDescriptor:responseDescriptor];
-    // 采用post方式，get方式可能产生中文乱码
-    [om postObject:nil path:@"/ola/collection/getColletionState" parameters:@{ @"userId" : userId,
-                                                                               @"collectionId" : collectionId,
-                                                                               @"type" : type
-                                                                                       }
-           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-               if ([mappingResult.firstObject isKindOfClass:[VideoCollectionResult class]]) {
-                   VideoCollectionResult *result = mappingResult.firstObject;
-                   if (result.code!=10000) {
-                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:result.message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                       [alert show];
-                   }
-                   if (success != nil) {
-                       success(result);
-                   }
-               }
-               
-           }
-           failure:^(RKObjectRequestOperation *operation, NSError *error) {
-               if (failure != nil) {
-                   failure(error);
-               }
-           }];
-}
-
 
 -(void)removeCollectionWithUserId:(NSString*)userId
                           Success:(void(^)(CommonResult *result))success

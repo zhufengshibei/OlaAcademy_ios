@@ -21,6 +21,7 @@
 #import "GroupViewController.h"
 #import "CreateGroupController.h"
 #import "HomeworkChooseController.h"
+#import "HomeworkStatisticsController.h"
 
 @interface TeaHomeworkController ()<MeetingTableViewDelegate>
 
@@ -41,7 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"老师版";
+    self.navigationItem.title = @"作业";
     [self setupRightButton];
     [self setupDefaultView];
     
@@ -318,6 +319,10 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowWithModel:(Homework *)model{
+    HomeworkStatisticsController *statisticsVC = [[HomeworkStatisticsController alloc]init];
+    statisticsVC.hidesBottomBarWhenPushed = YES;
+    statisticsVC.homework = model;
+    [self.navigationController pushViewController:statisticsVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

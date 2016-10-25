@@ -29,5 +29,7 @@ typedef void (^PopoverViewButtonBlock)();
 //设置取消按钮的标题，不设置，按钮不显示
 - (void)setCancelButtonBlock:(PopoverViewButtonBlock)block;
 
+-(void)setupViewWithDay:(NSString*)signDay Coin:(NSString*)coin;
+
 @end
 

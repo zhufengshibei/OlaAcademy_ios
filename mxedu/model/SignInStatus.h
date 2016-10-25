@@ -13,5 +13,10 @@
 @property (nonatomic) int status; // 1 已签到 0 未签到
 @property (nonatomic) NSString *lastSignIn; // 最近签到
 @property (nonatomic) NSString *signInDays; // 连续签到
+@property (nonatomic) NSString *coin; // 欧拉币
+@property (nonatomic) NSString *todayCoin; // 今日欧拉币
+@property (nonatomic) int profileTask; //完善个人资料
+@property (nonatomic) int vipTask; //首次购买会员
+@property (nonatomic) int courseTask; //首次购买精品课
 
 @end

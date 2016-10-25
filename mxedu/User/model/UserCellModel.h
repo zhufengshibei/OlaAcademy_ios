@@ -15,5 +15,6 @@
 @property (nonatomic) NSString *desc;
 @property (nonatomic) int type;   //1 右侧有箭头 2 右侧只有文本无箭头
 @property (nonatomic) int isSection;
+@property (nonatomic) int showRedTip;
 
 @end

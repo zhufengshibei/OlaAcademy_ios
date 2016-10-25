@@ -10,7 +10,6 @@
 
 #import "SKSplashIcon.h"
 #import "AuthManager.h"
-#import "SignInManager.h"
 #import "SysCommon.h"
 
 #import "UITabBar+badge.h"
@@ -94,9 +93,6 @@
     [self setupTabContent];
     self.selectedIndex = 2;
     
-    // 每日签到状态
-    [self fetchSignInStatus];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupTabContent) name:@"NEEDREFRESH" object:nil];
     
 }
@@ -107,26 +103,6 @@
         self.viewControllers = _teach_controllers;
     }else{
         self.viewControllers = _stu_controllers;
-    }
-}
-
--(void)fetchSignInStatus{
-    SignInManager *sm =[[SignInManager alloc]init];
-    AuthManager *am = [AuthManager sharedInstance];
-    if (am.isAuthenticated) {
-        __weak MainViewController *weakSelf = self;
-        [sm fetchSignInStatusWithUserId:am.userInfo.userId Success:^(SignInStatusResult *result) {
-            if (result.signInStatus.status==0) {
-                _userVC.showSignIn = YES;
-                _userVC.signInBlock = ^{
-                    weakSelf.userVC.showSignIn = NO;
-                    [weakSelf.tabBar hideBadgeOnItemIndex:4];
-                };
-                [self.tabBar showBadgeOnItemIndex:4];
-            }
-        } Failure:^(NSError *error) {
-            
-        }];
     }
 }
 

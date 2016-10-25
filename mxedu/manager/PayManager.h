@@ -27,20 +27,22 @@
  * type : 1月度会员 2 年度会员 3 整套视频
  */
 -(void)fetchPayReqInfoWithUserId:(NSString*)userId
-                          Type:(NSString*)type
-                       goodsId:(NSString*)goodsId
-                       Success:(void(^)(PayReqResult*))success
-                       Failure:(void(^)(NSError* error))failure;
+                            Type:(NSString*)type
+                         goodsId:(NSString*)goodsId
+                            coin:(NSString*)coin
+                         Success:(void(^)(PayReqResult*))success
+                         Failure:(void(^)(NSError* error))failure;
 
 /**
  * 获取支付宝支付信息
  * type : 1月度会员 2 年度会员 3 整套视频
  */
 -(void)fetchAliPayInfoWithUserId:(NSString*)userId
-                          Type:(NSString*)type
-                       goodsId:(NSString*)goodsId
-                       Success:(void(^)(AliPayResult*))success
-                       Failure:(void(^)(NSError* error))failure;
+                            Type:(NSString*)type
+                         goodsId:(NSString*)goodsId
+                            coin:(NSString*)coin
+                         Success:(void(^)(AliPayResult*))success
+                         Failure:(void(^)(NSError* error))failure;
 
 /**
  * 检验苹果IAP支付结果，并更新VIP状态

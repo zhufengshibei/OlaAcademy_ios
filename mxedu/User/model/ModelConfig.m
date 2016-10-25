@@ -12,7 +12,7 @@
 
 @implementation ModelConfig
 
-+(NSMutableArray*)confgiModelData{
++(NSMutableArray*)confgiModelDataWithCoin:(NSString*)coinValue ShowSignIn:(int)show{
     NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:10];
     
     UserCellModel *mistake = [[UserCellModel alloc]init];
@@ -20,33 +20,46 @@
     mistake.title = @"错题本";
     mistake.type = 1;
     mistake.isSection = 1;
+    mistake.showRedTip = 0;
     [dataArray addObject:mistake];
     
     UserCellModel *vip = [[UserCellModel alloc]init];
     vip.icon = @"icon_vip";
-    vip.title = @"VIP购买";
+    vip.title = @"欧拉会员";
     vip.desc = @"30元/月";
     vip.type = 1;
     vip.isSection = 1;
+    vip.showRedTip = 0;
     [dataArray addObject:vip];
+    
+    UserCellModel *coin = [[UserCellModel alloc]init];
+    coin.icon = @"icon_score";
+    coin.title = @"欧拉币";
+    coin.desc = coinValue;
+    coin.type = 1;
+    coin.showRedTip = show;
+    [dataArray addObject:coin];
     
     UserCellModel *buy = [[UserCellModel alloc]init];
     buy.icon = @"icon_buy";
     buy.title = @"我的购买";
     buy.isSection = 1;
     buy.type = 1;
+    buy.showRedTip = 0;
     [dataArray addObject:buy];
     
     UserCellModel *collect = [[UserCellModel alloc]init];
     collect.icon = @"icon_collect";
     collect.title = @"我的收藏";
     collect.type = 1;
+    collect.showRedTip = 0;
     [dataArray addObject:collect];
     
     UserCellModel *download = [[UserCellModel alloc]init];
     download.icon = @"icon_download";
     download.title = @"我的下载";
     download.type = 1;
+    download.showRedTip = 0;
     [dataArray addObject:download];
     
     UserCellModel *email = [[UserCellModel alloc]init];
@@ -55,6 +68,7 @@
     email.type = 2;
     email.desc = @"service@olaxueyuan.com";
     email.isSection = 1;
+    email.showRedTip = 0;
     [dataArray addObject:email];
     
     return dataArray;

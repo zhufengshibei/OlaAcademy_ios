@@ -61,9 +61,12 @@
 }
 
 -(void)setupCellWithModel:(Group*)group{
-    //1,头像
-    if(group.avatar){
-        [_avatar sd_setImageWithURL:[NSURL URLWithString: [@"http://api.olaxueyuan.com/upload/" stringByAppendingString:group.avatar]] placeholderImage:[UIImage imageNamed:@"ic_avatar"]];
+    if (group.avatar) {
+        if ([group.avatar rangeOfString:@".jpg"].location == NSNotFound) {
+            [_avatar sd_setImageWithURL:[NSURL URLWithString: [BASIC_IMAGE_URL stringByAppendingString:group.avatar]] placeholderImage:[UIImage imageNamed:@"ic_avatar"]];
+        }else{
+            [_avatar sd_setImageWithURL:[NSURL URLWithString: [@"http://api.olaxueyuan.com/upload/" stringByAppendingString:group.avatar]] placeholderImage:[UIImage imageNamed:@"ic_avatar"]];
+        }
     }else{
         _avatar.image = [UIImage imageNamed:@"ic_avatar"];
     }

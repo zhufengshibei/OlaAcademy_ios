@@ -13,6 +13,7 @@
 #import "ExamManager.h"
 #import "MessageManager.h"
 #import "PayManager.h"
+#import "ExchangeManager.h"
 #import "Course.h"
 #import "QuestionWebController.h"
 #import "ExamTableCell.h"
@@ -31,7 +32,7 @@
 #import "IAPVIPController.h"
 #import "VIPSubController.h"
 
-@interface QuestionViewController ()<HomeworkViewDelegate,ZSYPopoverListDatasource, ZSYPopoverListDelegate,UIAlertViewDelegate>
+@interface QuestionViewController ()<HomeworkViewDelegate,ZSYPopoverListDatasource, ZSYPopoverListDelegate,UIActionSheetDelegate,UIAlertViewDelegate>
 
 @property (nonatomic) UIImageView *messageBtn;
 
@@ -49,6 +50,7 @@
 @property (nonatomic) Course *currentCourse;
 
 @property (nonatomic) Homework *homework; //当前作业
+@property (nonatomic) Examination *examination;//选中的题目
 
 @property (nonatomic) ThirdPay *thirdPay; // iap支付 还是 支付宝 微信支付
 
@@ -382,6 +384,7 @@
     //SDGroupCell *cell = (SDGroupCell *)[tableView cellForRowAtIndexPath:indexPath];
     if(self.selectedIndex!=0){
         Examination *examination = [_examArray objectAtIndex:indexPath.row];
+        _examination = examination;
         if([examination.isfree intValue]==1){
             QuestionWebController *questionVC = [[QuestionWebController alloc]init];
             if (self.selectedIndex==1) {
@@ -401,11 +404,86 @@
             [self.navigationController pushViewController:questionVC animated:YES];
         }else{
             OLA_LOGIN;
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"友情提示" message:@"购买会员后即可拥有" delegate:self cancelButtonTitle:@"取消" otherButtonTitles: @"去购买",nil];
-            [alert show];
+            [self showActionSheet];
         }
 
     }
+}
+
+-(void)showActionSheet{
+    UIActionSheet *sheet =[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"购买会员",@"积分兑换", nil];
+    [sheet showInView:self.view];
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex) {
+        case 0:{
+            [self showBuyView];
+            break;
+        }
+        case 1:{
+            NSString *coin = [AuthManager sharedInstance].userInfo.coin;
+            if (coin&&[coin intValue]>=20) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"兑换该套题将消耗您20欧拉币" delegate:self cancelButtonTitle:@"取消" otherButtonTitles: @"兑换",nil];
+                alert.tag = 1001;
+                [alert show];
+            }else{
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您的欧拉币余额不足，使用其他方式？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles: @"购买会员",nil];
+                alert.tag = 1002;
+                [alert show];
+            }
+            
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+#pragma alertview delegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==1) {
+        if (alertView.tag==1001) {
+            [self exchangeWithOlaCoin];
+        }else{
+            [self showBuyView];
+        }
+    }
+}
+
+-(void)showBuyView{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    if ([_thirdPay.version isEqualToString:[infoDictionary objectForKey:@"CFBundleShortVersionString"]]&&[_thirdPay.thirdPay isEqualToString:@"0"]){
+        IAPVIPController *iapVC =[[IAPVIPController alloc]init];
+        iapVC.callbackBlock = ^{
+            [self setupData];
+        };
+        iapVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:iapVC animated:YES];
+    }else{
+        VIPSubController *vipVC =[[VIPSubController alloc]init];
+        vipVC.callbackBlock = ^{
+            [self setupData];
+        };
+        vipVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vipVC animated:YES];
+    }
+}
+
+// 欧拉币兑换题目
+-(void)exchangeWithOlaCoin{
+    ExchangeManager *em = [[ExchangeManager alloc]init];
+    [em unlockSubjectWithUserId:[AuthManager sharedInstance].userInfo.userId ObjectId:_examination.examId Type:@"2" success:^(CommonResult *result) {
+        if (result.code==10000) {
+             [self setupData];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:result.message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alert show];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+    
 }
 
 #pragma mark - Nested Tables events
@@ -496,28 +574,6 @@
     [self setupData];
     [_listView dismiss];
     
-}
-
-#pragma alertview delegate
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex==1) {
-        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        if ([_thirdPay.version isEqualToString:[infoDictionary objectForKey:@"CFBundleShortVersionString"]]&&[_thirdPay.thirdPay isEqualToString:@"0"]){
-            IAPVIPController *iapVC =[[IAPVIPController alloc]init];
-            iapVC.callbackBlock = ^{
-                [self setupData];
-            };
-            iapVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:iapVC animated:YES];
-        }else{
-            VIPSubController *vipVC =[[VIPSubController alloc]init];
-            vipVC.callbackBlock = ^{
-                [self setupData];
-            };
-            vipVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vipVC animated:YES];
-        }
-    }
 }
 
 @end

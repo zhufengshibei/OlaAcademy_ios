@@ -49,13 +49,13 @@
     
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
-        make.top.equalTo(self.view.mas_top).offset(GENERAL_SIZE(200));
+        make.top.equalTo(self.view.mas_top).offset(GENERAL_SIZE(100));
     }];
     
     UILabel *versionLabel = [UILabel new];
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     versionLabel.text = [NSString stringWithFormat:@"Version %@",[infoDictionary objectForKey:@"CFBundleShortVersionString"]];
-    versionLabel.textColor = COMMONBLUECOLOR;
+    versionLabel.textColor = RGBCOLOR(153, 153, 153);
     [versionLabel sizeToFit];
     [self.view addSubview:versionLabel];
     
@@ -76,7 +76,7 @@
     }];
     
     UILabel *contactLabel = [UILabel new];
-    contactLabel.text = @"contact@olaxueyuan.com";
+    contactLabel.text = @"service@olaxueyuan.com";
     contactLabel.textColor = RGBCOLOR(153, 153, 153);
     [contactLabel sizeToFit];
     [self.view addSubview:contactLabel];
@@ -91,15 +91,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

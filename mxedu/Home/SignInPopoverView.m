@@ -19,6 +19,9 @@ static const char * const kZSYPopoverListButtonClickForCancel = "kZSYPopoverList
 
 @property (nonatomic, retain) UIImageView *backIV;
 @property (nonatomic, retain) UIButton *cancelButton;
+@property (nonatomic, retain) UILabel *coinCount;
+@property (nonatomic, retain) UILabel *signCount;
+
 //初始化界面 
 - (void)initTheInterface;
 
@@ -52,6 +55,7 @@ static const char * const kZSYPopoverListButtonClickForCancel = "kZSYPopoverList
     self.backgroundColor = [UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:0.6];
     
     _backIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg_signIn"]];
+    _backIV.userInteractionEnabled = YES;
     [self addSubview:_backIV];
     
     [_backIV mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -76,13 +80,55 @@ static const char * const kZSYPopoverListButtonClickForCancel = "kZSYPopoverList
     }];
     
     UILabel *signL = [[UILabel alloc] init];
-    signL.text = @"签到活得欧拉币";
+    signL.text = @"签到获得欧拉币";
     signL.textColor = [UIColor whiteColor];
     signL.font = LabelFont(20);
     [tipIV addSubview:signL];
     
     [signL mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(tipIV);
+    }];
+    
+    UILabel *signCountL = [[UILabel alloc]init];
+    signCountL.text = @"累计打卡";
+    signCountL.textColor = [UIColor whiteColor];
+    signCountL.font = LabelFont(20);
+    [_backIV addSubview:signCountL];
+    
+    [signCountL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_backIV.mas_bottom).offset(-GENERAL_SIZE(20));
+        make.left.equalTo(_backIV).offset(GENERAL_SIZE(35));
+    }];
+    
+    _signCount = [[UILabel alloc]init];
+    _signCount.textColor = RGBCOLOR(249, 255, 0);
+    _signCount.font = LabelFont(18);
+    [_backIV addSubview:_signCount];
+    
+    [_signCount mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(signCountL.mas_top).offset(-GENERAL_SIZE(15));
+        make.centerX.equalTo(signCountL);
+    }];
+    
+    UILabel *coinCountL = [[UILabel alloc]init];
+    coinCountL.text = @"欧拉币值";
+    coinCountL.textColor = [UIColor whiteColor];
+    coinCountL.font = LabelFont(20);
+    [_backIV addSubview:coinCountL];
+    
+    [coinCountL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_backIV.mas_bottom).offset(-GENERAL_SIZE(20));
+        make.right.equalTo(_backIV.mas_right).offset(-GENERAL_SIZE(35));
+    }];
+    
+    _coinCount = [[UILabel alloc]init];
+    _coinCount.textColor = RGBCOLOR(249, 255, 0);;
+    _coinCount.font = LabelFont(18);
+    [_backIV addSubview:_coinCount];
+    
+    [_coinCount mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(coinCountL.mas_top).offset(-GENERAL_SIZE(15));
+        make.centerX.equalTo(coinCountL);
     }];
     
     UIImageView *bottomIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg_signIn_bottom"]];
@@ -237,6 +283,15 @@ static const char * const kZSYPopoverListButtonClickForCancel = "kZSYPopoverList
 
 }
 
+-(void)setupViewWithDay:(NSString*)signDay Coin:(NSString*)coin{
+    NSMutableAttributedString *signStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@天",signDay]];
+    [signStr addAttribute:NSFontAttributeName value:LabelFont(24) range:NSMakeRange(0, signDay.length)];
+    _signCount.attributedText = signStr;
+    NSMutableAttributedString *coinStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@欧",coin]];
+    [coinStr addAttribute:NSFontAttributeName value:LabelFont(24) range:NSMakeRange(0, coin.length)];
+    _coinCount.attributedText = coinStr;
+}
+
 
 #pragma mark - Button Method
 - (void)setCancelButtonBlock:(PopoverViewButtonBlock)block
@@ -245,8 +300,9 @@ static const char * const kZSYPopoverListButtonClickForCancel = "kZSYPopoverList
     {
         
         self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.cancelButton.frame = CGRectMake(0, 0, 30, 30);
         [self.cancelButton setImage:[UIImage imageNamed:@"icon_close"] forState:UIControlStateNormal];
-        [self.cancelButton addTarget:self action:@selector(buttonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.cancelButton addTarget:self action:@selector(buttonWasPressed:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:self.cancelButton];
         
         [self.cancelButton mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -30,6 +30,9 @@
 // 签到状态
 @property (nonatomic, strong, readonly) RKObjectMapping* signInStatusResultMapping;
 
+// 欧拉币明细
+@property (nonatomic, strong, readonly) RKObjectMapping* coinHistoryListResultMapping;
+
 @property (nonatomic, strong, readonly) RKObjectMapping* homeListResultMapping;
 
 @property (nonatomic, strong, readonly) RKObjectMapping* courseListResultMapping;
@@ -37,6 +40,7 @@
 @property (nonatomic, strong, readonly) RKObjectMapping* examListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* questionListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* homeworkListResultMapping;
+@property (nonatomic, strong, readonly) RKObjectMapping* workStatisticsListResultMapping;
 
 @property (nonatomic, strong, readonly) RKObjectMapping* groupListResultMapping;
 

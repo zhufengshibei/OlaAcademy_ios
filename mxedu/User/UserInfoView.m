@@ -147,7 +147,7 @@ typedef enum
     _user = user;
     
     [self updateNickname:user.name];
-    [self updateSignInDays:user.signInDays];
+    [self updateOlaCoin:user.coin];
     [self updateLocal:user.vipTime];
     
     [_signInLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -221,11 +221,11 @@ typedef enum
     }
 }
 
-- (void)updateSignInDays:(NSString*)days
+- (void)updateOlaCoin:(NSString*)coin
 {
-    if (days != nil)
+    if (coin != nil)
     {
-        _signInLabel.text = [NSString stringWithFormat:@"%@天累签",days];
+        _signInLabel.text = [NSString stringWithFormat:@"%@欧拉币",coin];
     }
     else
     {

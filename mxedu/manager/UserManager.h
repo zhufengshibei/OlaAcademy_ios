@@ -52,8 +52,10 @@
  */
 -(void)updateUserWithUserId:(NSString*)userId
                        Name:(NSString*)name
+                   RealName:(NSString*)realName
                         sex:(NSString*)sex
                       local:(NSString*)local
+                   ExamType:(NSString*)examType
                    descript:(NSString*)descript
                      avatar:(NSString*)avatar
                     Success:(void(^)())success
