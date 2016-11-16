@@ -34,6 +34,8 @@
 @property (nonatomic, strong, readonly) RKObjectMapping* coinHistoryListResultMapping;
 
 @property (nonatomic, strong, readonly) RKObjectMapping* homeListResultMapping;
+//资料列表
+@property (nonatomic, strong, readonly) RKObjectMapping* materialListResultMapping;
 
 @property (nonatomic, strong, readonly) RKObjectMapping* courseListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* bannerListResultMapping;
@@ -42,9 +44,16 @@
 @property (nonatomic, strong, readonly) RKObjectMapping* homeworkListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* workStatisticsListResultMapping;
 
+// 错题集列表
+@property (nonatomic, strong, readonly) RKObjectMapping*mistakeListResultMapping;
+
+// 群列表
 @property (nonatomic, strong, readonly) RKObjectMapping* groupListResultMapping;
+// 群成员列表
+@property (nonatomic, strong, readonly) RKObjectMapping* memberListResultMapping;
 
 @property (nonatomic, strong, readonly) RKObjectMapping* orgListResultMapping;
+@property (nonatomic, strong, readonly) RKObjectMapping* orgInfoListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* teacherListResultMapping;
 
 @property (nonatomic, strong, readonly) RKObjectMapping* locationMapping;

@@ -35,6 +35,7 @@
     if (self) {
         
         _avatar = [[UIImageView alloc]initWithFrame:CGRectMake(GENERAL_SIZE(20), GENERAL_SIZE(25), GENERAL_SIZE(140), GENERAL_SIZE(140))];
+        _avatar.layer.masksToBounds = YES;
         _avatar.layer.cornerRadius = GENERAL_SIZE(70);
         [self addSubview:_avatar];
         

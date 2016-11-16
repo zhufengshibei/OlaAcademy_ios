@@ -47,7 +47,7 @@
         
         [self addSubview:_teamView];
         
-        _patientView = [self viewWithName:@"我找老师" Pic:@"icon_teacher" Type:1];
+        _patientView = [self viewWithName:@"我要报名" Pic:@"icon_teacher" Type:1];
         _patientView.frame = CGRectMake(SCREEN_WIDTH/4, GENERAL_SIZE(400), SCREEN_WIDTH/4, GENERAL_SIZE(170));
         
         [self addSubview:_patientView];

@@ -20,6 +20,7 @@
 #import "VideoHistoryResult.h"
 #import "StatisticsListResult.h"
 #import "BannerListResult.h"
+#import "MistakeListResult.h"
 
 @interface CourseManager : NSObject
 
@@ -173,6 +174,20 @@
                              Failure:(void(^)(NSError* error))failure;
 
 /**
+ *  错题集列表
+ *  @param type 1 考点 2 模考 3 真题
+ *  @param type 1 数学 2 英语 3 逻辑 4 写作
+ *
+ *  @param success <#success description#>
+ *  @param failure <#failure description#>
+ */
+-(void)fetchMistakeListWithUserId:(NSString*)userId
+                             Type:(NSString*)type
+                      SubjetcType:(NSString*)subjectType
+                          Success:(void(^)(MistakeListResult *result))success
+                          Failure:(void(^)(NSError* error))failure;
+
+/**
  *  错题集
  *
  *  @param success <#success description#>
@@ -183,5 +198,20 @@
                             UserId:(NSString*)userId
                            Success:(void(^)(QuestionListResult *result))success
                            Failure:(void(^)(NSError* error))failure;
+
+/**
+ *  更新错题集（添加／移除）
+ *  @param questionType 1 考点 2 模考或真题
+ *  @param type 1 添加错题 2 移除错题
+ *
+ *  @param success <#success description#>
+ *  @param failure <#failure description#>
+ */
+-(void)updateWrongSetWithUserId:(NSString*)userId
+                      SubjectId:(NSString*)subjectId
+                   QuestionType:(NSString*)questionType
+                           Type:(NSString*)type
+                        Success:(void(^)(CommonResult *result))success
+                        Failure:(void(^)(NSError* error))failure;
 
 @end

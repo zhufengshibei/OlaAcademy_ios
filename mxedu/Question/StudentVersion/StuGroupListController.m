@@ -19,6 +19,7 @@
 #import "HMSegmentedControl.h"
 
 #import "CreateGroupController.h"
+#import "GroupMemberController.h"
 
 @interface StuGroupListController ()<UITableViewDelegate,UITableViewDataSource,StuGroupCellDelegate>
 
@@ -132,6 +133,14 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return GENERAL_SIZE(190);
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    GroupMemberController *memberVC = [[GroupMemberController alloc]init];
+    Group *group = [_dataArray objectAtIndex:indexPath.row];
+    memberVC.groupId = group.groupId;
+    [self.navigationController pushViewController:memberVC animated:YES];
 }
 
 #pragma delegate

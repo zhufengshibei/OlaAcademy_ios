@@ -55,10 +55,6 @@
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
     
-    UIImageView *headerIV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, GENERAL_SIZE(300))];
-    headerIV.image = [UIImage imageNamed:@"banner_goods"];
-    self.tableView.tableHeaderView = headerIV;
-    
     self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self fetchCommodityList];
     }];

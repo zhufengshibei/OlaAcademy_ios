@@ -253,7 +253,11 @@ NSMutableArray *provinces, *cities; // 本地plist中的地区信息
 -(void)setupDomainSection{
     RETableViewSection* section = [RETableViewSection sectionWithHeaderTitle:nil];
     NSString *examType = userInfo.examType&&![userInfo isEqual:@""]?userInfo.examType:@"研究生管理类联考";
-    _examPicker = [REPickerItem itemWithTitle:@"关注领域" value:@[examType] placeholder:nil options:@[@[@"研究生管理类联考", @"英语四六级",@"公务员国考"]]];
+    NSArray *optionArray = [NSArray arrayWithObjects:@"工商管理硕士(MBA)",@"会计硕士(MPAcc)",@"审计硕士(MAud)",@"公共管理硕士(MPA)",@"工程管理硕士(MEM)",@"旅游管理硕士(MTA)",@"图书情报硕士(MLis)", @"其他管理硕士(Other)",nil];
+    if([optionArray indexOfObject:examType] == NSNotFound){
+        examType = [optionArray objectAtIndex:0];
+    }
+    _examPicker = [REPickerItem itemWithTitle:@"关注领域" value:@[examType] placeholder:nil options:@[optionArray]];
     _examPicker.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _examPicker.onChange = ^(REPickerItem *item){
     };

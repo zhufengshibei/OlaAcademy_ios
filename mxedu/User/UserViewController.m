@@ -18,7 +18,7 @@
 #import "MyEnrollViewController.h"
 #import "MyDownloadListViewController.h"
 
-#import "KnowledgeSubController.h"
+#import "MistakeListController.h"
 #import "CourseBuySubController.h"
 #import "CollectionSubController.h"
 #import "VIPSubController.h"
@@ -142,7 +142,7 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
     switch (indexPath.row) {
         case 0:
         {
-             KnowledgeSubController *knowledgeVC = [[KnowledgeSubController alloc] init];
+             MistakeListController *knowledgeVC = [[MistakeListController alloc] init];
             [self pushToViewController:knowledgeVC];
             break;
         }

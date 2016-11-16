@@ -34,6 +34,7 @@
 #import "PayManager.h"
 
 #import "PDFView.h"
+#import "CommodityView.h"
 #import "HMSegmentedControl.h"
 #import "SVProgressHUD.h"
 
@@ -42,6 +43,7 @@
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) HMSegmentedControl *segmentedControl;
 @property (nonatomic) UIView *operationView;
+@property (nonatomic) CommodityView *detailView;
 @property (nonatomic) PDFView *pdfView;
 
 @property (nonatomic) ThirdPay *thirdPay; //iap支付 还是 支付宝 微信支付
@@ -60,6 +62,8 @@
 @implementation CourSectionViewController{
     
     UIView *titleView;
+    
+    UILabel *priceL;
     
     UIButton *collectionButton;
     UIButton *downloadButton;
@@ -191,6 +195,7 @@
     
     [self setupSegment];
     [self setupTableView];
+    [self setupDetailView];
     [self setupPDFView];
     
 }
@@ -224,7 +229,12 @@
 
 -(void)setupSegment{
     _segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(_myMediaPlayer.nomalFrame)+UI_STATUS_BAR_HEIGHT, SCREEN_WIDTH-60, GENERAL_SIZE(80))];
-    _segmentedControl.sectionTitles = @[@"目录",@"讲义"];
+    if (_type==1) {
+        _segmentedControl.sectionTitles = @[@"目录",@"讲义"];
+    }else if(_type==2){
+        _segmentedControl.sectionTitles = @[@"目录",@"详情",@"讲义"];
+    }
+    
     _segmentedControl.selectedSegmentIndex = 0;
     
     _segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : RGBCOLOR(81, 84, 93), NSFontAttributeName : LabelFont(32)};
@@ -244,9 +254,22 @@
         _currentIndex = (int)index;
         if (index==0) {
             weakSelf.pdfView.hidden = YES;
+            weakSelf.detailView.hidden = YES;
         }else{
-            weakSelf.pdfView.hidden = NO;
-            [weakSelf.pdfView loadPDF:weakSelf.currentVideo];
+            if(_type==1){
+                weakSelf.pdfView.hidden = NO;
+                [weakSelf.pdfView loadPDF:weakSelf.currentVideo];
+            }else{
+                if (index==1) {
+                    weakSelf.pdfView.hidden = YES;
+                    weakSelf.detailView.hidden = NO;
+                }else if(index==2){
+                    weakSelf.pdfView.hidden = NO;
+                    weakSelf.detailView.hidden = YES;
+                    [weakSelf.pdfView loadPDF:weakSelf.currentVideo];
+                }
+            }
+            
         }
     }];
     
@@ -261,6 +284,14 @@
     [self.view addSubview:_tableView];
     
     [self setupBottomView];
+}
+
+-(void)setupDetailView{
+    _detailView = [[CommodityView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_segmentedControl.frame), SCREEN_WIDTH, SCREEN_HEIGHT-CGRectGetMaxY(_segmentedControl.frame))];
+    [_detailView setupWithModel:_commodity];
+    _detailView.backgroundColor = [UIColor whiteColor];
+    _detailView.hidden = YES;
+    [self.view addSubview:_detailView];
 }
 
 -(void)setupPDFView{
@@ -343,7 +374,7 @@
     [shareButton addTarget:self action:@selector(shareCourse) forControlEvents:UIControlEventTouchDown];
     
     UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [buyButton setBackgroundImage:[UIImage imageNamed:@"btn_buy"] forState:UIControlStateNormal];
+    [buyButton setBackgroundColor:RGBCOLOR(255, 108, 0)];
     [buyButton setTitle:@"立即购买" forState:UIControlStateNormal];
     [buyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [buyButton sizeToFit];
@@ -355,10 +386,28 @@
     
     // 精品课程未购买则显示购买按钮
     if(_type==2&&[_orderStatus isEqualToString:@"0"]&&![_commodity.price isEqualToString:@"0"]){
+        priceL = [[UILabel alloc]init];
+        priceL.textColor = RGBCOLOR(255, 108, 0);
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%@ 已有%@人购买",_commodity.price,_commodity.paynum]];
+        [str addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(153, 153, 153) range:NSMakeRange(_commodity.price.length+2,str.length-_commodity.price.length-2)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12.0] range:NSMakeRange(_commodity.price.length+2,str.length-_commodity.price.length-2)];
+        priceL.attributedText = str;
+        [_operationView addSubview: priceL];
+        
         [_operationView addSubview:buyButton];
+        
         [buyButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(_operationView);
-            make.right.equalTo(_operationView.mas_right).offset(-10);
+            make.top.equalTo(_operationView);
+            make.bottom.equalTo(_operationView.mas_bottom);
+            make.right.equalTo(_operationView.mas_right);
+            make.width.equalTo(@(GENERAL_SIZE(240)));
+        }];
+        
+        [priceL mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_operationView);
+            make.bottom.equalTo(_operationView.mas_bottom);
+            make.left.equalTo(_operationView).offset(GENERAL_SIZE(20));
+            make.right.equalTo(buyButton.mas_left);
         }];
     }else{
         [_operationView addSubview:downloadButton];
@@ -450,9 +499,9 @@
         return;
     }
     [_myMediaPlayer pause];
-    CourBuyViewController *buyVC = [[CourBuyViewController alloc]init];
-    buyVC.commodity = _commodity;
-    [self.navigationController pushViewController:buyVC animated:YES];
+    CommodityPayVC *payVC = [[CommodityPayVC alloc]init];
+    payVC.commodity = _commodity;
+    [self.navigationController pushViewController:payVC animated:YES];
 }
 
 -(void)collectCourse{
@@ -614,8 +663,8 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setInteger:2 forKey:@"download_type"];
             [self downloadVideo];
-        }else if (alertView.tag == 1002) {
-            if(_type==1){
+        }else if (alertView.tag == 1002||alertView.tag == 1003) {
+            if(alertView.tag == 1003||_type==1){
                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                 if ([_thirdPay.version isEqualToString:[infoDictionary objectForKey:@"CFBundleShortVersionString"]]&&[_thirdPay.thirdPay isEqualToString:@"0"]){
                     IAPVIPController *iapVC =[[IAPVIPController alloc]init];
@@ -659,6 +708,19 @@
 #pragma PDFView delegate
 -(void)didClickSendMail:(CourseVideo *)video{
     [_myMediaPlayer pause];
+    
+    AuthManager *am = [AuthManager sharedInstance];
+    if(!am.isAuthenticated)
+    {
+        [self showLoginView];
+        return;
+    }
+    if([am.userInfo.vipTime isEqualToString:@"0"]){
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"仅限会员下载" delegate:self cancelButtonTitle:@"取消" otherButtonTitles: @"去购买",nil];
+        alert.tag = 1003;
+        [alert show];
+        return;
+    }
     [self sendMailInApp:video];
 }
 

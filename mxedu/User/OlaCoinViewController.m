@@ -185,7 +185,7 @@
     [shareView addSubview:shareL];
     
     UILabel *shareCoinL = [[UILabel alloc]init];
-    shareCoinL.text = @"奖励2(最多10)欧拉币";
+    shareCoinL.text = @"奖励5(最多10)欧拉币";
     shareCoinL.font = LabelFont(24);
     shareCoinL.textColor = RGBCOLOR(153, 153, 153);
     [shareView addSubview:shareCoinL];

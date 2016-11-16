@@ -10,6 +10,7 @@
 
 #import "GroupListResult.h"
 #import "CommonResult.h"
+#import "GroupMemberResult.h"
 
 @interface GroupManager : NSObject
 
@@ -42,6 +43,7 @@
 -(void)createGroupWithUserId:(NSString*)userId
                         Name:(NSString*)name
                       Avatar:(NSString*)avatar
+                     Profile:(NSString*)profile
                         Type:(NSString*)type
                      success:(void (^)(CommonResult *result))success
                      failure:(void (^)(NSError*))failure;
@@ -55,5 +57,14 @@
                         Type:(NSString*)type
                      success:(void (^)(CommonResult *result))success
                      failure:(void (^)(NSError*))failure;
+
+/*
+ * 群成员
+ */
+-(void)fetchGroupMemberWithGroupId:(NSString*)groupId
+                         pageIndex:(NSString*)pageIndex
+                          pageSize:(NSString*)pageSize
+                           success:(void (^)(GroupMemberResult *result))success
+                           failure:(void (^)(NSError*))failure;
 
 @end

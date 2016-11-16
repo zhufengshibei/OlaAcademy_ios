@@ -72,6 +72,20 @@
                                     bridge.registerHandler('nextClickHandler', function(data, responseCallback) {
                                                             clickNext(data)
                                                             })
+                                    bridge.registerHandler('chooseAllHandler', function(data, responseCallback) {
+                                                           chooseAll(data.choose);
+                                                                })
+                                         
+                                    // 全选
+                                    function chooseAll(type){
+                                         $("input[type='checkbox']").each(function(){
+                                                            if(type==1){
+                                                                this.checked = true;
+                                                            }else{
+                                                                this.checked = false;
+                                                            }
+                                                        });
+                                    }
                                          
                                     //下一步
                                     function clickNext(data){
@@ -106,6 +120,7 @@
 				questionDIV.innerHTML = html;
 				MathJax.Hub.Queue(["Typeset", MathJax.Hub, questionDIV]);
 			}
+                
 			
 		</script>
 	</head>

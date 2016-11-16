@@ -19,12 +19,13 @@
 #import "UIColor+HexColor.h"
 
 #import "LoginViewController.h"
-#import "OrganizationViewController.h"
+#import "StuEnrollController.h"
 #import "CircleViewController.h"
 #import "CommodityViewController.h"
 #import "BannerWebViewController.h"
 #import "CommentController.h"
 #import "DeployViewController.h"
+#import "MaterialViewController.h"
 #import "StuGroupListController.h"
 
 @interface HomeViewController ()<UITableViewDataSource,UITableViewDelegate,CollectionCellDelegate,HomeHeadViewDelegate>
@@ -232,10 +233,11 @@
     [self.navigationController pushViewController:deployVC animated:YES];
 }
 -(void)didClickTeacherView{
+    OLA_LOGIN;
     [self pushToOrgView];
 }
 -(void)didClickMaterialView{
-    [self pushToComView:@"2"];
+    [self pushToMaterialView];
 }
 -(void)didClickGroupView{
     OLA_LOGIN;
@@ -268,6 +270,12 @@
     [self.navigationController pushViewController:commodityVC animated:YES];
 }
 
+-(void)pushToMaterialView{
+    MaterialViewController *materialVC = [[MaterialViewController alloc]init];
+    materialVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:materialVC animated:YES];
+}
+
 -(void)pushToCircleView{
     CircleViewController *circleVC = [[CircleViewController alloc]init];
     circleVC.isFromHomePage = 1;
@@ -277,7 +285,7 @@
 
 
 -(void)pushToOrgView{
-    OrganizationViewController *orgnizationVC = [[OrganizationViewController alloc]init];
+    StuEnrollController *orgnizationVC = [[StuEnrollController alloc]init];
     orgnizationVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:orgnizationVC animated:YES];
 }

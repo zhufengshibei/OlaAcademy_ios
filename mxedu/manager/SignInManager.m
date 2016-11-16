@@ -93,7 +93,7 @@
     
     [om addResponseDescriptor:responseDescriptor];
     // 采用post方式，get方式可能产生中文乱码
-    [om postObject:nil path:@"/ola/dailyact/share" parameters:@{@"userId": userId
+    [om postObject:nil path:@"/ola/dailyact/dailyShare" parameters:@{@"userId": userId
                                                                   }
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                if ([mappingResult.firstObject isKindOfClass:[CommonResult class]]) {

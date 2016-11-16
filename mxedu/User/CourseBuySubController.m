@@ -49,32 +49,17 @@
     defaultView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-UI_NAVIGATION_BAR_HEIGHT)];
     defaultView.backgroundColor = [UIColor whiteColor];
     
-    UILabel *tipLabel = [UILabel new];
-    tipLabel.text = @"您的列表是空的";
-    tipLabel.textColor = RGBCOLOR(125, 125, 125);
-    [defaultView addSubview:tipLabel];
-    
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [addButton setImage:[UIImage imageNamed:@"ic_add_course"] forState:UIControlStateNormal];
+    [addButton setImage:[UIImage imageNamed:@"LoccalVideo_NoData"] forState:UIControlStateNormal];
     [addButton sizeToFit];
     [addButton addTarget:self action:@selector(addCourse) forControlEvents:UIControlEventTouchDown];
     [defaultView addSubview:addButton];
     
     [self.view addSubview:defaultView];
     
-    [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(defaultView);
-        if (iPhone6Plus) {
-            make.top.equalTo(defaultView.mas_top).offset(50);
-        }else if (iPhone6) {
-            make.top.equalTo(defaultView.mas_top).offset(30);
-        }else{
-            make.top.equalTo(defaultView.mas_top).offset(20);
-        }
-    }];
-    
     [addButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(defaultView);
+        make.centerX.equalTo(defaultView);
+        make.centerY.equalTo(defaultView).offset(-32);
     }];
     
     [self fetchCourseVideo];

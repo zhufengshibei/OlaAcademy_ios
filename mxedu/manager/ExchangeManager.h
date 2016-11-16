@@ -22,4 +22,12 @@
                        success:(void (^)(CommonResult *result))success
                        failure:(void (^)(NSError*))failure;
 
+/*
+ * 欧拉币解锁资料
+ */
+-(void)unlockMaterialWithUserId:(NSString*)userId
+                     MaterialId:(NSString*)objectId
+                        success:(void (^)(CommonResult *result))success
+                        failure:(void (^)(NSError*))failure;
+
 @end

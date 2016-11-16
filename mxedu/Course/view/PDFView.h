@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "CourseVideo.h"
+#import "Material.h"
 
 @protocol PDFViewDelegate <NSObject>
 
@@ -21,5 +22,6 @@
 @property (nonatomic) id<PDFViewDelegate> delegate;
 
 -(void)loadPDF:(CourseVideo*)video;
+-(void)loadPDFWithmaterial:(Material*)material;
 
 @end

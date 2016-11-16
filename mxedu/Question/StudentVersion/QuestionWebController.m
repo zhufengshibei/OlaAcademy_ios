@@ -11,6 +11,8 @@
 #import "CourseManager.h"
 #import "ExamManager.h"
 #import "HomeworkManager.h"
+#import "AuthManager.h"
+#import "LoginViewController.h"
 #import "Question.h"
 #import "QuestionOption.h"
 #import "SysCommon.h"
@@ -25,7 +27,7 @@
 #import "MobClick.h"
 #import <WebViewJavascriptBridge.h>
 
-@interface QuestionWebController ()
+@interface QuestionWebController ()<UIAlertViewDelegate>
 
 @property (nonatomic) WebViewJavascriptBridge* bridge;
 @property (nonatomic) UIWebView *webView;
@@ -38,11 +40,17 @@
 @end
 
 @implementation QuestionWebController{
+    UIView* titleView;
+    
     UITextView *articleText;
     UIButton *preButton;
     UIButton *nextButton;
     UILabel *subjectNoLabel;
     UIButton *videoBtn;
+    UILabel *timeL;
+    
+    NSTimer *timer;
+    int timeCount;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -54,6 +62,8 @@
     self.title = _titleName;
     self.view.backgroundColor = [UIColor whiteColor];
     [self setupNavButton];
+    
+    timeCount = 0;
     
     //友盟统计
     if(_type==1){
@@ -187,18 +197,44 @@
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     self.navigationItem.leftBarButtonItem = backButtonItem;
     
-    videoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [videoBtn setImage:[UIImage imageNamed:@"icon_video"] forState:UIControlStateNormal];
-    [videoBtn sizeToFit];
-    [videoBtn addTarget:self action:@selector(videoButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    videoBtn.hidden = YES;
+    UIButton* subjectButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, GENERAL_SIZE(150), 40)];
+    [subjectButton setImage:[UIImage imageNamed:@"icon_question_list"] forState:UIControlStateNormal];
+    [subjectButton addTarget:self action:@selector(subjectButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [subjectButton setTitleColor:[UIColor colorWithRed:0.1 green:0.63 blue:0.96 alpha:0.93] forState:UIControlStateNormal];
     
-    UIBarButtonItem *videoItem = [[UIBarButtonItem alloc] initWithCustomView:videoBtn];
-    self.navigationItem.rightBarButtonItem = videoItem;
+    UIButton *timeBtn = [[UIButton alloc]initWithFrame:CGRectMake(GENERAL_SIZE(150), 0, GENERAL_SIZE(150), 40)];
+    [timeBtn setImage:[UIImage imageNamed:@"icon_question_timer"] forState:UIControlStateNormal];
+    [timeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    timeL = [[UILabel alloc]initWithFrame:CGRectMake(GENERAL_SIZE(150), 0, GENERAL_SIZE(150), 40)];
+    timeL.backgroundColor = [UIColor clearColor];
+    timeL.textAlignment = NSTextAlignmentCenter;
+    timeL.textColor = COMMONBLUECOLOR;
+    timeL.font = LabelFont(20);
+    
+    videoBtn = [[UIButton alloc]initWithFrame:CGRectMake(GENERAL_SIZE(300), 0, GENERAL_SIZE(150), 40)];
+    [videoBtn setImage:[UIImage imageNamed:@"icon_question_video"] forState:UIControlStateNormal];
+    [videoBtn addTarget:self action:@selector(videoButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    videoBtn.enabled = NO;
+    
+    titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, GENERAL_SIZE(450), 40)];
+    [titleView addSubview:subjectButton];
+    [titleView addSubview:timeBtn];
+    [titleView addSubview:timeL];
+    [titleView addSubview:videoBtn];
+    
+    self.navigationItem.titleView=titleView;
+    
 }
 
 -(void)backButtonClicked{
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)subjectButtonClicked{
+    OLA_LOGIN;
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"将此题加入到错题本中？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alert show];
 }
 
 -(void)videoButtonClicked{
@@ -209,10 +245,45 @@
     [self presentViewController:playerVC animated:YES completion:nil];
 }
 
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==1) {
+        CourseManager *cm = [[CourseManager alloc]init];
+        NSString *questionType = @"2";
+        if (_type==1) {
+            questionType = @"1";
+        }
+        Question *questioin = [_questionArray objectAtIndex:_currentIndex];
+        [cm updateWrongSetWithUserId:[AuthManager sharedInstance].userInfo.userId SubjectId:questioin.questionId QuestionType: questionType Type:@"1" Success:^(CommonResult *result) {
+            
+        } Failure:^(NSError *error) {
+            
+        }];
+    }
+}
+
+//计时器
+-(void)countdown:(NSTimer*) t
+{
+    timeCount++;
+    
+    int h = timeCount/3600;
+    int m = timeCount/60;
+    int s = timeCount%60;
+    if (h>0) {
+        timeL.text = [NSString stringWithFormat:@"%02d:%02d:%02d",h,m,s];
+    }else{
+        timeL.text = [NSString stringWithFormat:@"%02d:%02d",m,s];
+    }
+}
+
+
 -(void)fetchQuestionList{
     if (_type==1) {
         CourseManager *cm = [[CourseManager alloc]init];
         [cm fetchQuestionWithPointId:_objectId Success:^(QuestionListResult *result) {
+            
+            timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countdown:) userInfo:nil repeats:YES];
+            
             _questionArray = [NSMutableArray arrayWithArray:result.questionArray];
             if ([_questionArray count]>0) {
                 if([_questionArray count]==1){
@@ -281,9 +352,11 @@
         articleText.attributedText = [[NSAttributedString alloc] initWithString:question.article attributes:attributes];
     }
     if (question.videourl&&![question.videourl isEqualToString:@""]) {
-        videoBtn.hidden = NO;
+        videoBtn.enabled = YES;
+        [videoBtn setImage:[UIImage imageNamed:@"icon_question_video"] forState:UIControlStateNormal];
     }else{
-        videoBtn.hidden = YES;
+        videoBtn.enabled = NO;
+        [videoBtn setImage:[UIImage imageNamed:@"icon_video_gray"] forState:UIControlStateNormal];
     }
     NSMutableDictionary *questionData = [NSMutableDictionary dictionaryWithCapacity:[question.optionList count]+1];
     NSString *content = [question.question stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
@@ -365,6 +438,5 @@
     correct.timeSpan = @"10";
     _correctnessArray[_currentIndex] = correct;
 }
-
 
 @end

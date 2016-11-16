@@ -41,6 +41,7 @@
 @implementation PDFView
 {
     CourseVideo *currentVideo;
+    NSString * pdfID; // 本地pdf唯一标识
     UIButton *mailBtn;
     UIWebView *webView;
     THProgressView *progressView;
@@ -129,8 +130,24 @@
 
 -(void)loadPDF:(CourseVideo*)video{
     currentVideo = video;
-    if (video.attachmentId&&video.url&&![video.url isEqualToString:@""]) {
-        NSString *fileName = [NSString stringWithFormat:@"%@.pdf",currentVideo.attachmentId];
+    pdfID = video.attachmentId;
+    
+    [self loadPDFWithURL:video.url];
+}
+
+-(void)loadPDFWithmaterial:(Material*)material{
+    [webView mas_remakeConstraints:^(MASConstraintMaker *make) {
+         make.edges.equalTo(self).with.insets(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
+    
+    pdfID = [NSString stringWithFormat:@"material_%@", material.materialId];
+    
+    [self loadPDFWithURL:material.url];
+}
+
+-(void)loadPDFWithURL:(NSString*)url{
+    if (pdfID&&url&&![url isEqualToString:@""]) {
+        NSString *fileName = [NSString stringWithFormat:@"%@.pdf",pdfID];
         NSString* filepath = [downloadPath stringByAppendingPathComponent:fileName];
         BOOL exist = [fileManager fileExistsAtPath:filepath];
         if (exist) {
@@ -141,8 +158,8 @@
             mailBtn.hidden = NO;
             shareImage.hidden = NO;
         }else{
-            NSURL* url = [NSURL URLWithString:video.url];
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:15];
+            NSURL* nsurl = [NSURL URLWithString:url];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:nsurl cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:15];
             [NSURLConnection connectionWithRequest:request delegate:self];
             progressView.hidden = NO;
             tipL.hidden = NO;
@@ -173,7 +190,7 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     tipL.text = @"加载失败";
-    NSString *fileName = [NSString stringWithFormat:@"%@.pdf",currentVideo.attachmentId];
+    NSString *fileName = [NSString stringWithFormat:@"%@.pdf",pdfID];
     NSString* filepath = [downloadPath stringByAppendingPathComponent:fileName];
     BOOL exist = [fileManager fileExistsAtPath:filepath];
     if(exist){
@@ -184,7 +201,7 @@
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     // 文件路径
-    NSString *fileName = [NSString stringWithFormat:@"%@.pdf",currentVideo.attachmentId];
+    NSString *fileName = [NSString stringWithFormat:@"%@.pdf",pdfID];
     NSString* filepath = [downloadPath stringByAppendingPathComponent:fileName];
     
     // 创建一个空的文件到沙盒中
@@ -228,7 +245,7 @@
     mailBtn.hidden = NO;
     shareImage.hidden = NO;
     // 加载文件
-    NSString *fileName = [NSString stringWithFormat:@"%@.pdf",currentVideo.attachmentId];
+    NSString *fileName = [NSString stringWithFormat:@"%@.pdf",pdfID];
     NSString* filepath = [downloadPath stringByAppendingPathComponent:fileName];
     NSData *data = [NSData dataWithContentsOfFile:filepath];
     [webView loadData:data MIMEType:@"application/pdf" textEncodingName:@"GBK" baseURL:nil];

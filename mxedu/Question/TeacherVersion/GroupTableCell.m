@@ -30,6 +30,8 @@
     if (self) {
         
         _avatar = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 80, 80)];
+        _avatar.layer.masksToBounds = YES;
+        _avatar.layer.cornerRadius = 40;
         [self addSubview:_avatar];
         
         _nameL = [[UILabel alloc] init];

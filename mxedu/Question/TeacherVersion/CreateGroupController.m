@@ -232,7 +232,7 @@
         return;
     }
     GroupManager *gm = [[GroupManager alloc]init];
-    [gm createGroupWithUserId:am.userInfo.userId Name:editTitle.text Avatar:imgGid Type:subjectType success:^(CommonResult *result) {
+    [gm createGroupWithUserId:am.userInfo.userId Name:editTitle.text Avatar:imgGid Profile:editText.text Type:subjectType success:^(CommonResult *result) {
         if (result.code==10000) {
             if (_groupCreateBlock) {
                 _groupCreateBlock();

@@ -16,6 +16,7 @@
 #import "AuthManager.h"
 
 #import "CreateGroupController.h"
+#import "GroupMemberController.h"
 
 @interface GroupViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -94,6 +95,14 @@
     [groupCell setupCellWithModel:group];
     groupCell.selectionStyle = UITableViewCellSelectionStyleNone;
     return groupCell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    GroupMemberController *memberVC = [[GroupMemberController alloc]init];
+    Group *group = [_dataArray objectAtIndex:indexPath.row];
+    memberVC.groupId = group.groupId;
+    [self.navigationController pushViewController:memberVC animated:YES];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

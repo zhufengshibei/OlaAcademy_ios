@@ -89,6 +89,7 @@
 -(void)createGroupWithUserId:(NSString*)userId
                         Name:(NSString*)name
                       Avatar:(NSString*)avatar
+                     Profile:(NSString*)profile
                         Type:(NSString*)type
                      success:(void (^)(CommonResult *result))success
                      failure:(void (^)(NSError*))failure
@@ -103,6 +104,7 @@
     [om postObject:nil path:@"/ola/homework/createGroup" parameters:@{@"userId": userId,
                                                                     @"name": name,
                                                                     @"avatar": avatar,
+                                                                    @"profile": profile,
                                                                     @"type": type
                                                                     }
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
@@ -145,6 +147,43 @@
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                if ([mappingResult.firstObject isKindOfClass:[CommonResult class]]) {
                    CommonResult *result = mappingResult.firstObject;
+                   if (success != nil) {
+                       success(result);
+                   }
+               }
+               
+           }
+           failure:^(RKObjectRequestOperation *operation, NSError *error) {
+               if (failure != nil) {
+                   failure(error);
+               }
+           }];
+}
+
+/*
+ * 群成员
+ */
+-(void)fetchGroupMemberWithGroupId:(NSString*)groupId
+                         pageIndex:(NSString*)pageIndex
+                          pageSize:(NSString*)pageSize
+                           success:(void (^)(GroupMemberResult *result))success
+                           failure:(void (^)(NSError*))failure
+{
+    DataMappingManager *dm = GetDataManager();
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.memberListResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
+    // 通过shareManager 共享 baseurl及请求头等
+    RKObjectManager* om = [RKObjectManager sharedManager];
+    
+    [om addResponseDescriptor:responseDescriptor];
+    // 采用post方式，get方式可能产生中文乱码
+    [om postObject:nil path:@"/ola/homework/queryGroupMember" parameters:@{
+                                                                    @"groupId": groupId,
+                                                                    @"pageIndex": pageIndex,
+                                                                    @"pageSize": pageSize
+                                                                      }
+           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+               if ([mappingResult.firstObject isKindOfClass:[GroupMemberResult class]]) {
+                   GroupMemberResult *result = mappingResult.firstObject;
                    if (success != nil) {
                        success(result);
                    }

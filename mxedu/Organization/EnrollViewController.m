@@ -377,7 +377,7 @@
     }
     [_enrollButton setEnabled:NO];
     OrganizationManager *om =[[OrganizationManager alloc]init];
-    [om checkInWithOrgId:_org.orgId CheckinTime:dateLabel.text UserPhone:phoneText.text UserLocal:@"" Type:[NSString stringWithFormat:@"%d",type] Success:^(CommonResult *result) {
+    [om checkInWithOrgId:_org.orgId CheckinTime:dateLabel.text UserPhone:phoneText.text UserLocal:@"" Success:^(CommonResult *result) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"报名成功" message:@"稍后客服与您取得联系" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
         [_enrollButton setImage:[UIImage imageNamed:@"ic_checkin_ed"] forState:UIControlStateNormal];

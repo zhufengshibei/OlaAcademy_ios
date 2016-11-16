@@ -23,15 +23,20 @@
 @property (nonatomic) NSMutableArray *questionArray;
 @property (nonatomic) NSMutableArray *chosenArray;
 
+@property (nonatomic) int isChooseAll;
+
 @end
 
-@implementation HomeworkWebController
+@implementation HomeworkWebController{
+    UIButton *chooseBtn;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.title = @"题目列表";
     self.view.backgroundColor = [UIColor whiteColor];
+    [self setupRightButton];
     _chosenArray = [NSMutableArray arrayWithCapacity:0];
     
     _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-UI_NAVIGATION_BAR_HEIGHT-UI_STATUS_BAR_HEIGHT-GENERAL_SIZE(122))];
@@ -74,6 +79,31 @@
     }];
         
     [self fetchQuestionList];
+}
+
+- (void)setupRightButton{
+    
+    chooseBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    chooseBtn.frame=CGRectMake(0, 0, 50, 25);
+    [chooseBtn setTitleColor:COMMONBLUECOLOR forState:UIControlStateNormal];
+    [chooseBtn setTitle:@"全选" forState:UIControlStateNormal];
+    
+    [chooseBtn addTarget:self action:@selector(chooseAll) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightbtn=[[UIBarButtonItem alloc] initWithCustomView:chooseBtn];
+    self.navigationItem.rightBarButtonItem = rightbtn;
+}
+
+-(void)chooseAll{
+    if (_isChooseAll==0) {
+        _isChooseAll = 1;
+        [chooseBtn setTitle:@"不选" forState:UIControlStateNormal];
+    }else{
+        _isChooseAll = 0;
+        [chooseBtn setTitle:@"全选" forState:UIControlStateNormal];
+    }
+    NSDictionary *data = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d",_isChooseAll] forKey:@"choose"];
+    [_bridge callHandler:@"chooseAllHandler" data:data responseCallback:^(id response) {
+    }];
 }
 
 -(void)fetchQuestionList{
