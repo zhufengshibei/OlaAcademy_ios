@@ -14,7 +14,6 @@
 #import "UIView+Positioning.h"
 #import <Masonry.h>
 #import <SVProgressHUD.h>
-#import "BSImagePickerController.h"
 #import "UploadManager.h"
 #import "QYSelectPhotoView.h"
 #import "ALAsset+BSEqual.h"
@@ -57,7 +56,6 @@
     UITapGestureRecognizer *wholeTap;
 }
 
-@property (nonatomic, strong) BSImagePickerController *imagePicker;
 @property (nonatomic, strong) UICollectionView *collectionView;
 
 
@@ -202,10 +200,6 @@ BOOL uploadOrignalImage;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)addMedia:(id)sender{
-    [self getImages];
-}
-
 -(void)setNavBar
 {
     [self.navigationItem setTitle:@"欧拉动态"];
@@ -255,9 +249,9 @@ BOOL uploadOrignalImage;
 }
 -(void)uploadImages{
     if (uploadOrignalImage) {
-        [self uploadByImageDatas:_selectPhotoView.photoData];
+        [self uploadByImageDatas:_selectPhotoView.photoData Angles:_selectPhotoView.photoAngle];
     }else{
-        [self uploadByImageDatas:_selectPhotoView.smallphotoData];
+        [self uploadByImageDatas:_selectPhotoView.smallphotoData Angles:_selectPhotoView.photoAngle];
     }
 }
 -(void)textViewDidChange:(UITextView *)textView
@@ -290,227 +284,7 @@ BOOL uploadOrignalImage;
     [selectPhotoView showSelectPhotoView];
 }
 
--(void)getImages{
-    UIActionSheet *sheet =[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从相册选择",@"拍照", nil];
-    [sheet showInView:self.view];
-}
-
-- (void)doBSImagePicker:(id)sender
-{
-    BSImagePickerController *imagePicker = [[BSImagePickerController alloc] init];
-    
-    [imagePicker setKeepSelection:YES];
-    
-    [self.navigationController presentImagePickerController:imagePicker
-                                                   animated:YES
-                                                 completion:nil
-                                                     toggle:^(ALAsset *asset, BOOL select) {
-                                                         if(select) { //选择图片回调
-                                                             
-                                                         } else { // 移除选择回调
-                                                             
-                                                         }
-                                                     }
-                                                     cancel:^(NSArray *assets) { //取消事件回调
-                                                         [imagePicker dismissViewControllerAnimated:YES completion:nil];
-                                                     }
-                                                     finish:^(NSArray *assets) {  // 完成事件回调
-                                                         [imagePicker dismissViewControllerAnimated:YES completion:nil];
-                                                         NSMutableArray* imageInfos = [NSMutableArray arrayWithCapacity:assets.count];
-                                                         for (ALAsset* asset in assets)
-                                                         {
-                                                             //获取资源图片的详细资源信息
-                                                             ALAssetRepresentation* representation = [asset defaultRepresentation];
-                                                             //资源图片url地址
-                                                             NSURL* url = [representation url];
-                                                             MCImageInfo* imageInfo = [[MCImageInfo alloc] init];
-                                                             imageInfo.imageName = [representation filename];
-                                                             imageInfo.url = [url absoluteString];
-                                                             imageInfo.width = [representation dimensions].width;
-                                                             imageInfo.asset = asset;
-                                                             imageInfo.height = [representation dimensions].height;
-                                                             imageInfo.angle = [self getImageAngle:representation];
-                                                             [imageInfos addObject:imageInfo];
-                                                         }
-                                                         [self setPendingUploadImageInfos:imageInfos];
-                                                     }];
-}
-
--(int)getImageAngle:(ALAssetRepresentation*) representation{
-    switch ([representation orientation]) { //旋转方向
-        case ALAssetOrientationUpMirrored:
-            return 0;
-        case ALAssetOrientationRight:
-            return 90;
-        case ALAssetOrientationDown:
-            return 180;
-        case ALAssetOrientationLeft:
-            return 270;
-    }
-    return 0;
-}
-
-- (void)setPendingUploadImages:(NSArray *)pendingUploadImages
-{
-    _pendingUploadImages = [pendingUploadImages copy];
-}
-
-- (void)setPendingUploadImageInfos:(NSArray *)pendingUploadImageInfos
-{
-    _pendingUploadImageInfos = pendingUploadImageInfos;
-    [choosenImages removeAllObjects];
-    for (MCImageInfo *imageInfo in _pendingUploadImageInfos) {
-        [choosenImages addObject:[UIImage imageWithCGImage:[imageInfo.asset thumbnail]]];
-    }
-    [choosenImages addObject:[UIImage imageNamed:@"ic_add_photo"]];
-    [_collectionView reloadData];
-}
-
-- (dispatch_queue_t)wokingQueue
-{
-    if (_workingQueue == nil)
-    {
-        _workingQueue = dispatch_queue_create("com.xpown.PendingUploadImageLoadingQueue", 0);
-    }
-    
-    return _workingQueue;
-}
-
-- (CGSize)fixedUploadSizeForImage:(UIImage*)image
-{
-    CGSize originalSize = image.size;
-    if (originalSize.width < 640||uploadOrignalImage)
-    {
-        return originalSize;
-    }
-    
-    return CGSizeMake(640, originalSize.height * 640 / originalSize.width);
-}
-
-
-- (void)upload
-{
-    [self.view endEditing:YES];
-    
-    if (_pendingUploadImages != nil && _pendingUploadImages.count > 0)
-    {
-        dispatch_queue_t dq = [self wokingQueue];
-        
-        
-        dispatch_async(dq, ^{
-            NSMutableArray* imageDatas = [NSMutableArray arrayWithCapacity:_pendingUploadImages.count];
-            for (UIImage* image in _pendingUploadImages)
-            {
-                UIImage* uploadImage = image;
-                //压缩图片
-                uploadImage = [image resizedImage:[self fixedUploadSizeForImage:image] interpolationQuality:kCGInterpolationHigh];
-                
-                NSData* imageData = UIImageJPEGRepresentation(uploadImage, 0.8);
-                [imageDatas addObject:imageData];
-            }
-            [self uploadByImageDatas:imageDatas];
-        });
-    }
-    else if (_pendingUploadImageInfos != nil && _pendingUploadImageInfos.count > 0)
-    {
-        ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
-        
-        NSMutableArray* imageDatas = [NSMutableArray arrayWithCapacity:_pendingUploadImageInfos.count];
-        
-        dispatch_queue_t dq = [self wokingQueue];
-        
-        __block NSUInteger pendingImageNum = _pendingUploadImageInfos.count;
-        
-        [SVProgressHUD show];
-        
-        ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset* asset)
-        {
-            ALAssetRepresentation* rep = [asset defaultRepresentation];
-            
-            NSError* error;
-            NSData* imageData;
-            if (true)  // 默认对图片进行压缩
-            {
-                CGImageRef iref = [rep fullResolutionImage];
-                UIImage* image = [UIImage imageWithCGImage:iref];
-                image = [image resizedImage:[self fixedUploadSizeForImage:image] interpolationQuality:kCGInterpolationHigh];
-                imageData = UIImageJPEGRepresentation(image, 0.8);
-            }
-            else
-            {
-                NSMutableData* mutableImageData = [NSMutableData dataWithCapacity:(NSUInteger)rep.size];
-                [mutableImageData setLength:(NSUInteger)rep.size];
-                NSUInteger buffered = [rep getBytes:[mutableImageData mutableBytes]
-                                         fromOffset:0.0
-                                             length:(NSUInteger)rep.size
-                                              error:&error];
-                [mutableImageData setLength:buffered];
-                imageData = mutableImageData;
-            }
-            
-            if (imageData != nil && error == nil)
-            {
-                dispatch_async(dq, ^{
-                    [imageDatas addObject:imageData];
-                    pendingImageNum--;
-                    if (pendingImageNum == 0)
-                    {
-                        dispatch_async(dispatch_get_main_queue(), ^{ [self uploadByImageDatas:imageDatas]; });
-                    }
-                    else
-                    {
-                        NSLog(@"pendingImageNum is %lu", (unsigned long)pendingImageNum);
-                    }
-                });
-            }
-            else
-            {
-                dispatch_async(dq, ^{
-                    pendingImageNum--;
-                    if (pendingImageNum == 0)
-                    {
-                        dispatch_async(dispatch_get_main_queue(), ^{ [self uploadByImageDatas:imageDatas]; });
-                    }
-                    else
-                    {
-                        NSLog(@"pendingImageNum is %lu", (unsigned long)pendingImageNum);
-                    }
-                });
-            }
-        };
-        
-        ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
-        {
-            dispatch_async(dq, ^{
-                NSLog (@"booya, cant get image - %@",[myerror localizedDescription]);
-                pendingImageNum--;
-                if (pendingImageNum == 0)
-                {
-                    dispatch_async(dispatch_get_main_queue(), ^{ [self uploadByImageDatas:imageDatas]; });
-                }
-                else
-                {
-                    NSLog(@"pendingImageNum is %lu", (unsigned long)pendingImageNum);
-                }
-            });
-        };
-        
-        for (MCImageInfo* imageInfo in _pendingUploadImageInfos)
-        {
-            NSURL* url = [NSURL URLWithString:imageInfo.url];
-            [assetslibrary assetForURL:url
-                           resultBlock:resultblock
-                          failureBlock:failureblock];
-        }
-    }
-    else
-    {
-        [SVProgressHUD showSuccessWithStatus:@"上传完毕。"];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
-- (void)uploadByImageDatas:(NSArray*)imageDatas
+- (void)uploadByImageDatas:(NSArray*)imageDatas Angles:(NSArray*)angles
 {
     AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated)
@@ -532,7 +306,7 @@ BOOL uploadOrignalImage;
     
     UploadManager* um = [[UploadManager alloc]init];
     [um uploadImageDatas:imageDatas
-                  angles:nil
+                  angles:angles
                 progress:^(NSInteger uploadedImageNum, NSInteger totalImageNum) {
                     float progress = ((float)uploadedImageNum  + 0.5) / (float)totalImageNum;
                     [SVProgressHUD showProgress:progress

@@ -25,6 +25,8 @@
 
 @property (nonatomic, strong) NSArray *smallphotoData;
 
+@property (nonatomic, strong) NSArray *photoAngle;
+
 @property (nonatomic, strong) NSMutableArray *dataSource;
 
 @property (nonatomic, weak) UIViewController* delegate;

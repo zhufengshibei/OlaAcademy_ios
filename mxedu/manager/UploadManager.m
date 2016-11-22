@@ -24,12 +24,14 @@
     _imageGids = [NSMutableArray arrayWithCapacity:0];
     
     NSMutableArray* pendingImageDatas = [NSMutableArray arrayWithArray:imageDatas];
+    NSMutableArray* pendingAngles = [NSMutableArray arrayWithArray:imgAngles];
     
     dispatch_queue_t dq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(dq, ^{
         while (pendingImageDatas.count > 0)
         {
             NSData* imageData = [pendingImageDatas firstObject];
+            NSString* imageAngle = [pendingAngles firstObject];
             
             dispatch_semaphore_t sema = dispatch_semaphore_create(0);
             
@@ -37,7 +39,7 @@
             __block NSError* uploadError = nil;
             
             [self uploadImageData:imageData
-                           angles:imgAngles
+                            angle:imageAngle
                           success:^{
                               dispatch_semaphore_signal(sema);
                           }
@@ -81,15 +83,15 @@
 }
 
 - (void)uploadImageData:(NSData*)imageData
-                 angles:(NSArray*)imgAngles
+                  angle:(NSString*)imgAngle
                 success:(void (^)())success
                 failure:(void (^)(NSError*))failure
 {
     NSMutableDictionary* params = [NSMutableDictionary dictionary];
     params[@"picType"] = @"jpg";
-    if (imgAngles != nil)
+    if (imgAngle)
     {
-        params[@"imgAngle"] = [imgAngles objectAtIndex:0];
+        params[@"imgAngle"] = imgAngle;
     }
     
     NSMutableURLRequest* request;

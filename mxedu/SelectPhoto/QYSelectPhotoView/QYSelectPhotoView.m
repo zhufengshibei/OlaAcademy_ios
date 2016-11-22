@@ -509,6 +509,19 @@ static CGFloat const kSpace = 15;
     }
     return photos;
 }
+- (NSArray*)photoAngle
+{
+    NSMutableArray *angles = [NSMutableArray new];
+    for (PhotoModel *model in _dataSource) {
+        if ([model isKindOfClass:[PhotoModel class]]) {
+            [angles addObject:model.photoAngle];
+        }else{
+            [angles addObject:model];
+        }
+        
+    }
+    return angles;
+}
 - (void)setIsEnable:(BOOL)isEnable
 {
     if (_isEnable != isEnable) {

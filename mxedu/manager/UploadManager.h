@@ -26,7 +26,7 @@
  * 一张图片
  */
 - (void)uploadImageData:(NSData*)imageData
-                 angles:(NSArray*)imgAngles
+                  angle:(NSString*)imgAngle
                 success:(void (^)())success
                 failure:(void (^)(NSError*))failure;
 

@@ -218,7 +218,7 @@
     
     UploadManager* um = [[UploadManager alloc]init];
     NSData* imageData = UIImageJPEGRepresentation(selectedImage, 0.8);
-    [um uploadImageData:imageData angles:nil success:^{
+    [um uploadImageData:imageData angle:nil success:^{
         NSString *imageGid =  um.imageGid;
         [self createGroup:imageGid];
     } failure:^(NSError *error) {
