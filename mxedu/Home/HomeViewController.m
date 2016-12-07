@@ -23,7 +23,7 @@
 #import "CircleViewController.h"
 #import "CommodityViewController.h"
 #import "BannerWebViewController.h"
-#import "CommentController.h"
+#import "CommentViewController.h"
 #import "DeployViewController.h"
 #import "MaterialViewController.h"
 #import "StuGroupListController.h"
@@ -77,8 +77,13 @@
 }
 
 -(void)setupData{
+    NSString *userId = @"";
+    AuthManager *am = [AuthManager sharedInstance];
+    if (am.isAuthenticated) {
+        userId = am.userInfo.userId;
+    }
     HomeManager *hm = [[HomeManager alloc]init];
-    [hm fetchHomePageListSuccess:^(HomeListResult *result) {
+    [hm fetchHomePageListWithUserId:userId Success:^(HomeListResult *result) {
         NSArray *bannerArray = result.homeData.bannerArray;
         [_headView setupView:bannerArray];
         _consultArray = result.homeData.consultArray;
@@ -176,7 +181,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==0) {
         Consult *consult = [_consultArray objectAtIndex:indexPath.row];
-        CommentController *commentVC = [[CommentController alloc]init];
+        CommentViewController *commentVC = [[CommentViewController alloc]init];
         commentVC.postId = consult.consultId;
         commentVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:commentVC animated:YES];

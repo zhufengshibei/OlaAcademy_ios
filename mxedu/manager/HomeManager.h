@@ -18,7 +18,8 @@
  *  @param success <#success description#>
  *  @param failure <#failure description#>
  */
--(void)fetchHomePageListSuccess:(void(^)(HomeListResult *result))success
-                        Failure:(void(^)(NSError* error))failure;
+-(void)fetchHomePageListWithUserId:(NSString*)userId
+                           Success:(void(^)(HomeListResult *result))success
+                           Failure:(void(^)(NSError* error))failure;
 
 @end

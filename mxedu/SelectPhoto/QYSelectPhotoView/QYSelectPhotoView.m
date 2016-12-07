@@ -188,6 +188,10 @@ static CGFloat const kSpace = 15;
             
         }
         
+        if (_photoDelegate) {
+            [_photoDelegate didShowSelectPhoto];
+        }
+        
         [self->_collectionView reloadData];
         
     } withMaxSelect:self.maximumNumberOfImages withSelectedPhotoNames:_photoNames];
@@ -514,7 +518,7 @@ static CGFloat const kSpace = 15;
     NSMutableArray *angles = [NSMutableArray new];
     for (PhotoModel *model in _dataSource) {
         if ([model isKindOfClass:[PhotoModel class]]) {
-            [angles addObject:model.photoAngle];
+            [angles addObject:model.photoAngle?model.photoAngle:@"0"];
         }else{
             [angles addObject:model];
         }

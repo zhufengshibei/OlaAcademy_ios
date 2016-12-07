@@ -94,6 +94,11 @@
 		3D3C46D81CF7E28E00BF66CD /* SDMyStrokeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3C46D01CF7E28E00BF66CD /* SDMyStrokeControl.m */; };
 		3D3C46DF1CF9456400BF66CD /* CourBuyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3C46DE1CF9456400BF66CD /* CourBuyViewController.m */; };
 		3D3C46E21CFAB2CE00BF66CD /* StatusResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3C46E11CFAB2CE00BF66CD /* StatusResult.m */; };
+		3D400ACC1DE94168009AFE61 /* mediaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D400ACB1DE94168009AFE61 /* mediaModel.m */; };
+		3D400AD21DE941E3009AFE61 /* MediaCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D400AD11DE941E3009AFE61 /* MediaCollectionViewCell.m */; };
+		3D400ADB1DE947F1009AFE61 /* CustomChoiceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D400ADA1DE947F1009AFE61 /* CustomChoiceView.m */; };
+		3D400ADE1DEBF798009AFE61 /* MediaUploadResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D400ADD1DEBF798009AFE61 /* MediaUploadResult.m */; };
+		3D400AE11DED6236009AFE61 /* CommentFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D400AE01DED6236009AFE61 /* CommentFrame.m */; };
 		3D44E45B1CBD309800B34990 /* ExamManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D44E45A1CBD309800B34990 /* ExamManager.m */; };
 		3D44E45F1CBD31D600B34990 /* ExamListRsult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D44E45E1CBD31D600B34990 /* ExamListRsult.m */; };
 		3D44E4631CBDD82200B34990 /* Examination.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D44E4621CBDD82200B34990 /* Examination.m */; };
@@ -316,8 +321,6 @@
 		3D9D35EA1C0B250F007CE085 /* CollectionListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D35E91C0B250F007CE085 /* CollectionListResult.m */; };
 		3D9D36171C0DA669007CE085 /* CheckInListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D36161C0DA669007CE085 /* CheckInListResult.m */; };
 		3D9D361A1C0DA7E3007CE085 /* CheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D36191C0DA7E3007CE085 /* CheckIn.m */; };
-		3DA2AE311D34D02E00C5C9CA /* CommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA2AE2F1D34D02E00C5C9CA /* CommentController.m */; };
-		3DA2AE321D34D02E00C5C9CA /* CommentController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DA2AE301D34D02E00C5C9CA /* CommentController.xib */; };
 		3DA372CE1CD2523E0075F93C /* OlaCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA372CD1CD2523E0075F93C /* OlaCircle.m */; };
 		3DA372D21CD252510075F93C /* VideoHistoryResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA372D11CD252510075F93C /* VideoHistoryResult.m */; };
 		3DA372D81CD71CA30075F93C /* StatisticsListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA372D71CD71CA30075F93C /* StatisticsListResult.m */; };
@@ -380,6 +383,9 @@
 		3DBC9CEC1C90585800030A63 /* QuestionListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBC9CEB1C90585800030A63 /* QuestionListResult.m */; };
 		3DBC9CEF1C90591E00030A63 /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBC9CEE1C90591E00030A63 /* Question.m */; };
 		3DBC9CF21C905C3B00030A63 /* QuestionOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBC9CF11C905C3B00030A63 /* QuestionOption.m */; };
+		3DC31F531DF2A952000A15DF /* CommentAudioView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F521DF2A952000A15DF /* CommentAudioView.m */; };
+		3DC31F561DF2B0DD000A15DF /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F551DF2B0DD000A15DF /* CommentViewController.m */; };
+		3DC31F591DF2BE73000A15DF /* CommentMediaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F581DF2BE73000A15DF /* CommentMediaView.m */; };
 		3DC597BF1DD49FE700720D9B /* MistakeListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC597BE1DD49FE700720D9B /* MistakeListController.m */; };
 		3DC597C21DD4A24700720D9B /* MistakeListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC597C11DD4A24700720D9B /* MistakeListResult.m */; };
 		3DC597C51DD4A50E00720D9B /* Mistake.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC597C41DD4A50E00720D9B /* Mistake.m */; };
@@ -679,6 +685,16 @@
 		3D3C46DE1CF9456400BF66CD /* CourBuyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourBuyViewController.m; sourceTree = "<group>"; };
 		3D3C46E01CFAB2CE00BF66CD /* StatusResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusResult.h; sourceTree = "<group>"; };
 		3D3C46E11CFAB2CE00BF66CD /* StatusResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusResult.m; sourceTree = "<group>"; };
+		3D400ACA1DE94168009AFE61 /* mediaModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mediaModel.h; sourceTree = "<group>"; };
+		3D400ACB1DE94168009AFE61 /* mediaModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mediaModel.m; sourceTree = "<group>"; };
+		3D400AD01DE941E3009AFE61 /* MediaCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaCollectionViewCell.h; sourceTree = "<group>"; };
+		3D400AD11DE941E3009AFE61 /* MediaCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaCollectionViewCell.m; sourceTree = "<group>"; };
+		3D400AD91DE947F1009AFE61 /* CustomChoiceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomChoiceView.h; sourceTree = "<group>"; };
+		3D400ADA1DE947F1009AFE61 /* CustomChoiceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomChoiceView.m; sourceTree = "<group>"; };
+		3D400ADC1DEBF798009AFE61 /* MediaUploadResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaUploadResult.h; sourceTree = "<group>"; };
+		3D400ADD1DEBF798009AFE61 /* MediaUploadResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaUploadResult.m; sourceTree = "<group>"; };
+		3D400ADF1DED6236009AFE61 /* CommentFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentFrame.h; sourceTree = "<group>"; };
+		3D400AE01DED6236009AFE61 /* CommentFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentFrame.m; sourceTree = "<group>"; };
 		3D44E4591CBD309800B34990 /* ExamManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExamManager.h; sourceTree = "<group>"; };
 		3D44E45A1CBD309800B34990 /* ExamManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExamManager.m; sourceTree = "<group>"; };
 		3D44E45D1CBD31D500B34990 /* ExamListRsult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExamListRsult.h; sourceTree = "<group>"; };
@@ -1102,9 +1118,6 @@
 		3D9D36161C0DA669007CE085 /* CheckInListResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInListResult.m; sourceTree = "<group>"; };
 		3D9D36181C0DA7E3007CE085 /* CheckIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckIn.h; sourceTree = "<group>"; };
 		3D9D36191C0DA7E3007CE085 /* CheckIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckIn.m; sourceTree = "<group>"; };
-		3DA2AE2E1D34D02E00C5C9CA /* CommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentController.h; sourceTree = "<group>"; };
-		3DA2AE2F1D34D02E00C5C9CA /* CommentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentController.m; sourceTree = "<group>"; };
-		3DA2AE301D34D02E00C5C9CA /* CommentController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentController.xib; sourceTree = "<group>"; };
 		3DA372CC1CD2523E0075F93C /* OlaCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OlaCircle.h; sourceTree = "<group>"; };
 		3DA372CD1CD2523E0075F93C /* OlaCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OlaCircle.m; sourceTree = "<group>"; };
 		3DA372D01CD252510075F93C /* VideoHistoryResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoHistoryResult.h; sourceTree = "<group>"; };
@@ -1210,6 +1223,12 @@
 		3DBC9CEE1C90591E00030A63 /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Question.m; sourceTree = "<group>"; };
 		3DBC9CF01C905C3B00030A63 /* QuestionOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionOption.h; sourceTree = "<group>"; };
 		3DBC9CF11C905C3B00030A63 /* QuestionOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionOption.m; sourceTree = "<group>"; };
+		3DC31F511DF2A952000A15DF /* CommentAudioView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentAudioView.h; sourceTree = "<group>"; };
+		3DC31F521DF2A952000A15DF /* CommentAudioView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentAudioView.m; sourceTree = "<group>"; };
+		3DC31F541DF2B0DD000A15DF /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
+		3DC31F551DF2B0DD000A15DF /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
+		3DC31F571DF2BE73000A15DF /* CommentMediaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentMediaView.h; sourceTree = "<group>"; };
+		3DC31F581DF2BE73000A15DF /* CommentMediaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentMediaView.m; sourceTree = "<group>"; };
 		3DC597BD1DD49FE700720D9B /* MistakeListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MistakeListController.h; sourceTree = "<group>"; };
 		3DC597BE1DD49FE700720D9B /* MistakeListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MistakeListController.m; sourceTree = "<group>"; };
 		3DC597C01DD4A24700720D9B /* MistakeListResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MistakeListResult.h; sourceTree = "<group>"; };
@@ -1734,6 +1753,10 @@
 				3D1D24721D2A3C5000A7F418 /* MCImageInfo.m */,
 				3D1D247F1D2C9D2800A7F418 /* CircleFrame.h */,
 				3D1D24801D2C9D2800A7F418 /* CircleFrame.m */,
+				3D400ACA1DE94168009AFE61 /* mediaModel.h */,
+				3D400ACB1DE94168009AFE61 /* mediaModel.m */,
+				3D400ADF1DED6236009AFE61 /* CommentFrame.h */,
+				3D400AE01DED6236009AFE61 /* CommentFrame.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -2241,11 +2264,10 @@
 				3D7C9ECE1CC78C390040DE5A /* view */,
 				3D76A9031CB7B13700128955 /* CircleViewController.h */,
 				3D76A9041CB7B13700128955 /* CircleViewController.m */,
-				3DA2AE2E1D34D02E00C5C9CA /* CommentController.h */,
-				3DA2AE2F1D34D02E00C5C9CA /* CommentController.m */,
-				3DA2AE301D34D02E00C5C9CA /* CommentController.xib */,
 				3D1D242F1D2A3A9500A7F418 /* DeployViewController.h */,
 				3D1D24301D2A3A9500A7F418 /* DeployViewController.m */,
+				3DC31F541DF2B0DD000A15DF /* CommentViewController.h */,
+				3DC31F551DF2B0DD000A15DF /* CommentViewController.m */,
 				3D9CB7811D916BC900A3C9A1 /* OtherUserController.h */,
 				3D9CB7821D916BC900A3C9A1 /* OtherUserController.m */,
 			);
@@ -2324,10 +2346,18 @@
 				3DD4B92F1D2DEB74002FDC0E /* CircleDetailView.m */,
 				3D7169DF1D339D02004B3ED6 /* CommentCell.h */,
 				3D7169E01D339D02004B3ED6 /* CommentCell.m */,
-				3D0C49811D3499F400E752B1 /* CustomInputView.h */,
-				3D0C49821D3499F400E752B1 /* CustomInputView.m */,
 				3D9CB7941D94F64D00A3C9A1 /* OtherHeadView.h */,
 				3D9CB7951D94F64D00A3C9A1 /* OtherHeadView.m */,
+				3D400AD01DE941E3009AFE61 /* MediaCollectionViewCell.h */,
+				3D400AD11DE941E3009AFE61 /* MediaCollectionViewCell.m */,
+				3D0C49811D3499F400E752B1 /* CustomInputView.h */,
+				3D0C49821D3499F400E752B1 /* CustomInputView.m */,
+				3D400AD91DE947F1009AFE61 /* CustomChoiceView.h */,
+				3D400ADA1DE947F1009AFE61 /* CustomChoiceView.m */,
+				3DC31F511DF2A952000A15DF /* CommentAudioView.h */,
+				3DC31F521DF2A952000A15DF /* CommentAudioView.m */,
+				3DC31F571DF2BE73000A15DF /* CommentMediaView.h */,
+				3DC31F581DF2BE73000A15DF /* CommentMediaView.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -3538,6 +3568,8 @@
 				3DFB6D661B6DD5AA0072D175 /* CommonResult.m */,
 				3DFB6D671B6DD5AA0072D175 /* UploadResult.h */,
 				3DFB6D681B6DD5AA0072D175 /* UploadResult.m */,
+				3D400ADC1DEBF798009AFE61 /* MediaUploadResult.h */,
+				3D400ADD1DEBF798009AFE61 /* MediaUploadResult.m */,
 				3DFB6D691B6DD5AA0072D175 /* UserInfoResult.h */,
 				3DFB6D6A1B6DD5AA0072D175 /* UserInfoResult.m */,
 				3DFB6D6B1B6DD5AA0072D175 /* LocationResult.h */,
@@ -3807,7 +3839,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D6F6C731CAEA72F00097DD0 /* AlipaySDK.bundle in Resources */,
-				3DA2AE321D34D02E00C5C9CA /* CommentController.xib in Resources */,
 				3D68CE2C1D77DE20005CA17F /* Default-568h@2x.png in Resources */,
 				3D68CE2A1D77DDF1005CA17F /* Default@2x.png in Resources */,
 				3D92FDE31D03CEEA008E602F /* UMSCommentDetailController.xib in Resources */,
@@ -4040,6 +4071,7 @@
 				3D0AA3771D51DC7200D73D81 /* Homework.m in Sources */,
 				3D11D5C61BD4D9AD00789D1F /* ASIFormDataRequest.m in Sources */,
 				3D6E72091CE36B7E003ABA1C /* VIPView.m in Sources */,
+				3D400ACC1DE94168009AFE61 /* mediaModel.m in Sources */,
 				3DFB6D081B6DCAC40072D175 /* BSPreviewCollectionViewCellFactory.m in Sources */,
 				3D9CB8161D9BA09600A3C9A1 /* CourseTableViewCell.m in Sources */,
 				3DFB6DA81B6DE2C10072D175 /* UserViewController.m in Sources */,
@@ -4147,6 +4179,7 @@
 				3DFB6D8B1B6DD5B50072D175 /* Location.m in Sources */,
 				3DFB6C481B6DCA7C0072D175 /* UIImage+Scaling.m in Sources */,
 				3D9CB7931D94C9EF00A3C9A1 /* UITabBar+badge.m in Sources */,
+				3D400ADB1DE947F1009AFE61 /* CustomChoiceView.m in Sources */,
 				3D68CE231D77C872005CA17F /* CorrectTableCell.m in Sources */,
 				3D9CB82C1DAA3EE800A3C9A1 /* ChosenWebController.m in Sources */,
 				3D44E4631CBDD82200B34990 /* Examination.m in Sources */,
@@ -4156,6 +4189,7 @@
 				3DAF992D1CCE2085007835E3 /* PayReqResult.m in Sources */,
 				3DFB6DA91B6DE2C10072D175 /* ForgetPassViewController.m in Sources */,
 				3DAF99361CCE223C007835E3 /* AliPayInfo.m in Sources */,
+				3DC31F531DF2A952000A15DF /* CommentAudioView.m in Sources */,
 				3D44E4991CBF73C800B34990 /* WXUtil.mm in Sources */,
 				3D9CB8401DB47EB000A3C9A1 /* WorkStatistics.m in Sources */,
 				3DFB6DD51B6DE6720072D175 /* ShareSheetView.m in Sources */,
@@ -4171,6 +4205,7 @@
 				3DAF99301CCE209F007835E3 /* AliPayResult.m in Sources */,
 				3D9D296A1CE0B6B900F58E57 /* ExamFilterView.m in Sources */,
 				3DA372E41CDA285B0075F93C /* CollectionVideo.m in Sources */,
+				3DC31F561DF2B0DD000A15DF /* CommentViewController.m in Sources */,
 				3D44E4981CBF73C800B34990 /* payRequsestHandler.mm in Sources */,
 				3D910C2F1BD52FB4007B092E /* OrganizationTableCell.m in Sources */,
 				3DFB6DAD1B6DE2C10072D175 /* RegisterViewController.m in Sources */,
@@ -4198,7 +4233,9 @@
 				3D79DD071C1BF1B700D34DD7 /* CourSectionTableCell.m in Sources */,
 				3DB865C11CF58A070011F4EF /* JRPlayerView.m in Sources */,
 				3DFB6DE81B6DEFA10072D175 /* MainViewController.m in Sources */,
+				3D400AD21DE941E3009AFE61 /* MediaCollectionViewCell.m in Sources */,
 				3D68CD9C1D61CA66005CA17F /* CourseListTableCell.m in Sources */,
+				3D400ADE1DEBF798009AFE61 /* MediaUploadResult.m in Sources */,
 				3D3B5F3E1BDE0DE400652CF3 /* ImageUtils.m in Sources */,
 				3D11D5C81BD4D9AE00789D1F /* ASIInputStream.m in Sources */,
 				3D9CB7DD1D97A67700A3C9A1 /* NSString+expand.m in Sources */,
@@ -4291,7 +4328,6 @@
 				3D6E71FF1CE31B03003ABA1C /* MJRefreshNormalHeader.m in Sources */,
 				3D9CB7E11D97A6E400A3C9A1 /* MBProgressHUD.m in Sources */,
 				3DFB6D0B1B6DCAC40072D175 /* BSImagePickerSettings.m in Sources */,
-				3DA2AE311D34D02E00C5C9CA /* CommentController.m in Sources */,
 				3D910C471BD61698007B092E /* CourseListResult.m in Sources */,
 				3DFB6D2A1B6DCADB0072D175 /* MJPhotoBrowser.m in Sources */,
 				3D1D247E1D2BF3DC00A7F418 /* CircleManager.m in Sources */,
@@ -4303,6 +4339,7 @@
 				3D8600B81C12CA1D00C0C69C /* SKSplashIcon.m in Sources */,
 				3D6E71F41CE31B03003ABA1C /* MJRefreshBackFooter.m in Sources */,
 				3D0C49831D3499F400E752B1 /* CustomInputView.m in Sources */,
+				3D400AE11DED6236009AFE61 /* CommentFrame.m in Sources */,
 				3D9D35D51C083A37007CE085 /* VideoCollectionResult.m in Sources */,
 				3DFB6C461B6DCA7C0072D175 /* UIImage+Resize.m in Sources */,
 				3D6E71F61CE31B03003ABA1C /* MJRefreshFooter.m in Sources */,
@@ -4311,6 +4348,7 @@
 				3DFB6D041B6DCAC40072D175 /* BSPreviewController.m in Sources */,
 				3D1D24311D2A3A9500A7F418 /* DeployViewController.m in Sources */,
 				3D9CB7891D93E0B700A3C9A1 /* SignInPopoverView.m in Sources */,
+				3DC31F591DF2BE73000A15DF /* CommentMediaView.m in Sources */,
 				3DB121FA1BD73DBA003D9437 /* CoursePoint.m in Sources */,
 				3DA372D21CD252510075F93C /* VideoHistoryResult.m in Sources */,
 				3D68CDD81D741C42005CA17F /* GroupManager.m in Sources */,

@@ -15,7 +15,7 @@
 #import "CircleManager.h"
 #import "CircleFrame.h"
 #import "DeployViewController.h"
-#import "CommentController.h"
+#import "CommentViewController.h"
 #import "ShareSheetView.h"
 #import "LoginViewController.h"
 #import "OtherUserController.h"
@@ -202,8 +202,13 @@
 }
 
 -(void)setupData:(NSString*)logId{
+    NSString *userId = @"";
+    AuthManager *am = [AuthManager sharedInstance];
+    if (am.isAuthenticated) {
+        userId = am.userInfo.userId;
+    }
     CircleManager *cm = [[CircleManager alloc]init];
-    [cm fetchVideoHistoryListWithVideoLogId:logId PageSize:@"20" Type:_type Success:^(VideoHistoryResult *result) {
+    [cm fetchVideoHistoryListWithVideoLogId:logId UserId:userId PageSize:@"20" Type:_type Success:^(VideoHistoryResult *result) {
         if ([logId isEqualToString:@""]) {
             [_dataArray removeAllObjects];
         }
@@ -243,8 +248,8 @@
         sectionVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:sectionVC animated:YES];
     }else{ // 发帖
-        CommentController *commentVC = [[CommentController alloc]init];
-        commentVC.circleFrame = frame;
+        CommentViewController *commentVC = [[CommentViewController alloc]init];
+        commentVC.postId = circle.circleId;
         commentVC.successFunc = ^void(OlaCircle *circle,int type){
             if (type==1) {
                 [self updatePraiseNumber:circle];
@@ -319,10 +324,8 @@
 }
 
 -(void) didClickComment:(OlaCircle *)circle{
-    CommentController *commentVC = [[CommentController alloc]init];
-    CircleFrame *frame = [[CircleFrame alloc] init];
-    frame.result = circle;
-    commentVC.circleFrame = frame;
+    CommentViewController *commentVC = [[CommentViewController alloc]init];
+    commentVC.postId = circle.circleId;
     commentVC.successFunc = ^void(OlaCircle *circle,int type){
         if (type==1) {
             [self updatePraiseNumber:circle];

@@ -11,6 +11,7 @@
 #import "AuthResult.h"
 #import "CommonResult.h"
 #import "UploadResult.h"
+#import "MediaUploadResult.h"
 #import "User.h"
 #import "UserInfoResult.h"
 #import "SignInStatusResult.h"
@@ -134,6 +135,7 @@
     [self setupUserMappings];
     [self setupSignInStatusResultMapping];
     [self setupUploadMappings];
+    [self setupMediaUploadMappings];
     [self setupLoactionResultMapping];
     [self setupHomeDataListMapping];
     [self setupCourseListMapping];
@@ -277,9 +279,19 @@
 -(void)setupUploadMappings{
     _uploadResultMapping = [RKObjectMapping mappingForClass:[UploadResult class]];
     [_uploadResultMapping addAttributeMappingsFromDictionary:@{
-                                                               @"code":   @"code",
-                                                               @"message":   @"message",
-                                                               @"imgGid":   @"imgGid"
+                                                            @"code":   @"code",
+                                                            @"message":   @"message",
+                                                            @"imgGid":   @"imgGid"
+                                                               }];
+}
+
+-(void)setupMediaUploadMappings{
+    _mediaUploadResultMapping = [RKObjectMapping mappingForClass:[MediaUploadResult class]];
+    [_mediaUploadResultMapping addAttributeMappingsFromDictionary:@{
+                                                            @"code":   @"code",
+                                                            @"message":@"message",
+                                                            @"pic":    @"imgGid",
+                                                            @"url":    @"movieUrl"
                                                                }];
 }
 
@@ -1002,10 +1014,14 @@
 -(void)setupCommentListMapping{
     RKObjectMapping *commentMapping = [RKObjectMapping mappingForClass:[Comment class]];
     [commentMapping addAttributeMappingsFromDictionary:@{
-                                                          @"commentId":         @"data_id",
+                                                          @"commentId":    @"data_id",
                                                           @"userId":       @"userId",
-                                                          @"userName":       @"username",
+                                                          @"userName":     @"username",
                                                           @"content":      @"content",
+                                                          @"imageIds":     @"imageIds",
+                                                          @"videoUrls":    @"videoUrls",
+                                                          @"videoImgs":    @"videoImgs",
+                                                          @"audioUrls":    @"audioUrls",
                                                           @"location" : @"local",
                                                           @"praiseNumber" :@"like_count",
                                                           @"userAvatar":    @"profile_image",

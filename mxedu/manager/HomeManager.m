@@ -18,7 +18,8 @@
  *  @param success <#success description#>
  *  @param failure <#failure description#>
  */
--(void)fetchHomePageListSuccess:(void(^)(HomeListResult *result))success
+-(void)fetchHomePageListWithUserId:(NSString*)userId
+                           Success:(void(^)(HomeListResult *result))success
                         Failure:(void(^)(NSError* error))failure{
     DataMappingManager *dm = GetDataManager();
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.homeListResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
@@ -27,7 +28,7 @@
     
     [om addResponseDescriptor:responseDescriptor];
     // 采用post方式，get方式可能产生中文乱码
-    [om postObject:nil path:@"/ola/home/getHomeList" parameters:nil
+    [om postObject:nil path:@"/ola/home/getHomeList" parameters:@{@"userId":userId}
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                if ([mappingResult.firstObject isKindOfClass:[HomeListResult class]]) {
                    HomeListResult *result = mappingResult.firstObject;

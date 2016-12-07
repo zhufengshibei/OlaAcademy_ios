@@ -24,9 +24,11 @@
 #import "CircleManager.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 
-@interface DeployViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UITextViewDelegate,UIGestureRecognizerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface DeployViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UITextViewDelegate,UIGestureRecognizerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,QYSelectPhotoViewDelegate>
 {
     UIButton *rights;//导航栏右侧按钮
+    
+    UIScrollView *scrollView;
     
     UILabel *label; //content 的 placehoder
     UITextView *editText;
@@ -42,6 +44,10 @@
     
     UIButton *addMediaButton;
     
+    UIView *assignView; //指定回答
+    UIView *inviteView;
+    UILabel *assignUserL;
+    
     dispatch_queue_t _workingQueue;
     
     /**
@@ -54,6 +60,10 @@
     NSString *meidaType;//上传的媒体样式
     
     UITapGestureRecognizer *wholeTap;
+    
+    NSString *isPublic; // 是否公开
+    NSString *assignUser;
+    UISwitch *publicSwitch;
 }
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -72,9 +82,16 @@ BOOL uploadOrignalImage;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
     
     [self setNavBar];
+    
+    isPublic = @"1";
+    assignUser = @"";
+    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-UI_NAVIGATION_BAR_HEIGHT-UI_STATUS_BAR_HEIGHT)];
+    scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
+    scrollView.backgroundColor = [UIColor whiteColor];
+    scrollView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview: scrollView];
     
     label = [[UILabel alloc]initWithFrame:CGRectMake(3, 5, 180, 20)];
     label.enabled = NO;
@@ -84,22 +101,16 @@ BOOL uploadOrignalImage;
     
     editText = [UITextView new];
     editText.tag=1002;
-    int height = 100;
-    if (iPhone6) {
-        height = 110;
-    }else if(iPhone6Plus){
-        height = 120;
-    }
-    editText.frame = CGRectMake(5, 5, SCREEN_WIDTH-10, height);
+    editText.frame = CGRectMake(5, 5, SCREEN_WIDTH-10, GENERAL_SIZE(220));
     editText.font=[UIFont systemFontOfSize:16];
     editText.backgroundColor = [UIColor whiteColor];
     editText.delegate = self;
     [editText addSubview:label];
-    [self.view addSubview:editText];
+    [scrollView addSubview:editText];
     
     UIView *dividerLine3 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(editText.frame), SCREEN_WIDTH, 5)];
     dividerLine3.backgroundColor = BACKGROUNDCOLOR;
-    [self.view addSubview:dividerLine3];
+    [scrollView addSubview:dividerLine3];
     
     localView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(dividerLine3.frame), SCREEN_WIDTH, 44)];
     localView.backgroundColor = [UIColor whiteColor];
@@ -110,7 +121,7 @@ BOOL uploadOrignalImage;
     localtion.text = @"定位中...";
     [localView addSubview:localLabel];
     [localView addSubview:localtion];
-    [self.view addSubview:localView];
+    [scrollView addSubview:localView];
     
     [localLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(localView).offset(0);
@@ -123,7 +134,7 @@ BOOL uploadOrignalImage;
     
     UIView *dividerLine4 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(localView.frame), SCREEN_WIDTH, 1)];
     dividerLine4.backgroundColor = BACKGROUNDCOLOR;
-    [self.view addSubview:dividerLine4];
+    [scrollView addSubview:dividerLine4];
     
     
     orgiView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(dividerLine4.frame)+5, SCREEN_WIDTH, 35)];
@@ -132,11 +143,12 @@ BOOL uploadOrignalImage;
     oriLabel.text = @"上传原图";
     oriLabel.textColor = RGBCOLOR(87, 87, 87);
     UISwitch *switchButton = [[UISwitch alloc]init];
+    switchButton.tag = 1001;
     [switchButton setOn:NO];
     [switchButton addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
     [orgiView addSubview:oriLabel];
     [orgiView addSubview:switchButton];
-    [self.view addSubview:orgiView];
+    [scrollView addSubview:orgiView];
     
     
     [oriLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -147,11 +159,11 @@ BOOL uploadOrignalImage;
         make.centerY.equalTo(orgiView).offset(0);
         make.right.equalTo(orgiView.mas_right).offset(-10);
     }];
-    
+
     addMediaButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [addMediaButton setImage:[UIImage imageNamed:@"ic_choose_photo"] forState:UIControlStateNormal];
     [addMediaButton addTarget:self action:@selector(addPhotoView) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:addMediaButton];
+    [scrollView addSubview:addMediaButton];
     
     [addMediaButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(orgiView.mas_bottom).offset(10);
@@ -161,11 +173,97 @@ BOOL uploadOrignalImage;
     }];
     
     uploadOrignalImage = NO;
+
+    [self setupAssignView];
     
     wholeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     
     [self setupLocation];
+}
+
+-(void)setupAssignView{
+    assignView = [[UIView alloc]init];
+    [scrollView addSubview:assignView];
     
+    UIView *dividerLine5 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 5)];
+    dividerLine5.backgroundColor = BACKGROUNDCOLOR;
+    [assignView addSubview:dividerLine5];
+    
+    UILabel *assignL = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 100, GENERAL_SIZE(80))];
+    assignL.text = @"指定回答";
+    assignL.textColor = RGBCOLOR(87, 87, 87);
+    [assignView addSubview:assignL];
+    
+    UISwitch *switchButton = [[UISwitch alloc]init];
+    switchButton.tag = 1002;
+    [switchButton setOn:NO];
+    [switchButton addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+    [assignView addSubview:switchButton];
+    
+    [switchButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(assignL);
+        make.right.equalTo(assignView.mas_right).offset(-10);
+    }];
+    
+    inviteView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(assignL.frame), SCREEN_WIDTH, 82)];
+    [inviteView setHidden:YES];
+    [assignView addSubview:inviteView];
+    
+    UIView *lineView1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
+    lineView1.backgroundColor = BACKGROUNDCOLOR;
+    [inviteView addSubview:lineView1];
+    
+    UILabel *inviteL = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(lineView1.frame), 100, GENERAL_SIZE(80))];
+    inviteL.text = @"邀请回答";
+    inviteL.textColor = RGBCOLOR(87, 87, 87);
+    [inviteView addSubview:inviteL];
+    
+    UIImageView *nextIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ic_next"]];
+    [inviteView addSubview:nextIV];
+    
+    [nextIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(inviteL);
+        make.right.equalTo(inviteView).offset(-10);
+    }];
+    
+    assignUserL = [[UILabel alloc]init];
+    assignUserL.textColor = RGBCOLOR(87, 87, 87);
+    assignUserL.text = @"陈剑";
+    [inviteView addSubview:assignUserL];
+    
+    [assignUserL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(inviteL);
+        make.right.equalTo(nextIV.mas_left).offset(-10);
+    }];
+    
+    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(inviteL.frame), SCREEN_WIDTH, 1)];
+    lineView2.backgroundColor = BACKGROUNDCOLOR;
+    [inviteView addSubview:lineView2];
+    
+    UILabel *publicL = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(lineView2.frame), 100, GENERAL_SIZE(80))];
+    publicL.text = @"是否公开";
+    publicL.textColor = RGBCOLOR(87, 87, 87);
+    [inviteView addSubview:publicL];
+    
+    publicSwitch = [[UISwitch alloc]init];
+    publicSwitch.tag = 1003;
+    [publicSwitch setOn:YES];
+    [publicSwitch addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+    [inviteView addSubview:publicSwitch];
+    
+    [publicSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(publicL);
+        make.right.equalTo(assignView.mas_right).offset(-10);
+    }];
+
+    
+    [assignView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.top.equalTo(addMediaButton.mas_bottom).offset(20);
+        make.bottom.equalTo(self.view.mas_bottom);
+    }];
+
 }
 
 -(void)setupLocation{
@@ -221,12 +319,36 @@ BOOL uploadOrignalImage;
 {
     UISwitch *switchButton = (UISwitch*)sender;
     BOOL isButtonOn = [switchButton isOn];
-    if (isButtonOn) {
-        [SVProgressHUD showInfoWithStatus:@"上传原图将耗费较多流量"];
-        uploadOrignalImage = YES;
-    }else {
-        uploadOrignalImage = NO;
+    switch (switchButton.tag) {
+        case 1001:
+            if (isButtonOn) {
+                [SVProgressHUD showInfoWithStatus:@"上传原图将耗费较多流量"];
+                uploadOrignalImage = YES;
+            }else {
+                uploadOrignalImage = NO;
+            }
+            break;
+        case 1002:
+            if (isButtonOn) {
+                [inviteView setHidden:NO];
+            }else{
+                [inviteView setHidden:YES];
+                assignUser = @"";
+                isPublic = @"1";
+                [publicSwitch setOn:YES];
+            }
+            break;
+        case 1003:
+            if (isButtonOn) {
+                isPublic = @"1";
+            }else{
+                isPublic = @"0";
+            }
+            break;
+        default:
+            break;
     }
+    
 }
 
 -(void)deployMessage:(UIButton *)sender{
@@ -269,10 +391,11 @@ BOOL uploadOrignalImage;
 -(void)addPhotoView{
     QYSelectPhotoView *selectPhotoView = [[QYSelectPhotoView alloc] initWithFrame:CGRectZero];
     selectPhotoView.delegate = self;
+    selectPhotoView.photoDelegate = self;
     selectPhotoView.isEnable = YES;
     selectPhotoView.isHiddenAdd=YES;
     selectPhotoView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:selectPhotoView];
+    [scrollView addSubview:selectPhotoView];
     _selectPhotoView = selectPhotoView;
     
     [selectPhotoView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -284,6 +407,27 @@ BOOL uploadOrignalImage;
     [selectPhotoView showSelectPhotoView];
 }
 
+#pragma  delegate
+-(void)didShowSelectPhoto{
+    
+    //清除原有约束重新布局
+    [_selectPhotoView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(orgiView.mas_bottom).offset(10);
+        make.left.equalTo(self.view.mas_left).offset(10);
+        make.right.equalTo(self.view.mas_right).offset(-10);
+        make.bottom.equalTo(orgiView.mas_bottom).offset(SCREEN_WIDTH/4*ceil(([_selectPhotoView.photoData count]+1)/4.0));
+    }];
+    
+    [assignView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.top.equalTo(_selectPhotoView.mas_bottom).offset(20);
+        make.bottom.equalTo(self.view.mas_bottom);
+    }];
+    
+}
+
+#pragma method
 - (void)uploadByImageDatas:(NSArray*)imageDatas Angles:(NSArray*)angles
 {
     AuthManager *am = [AuthManager sharedInstance];
@@ -336,7 +480,7 @@ BOOL uploadOrignalImage;
 -(void)savePostInfo:(NSString*) lstPic{
     AuthManager *am = [AuthManager sharedInstance];
     CircleManager* cm = [[CircleManager alloc]init];
-    [cm addOlaCircleWithUserId:am.userInfo.userId Title:@"欧拉圈" content:editText.text imageGids:lstPic Location:locationString==nil?@"":locationString Type:@"2" Success:^(CommonResult *result) {
+    [cm addOlaCircleWithUserId:am.userInfo.userId Title:@"欧拉圈" content:editText.text imageGids:lstPic assignUser:assignUser isPublic:isPublic Location:locationString==nil?@"":locationString Type:@"2" Success:^(CommonResult *result) {
         if (_doneAction) {
             _doneAction();
         }

@@ -25,6 +25,11 @@
 
 @property(nonatomic,copy)NSString *content;//评论内容
 
+@property(nonatomic,copy)NSString *imageIds;
+@property(nonatomic,copy)NSString *videoUrls;
+@property(nonatomic,copy)NSString *videoImgs;
+@property(nonatomic,copy)NSString *audioUrls;
+
 @property(nonatomic,copy)NSString *local;//定位信息
 
 @property(nonatomic,copy)NSString *passtime;//发帖时间

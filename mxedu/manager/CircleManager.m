@@ -17,6 +17,8 @@
                        Title:(NSString*)title
                      content:(NSString*)content
                    imageGids:(NSString*)imageGids
+                   assignUser:(NSString*)assignUser
+                     isPublic:(NSString*)isPublic
                    Location:(NSString*)location
                         Type:(NSString*)type
                 Success:(void(^)(CommonResult *result))success
@@ -30,6 +32,8 @@
     [om postObject:nil path:@"/ola/circle/addOlaCircle" parameters:@{@"userId" : userId,
                                                                      @"title" : title,
                                                                      @"content":content,
+                                                                     @"isPublic":isPublic,
+                                                                     @"assignUser":assignUser,
                                                                      @"imageGids":imageGids,
                                                                      @"location":location,
                                                                      @"type":type
@@ -60,6 +64,7 @@
  *  @param failure <#failure description#>
  */
 -(void)fetchVideoHistoryListWithVideoLogId:(NSString*)circleId
+                                    UserId:(NSString*)userId
                                   PageSize:(NSString*)pageSize
                                       Type:(NSString*)type
                                    Success:(void(^)(VideoHistoryResult *result))success
@@ -71,9 +76,11 @@
     
     [om addResponseDescriptor:responseDescriptor];
     // 采用post方式，get方式可能产生中文乱码
-    [om postObject:nil path:@"/ola/circle/getCircleList" parameters:@{@"circleId": circleId,
-                                                                      @"pageSize": pageSize,
-                                                                      @"type": type
+    [om postObject:nil path:@"/ola/circle/getCircleList" parameters:@{
+                                                                @"userId": userId,
+                                                                @"circleId": circleId,
+                                                                @"pageSize": pageSize,
+                                                                @"type": type
                                                                      }
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                if ([mappingResult.firstObject isKindOfClass:[VideoHistoryResult class]]) {

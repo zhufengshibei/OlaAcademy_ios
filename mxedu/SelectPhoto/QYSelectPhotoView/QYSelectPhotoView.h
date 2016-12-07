@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+// add by 田晓鹏
+@protocol QYSelectPhotoViewDelegate <NSObject>
+
+-(void)didShowSelectPhoto;
+
+@end
+
 /**
  *  选择图片视图
  */
@@ -38,5 +45,7 @@
 - (void)reloadData;
 
 - (void)showSelectPhotoView;
+
+@property (nonatomic) id<QYSelectPhotoViewDelegate> photoDelegate;
 
 @end

@@ -362,13 +362,13 @@
     NSString *content = [question.question stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
     [content stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp"];
     [questionData setObject:content forKey:@"title"];
+    [questionData setObject:[self jsonStringFromArray :question.optionList] forKey:@"option"];
     int i = 0;
     NSString *rightanswer;
     NSString *currentChoice;
     for (QuestionOption *option in question.optionList) {
         i++;
         if (option.content&&![option.content isEqualToString:@""]) {
-            [questionData setObject:option.content forKey:[NSString stringWithFormat:@"option%d",i]];
             if([option.isanswer isEqualToString:@"1"]){
                 rightanswer =[NSString stringWithFormat:@"%d",64+i];
             }
@@ -396,6 +396,28 @@
     [_bridge callHandler:@"javascriptHandler" data:questionData responseCallback:^(id response) {
         NSLog(@"javascriptHandler responded: %@", response);
     }];
+}
+
+-(NSString*)jsonStringFromArray:(NSArray*)optionArray{
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:[optionArray count]];
+    for (QuestionOption *option in optionArray) {
+        if (option.content) {
+            NSDictionary *contentDict = [NSDictionary dictionaryWithObjectsAndKeys:option.content,@"content", nil];
+            [array addObject:contentDict];
+        }
+    }
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:array
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:&error];
+    NSString *jsonString;
+    if (! jsonData) {
+        NSLog(@"Got an error: %@", error);
+        jsonString=@"";
+    } else {
+        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    return jsonString;
 }
 
 

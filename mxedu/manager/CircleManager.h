@@ -18,6 +18,8 @@
                         Title:(NSString*)title
                       content:(NSString*)content
                     imageGids:(NSString*)imageGids
+                   assignUser:(NSString*)assignUser
+                     isPublic:(NSString*)isPublic
                      Location:(NSString*)location
                          Type:(NSString*)type
                       Success:(void(^)(CommonResult *result))success
@@ -30,6 +32,7 @@
  *  @param failure <#failure description#>
  */
 -(void)fetchVideoHistoryListWithVideoLogId:(NSString*)circleId
+                                    UserId:(NSString*)userId
                                   PageSize:(NSString*)pageSize
                                       Type:(NSString*)type
                                    Success:(void(^)(VideoHistoryResult *result))success

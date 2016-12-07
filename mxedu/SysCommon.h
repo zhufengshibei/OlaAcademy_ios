@@ -51,8 +51,11 @@ extern "C" {
 #define LabelFont(I)  [UIFont systemFontOfSize:(int)(SCREEN_WIDTH/defaultWith*I)]
 #define GENERAL_SIZE(I)  (int)(SCREEN_WIDTH/defaultWith*I)
 
+#define BASIC_URL @"http://123.59.129.137:8080"
+//#define BASIC_URL @"http://api.olaxueyuan.com"
+
 #define BASIC_IMAGE_URL @"http://upload.olaxueyuan.com/SDpic/common/picSelect?gid="
-#define BASIC_URL @"http://api.olaxueyuan.com"
+#define BASIC_Movie_URL @"http://upload.olaxueyuan.com/"
 
 #define GET_IMAGE_URL(url) [NSString stringWithFormat:@"%@%@", BASIC_IMAGE_URL, url]
 

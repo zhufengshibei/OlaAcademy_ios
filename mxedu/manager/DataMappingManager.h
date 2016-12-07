@@ -19,6 +19,7 @@
 @property (nonatomic, strong, readonly) RKObjectMapping* commonResultMapping;
 
 @property (nonatomic, strong, readonly) RKObjectMapping* uploadResultMapping;
+@property (nonatomic, strong, readonly) RKObjectMapping* mediaUploadResultMapping;
 
 @property (nonatomic, strong, readonly) RKObjectMapping* meetingResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* meetingFavResultMapping;

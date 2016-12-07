@@ -8,17 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
+#import "CommentFrame.h"
+
 @class CommentCell;
 @protocol CommentCellDelegate <NSObject>
 
 //点击点赞按钮
 -(void)didPraiseAction:(CommentCell *)seletedCell;
 
+-(void)showMediaContent:(Comment*)comment;
+
 @end
 
-@class Comment;
 @interface CommentCell : UITableViewCell
-@property (nonatomic,strong)Comment *commentR;
+
+@property (nonatomic) Comment *comment;
+
+- (void)setupCellWithFrame:(CommentFrame *)commentR;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 @property (nonatomic,retain) id<CommentCellDelegate> cellDelegate;
