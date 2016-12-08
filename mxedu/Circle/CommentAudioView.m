@@ -206,6 +206,10 @@
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
         [_audioRecorder prepareToRecord];
         [_audioRecorder record];
+        
+        if (_delegate) {
+            [_delegate clearMediaData]; //清除图片及视频数据
+        }
     }
     else
     {
@@ -331,6 +335,10 @@
     audioModel.localpath = _recordingFilePath;
     audioModel.image = [UIImage imageNamed:@"ic_audio"];
     audioModel.isExit=NO;
+    
+    if (_delegate) {
+        [_delegate updateDataSource:audioModel]; //返回音频数据
+    }
 }
 
 - (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error

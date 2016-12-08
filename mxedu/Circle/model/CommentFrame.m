@@ -9,6 +9,7 @@
 #import "CommentFrame.h"
 
 #import "SysCommon.h"
+#import "Comment.h"
 
 @implementation CommentFrame
 
@@ -53,20 +54,26 @@
                                          context:nil];
     textSize.width=maxW;
     textSize.height=rect.size.height;
-    
-//    if (textSize.height>60) {
-//        textSize = CGSizeMake(textSize.width, 60);
-//    }
 
     self.textFrame = (CGRect){{textX,textY},textSize};
     
     //设置音视频frame
+    CGFloat audioX = GENERAL_SIZE(30);
+    CGFloat audioY = CGRectGetMaxY(self.textFrame)+5;
+    CGFloat audioW = SCREEN_WIDTH-GENERAL_SIZE(120);
+    CGFloat audioH = 0;
+    if(comment.audioUrls&&![comment.audioUrls isEqualToString:@""]){
+        audioH = GENERAL_SIZE(80);
+    }
+    self.audioFrame = CGRectMake(audioX, audioY, audioW, audioH);
+    
+    //设置音视频frame
     CGFloat mediaX = GENERAL_SIZE(30);
     CGFloat mediaY = CGRectGetMaxY(self.textFrame)+5;
-    CGFloat mediaW = SCREEN_WIDTH-GENERAL_SIZE(120);
+    CGFloat mediaW = GENERAL_SIZE(375);
     CGFloat mediaH = 0;
-    if((comment.videoUrls&&![comment.videoUrls isEqualToString:@""])||(comment.audioUrls&&![comment.audioUrls isEqualToString:@""])){
-        mediaH = GENERAL_SIZE(80);
+    if(comment.videoUrls&&![comment.videoUrls isEqualToString:@""]){
+        mediaH = GENERAL_SIZE(220);
     }
     self.mediaFrame = CGRectMake(mediaX, mediaY, mediaW, mediaH);
     
@@ -78,11 +85,16 @@
     }
     
     CGFloat imageX = GENERAL_SIZE(30);
-    CGFloat imageY = CGRectGetMaxY(self.mediaFrame) + (count==0?0:mgr);
+    CGFloat imageY = CGRectGetMaxY(self.audioFrame) + (count==0?0:mgr);
+    if (comment.videoUrls&&![comment.videoUrls isEqualToString:@""]) {
+        imageY = CGRectGetMaxY(self.mediaFrame) + (count==0?0:mgr);
+    }
     CGFloat imageW = SCREEN_WIDTH/4 *(count<3?count:3) + (count<3?count:4) * 5; //图片大小为屏幕的1/4
     CGFloat imageH = 0;
     
-    if (count <= 3) {
+    if (count == 0) {
+        imageH = 0;
+    }else if (count <= 3) {
         imageH = SCREEN_WIDTH/3 -20;
     }else if(count <= 6){
         imageH = 2*SCREEN_WIDTH/3 -40;

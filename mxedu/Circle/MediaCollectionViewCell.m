@@ -61,7 +61,7 @@
     [self.contentView addSubview:timeLongLable];
     
     delBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [delBtn setImage:[UIImage imageNamed:@"icon_close"] forState:UIControlStateNormal];
+    [delBtn setImage:[UIImage imageNamed:@"ic_close"] forState:UIControlStateNormal];
     [delBtn addTarget:self action:@selector(removeCell) forControlEvents:UIControlEventTouchDown];
     [self.contentView addSubview:delBtn];
     

@@ -22,6 +22,7 @@
 #import "CommentManager.h"
 #import "UploadManager.h"
 #import "CircleManager.h"
+#import "LCAudioManager.h"
 
 #import "CircleFrame.h"
 #import "Comment.h"
@@ -39,7 +40,7 @@
 
 #define COMMENT_INPUTVIEW_OFFSET_FOR_KEYBOARD 0
 
-@interface CommentViewController ()<UITableViewDataSource,UITableViewDelegate,CommentMediaViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UMSocialUIDelegate,ShareSheetDelegate,CircleToolbarDelegate,CommentCellDelegate>
+@interface CommentViewController ()<UITableViewDataSource,UITableViewDelegate,CommentAudioViewDelegate,CommentMediaViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UMSocialUIDelegate,ShareSheetDelegate,CircleToolbarDelegate,CommentCellDelegate,CustomProgressDelegate>
 
 @property (nonatomic) CircleFrame* circleFrame;
 
@@ -56,6 +57,8 @@
 @property (nonatomic) BOOL mediaViewShow;
 
 @property (nonatomic) OlaCircle *sharedCircle;
+
+@property (nonatomic) NSString *currentUrl; //当前正在播放的音频
 
 @end
 
@@ -97,6 +100,7 @@
     _audioView = [[CommentAudioView alloc]init];
     _audioView.backgroundColor = RGBCOLOR(253, 253, 253);
     _audioView.hidden = YES;
+    _audioView.delegate = self;
     [self.view addSubview:_audioView];
     [_audioView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view.mas_bottom);
@@ -214,9 +218,14 @@
     [cm fetchCommentListWithPostId:_circleFrame.result.circleId Type:@"2" Success:^(CommentListResult *result) {
         _dataArray = [NSMutableArray arrayWithCapacity:0];
         for (Comment *comment in result.commentArray) {
-            CommentFrame *frame = [[CommentFrame alloc]init];
-            frame.comment = comment;
-            [_dataArray addObject:frame];
+            CommentFrame *m = [[CommentFrame alloc]init];
+            m.urlString = [BASIC_Movie_URL stringByAppendingString:comment.audioUrls];
+            m.playstate = Stop;
+            comment.urlString = m.urlString;
+            comment.isReset = NO;
+            comment.currentState = Stop;
+            m.comment = comment;
+            [_dataArray addObject:m];
         }
         [self.tableView reloadData];
     } Failure:^(NSError *error) {
@@ -375,6 +384,7 @@
     CommentFrame *commentF = self.dataArray[indexPath.row];
     [cell setupCellWithFrame:commentF];
     cell.cellDelegate = self;
+    cell.delegate = self; //音频
     return cell;
 }
 
@@ -441,7 +451,19 @@
     }
 }
 
-#pragma delegate 从手机选取照片或拍照
+#pragma AudioView delegate
+-(void)clearMediaData{
+    if ([_mediaDataArray count]>0) {
+        [_mediaDataArray removeAllObjects];
+        [_mediaView refreshViewWithData:_mediaDataArray];
+    }
+}
+-(void)updateDataSource:(mediaModel*)audioModel{
+    [_mediaDataArray removeAllObjects];
+    [_mediaDataArray addObject:audioModel];
+}
+
+#pragma MeidaView delegate 从手机选取照片或拍照
 
 -(void)chooseImage:(NSInteger)type{
     
@@ -657,8 +679,6 @@
 }
 
 #pragma CommentCellDelegate
-
-#pragma CommentCellDelegate
 // 评论点赞
 -(void)didPraiseAction:(CommentCell *)seletedCell{
 
@@ -673,6 +693,39 @@
     }
 }
 
+-(void)customProgressDidTapWithPlayState:(PlayState)state andWithUrl:(NSString *)urlString
+{
+    //如果两次点击url 不是同一个url
+    if(![urlString isEqualToString:self.currentUrl])
+    {
+        if (self.currentUrl) {
+            for (NSInteger i = 0; i < self.dataArray.count;i++) {
+                
+                CommentFrame * m = self.dataArray[i];
+                
+                if ([m.urlString isEqualToString:self.currentUrl]) {
+                    
+                    //如何清空数据.. 通过获取数据源 修改数据源的数据 来清空timer..
+                    m.comment.currentPalyTime = 0;
+                    m.comment.isReset = YES;
+                    m.comment.currentState = Stop;
+                    
+                    [self.tableView reloadData];
+                    
+                    if ([[LCAudioManager manager] isPlaying]) {
+                        [[LCAudioManager manager] stopPlaying];
+                    }
+                    
+                    break;
+                    
+                }
+            }
+        }
+    }
+    
+    //记录上一次播放的状态..
+    self.currentUrl = urlString;
+}
 
 #pragma mark - LXActivityDelegate
 

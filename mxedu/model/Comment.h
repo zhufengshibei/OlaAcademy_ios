@@ -9,6 +9,24 @@
 #import <Foundation/Foundation.h>
 #import "SysCommon.h"
 
+#import "CommentFrame.h"
+
+typedef enum
+{
+    NETWORK = 0,
+    LOCAL = 1
+    
+}SoundType;
+
+typedef enum
+{
+    Ready = 0,
+    NeedDown = 1,
+    Downloading = 2
+    
+}FileState;
+
+
 @interface Comment : NSObject
 @property(nonatomic,copy)NSString *total;
 @property(nonatomic,copy)NSString *profile_image;//用户头像
@@ -41,6 +59,15 @@
 @property(nonatomic,copy)NSString *rpyToUserId; //被回复人id
 @property(nonatomic,copy)NSString *rpyToUserName;// 被回复人name
 @property(nonatomic,copy)NSString *isPraised; //是否对回复点赞
+
+@property (nonatomic,assign) SoundType type;
+@property (nonatomic,copy) NSString * recordPath;
+@property (nonatomic,copy) NSString * urlString;
+@property (nonatomic,assign) NSInteger currentPalyTime;
+@property (nonatomic,assign) BOOL isReset;
+@property (nonatomic,assign) PlayState currentState;
+@property (nonatomic,assign) FileState fileState;
+
 -(CGFloat)cellHeight;
 
 @end

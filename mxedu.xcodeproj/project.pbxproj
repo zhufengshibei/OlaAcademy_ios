@@ -386,6 +386,19 @@
 		3DC31F531DF2A952000A15DF /* CommentAudioView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F521DF2A952000A15DF /* CommentAudioView.m */; };
 		3DC31F561DF2B0DD000A15DF /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F551DF2B0DD000A15DF /* CommentViewController.m */; };
 		3DC31F591DF2BE73000A15DF /* CommentMediaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F581DF2BE73000A15DF /* CommentMediaView.m */; };
+		3DC31F7A1DF9343F000A15DF /* AFSoundItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F5C1DF9343F000A15DF /* AFSoundItem.m */; };
+		3DC31F7B1DF93440000A15DF /* AFSoundPlayback.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F5F1DF9343F000A15DF /* AFSoundPlayback.m */; };
+		3DC31F7C1DF93440000A15DF /* AFSoundQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F611DF9343F000A15DF /* AFSoundQueue.m */; };
+		3DC31F7D1DF93440000A15DF /* AFSoundRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F631DF9343F000A15DF /* AFSoundRecord.m */; };
+		3DC31F7E1DF93440000A15DF /* NSTimer+AFSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F651DF9343F000A15DF /* NSTimer+AFSoundManager.m */; };
+		3DC31F7F1DF93440000A15DF /* LCAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F691DF9343F000A15DF /* LCAudioManager.m */; };
+		3DC31F801DF93440000A15DF /* LCAudioPlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F6B1DF9343F000A15DF /* LCAudioPlay.m */; };
+		3DC31F811DF93440000A15DF /* LCAudioRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F6D1DF9343F000A15DF /* LCAudioRecord.m */; };
+		3DC31F821DF93440000A15DF /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC31F6E1DF9343F000A15DF /* libmp3lame.a */; };
+		3DC31F831DF93440000A15DF /* HSDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F711DF9343F000A15DF /* HSDownloadManager.m */; };
+		3DC31F841DF93440000A15DF /* HSSessionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F731DF9343F000A15DF /* HSSessionModel.m */; };
+		3DC31F851DF93440000A15DF /* NSString+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F761DF9343F000A15DF /* NSString+Hash.m */; };
+		3DC31F8C1DF940A4000A15DF /* CustomProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F8B1DF940A4000A15DF /* CustomProgress.m */; };
 		3DC597BF1DD49FE700720D9B /* MistakeListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC597BE1DD49FE700720D9B /* MistakeListController.m */; };
 		3DC597C21DD4A24700720D9B /* MistakeListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC597C11DD4A24700720D9B /* MistakeListResult.m */; };
 		3DC597C51DD4A50E00720D9B /* Mistake.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC597C41DD4A50E00720D9B /* Mistake.m */; };
@@ -1229,6 +1242,33 @@
 		3DC31F551DF2B0DD000A15DF /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		3DC31F571DF2BE73000A15DF /* CommentMediaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentMediaView.h; sourceTree = "<group>"; };
 		3DC31F581DF2BE73000A15DF /* CommentMediaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentMediaView.m; sourceTree = "<group>"; };
+		3DC31F5B1DF9343F000A15DF /* AFSoundItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSoundItem.h; sourceTree = "<group>"; };
+		3DC31F5C1DF9343F000A15DF /* AFSoundItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSoundItem.m; sourceTree = "<group>"; };
+		3DC31F5D1DF9343F000A15DF /* AFSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSoundManager.h; sourceTree = "<group>"; };
+		3DC31F5E1DF9343F000A15DF /* AFSoundPlayback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSoundPlayback.h; sourceTree = "<group>"; };
+		3DC31F5F1DF9343F000A15DF /* AFSoundPlayback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSoundPlayback.m; sourceTree = "<group>"; };
+		3DC31F601DF9343F000A15DF /* AFSoundQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSoundQueue.h; sourceTree = "<group>"; };
+		3DC31F611DF9343F000A15DF /* AFSoundQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSoundQueue.m; sourceTree = "<group>"; };
+		3DC31F621DF9343F000A15DF /* AFSoundRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSoundRecord.h; sourceTree = "<group>"; };
+		3DC31F631DF9343F000A15DF /* AFSoundRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSoundRecord.m; sourceTree = "<group>"; };
+		3DC31F641DF9343F000A15DF /* NSTimer+AFSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+AFSoundManager.h"; sourceTree = "<group>"; };
+		3DC31F651DF9343F000A15DF /* NSTimer+AFSoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+AFSoundManager.m"; sourceTree = "<group>"; };
+		3DC31F671DF9343F000A15DF /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
+		3DC31F681DF9343F000A15DF /* LCAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCAudioManager.h; sourceTree = "<group>"; };
+		3DC31F691DF9343F000A15DF /* LCAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCAudioManager.m; sourceTree = "<group>"; };
+		3DC31F6A1DF9343F000A15DF /* LCAudioPlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCAudioPlay.h; sourceTree = "<group>"; };
+		3DC31F6B1DF9343F000A15DF /* LCAudioPlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCAudioPlay.m; sourceTree = "<group>"; };
+		3DC31F6C1DF9343F000A15DF /* LCAudioRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCAudioRecord.h; sourceTree = "<group>"; };
+		3DC31F6D1DF9343F000A15DF /* LCAudioRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCAudioRecord.m; sourceTree = "<group>"; };
+		3DC31F6E1DF9343F000A15DF /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
+		3DC31F701DF9343F000A15DF /* HSDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSDownloadManager.h; sourceTree = "<group>"; };
+		3DC31F711DF9343F000A15DF /* HSDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSDownloadManager.m; sourceTree = "<group>"; };
+		3DC31F721DF9343F000A15DF /* HSSessionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSSessionModel.h; sourceTree = "<group>"; };
+		3DC31F731DF9343F000A15DF /* HSSessionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSSessionModel.m; sourceTree = "<group>"; };
+		3DC31F751DF9343F000A15DF /* NSString+Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Hash.h"; sourceTree = "<group>"; };
+		3DC31F761DF9343F000A15DF /* NSString+Hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hash.m"; sourceTree = "<group>"; };
+		3DC31F8A1DF940A4000A15DF /* CustomProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomProgress.h; sourceTree = "<group>"; };
+		3DC31F8B1DF940A4000A15DF /* CustomProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomProgress.m; sourceTree = "<group>"; };
 		3DC597BD1DD49FE700720D9B /* MistakeListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MistakeListController.h; sourceTree = "<group>"; };
 		3DC597BE1DD49FE700720D9B /* MistakeListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MistakeListController.m; sourceTree = "<group>"; };
 		3DC597C01DD4A24700720D9B /* MistakeListResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MistakeListResult.h; sourceTree = "<group>"; };
@@ -1479,6 +1519,7 @@
 				3D6F6C8C1CAEAC0B00097DD0 /* UIKit.framework in Frameworks */,
 				3D6F6C881CAEABED00097DD0 /* Foundation.framework in Frameworks */,
 				3D79DD4B1C250E1500D34DD7 /* libc++.tbd in Frameworks */,
+				3DC31F821DF93440000A15DF /* libmp3lame.a in Frameworks */,
 				3D92FDF31D03CEEA008E602F /* libWeChatSDK.a in Frameworks */,
 				3D79DD491C2507D900D34DD7 /* libMobClickLibrary.a in Frameworks */,
 				3D6F6C751CAEA75E00097DD0 /* AlipaySDK.framework in Frameworks */,
@@ -2344,6 +2385,8 @@
 				3D8531971D34D48C00105444 /* CircleToolbar.m */,
 				3DD4B92E1D2DEB74002FDC0E /* CircleDetailView.h */,
 				3DD4B92F1D2DEB74002FDC0E /* CircleDetailView.m */,
+				3DC31F8A1DF940A4000A15DF /* CustomProgress.h */,
+				3DC31F8B1DF940A4000A15DF /* CustomProgress.m */,
 				3D7169DF1D339D02004B3ED6 /* CommentCell.h */,
 				3D7169E01D339D02004B3ED6 /* CommentCell.m */,
 				3D9CB7941D94F64D00A3C9A1 /* OtherHeadView.h */,
@@ -2986,6 +3029,60 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		3DC31F5A1DF9343F000A15DF /* AFSoundManager */ = {
+			isa = PBXGroup;
+			children = (
+				3DC31F5B1DF9343F000A15DF /* AFSoundItem.h */,
+				3DC31F5C1DF9343F000A15DF /* AFSoundItem.m */,
+				3DC31F5D1DF9343F000A15DF /* AFSoundManager.h */,
+				3DC31F5E1DF9343F000A15DF /* AFSoundPlayback.h */,
+				3DC31F5F1DF9343F000A15DF /* AFSoundPlayback.m */,
+				3DC31F601DF9343F000A15DF /* AFSoundQueue.h */,
+				3DC31F611DF9343F000A15DF /* AFSoundQueue.m */,
+				3DC31F621DF9343F000A15DF /* AFSoundRecord.h */,
+				3DC31F631DF9343F000A15DF /* AFSoundRecord.m */,
+				3DC31F641DF9343F000A15DF /* NSTimer+AFSoundManager.h */,
+				3DC31F651DF9343F000A15DF /* NSTimer+AFSoundManager.m */,
+			);
+			path = AFSoundManager;
+			sourceTree = "<group>";
+		};
+		3DC31F661DF9343F000A15DF /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				3DC31F671DF9343F000A15DF /* lame.h */,
+				3DC31F681DF9343F000A15DF /* LCAudioManager.h */,
+				3DC31F691DF9343F000A15DF /* LCAudioManager.m */,
+				3DC31F6A1DF9343F000A15DF /* LCAudioPlay.h */,
+				3DC31F6B1DF9343F000A15DF /* LCAudioPlay.m */,
+				3DC31F6C1DF9343F000A15DF /* LCAudioRecord.h */,
+				3DC31F6D1DF9343F000A15DF /* LCAudioRecord.m */,
+				3DC31F6E1DF9343F000A15DF /* libmp3lame.a */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		3DC31F6F1DF9343F000A15DF /* HSDownloadManager */ = {
+			isa = PBXGroup;
+			children = (
+				3DC31F701DF9343F000A15DF /* HSDownloadManager.h */,
+				3DC31F711DF9343F000A15DF /* HSDownloadManager.m */,
+				3DC31F721DF9343F000A15DF /* HSSessionModel.h */,
+				3DC31F731DF9343F000A15DF /* HSSessionModel.m */,
+				3DC31F741DF9343F000A15DF /* MD5 */,
+			);
+			path = HSDownloadManager;
+			sourceTree = "<group>";
+		};
+		3DC31F741DF9343F000A15DF /* MD5 */ = {
+			isa = PBXGroup;
+			children = (
+				3DC31F751DF9343F000A15DF /* NSString+Hash.h */,
+				3DC31F761DF9343F000A15DF /* NSString+Hash.m */,
+			);
+			path = MD5;
+			sourceTree = "<group>";
+		};
 		3DF69E031C994B0E002F33DC /* question */ = {
 			isa = PBXGroup;
 			children = (
@@ -3150,6 +3247,9 @@
 		3DFB6C341B6DC9690072D175 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				3DC31F5A1DF9343F000A15DF /* AFSoundManager */,
+				3DC31F661DF9343F000A15DF /* Audio */,
+				3DC31F6F1DF9343F000A15DF /* HSDownloadManager */,
 				3D9CB7E91D97AF0D00A3C9A1 /* RNCryptor */,
 				3D9CB8011D97B17000A3C9A1 /* CMDateFormatter */,
 				3D6F6C6E1CAEA47100097DD0 /* AliPay */,
@@ -3966,6 +4066,7 @@
 				3D3C46D31CF7E28E00BF66CD /* LoadVideoViewController.m in Sources */,
 				3D8600E51C1BC1C800C0C69C /* UserPrivacyViewController.m in Sources */,
 				3DA372E11CD8EC200075F93C /* MistakeViewController.m in Sources */,
+				3DC31F831DF93440000A15DF /* HSDownloadManager.m in Sources */,
 				3D2DBB9B1BE9FE6B00B3AD06 /* CourseCollectionView.m in Sources */,
 				3DBBE3BA1CF6FA970038F29E /* SDResourceHeader.m in Sources */,
 				3D68CD961D61B079005CA17F /* HomeCollectionCell.m in Sources */,
@@ -3975,6 +4076,7 @@
 				3D9CB7961D94F64D00A3C9A1 /* OtherHeadView.m in Sources */,
 				3DFB6C2F1B6DC92F0072D175 /* UploadManager.m in Sources */,
 				3D36D9781D12EF4A00FA6570 /* ApplePayVIPController.m in Sources */,
+				3DC31F7D1DF93440000A15DF /* AFSoundRecord.m in Sources */,
 				3D2830DA1C9EC70B00C2326D /* ExamViewController.m in Sources */,
 				3D1D246D1D2A3B9B00A7F418 /* QYImageUtil.m in Sources */,
 				3D9CB80C1D98CFFB00A3C9A1 /* QCSlideSwitchView.m in Sources */,
@@ -4027,6 +4129,7 @@
 				3DFB6DAF1B6DE2C10072D175 /* UserProcotolViewController.m in Sources */,
 				3D9CB81F1D9E02C400A3C9A1 /* StuHomeworkController.m in Sources */,
 				3D9CB8191D9CC46600A3C9A1 /* HomeworkWebController.m in Sources */,
+				3DC31F841DF93440000A15DF /* HSSessionModel.m in Sources */,
 				3DA372D81CD71CA30075F93C /* StatisticsListResult.m in Sources */,
 				3D2830DE1C9EC96600C2326D /* ExamCollectionView.m in Sources */,
 				3D68CDF91D77C78E005CA17F /* MonthHomework.m in Sources */,
@@ -4078,6 +4181,7 @@
 				3D11D5C21BD4D9AD00789D1F /* ASIAuthenticationDialog.m in Sources */,
 				3D2F0BBE1CE220D200C84CF0 /* VideoBoxResult.m in Sources */,
 				3DFB6CF41B6DCAC40072D175 /* BSShrinkAnimator.m in Sources */,
+				3DC31F7C1DF93440000A15DF /* AFSoundQueue.m in Sources */,
 				3DA967291D87A6E5001217C5 /* UserTableCell.m in Sources */,
 				3D68CE361D782ECF005CA17F /* StuGroupTableCell.m in Sources */,
 				3DFB6D5A1B6DD5230072D175 /* NSString+MD5Addition.m in Sources */,
@@ -4123,6 +4227,7 @@
 				3D9CB7C11D979C4800A3C9A1 /* SUIControl.m in Sources */,
 				3D9CB8041D97B17000A3C9A1 /* CMSingleObjcManager.m in Sources */,
 				3DFB6D121B6DCAC40072D175 /* BSVideoCell.m in Sources */,
+				3DC31F801DF93440000A15DF /* LCAudioPlay.m in Sources */,
 				3D68CDC51D6BF384005CA17F /* ConsultTableCell.m in Sources */,
 				3D68CDA31D644032005CA17F /* HomeListResult.m in Sources */,
 				3D6780841BE753D300F5055B /* LoginViewController.m in Sources */,
@@ -4162,6 +4267,7 @@
 				3DFB6D451B6DD4D90072D175 /* UIView+Extension.m in Sources */,
 				3D461F771DC44C35004D3194 /* MaterialManager.m in Sources */,
 				3D31C36E1D407244008882C3 /* PopViewController.m in Sources */,
+				3DC31F7A1DF9343F000A15DF /* AFSoundItem.m in Sources */,
 				3D6E72001CE31B03003ABA1C /* MJRefreshStateHeader.m in Sources */,
 				3DFB6D8A1B6DD5B50072D175 /* User.m in Sources */,
 				3D3C46D61CF7E28E00BF66CD /* DownLoadbottomBar.m in Sources */,
@@ -4186,6 +4292,7 @@
 				3D1D24681D2A3B9B00A7F418 /* AlbumListController.m in Sources */,
 				3D1D246B1D2A3B9B00A7F418 /* AlbumTableViewCell.m in Sources */,
 				3D68CE251D77C872005CA17F /* HomeworkView.m in Sources */,
+				3DC31F851DF93440000A15DF /* NSString+Hash.m in Sources */,
 				3DAF992D1CCE2085007835E3 /* PayReqResult.m in Sources */,
 				3DFB6DA91B6DE2C10072D175 /* ForgetPassViewController.m in Sources */,
 				3DAF99361CCE223C007835E3 /* AliPayInfo.m in Sources */,
@@ -4246,6 +4353,7 @@
 				3DFB6CFE1B6DCAC40072D175 /* BSTableController+BSItemsModel.m in Sources */,
 				3D6F6C9F1CB25F1B00097DD0 /* CommodityPayVC.m in Sources */,
 				3DFB6C2C1B6DC92F0072D175 /* DataMappingManager.m in Sources */,
+				3DC31F7F1DF93440000A15DF /* LCAudioManager.m in Sources */,
 				3D68CD991D61C49B005CA17F /* CourseListController.m in Sources */,
 				3DFB6DB11B6DE2C10072D175 /* IndexViewController.m in Sources */,
 				3D9D35EA1C0B250F007CE085 /* CollectionListResult.m in Sources */,
@@ -4275,6 +4383,7 @@
 				3D1D24871D2CA2BF00A7F418 /* CircleTableViewCell.m in Sources */,
 				3DFB6D2F1B6DCADB0072D175 /* SDWebImageManager+MJ.m in Sources */,
 				3D6E71F81CE31B03003ABA1C /* MJRefreshAutoGifFooter.m in Sources */,
+				3DC31F8C1DF940A4000A15DF /* CustomProgress.m in Sources */,
 				3DFB6C451B6DCA7C0072D175 /* UIImage+Alpha.m in Sources */,
 				3DFB6D421B6DD4CD0072D175 /* UIColor+HexColor.m in Sources */,
 				3D9CB7AC1D97989D00A3C9A1 /* VideoTerminalListSubView.m in Sources */,
@@ -4284,6 +4393,7 @@
 				3D68CDCC1D6F3A9F005CA17F /* CircleDetailResult.m in Sources */,
 				3D9CB81C1D9E028E00A3C9A1 /* TeaHomeworkController.m in Sources */,
 				3DFB6CFC1B6DCAC40072D175 /* BSPhotosController+UICollectionView.m in Sources */,
+				3DC31F7B1DF93440000A15DF /* AFSoundPlayback.m in Sources */,
 				3D0EB29D1CCB4E9700C95B80 /* FilterView.m in Sources */,
 				3D68CE0D1D77C845005CA17F /* QuestionViewController.m in Sources */,
 				3D9D36171C0DA669007CE085 /* CheckInListResult.m in Sources */,
@@ -4346,6 +4456,7 @@
 				3D9CB7FC1D97AF0D00A3C9A1 /* RNDecryptor.m in Sources */,
 				3D1D24631D2A3B9B00A7F418 /* CXTapDetectingImageView.m in Sources */,
 				3DFB6D041B6DCAC40072D175 /* BSPreviewController.m in Sources */,
+				3DC31F7E1DF93440000A15DF /* NSTimer+AFSoundManager.m in Sources */,
 				3D1D24311D2A3A9500A7F418 /* DeployViewController.m in Sources */,
 				3D9CB7891D93E0B700A3C9A1 /* SignInPopoverView.m in Sources */,
 				3DC31F591DF2BE73000A15DF /* CommentMediaView.m in Sources */,
@@ -4355,6 +4466,7 @@
 				3DFD14F51DB759DC0061F1EB /* CoinRuleController.m in Sources */,
 				3DBBE3B81CF6FA970038F29E /* DownloadModal.m in Sources */,
 				3DD4B9301D2DEB74002FDC0E /* CircleDetailView.m in Sources */,
+				3DC31F811DF93440000A15DF /* LCAudioRecord.m in Sources */,
 				3D31C36D1D407244008882C3 /* PopContentTabeVIew.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4532,6 +4644,7 @@
 					"$(PROJECT_DIR)/mxedu/ThirdParty/UMShare/UMSocial_Sdk_5.2.1",
 					"$(PROJECT_DIR)/mxedu/Course/ucloud/lib/Player",
 					"$(PROJECT_DIR)/mxedu/ThirdParty/UMessage_Sdk_1.3.0",
+					"$(PROJECT_DIR)/mxedu/ThirdParty/Audio",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.michen.olaxueyuan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4583,6 +4696,7 @@
 					"$(PROJECT_DIR)/mxedu/ThirdParty/UMShare/UMSocial_Sdk_5.2.1",
 					"$(PROJECT_DIR)/mxedu/Course/ucloud/lib/Player",
 					"$(PROJECT_DIR)/mxedu/ThirdParty/UMessage_Sdk_1.3.0",
+					"$(PROJECT_DIR)/mxedu/ThirdParty/Audio",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.michen.olaxueyuan;
 				PRODUCT_NAME = "$(TARGET_NAME)";

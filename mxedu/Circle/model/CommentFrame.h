@@ -9,7 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "Comment.h"
+@class Comment;
+@class CustomProgress;
+typedef enum
+{
+    Playing = 0,
+    Paused = 1,
+    Stop = 2
+    
+}PlayState;
 
 @interface CommentFrame : NSObject
 
@@ -17,7 +25,9 @@
 @property (nonatomic, assign) CGRect iconFrame;
 /**昵称frame*/
 @property (nonatomic, assign) CGRect nameFrame;
-/**视频／音频frame*/
+/**音频frame*/
+@property (nonatomic, assign) CGRect audioFrame;
+/**视频frame*/
 @property (nonatomic, assign) CGRect mediaFrame;
 /**正文frame*/
 @property (nonatomic, assign) CGRect textFrame;
@@ -29,5 +39,10 @@
 
 /**模型数据*/
 @property (nonatomic,strong) Comment *comment;
+
+// 音频播放相关
+@property (nonatomic,copy) NSString * urlString;
+@property (nonatomic,assign) PlayState playstate;
+@property (nonatomic,strong) CustomProgress * custoprogress;
 
 @end

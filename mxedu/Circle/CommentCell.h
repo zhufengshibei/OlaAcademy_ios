@@ -10,6 +10,9 @@
 
 #import "CommentFrame.h"
 
+#import "CustomProgress.h"
+#import "CommentFrame.h"
+
 @class CommentCell;
 @protocol CommentCellDelegate <NSObject>
 
@@ -23,6 +26,11 @@
 @interface CommentCell : UITableViewCell
 
 @property (nonatomic) Comment *comment;
+
+@property (nonatomic,strong) CommentFrame * rdmanager;
+@property (nonatomic,strong) Comment * sdModel;
+
+@property (nonatomic,weak) id<CustomProgressDelegate> delegate;
 
 - (void)setupCellWithFrame:(CommentFrame *)commentR;
 

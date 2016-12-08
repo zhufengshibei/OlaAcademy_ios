@@ -91,10 +91,10 @@
 
 -(void)refreshViewWithData:(NSMutableArray*)mediaArray{
     _mediaDataArray = mediaArray;
+    [mediaListView reloadData];
     if([_mediaDataArray count]==0){
         choiceView.hidden = NO;
     }else{
-        [mediaListView reloadData];
         choiceView.hidden = YES;
     }
 }
