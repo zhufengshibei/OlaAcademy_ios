@@ -74,8 +74,6 @@
 		3D31C35A1D3E5E5B008882C3 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D31C3591D3E5E5B008882C3 /* Message.m */; };
 		3D31C3611D3E6862008882C3 /* MessageTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D31C3601D3E6862008882C3 /* MessageTableCell.m */; };
 		3D31C3641D3F7124008882C3 /* MessageUnreadResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D31C3631D3F7124008882C3 /* MessageUnreadResult.m */; };
-		3D31C36D1D407244008882C3 /* PopContentTabeVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D31C36A1D407244008882C3 /* PopContentTabeVIew.m */; };
-		3D31C36E1D407244008882C3 /* PopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D31C36C1D407244008882C3 /* PopViewController.m */; };
 		3D31C3771D40795D008882C3 /* FPPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D31C3721D40795D008882C3 /* FPPopoverController.m */; };
 		3D31C3781D40795D008882C3 /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D31C3741D40795D008882C3 /* FPPopoverView.m */; };
 		3D31C3791D40795D008882C3 /* FPTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D31C3761D40795D008882C3 /* FPTouchView.m */; };
@@ -399,6 +397,9 @@
 		3DC31F841DF93440000A15DF /* HSSessionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F731DF9343F000A15DF /* HSSessionModel.m */; };
 		3DC31F851DF93440000A15DF /* NSString+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F761DF9343F000A15DF /* NSString+Hash.m */; };
 		3DC31F8C1DF940A4000A15DF /* CustomProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F8B1DF940A4000A15DF /* CustomProgress.m */; };
+		3DC31F8F1DFA860F000A15DF /* TeacherListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F8E1DFA860E000A15DF /* TeacherListController.m */; };
+		3DC31F921DFA8FE8000A15DF /* TeacherTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F911DFA8FE8000A15DF /* TeacherTableCell.m */; };
+		3DC31F951DFBB2F0000A15DF /* CircleListTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC31F941DFBB2F0000A15DF /* CircleListTableCell.m */; };
 		3DC597BF1DD49FE700720D9B /* MistakeListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC597BE1DD49FE700720D9B /* MistakeListController.m */; };
 		3DC597C21DD4A24700720D9B /* MistakeListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC597C11DD4A24700720D9B /* MistakeListResult.m */; };
 		3DC597C51DD4A50E00720D9B /* Mistake.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC597C41DD4A50E00720D9B /* Mistake.m */; };
@@ -657,10 +658,6 @@
 		3D31C3601D3E6862008882C3 /* MessageTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableCell.m; sourceTree = "<group>"; };
 		3D31C3621D3F7124008882C3 /* MessageUnreadResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageUnreadResult.h; sourceTree = "<group>"; };
 		3D31C3631D3F7124008882C3 /* MessageUnreadResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageUnreadResult.m; sourceTree = "<group>"; };
-		3D31C3691D407244008882C3 /* PopContentTabeVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopContentTabeVIew.h; sourceTree = "<group>"; };
-		3D31C36A1D407244008882C3 /* PopContentTabeVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopContentTabeVIew.m; sourceTree = "<group>"; };
-		3D31C36B1D407244008882C3 /* PopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopViewController.h; sourceTree = "<group>"; };
-		3D31C36C1D407244008882C3 /* PopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopViewController.m; sourceTree = "<group>"; };
 		3D31C3701D40795D008882C3 /* ARCMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCMacros.h; sourceTree = "<group>"; };
 		3D31C3711D40795D008882C3 /* FPPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPopoverController.h; sourceTree = "<group>"; };
 		3D31C3721D40795D008882C3 /* FPPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPPopoverController.m; sourceTree = "<group>"; };
@@ -1269,6 +1266,12 @@
 		3DC31F761DF9343F000A15DF /* NSString+Hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hash.m"; sourceTree = "<group>"; };
 		3DC31F8A1DF940A4000A15DF /* CustomProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomProgress.h; sourceTree = "<group>"; };
 		3DC31F8B1DF940A4000A15DF /* CustomProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomProgress.m; sourceTree = "<group>"; };
+		3DC31F8D1DFA860E000A15DF /* TeacherListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeacherListController.h; sourceTree = "<group>"; };
+		3DC31F8E1DFA860E000A15DF /* TeacherListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeacherListController.m; sourceTree = "<group>"; };
+		3DC31F901DFA8FE8000A15DF /* TeacherTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeacherTableCell.h; sourceTree = "<group>"; };
+		3DC31F911DFA8FE8000A15DF /* TeacherTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeacherTableCell.m; sourceTree = "<group>"; };
+		3DC31F931DFBB2F0000A15DF /* CircleListTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleListTableCell.h; sourceTree = "<group>"; };
+		3DC31F941DFBB2F0000A15DF /* CircleListTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleListTableCell.m; sourceTree = "<group>"; };
 		3DC597BD1DD49FE700720D9B /* MistakeListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MistakeListController.h; sourceTree = "<group>"; };
 		3DC597BE1DD49FE700720D9B /* MistakeListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MistakeListController.m; sourceTree = "<group>"; };
 		3DC597C01DD4A24700720D9B /* MistakeListResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MistakeListResult.h; sourceTree = "<group>"; };
@@ -1859,17 +1862,6 @@
 			path = view;
 			sourceTree = "<group>";
 		};
-		3D31C3681D407244008882C3 /* popViewVC */ = {
-			isa = PBXGroup;
-			children = (
-				3D31C3691D407244008882C3 /* PopContentTabeVIew.h */,
-				3D31C36A1D407244008882C3 /* PopContentTabeVIew.m */,
-				3D31C36B1D407244008882C3 /* PopViewController.h */,
-				3D31C36C1D407244008882C3 /* PopViewController.m */,
-			);
-			path = popViewVC;
-			sourceTree = "<group>";
-		};
 		3D31C36F1D40795D008882C3 /* popView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2311,6 +2303,8 @@
 				3DC31F551DF2B0DD000A15DF /* CommentViewController.m */,
 				3D9CB7811D916BC900A3C9A1 /* OtherUserController.h */,
 				3D9CB7821D916BC900A3C9A1 /* OtherUserController.m */,
+				3DC31F8D1DFA860E000A15DF /* TeacherListController.h */,
+				3DC31F8E1DFA860E000A15DF /* TeacherListController.m */,
 			);
 			path = Circle;
 			sourceTree = "<group>";
@@ -2375,10 +2369,11 @@
 		3D7C9ECE1CC78C390040DE5A /* view */ = {
 			isa = PBXGroup;
 			children = (
-				3D31C3681D407244008882C3 /* popViewVC */,
 				3D1D24741D2A3CD800A7F418 /* ImageCell.h */,
 				3D1D24751D2A3CD800A7F418 /* ImageCell.m */,
 				3D1D24761D2A3CD800A7F418 /* ImageCell.xib */,
+				3DC31F931DFBB2F0000A15DF /* CircleListTableCell.h */,
+				3DC31F941DFBB2F0000A15DF /* CircleListTableCell.m */,
 				3D1D24851D2CA2BF00A7F418 /* CircleTableViewCell.h */,
 				3D1D24861D2CA2BF00A7F418 /* CircleTableViewCell.m */,
 				3D8531961D34D48C00105444 /* CircleToolbar.h */,
@@ -2401,6 +2396,8 @@
 				3DC31F521DF2A952000A15DF /* CommentAudioView.m */,
 				3DC31F571DF2BE73000A15DF /* CommentMediaView.h */,
 				3DC31F581DF2BE73000A15DF /* CommentMediaView.m */,
+				3DC31F901DFA8FE8000A15DF /* TeacherTableCell.h */,
+				3DC31F911DFA8FE8000A15DF /* TeacherTableCell.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -4135,6 +4132,7 @@
 				3D68CDF91D77C78E005CA17F /* MonthHomework.m in Sources */,
 				3D9D35BD1C058195007CE085 /* AboutViewController.m in Sources */,
 				3D6E72031CE31B03003ABA1C /* UIScrollView+MJExtension.m in Sources */,
+				3DC31F921DFA8FE8000A15DF /* TeacherTableCell.m in Sources */,
 				3DFB6D101B6DCAC40072D175 /* BSSpeechBubbleView.m in Sources */,
 				3DFB6DB61B6DE2D00072D175 /* UserInfoView.m in Sources */,
 				3D9D35E11C0ADA49007CE085 /* TeacherInfoViewController.m in Sources */,
@@ -4266,7 +4264,6 @@
 				3D68CE241D77C872005CA17F /* ExamTableCell.m in Sources */,
 				3DFB6D451B6DD4D90072D175 /* UIView+Extension.m in Sources */,
 				3D461F771DC44C35004D3194 /* MaterialManager.m in Sources */,
-				3D31C36E1D407244008882C3 /* PopViewController.m in Sources */,
 				3DC31F7A1DF9343F000A15DF /* AFSoundItem.m in Sources */,
 				3D6E72001CE31B03003ABA1C /* MJRefreshStateHeader.m in Sources */,
 				3DFB6D8A1B6DD5B50072D175 /* User.m in Sources */,
@@ -4348,6 +4345,7 @@
 				3D9CB7DD1D97A67700A3C9A1 /* NSString+expand.m in Sources */,
 				3DFB6DAB1B6DE2C10072D175 /* ModifyPassViewController.m in Sources */,
 				3D68CE331D782E8B005CA17F /* StuGroupListController.m in Sources */,
+				3DC31F951DFBB2F0000A15DF /* CircleListTableCell.m in Sources */,
 				3D9CB8131D9A576800A3C9A1 /* SignInStatus.m in Sources */,
 				3DFB6D741B6DD5AA0072D175 /* CommonResult.m in Sources */,
 				3DFB6CFE1B6DCAC40072D175 /* BSTableController+BSItemsModel.m in Sources */,
@@ -4467,7 +4465,7 @@
 				3DBBE3B81CF6FA970038F29E /* DownloadModal.m in Sources */,
 				3DD4B9301D2DEB74002FDC0E /* CircleDetailView.m in Sources */,
 				3DC31F811DF93440000A15DF /* LCAudioRecord.m in Sources */,
-				3D31C36D1D407244008882C3 /* PopContentTabeVIew.m in Sources */,
+				3DC31F8F1DFA860F000A15DF /* TeacherListController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

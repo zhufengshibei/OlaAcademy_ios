@@ -12,4 +12,7 @@
 
 @interface StuEnrollController : UIBaseViewController<LMComBoxViewDelegate>
 
+@property (nonatomic) int optionIndex; //指定的机构
+@property (nonatomic) int nameIndex; //指定的机构下的指定培训
+
 @end

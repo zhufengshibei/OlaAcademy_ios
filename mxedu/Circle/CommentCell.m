@@ -63,9 +63,19 @@
         [self addSubview:content];
         self.content = content;
         
+        //音频
+        CustomProgress *audioProgress = [[CustomProgress alloc] initWithFrame:CGRectMake(GENERAL_SIZE(30), 0, SCREEN_WIDTH-GENERAL_SIZE(120), GENERAL_SIZE(80))];
+        audioProgress.maxValue = 60;
+        //设置背景色
+        audioProgress.bgimg.backgroundColor =[UIColor colorWithRed:19/255.0 green:127/255.0 blue:251/255.0 alpha:1];
+        audioProgress.leftimg.backgroundColor =[UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:0.35];
+        audioProgress.presentlab.textColor = [UIColor whiteColor];
+        audioProgress.delegate = self;
+        [self addSubview:audioProgress];
+        self.audioProgress = audioProgress;
+        
         //视频
         UIImageView *mediaView = [[UIImageView alloc]init];
-        mediaView.backgroundColor = [UIColor greenColor];
         mediaView.layer.masksToBounds = YES;
         mediaView.layer.cornerRadius = GENERAL_SIZE(40);
         mediaView.backgroundColor = COMMONBLUECOLOR;
@@ -114,9 +124,9 @@
         [self addSubview:_collectionView];
         
         UILabel *timeL = [[UILabel alloc] init];
-        timeL.font = [UIFont systemFontOfSize:12.0];
+        timeL.font = LabelFont(24);
         timeL.textColor = [UIColor grayColor];
-        timeL.contentMode = UIViewContentModeTopRight;
+        timeL.textAlignment = NSTextAlignmentRight;
         [self addSubview:timeL];
         self.timeLabel = timeL;
         
@@ -126,6 +136,17 @@
         localL.contentMode = UIViewContentModeTopRight;
         [self addSubview:localL];
         self.localLabel = localL;
+        
+        UIView *lineView =[[UIView alloc]init];
+        lineView.backgroundColor = RGBCOLOR(235, 235, 235);
+        [self addSubview:lineView];
+        
+        [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.mas_bottom).offset(-1);
+            make.height.equalTo(@1);
+            make.left.equalTo(self).offset(GENERAL_SIZE(20));
+            make.right.equalTo(self.mas_right).offset(-GENERAL_SIZE(20));
+        }];
 
     }
     return self;
@@ -158,18 +179,6 @@
 {
     _comment = commentR.comment;
     
-    //音频
-    if (!self.audioProgress) {
-        _audioProgress = [[CustomProgress alloc] initWithFrame:commentR.audioFrame];
-        _audioProgress.maxValue = 60;
-        //设置背景色
-        _audioProgress.bgimg.backgroundColor =[UIColor colorWithRed:19/255.0 green:127/255.0 blue:251/255.0 alpha:1];
-        _audioProgress.leftimg.backgroundColor =[UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:0.35];
-        _audioProgress.presentlab.textColor = [UIColor whiteColor];
-        _audioProgress.delegate = self;
-        [self addSubview:_audioProgress];
-    }
-    
     //布局
     self.iconView.frame = commentR.iconFrame;
     self.nameLabel.frame = commentR.nameFrame;
@@ -177,7 +186,14 @@
     self.mediaView.frame = commentR.mediaFrame;
     self.collectionView.frame = commentR.imageFrame;
     self.audioProgress.frame = commentR.audioFrame;
+    self.timeLabel.frame = commentR.timeFrame;
     self.audioProgress.sdmodel = _comment;
+    
+    if (_comment.audioUrls&&![_comment.audioUrls isEqualToString:@""]) {
+        self.audioProgress.hidden = NO;
+    }else{
+        self.audioProgress.hidden = YES;
+    }
 
     if (_comment.profile_image) {
         if ([_comment.profile_image rangeOfString:@".jpg"].location == NSNotFound) {

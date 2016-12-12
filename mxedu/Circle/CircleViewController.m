@@ -9,30 +9,26 @@
 #import "CircleViewController.h"
 
 #import "SysCommon.h"
-#import "CircleTableViewCell.h"
 #import "MJRefresh.h"
 #import "AuthManager.h"
 #import "CircleManager.h"
-#import "CircleFrame.h"
+#import "MessageManager.h"
+#import "CircleListTableCell.h"
 #import "DeployViewController.h"
 #import "CommentViewController.h"
+#import "MessageViewController.h"
 #import "ShareSheetView.h"
 #import "LoginViewController.h"
 #import "OtherUserController.h"
 
-#import "PopViewController.h"
-#import "PopContentTabeVIew.h"
+#import "Masonry.h"
 
-@interface CircleViewController ()<UITableViewDataSource,UITableViewDelegate,UMSocialUIDelegate,ShareSheetDelegate,CircleViewDelegate,CircleToolbarDelegate>
+@interface CircleViewController ()<UITableViewDataSource,UITableViewDelegate,UMSocialUIDelegate,ShareSheetDelegate>
 
-@property (nonatomic) UIButton *titleBtn;
-
-@property (nonatomic) NSString *type;//当前筛选类型 1 学习记录 2帖子 空 其他
-@property (nonatomic) PopViewController *popover;
+@property (nonatomic) UIImageView *messageBtn;
 
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) NSMutableArray *dataArray;
-@property (nonatomic) NSMutableArray *circleFrames;
 
 @property (nonatomic) OlaCircle *sharedCircle;
 
@@ -42,9 +38,8 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden = NO;
-    if(_isFromHomePage==0){
-        [self setupNavBar];
-    }else{
+    [self fetchMessageCount]; //消息提醒
+    if(_isFromHomePage==1){
         [self setupBackButton];
     }
 }
@@ -52,9 +47,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"欧拉圈";
     [self setupRightButton];
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-60)];
+    _tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
@@ -72,31 +69,13 @@
         }
     }];
     
-    if (_isFromHomePage==1) {
-        _type = @"2";
-    }else{
-        _type = @"";
-    }
+    [self setupDeployImage];
     
     [self setupData:@""];
 }
 
--(void)setupNavBar{
-    _titleBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [_titleBtn setFrame:CGRectMake(0, 0, 60, 20)];
-    [_titleBtn setTitle:@"欧拉圈" forState:UIControlStateNormal];
-    _titleBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
-    [_titleBtn setImage:[UIImage imageNamed:@"ic_pulldown"] forState:UIControlStateNormal];
-    [_titleBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -20, 0, 20)];
-    [_titleBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 40, 0, -40)];
-    [_titleBtn addTarget:self action:@selector(showFilterView:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.navigationItem.titleView = _titleBtn;
-}
-
 - (void)setupBackButton
 {
-    self.title = @"欧拉问答";
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
     [backBtn sizeToFit];
@@ -111,29 +90,42 @@
 }
 
 -(void)setupRightButton{
-    UIImageView *slideBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
-    slideBtn.image = [UIImage imageNamed:@"ic_add_circle"];
-    slideBtn.userInteractionEnabled = YES;
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showDeployView)];
-    [slideBtn addGestureRecognizer:singleTap];
-    [slideBtn sizeToFit];
+    _messageBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
+    _messageBtn.image = [UIImage imageNamed:@"icon_message"];
+    _messageBtn.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showMessageView)];
+    [_messageBtn addGestureRecognizer:singleTap];
+    [_messageBtn sizeToFit];
     
-    UIBarButtonItem *rightCunstomButtonView = [[UIBarButtonItem alloc] initWithCustomView:slideBtn];
+    UIBarButtonItem *rightCunstomButtonView = [[UIBarButtonItem alloc] initWithCustomView:_messageBtn];
     self.navigationItem.rightBarButtonItem = rightCunstomButtonView;
 }
 
--(void)showDeployView{
+-(void)showMessageView{
     AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated) {
         [self showLoginView];
         return;
     }
-    DeployViewController *deployVC = [[DeployViewController alloc]init];
-    deployVC.doneAction = ^{
-        [self setupData:@""];
-    };
-    deployVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:deployVC animated:YES];
+    MessageViewController *messageVC = [[MessageViewController alloc]init];
+    messageVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:messageVC animated:YES];
+}
+
+-(void)fetchMessageCount{
+    AuthManager *am = [AuthManager sharedInstance];
+    if (am.isAuthenticated) {
+        MessageManager *mm = [[MessageManager alloc]init];
+        [mm fetchUnreadCountWithUserId:am.userInfo.userId Success:^(MessageUnreadResult *result) {
+            if (result.code==10000&result.count>0) {
+                _messageBtn.image = [UIImage imageNamed:@"icon_message_tip"];
+            }else{
+                _messageBtn.image = [UIImage imageNamed:@"icon_message"];
+            }
+        } Failure:^(NSError *error) {
+            
+        }];
+    }
 }
 
 -(void)showLoginView{
@@ -146,59 +138,105 @@
      ];
 }
 
-#pragma 下拉筛选
-
-// 筛选视图
--(void)showFilterView:(UIButton*)btn{
-    _modalDataArray = [NSMutableArray arrayWithCapacity:3];
+//发帖按钮
+-(void)setupDeployImage{
     
-    NSArray *titlesArr = @[@"全部",@"学习记录",@"欧拉分享"];
-    for (NSString *titleStr in titlesArr) {
-        NSDictionary *dataDic = [NSDictionary dictionaryWithObjectsAndKeys:titleStr,@"titleName", nil];
-        [_modalDataArray addObject:dataDic];
-    }
-    SAFE_ARC_RELEASE(popover); _popover=nil;
+    int tabbarHeight = self.tabBarController.tabBar.frame.size.height;
     
-    //the controller we want to present as a popover
-    PopContentTabeVIew *popview = [[PopContentTabeVIew alloc] initWithStyle:UITableViewStylePlain];
-    popview.delegate = self;
-    _popover = [[PopViewController alloc] initWithViewController:popview];
-    _popover.tint = FPPopoverWhiteTint;
-    _popover.keyboardHeight = 0;
+    UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon_deploy"]];
+    UITapGestureRecognizer *recognizer1 = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                  action:@selector(handleTap:)];
+    [imageView addGestureRecognizer:recognizer1];
+    UIPanGestureRecognizer *recognizer2 = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                                  action:@selector(handlePan:)];
+    [imageView addGestureRecognizer:recognizer2];
+    imageView.userInteractionEnabled = YES;
+    [self.view addSubview:imageView];
+    __weak typeof(self)weekSelf = self;
     
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        _popover.contentSize = CGSizeMake(300, 350);
-    }
-    else {
-        _popover.contentSize = CGSizeMake(200, 230);
-    }
-    //no arrow
-    _popover.arrowDirection = FPPopoverArrowDirectionAny;
-    [_popover presentPopoverFromView:btn];
-
+    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        __strong typeof(weekSelf)strongSelf = weekSelf;
+        
+        make.right.equalTo(self.view.mas_right).offset(-10);
+        make.bottom.equalTo(strongSelf.tableView.mas_bottom).offset(-(tabbarHeight+20));
+    }];
+    
 }
 
-#pragma mark popView中taleCell的点击时间
--(void)selectedTableRow:(NSIndexPath *)path
-{
-    //NSString *navTitle = [[_modalDataArray objectAtIndex:path.row] objectForKey:@"titleName"];
-    switch (path.row) {
-        case 1:
-            [_titleBtn setTitle:@"学习" forState:UIControlStateNormal];
-            break;
-        case 2:
-            [_titleBtn setTitle:@"分享" forState:UIControlStateNormal];
-            break;
-            
-        default:
-            [_titleBtn setTitle:@"全部" forState:UIControlStateNormal];
-            break;
+/**
+ *  处理点击手势
+ *
+ *  @param recognizer 手势识别器对象实例
+ */
+- (void)handleTap:(UIPanGestureRecognizer *)recognizer{
+    AuthManager *am = [AuthManager sharedInstance];
+    if (!am.isAuthenticated) {
+        [self showLoginView];
+        return;
     }
+    DeployViewController *deployVC = [[DeployViewController alloc]init];
+    deployVC.doneAction = ^{
+        // 延迟一秒执行
+        double delayInSeconds = 1.0;
+        __block CircleViewController* bself = self;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [bself setupData:@""];
+        });
+        
+    };
+    deployVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:deployVC animated:YES];
+}
+
+/**
+ *  处理拖动手势
+ *
+ *  @param recognizer 拖动手势识别器对象实例
+ */
+- (void)handlePan:(UIPanGestureRecognizer *)recognizer {
+    //视图前置操作
+    [recognizer.view.superview bringSubviewToFront:recognizer.view];
     
-    _type = path.row == 0?@"":[NSString stringWithFormat:@"%ld", path.row];
-    [self.tableView.header beginRefreshing];
-    [_popover dismissPopoverAnimated:YES];
+    CGPoint center = recognizer.view.center;
+    CGFloat cornerRadius = recognizer.view.frame.size.width / 2;
+    CGPoint translation = [recognizer translationInView:self.view];
+    //NSLog(@"%@", NSStringFromCGPoint(translation));
+    recognizer.view.center = CGPointMake(center.x + translation.x, center.y + translation.y);
+    [recognizer setTranslation:CGPointZero inView:self.view];
+    
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        //计算速度向量的长度，当他小于200时，滑行会很短
+        CGPoint velocity = [recognizer velocityInView:self.view];
+        CGFloat magnitude = sqrtf((velocity.x * velocity.x) + (velocity.y * velocity.y));
+        CGFloat slideMult = magnitude / 200;
+        //NSLog(@"magnitude: %f, slideMult: %f", magnitude, slideMult); //e.g. 397.973175, slideMult: 1.989866
+        
+        //基于速度和速度因素计算一个终点
+        float slideFactor = 0.1 * slideMult;
+        CGPoint finalPoint = CGPointMake(center.x + (velocity.x * slideFactor),
+                                         center.y + (velocity.y * slideFactor));
+        //限制最小［cornerRadius］和最大边界值［self.view.bounds.size.width - cornerRadius］，以免拖动出屏幕界限
+        finalPoint.x = MIN(MAX(finalPoint.x, cornerRadius),
+                           self.view.bounds.size.width - cornerRadius);
+        int height = 200;
+        if (iPhone6) {
+            height = 100;
+        }else if(iPhone6Plus){
+            height = 40;
+        }
+        finalPoint.y = MIN(MAX(finalPoint.y, cornerRadius),
+                           self.view.bounds.size.height- height - cornerRadius);
+        
+        //使用 UIView 动画使 view 滑行到终点
+        [UIView animateWithDuration:slideFactor*2
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             recognizer.view.center = finalPoint;
+                         }
+                         completion:nil];
+    }
 }
 
 -(void)setupData:(NSString*)logId{
@@ -208,12 +246,11 @@
         userId = am.userInfo.userId;
     }
     CircleManager *cm = [[CircleManager alloc]init];
-    [cm fetchVideoHistoryListWithVideoLogId:logId UserId:userId PageSize:@"20" Type:_type Success:^(VideoHistoryResult *result) {
+    [cm fetchVideoHistoryListWithVideoLogId:logId UserId:userId PageSize:@"20" Type:@"2" Success:^(VideoHistoryResult *result) {
         if ([logId isEqualToString:@""]) {
             [_dataArray removeAllObjects];
         }
         [_dataArray addObjectsFromArray:result.historyArray];
-        self.circleFrames = [self circleFrameWithcircleModels:_dataArray];
         
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
@@ -230,51 +267,46 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CircleTableViewCell *cell = [CircleTableViewCell cellWithTableView:tableView];
-    CircleFrame *circleFrame = self.circleFrames[indexPath.row];
-    cell.detailView.toolBar.delegate = self;
-    cell.detailView.delegate = self;
-    cell.statusFrame = circleFrame;
-    return cell;
+    static NSString *cellIdentifier = @"circleCell";
+    CircleListTableCell *circleCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (circleCell == nil) {
+        circleCell = [[CircleListTableCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"circleCell"];
+    }
+    circleCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    OlaCircle *circle = self.dataArray[indexPath.row];
+    [circleCell setupCellWithModel:circle];
+    return circleCell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    CircleFrame *frame = self.circleFrames[indexPath.row];
-    OlaCircle *circle = frame.result;
-    if ([circle.type isEqualToString: @"1"]) {  //观看记录
-        CourSectionViewController *sectionVC = [[CourSectionViewController alloc]init];
-        sectionVC.objectId = circle.courseId;
-        sectionVC.type = 1;
-        sectionVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:sectionVC animated:YES];
-    }else{ // 发帖
-        CommentViewController *commentVC = [[CommentViewController alloc]init];
-        commentVC.postId = circle.circleId;
-        commentVC.successFunc = ^void(OlaCircle *circle,int type){
-            if (type==1) {
-                [self updatePraiseNumber:circle];
-            }
-        };
-        commentVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:commentVC animated:YES];
-    }
+    
+    OlaCircle *circle = self.dataArray[indexPath.row];
+    CommentViewController *commentVC = [[CommentViewController alloc]init];
+    commentVC.postId = circle.circleId;
+    commentVC.successFunc = ^void(OlaCircle *circle,int type){
+        if (type==1) {
+            [self updatePraiseNumber:circle];
+        }
+    };
+    commentVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:commentVC animated:YES];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CircleFrame *frame = self.circleFrames[indexPath.row];
-    return frame.cellHeigth;
-}
-- (NSMutableArray *)circleFrameWithcircleModels:(NSArray *)modelArray
-{
-    NSMutableArray *frames = [NSMutableArray array];
-    
-    for (OlaCircle *result in modelArray) {
-        CircleFrame *frame = [[CircleFrame alloc] init];
-        //传递微博模型数据，计算所有子控件的frame
-        frame.result = result;
-        [frames addObject:frame];
+    OlaCircle *circle = self.dataArray[indexPath.row];
+    NSString* contetxt = [circle.title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    //根据普通文本计算正文的范围
+    NSMutableParagraphStyle *style =  [[NSMutableParagraphStyle alloc] init];
+    style.lineSpacing = 5.0f;
+    NSDictionary *attributes = @{NSFontAttributeName: LabelFont(30),NSParagraphStyleAttributeName:style};
+    CGRect rect = [contetxt boundingRectWithSize:CGSizeMake(SCREEN_WIDTH-GENERAL_SIZE(40), MAXFLOAT)
+                                         options:NSStringDrawingUsesLineFragmentOrigin
+                                      attributes:attributes
+                                         context:nil];
+    if (circle.imageGids&&![circle.imageGids isEqualToString:@""]) {
+        return rect.size.height+GENERAL_SIZE(475);
     }
-    return frames;
+    return rect.size.height+GENERAL_SIZE(145);
 }
 
 #pragma CircleDetailView Delegate
@@ -286,7 +318,7 @@
     //[self.navigationController pushViewController:otherVC animated:YES];
 }
 
-#pragma Toolbar Delegate
+#pragma Toolbar Delegate(暂未使用)
 // 点赞
 -(void) didClickLove:(OlaCircle *)circle{
     CircleManager *cm = [[CircleManager alloc]init];
@@ -298,13 +330,11 @@
 }
 
 -(void)updatePraiseNumber:(OlaCircle*)circle{
-    for (int i=0; i<[_circleFrames count]; i++) {
-        CircleFrame *frame = [_circleFrames objectAtIndex:i];
-        OlaCircle *oldCircle = frame.result;
+    for (int i=0; i<[_dataArray count]; i++) {
+        OlaCircle *oldCircle = [_dataArray objectAtIndex:i];
         if ([oldCircle.circleId isEqualToString:circle.circleId]) {
             circle.praiseNumber = [NSString stringWithFormat:@"%d", circle.praiseNumber.intValue+1];
-            frame.result = circle;
-            [_circleFrames setObject:frame atIndexedSubscript:i];
+            [_dataArray setObject:circle atIndexedSubscript:i];
             break;
         }
     }
@@ -390,20 +420,9 @@
     }
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

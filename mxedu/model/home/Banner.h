@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "Commodity.h"
+
 @interface Banner : NSObject
 
 @property (nonatomic) NSString* bannerId;
@@ -16,5 +18,6 @@
 @property (nonatomic) NSString* pic;
 @property (nonatomic) int type;
 @property (nonatomic) NSString* url;
+@property (nonatomic) Commodity *commodity;
 
 @end

@@ -312,23 +312,6 @@
 }
 
 -(void)setupHomeDataListMapping{
-    RKObjectMapping *bannerMapping = [RKObjectMapping mappingForClass:[Banner class]];
-    [bannerMapping addAttributeMappingsFromDictionary:@{
-                                                        @"id":         @"bannerId",
-                                                        @"name":       @"name",
-                                                        @"objectId":   @"objectId",
-                                                        @"type":       @"type",
-                                                        @"pic":        @"pic",
-                                                        @"url":        @"url",
-                                                        }];
-    
-    RKObjectMapping *consultMapping = [RKObjectMapping mappingForClass:[Consult class]];
-    [consultMapping addAttributeMappingsFromDictionary:@{
-                                                        @"id":         @"consultId",
-                                                        @"content":    @"content",
-                                                        @"number":     @"number",
-                                                        @"time":       @"time",
-                                                        }];
     
     RKObjectMapping* commodityMapping = [RKObjectMapping mappingForClass:[Commodity class]];
     [commodityMapping addAttributeMappingsFromDictionary:@{
@@ -348,6 +331,25 @@
                                                            @"image":        @"image",
                                                            @"url":        @"url"
                                                            }];
+    
+    RKObjectMapping *bannerMapping = [RKObjectMapping mappingForClass:[Banner class]];
+    [bannerMapping addAttributeMappingsFromDictionary:@{
+                                                        @"id":         @"bannerId",
+                                                        @"name":       @"name",
+                                                        @"objectId":   @"objectId",
+                                                        @"type":       @"type",
+                                                        @"pic":        @"pic",
+                                                        @"url":        @"url",
+                                                        }];
+    [bannerMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"commodity" toKeyPath:@"commodity" withMapping:commodityMapping]];
+    
+    RKObjectMapping *consultMapping = [RKObjectMapping mappingForClass:[Consult class]];
+    [consultMapping addAttributeMappingsFromDictionary:@{
+                                                        @"id":         @"consultId",
+                                                        @"content":    @"content",
+                                                        @"number":     @"number",
+                                                        @"time":       @"time",
+                                                        }];
     
     RKObjectMapping* courseMapping = [RKObjectMapping mappingForClass:[Course class]];
     [courseMapping addAttributeMappingsFromDictionary:@{

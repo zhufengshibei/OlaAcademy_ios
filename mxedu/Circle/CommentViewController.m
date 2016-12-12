@@ -85,6 +85,7 @@
     [super viewDidLoad];
     
     self.title = @"详情";
+    self.view.backgroundColor = [UIColor whiteColor];
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-UI_NAVIGATION_BAR_HEIGHT-UI_STATUS_BAR_HEIGHT-50) style:UITableViewStyleGrouped];
     _tableView.backgroundColor = [UIColor whiteColor];
@@ -219,11 +220,13 @@
         _dataArray = [NSMutableArray arrayWithCapacity:0];
         for (Comment *comment in result.commentArray) {
             CommentFrame *m = [[CommentFrame alloc]init];
-            m.urlString = [BASIC_Movie_URL stringByAppendingString:comment.audioUrls];
-            m.playstate = Stop;
-            comment.urlString = m.urlString;
-            comment.isReset = NO;
-            comment.currentState = Stop;
+            if (comment.audioUrls) {
+                m.urlString = [BASIC_Movie_URL stringByAppendingString:comment.audioUrls];
+                m.playstate = Stop;
+                comment.urlString = m.urlString;
+                comment.isReset = NO;
+                comment.currentState = Stop;
+            }
             m.comment = comment;
             [_dataArray addObject:m];
         }
@@ -283,7 +286,7 @@
     NSString *location = am.userInfo.local?am.userInfo.local:@"";
     [SVProgressHUD showWithStatus:@"发布中..." maskType:SVProgressHUDMaskTypeNone];
     [cm addPostReplyToUserId:@"" detail:_inputView.text imageIds:imgIDs videoUrls:videoIDs videoImgs:videoImgS audioUrls:audioIDs postId:_postId currentUserId:am.userInfo.userId type:@"2" location:location success:^(CommonResult *result) {
-        
+        _inputView.text = @"";
         [SVProgressHUD dismiss];
         [self loadCommentData];
     } failure:^(NSError *error) {

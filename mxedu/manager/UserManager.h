@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "User.h"
+#import "GroupMemberResult.h"
 
 @interface UserManager : NSObject
 
@@ -67,5 +68,11 @@
 -(void)fetchUserWithUserId:(NSString*)userId
                     Success:(void(^)())success
                     Failure:(void(^)(NSError* error))failure;
+
+/**
+ * 老师列表
+ */
+-(void)fetchTeacherListSuccess:(void (^)(GroupMemberResult *result))success
+                       Failure:(void(^)(NSError* error))failure;
 
 @end

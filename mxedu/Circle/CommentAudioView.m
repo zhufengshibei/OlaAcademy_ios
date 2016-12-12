@@ -12,6 +12,7 @@
 #import "Masonry.h"
 #import "SysCommon.h"
 #import "mediaModel.h"
+#import "LCAudioManager.h"
 
 
 @implementation NSString (TimeString)
@@ -35,25 +36,21 @@
 
 @end
 
-@interface CommentAudioView()<AVAudioRecorderDelegate,AVAudioPlayerDelegate>
+@interface CommentAudioView()<AVAudioPlayerDelegate>
 
 @end
 
 @implementation CommentAudioView
 {
     //Recording
-    AVAudioRecorder *_audioRecorder;
     NSString *_recordingFilePath;
-    BOOL _isRecording;
+    NSString *_fileName;
     CADisplayLink *meterUpdateDisplayLink;
     UILabel *recordingTime;
     UIImageView *recordBG;
     
     //Playing
-    AVAudioPlayer *_audioPlayer;
     CADisplayLink *playProgressDisplayLink;
-    
-    BOOL _isPlaying;
     
     UIButton *_recordButton;
     UIButton *_playButton;
@@ -73,9 +70,8 @@
 }
 
 -(void)setupRecording{
-    //Unique recording URL
-    NSString *fileName = [[NSProcessInfo processInfo] globallyUniqueString];
-    _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",fileName]];
+    //Unique recording URL 录音
+    _fileName = [[NSProcessInfo processInfo] globallyUniqueString];
     
     {
         _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -148,20 +144,6 @@
         recordBG.hidden = YES;
     }
     
-    // Define the recorder setting
-    {
-        NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
-        
-        [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-        [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
-        [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
-        
-        // Initiate and prepare the recorder
-        _audioRecorder = [[AVAudioRecorder alloc] initWithURL:[NSURL fileURLWithPath:_recordingFilePath] settings:recordSetting error:nil];
-        _audioRecorder.delegate = self;
-        _audioRecorder.meteringEnabled = YES;
-    }
-    
 }
 
 -(void)startUpdatingMeter
@@ -181,10 +163,9 @@
 // 录音
 - (void)recordingButtonAction:(UIButton *)item
 {
-    if (_isRecording == NO)
+    if ([LCAudioManager manager].isRecording == NO)
     {
         [_recordButton setImage:[UIImage imageNamed:@"ic_record_finish"] forState:UIControlStateNormal];
-        _isRecording = YES;
         
         //UI Update
         {
@@ -194,18 +175,10 @@
             recordBG.hidden = NO;
         }
         
-        /*
-         Create the recorder
-         */
-        if ([[NSFileManager defaultManager] fileExistsAtPath:_recordingFilePath])
-        {
-            [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath error:nil];
-        }
-        
-        _oldSessionCategory = [[AVAudioSession sharedInstance] category];
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
-        [_audioRecorder prepareToRecord];
-        [_audioRecorder record];
+        //开始录音
+        [[LCAudioManager manager]startRecordingWithFileName:_fileName completion:^(NSError *error) {
+            
+        }];
         
         if (_delegate) {
             [_delegate clearMediaData]; //清除图片及视频数据
@@ -213,7 +186,6 @@
     }
     else
     {
-        _isRecording = NO;
         [_recordButton setImage:[UIImage imageNamed:@"ic_record_start"] forState:UIControlStateNormal];
         _recordButton.hidden = NO;
         
@@ -225,26 +197,33 @@
             recordBG.hidden = YES;
         }
         
-        [_audioRecorder stop];
-        [[AVAudioSession sharedInstance] setCategory:_oldSessionCategory error:nil];
-        
-        [_playButton setTitle:recordingTime.text forState:UIControlStateNormal];
+        [[LCAudioManager manager]stopRecordingWithCompletion:^(NSString *recordPath, NSInteger aDuration, NSError *error) {
+            _recordingFilePath = recordPath;
+            [_playButton setTitle:[NSString stringWithFormat:@"%lf", [LCAudioManager durationWithAudio:[NSURL fileURLWithPath:_recordingFilePath]]] forState:UIControlStateNormal];
+            // 用于上传服务器
+            mediaModel *audioModel = [[mediaModel alloc] init];
+            audioModel.type = @"2";
+            audioModel.timeLong = recordingTime.text;
+            audioModel.localpath = _recordingFilePath;
+            audioModel.image = [UIImage imageNamed:@"ic_audio"];
+            audioModel.isExit=NO;
+            
+            if (_delegate) {
+                [_delegate updateDataSource:audioModel]; //返回音频数据
+            }
+        }];
     }
 }
 
 // 播放
 - (void)playAction:(UIButton *)item
 {
-    if (!_isPlaying) {
-        _isPlaying = YES;
-        _oldSessionCategory = [[AVAudioSession sharedInstance] category];
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    if (![LCAudioManager manager].isPlaying) {
         
-        _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:_recordingFilePath] error:nil];
-        _audioPlayer.delegate = self;
-        [_audioPlayer prepareToPlay];
-        [_audioPlayer play];
-        
+        [[LCAudioManager manager]playingWithRecordPath:_recordingFilePath completion:^(NSError *error) {
+            _recordButton.enabled = YES;
+            _trashButton.enabled = YES;
+        }];
         //UI Update
         {
             _recordButton.enabled = NO;
@@ -253,14 +232,13 @@
         
         //Start regular update
         {
-            [_playButton setTitle:[NSString timeStringForTimeInterval:(_audioPlayer.duration-_audioPlayer.currentTime)] forState:UIControlStateNormal];
+//            [_playButton setTitle:[NSString timeStringForTimeInterval:(_audioPlayer.duration-_audioPlayer.currentTime)] forState:UIControlStateNormal];
             
             [playProgressDisplayLink invalidate];
             playProgressDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updatePlayProgress)];
             [playProgressDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
         }
     }else{
-        _isPlaying = NO;
         
         //UI Update
         {
@@ -272,12 +250,7 @@
             [playProgressDisplayLink invalidate];
             playProgressDisplayLink = nil;
         }
-        
-        _audioPlayer.delegate = nil;
-        [_audioPlayer stop];
-        _audioPlayer = nil;
-        
-        [[AVAudioSession sharedInstance] setCategory:_oldSessionCategory error:nil];
+        [[LCAudioManager manager]stopPlaying];
         
         [_playButton setTitle:recordingTime.text forState:UIControlStateNormal];
     }
@@ -297,21 +270,21 @@
 
 - (void)updateMeters
 {
-    [_audioRecorder updateMeters];
-    
-    CGFloat normalizedValue = pow (10, [_audioRecorder averagePowerForChannel:0] / 20);
-    
-    if (_audioRecorder.isRecording)
-    {
-        recordingTime.text = [NSString timeStringForTimeInterval:_audioRecorder.currentTime];
-    }
+//    [_audioRecorder updateMeters];
+//    
+//    CGFloat normalizedValue = pow (10, [_audioRecorder averagePowerForChannel:0] / 20);
+//    
+//    if (_audioRecorder.isRecording)
+//    {
+//        recordingTime.text = [NSString timeStringForTimeInterval:_audioRecorder.currentTime];
+//    }
 }
 
 #pragma mark - Update Play Progress
 
 -(void)updatePlayProgress
 {
-    [_playButton setTitle:[NSString timeStringForTimeInterval:(_audioPlayer.duration-_audioPlayer.currentTime)] forState:UIControlStateNormal];
+//    [_playButton setTitle:[NSString timeStringForTimeInterval:(_audioPlayer.duration-_audioPlayer.currentTime)] forState:UIControlStateNormal];
 }
 
 
@@ -321,40 +294,12 @@
  */
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
-    _isPlaying = NO;
+    
     [_playButton setTitle:recordingTime.text forState:UIControlStateNormal];
 }
 
-#pragma mark - AVAudioRecorderDelegate
-
-- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag
-{
-    mediaModel *audioModel = [[mediaModel alloc] init];
-    audioModel.type = @"2";
-    audioModel.timeLong = recordingTime.text;
-    audioModel.localpath = _recordingFilePath;
-    audioModel.image = [UIImage imageNamed:@"ic_audio"];
-    audioModel.isExit=NO;
-    
-    if (_delegate) {
-        [_delegate updateDataSource:audioModel]; //返回音频数据
-    }
-}
-
-- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error
-{
-    //    NSLog(@"%@: %@",NSStringFromSelector(_cmd),error);
-}
 
 -(void)dealloc{
-    _audioPlayer.delegate = nil;
-    [_audioPlayer stop];
-    _audioPlayer = nil;
-    
-    _audioRecorder.delegate = nil;
-    [_audioRecorder stop];
-    _audioRecorder = nil;
-    
     [self stopUpdatingMeter];
 }
 

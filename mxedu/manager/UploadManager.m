@@ -326,7 +326,7 @@
                                   constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                       [formData appendPartWithFileData:moveData
                                                                   name:@"movData"
-                                                              fileName:@"uploading-movie.mp4"
+                                                              fileName:@"uploading-movie.mp3"
                                                               mimeType:@"application/octet-stream"];
                                   }];
     

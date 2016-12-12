@@ -92,7 +92,7 @@
     CGFloat imageW = SCREEN_WIDTH/4 *(count<3?count:3) + (count<3?count:4) * 5; //图片大小为屏幕的1/4
     CGFloat imageH = 0;
     
-    if (count == 0) {
+    if (count <= 0) {
         imageH = 0;
     }else if (count <= 3) {
         imageH = SCREEN_WIDTH/3 -20;
@@ -106,8 +106,15 @@
     
     self.imageFrame = CGRectMake(imageX, imageY, imageW, imageH);
     
+    //时间
+    CGFloat timeX = SCREEN_WIDTH-GENERAL_SIZE(230);
+    CGFloat timeY = CGRectGetMaxY(self.imageFrame)+(imageH==0?0:5);
+    CGFloat timeW = GENERAL_SIZE(200);
+    CGFloat timeH = GENERAL_SIZE(50);
+    self.timeFrame = CGRectMake(timeX, timeY, timeW, timeH);
+    
     //设置cell的高度
-    self.cellHeight = CGRectGetMaxY(self.imageFrame) + 2*mgr;
+    self.cellHeight = CGRectGetMaxY(self.timeFrame) + mgr;
     
 }
 

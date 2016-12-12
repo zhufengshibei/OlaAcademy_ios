@@ -222,12 +222,24 @@
         webVC.url = banner.url;
         webVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:webVC animated:YES];
-    }else if (banner.type==2){
+    }else if (banner.type==2||banner.type==3){
         CourSectionViewController *sectionVC = [[CourSectionViewController alloc]init];
         sectionVC.objectId = banner.objectId;
-        sectionVC.type = 1;
+        sectionVC.type = banner.type-1;
+        if (banner.type==3) {
+            sectionVC.commodity = banner.commodity;
+        }
         sectionVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:sectionVC animated:YES];
+    }else if(banner.type==4){
+        StuEnrollController *enrollVC = [[StuEnrollController alloc]init];
+        NSArray *indexArray = [banner.objectId componentsSeparatedByString:@","];
+        if ([indexArray count]==2) {
+            enrollVC.optionIndex = [indexArray[0] intValue];
+            enrollVC.nameIndex = [indexArray[1] intValue];
+        }
+        enrollVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:enrollVC animated:YES];
     }
 }
 

@@ -300,6 +300,9 @@
     }else if(_type==2){
         ExamManager *em = [[ExamManager alloc]init];
         [em fetchQuestionWithExamId:_objectId Success:^(QuestionListResult *result) {
+            
+            timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countdown:) userInfo:nil repeats:YES];
+            
             _questionArray = [NSMutableArray arrayWithArray:result.questionArray];
             if ([_questionArray count]>0) {
                 if([_questionArray count]==1){

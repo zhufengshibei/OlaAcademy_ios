@@ -8,7 +8,6 @@
 
 #import "DeployViewController.h"
 
-#import "DeployViewController.h"
 #import "SysCommon.h"
 #import "UIImage+Resize.h"
 #import "UIView+Positioning.h"
@@ -22,6 +21,7 @@
 #import "User.h"
 #import "AuthManager.h"
 #import "CircleManager.h"
+#import "TeacherListController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 
 @interface DeployViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UITextViewDelegate,UIGestureRecognizerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,QYSelectPhotoViewDelegate>
@@ -30,17 +30,16 @@
     
     UIScrollView *scrollView;
     
+    UILabel *title; //title 的 placehoder
+    UITextView *editTitle;
+    
     UILabel *label; //content 的 placehoder
     UITextView *editText;
     
     NSMutableArray *choosenImages;
     UIImageView *addImage;
-    UILabel *localtion;
-    
-    NSString *locationString;
     
     UIView *orgiView;
-    UIView *localView;
     
     UIButton *addMediaButton;
     
@@ -93,15 +92,35 @@ BOOL uploadOrignalImage;
     scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview: scrollView];
     
+    title = [[UILabel alloc]initWithFrame:CGRectMake(3, 0, 160, 40)];
+    title.enabled = NO;
+    title.text = @"标题 2-20个字";
+    title.font =  [UIFont systemFontOfSize:16];
+    title.textColor = [UIColor blackColor];
+    
+    editTitle = [UITextView new];
+    editTitle.tag = 1001;
+    editTitle.frame = CGRectMake(5, 5, SCREEN_WIDTH-10, 45);
+    editTitle.font=[UIFont systemFontOfSize:16];
+    editTitle.backgroundColor = [UIColor whiteColor];
+    editTitle.delegate = self;
+    editTitle.showsVerticalScrollIndicator = false;
+    [editTitle addSubview:title];
+    [scrollView addSubview:editTitle];
+    
+    UIView *dividerLine = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(editTitle.frame), SCREEN_WIDTH, 1)];
+    dividerLine.backgroundColor = BACKGROUNDCOLOR;
+    [scrollView addSubview:dividerLine];
+    
     label = [[UILabel alloc]initWithFrame:CGRectMake(3, 5, 180, 20)];
     label.enabled = NO;
-    label.text = @"说说您的备考问题／经验";
+    label.text = @"内容 2-140个字";
     label.font =  [UIFont systemFontOfSize:16];
     label.textColor = [UIColor blackColor];
     
     editText = [UITextView new];
     editText.tag=1002;
-    editText.frame = CGRectMake(5, 5, SCREEN_WIDTH-10, GENERAL_SIZE(220));
+    editText.frame = CGRectMake(5, CGRectGetMaxY(dividerLine.frame)+5, SCREEN_WIDTH-10, GENERAL_SIZE(220));
     editText.font=[UIFont systemFontOfSize:16];
     editText.backgroundColor = [UIColor whiteColor];
     editText.delegate = self;
@@ -112,32 +131,7 @@ BOOL uploadOrignalImage;
     dividerLine3.backgroundColor = BACKGROUNDCOLOR;
     [scrollView addSubview:dividerLine3];
     
-    localView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(dividerLine3.frame), SCREEN_WIDTH, 44)];
-    localView.backgroundColor = [UIColor whiteColor];
-    UILabel *localLabel = [[UILabel alloc]init];
-    localLabel.text = @"所在位置";
-    localLabel.textColor = RGBCOLOR(87, 87, 87);
-    localtion = [[UILabel alloc]init];
-    localtion.text = @"定位中...";
-    [localView addSubview:localLabel];
-    [localView addSubview:localtion];
-    [scrollView addSubview:localView];
-    
-    [localLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(localView).offset(0);
-        make.left.equalTo(localView.mas_left).offset(10);
-    }];
-    [localtion mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(localView).offset(0);
-        make.right.equalTo(localView.mas_right).offset(-10);
-    }];
-    
-    UIView *dividerLine4 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(localView.frame), SCREEN_WIDTH, 1)];
-    dividerLine4.backgroundColor = BACKGROUNDCOLOR;
-    [scrollView addSubview:dividerLine4];
-    
-    
-    orgiView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(dividerLine4.frame)+5, SCREEN_WIDTH, 35)];
+    orgiView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(dividerLine3.frame)+5, SCREEN_WIDTH, 35)];
     orgiView.backgroundColor = [UIColor whiteColor];
     UILabel *oriLabel = [[UILabel alloc]init];
     oriLabel.text = @"上传原图";
@@ -177,8 +171,6 @@ BOOL uploadOrignalImage;
     [self setupAssignView];
     
     wholeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
-    
-    [self setupLocation];
 }
 
 -(void)setupAssignView{
@@ -213,8 +205,11 @@ BOOL uploadOrignalImage;
     lineView1.backgroundColor = BACKGROUNDCOLOR;
     [inviteView addSubview:lineView1];
     
-    UILabel *inviteL = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(lineView1.frame), 100, GENERAL_SIZE(80))];
+    UILabel *inviteL = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(lineView1.frame), SCREEN_WIDTH-10, GENERAL_SIZE(80))];
     inviteL.text = @"邀请回答";
+    inviteL.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseTeacher)];
+    [inviteL addGestureRecognizer:tap];
     inviteL.textColor = RGBCOLOR(87, 87, 87);
     [inviteView addSubview:inviteL];
     
@@ -228,7 +223,6 @@ BOOL uploadOrignalImage;
     
     assignUserL = [[UILabel alloc]init];
     assignUserL.textColor = RGBCOLOR(87, 87, 87);
-    assignUserL.text = @"陈剑";
     [inviteView addSubview:assignUserL];
     
     [assignUserL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -266,42 +260,20 @@ BOOL uploadOrignalImage;
 
 }
 
--(void)setupLocation{
-    _locationmanager = [[CLLocationManager alloc]init];
-    if ([[[UIDevice currentDevice] systemVersion] doubleValue] > 8.0)
-    {
-        //设置定位权限 仅ios8有意义
-        [_locationmanager requestWhenInUseAuthorization];// 前台定位
-        //[_locationmanager requestAlwaysAuthorization];// 前后台同时定位
-    }
-    //设置定位的精度
-    [_locationmanager setDesiredAccuracy:kCLLocationAccuracyBest];
-    //实现协议
-    _locationmanager.delegate = self;
-    
-    //开始定位
-    [_locationmanager startUpdatingLocation];
-}
-
-- (void)setupBackButton
-{
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
-    [backBtn sizeToFit];
-    [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
-}
-
--(void)backButtonClicked{
-    [self.navigationController popViewControllerAnimated:YES];
+-(void)chooseTeacher{
+    TeacherListController *teacherVC = [[TeacherListController alloc]init];
+    teacherVC.didChooseUser = ^void(User *user){
+        if (user.name) {
+            assignUserL.text = user.name;
+            assignUser = user.userId;
+        }
+    };
+    [self.navigationController pushViewController:teacherVC animated:YES];
 }
 
 -(void)setNavBar
 {
     [self.navigationItem setTitle:@"欧拉动态"];
-    [self setupBackButton];
     
     //发布按钮
     rights=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -334,6 +306,7 @@ BOOL uploadOrignalImage;
             }else{
                 [inviteView setHidden:YES];
                 assignUser = @"";
+                assignUserL.text = @"";
                 isPublic = @"1";
                 [publicSwitch setOn:YES];
             }
@@ -352,8 +325,15 @@ BOOL uploadOrignalImage;
 }
 
 -(void)deployMessage:(UIButton *)sender{
-    if (editText.text.length<2) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"内容不少于两个字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    NSString *titleString = [editTitle.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (titleString.length<2||titleString.length>20) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"标题字数为2-20个字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
+    NSString *contentString = [editText.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (contentString.length<2||contentString.length>140) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"内容字数为2-140字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alert show];
         return;
     }
@@ -378,10 +358,18 @@ BOOL uploadOrignalImage;
 }
 -(void)textViewDidChange:(UITextView *)textView
 {
-    if ([textView.text length] == 0) {
-        [label setHidden:NO];
+    if (textView.tag==1001) {
+        if ([textView.text length] == 0) {
+            [title setHidden:NO];
+        }else{
+            [title setHidden:YES];
+        }
     }else{
-        [label setHidden:YES];
+        if ([textView.text length] == 0) {
+            [label setHidden:NO];
+        }else{
+            [label setHidden:YES];
+        }
     }
 }
 -(void)textViewDidBeginEditing:(UITextView *)textView{
@@ -480,7 +468,7 @@ BOOL uploadOrignalImage;
 -(void)savePostInfo:(NSString*) lstPic{
     AuthManager *am = [AuthManager sharedInstance];
     CircleManager* cm = [[CircleManager alloc]init];
-    [cm addOlaCircleWithUserId:am.userInfo.userId Title:@"欧拉圈" content:editText.text imageGids:lstPic assignUser:assignUser isPublic:isPublic Location:locationString==nil?@"":locationString Type:@"2" Success:^(CommonResult *result) {
+    [cm addOlaCircleWithUserId:am.userInfo.userId Title:editTitle.text content:editText.text imageGids:lstPic assignUser:assignUser isPublic:isPublic Location:@"" Type:@"2" Success:^(CommonResult *result) {
         if (_doneAction) {
             _doneAction();
         }
@@ -521,15 +509,6 @@ BOOL uploadOrignalImage;
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ImageCell *cell = (ImageCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"ImageCell" forIndexPath:indexPath];
-    
-    if (indexPath.row==choosenImages.count-1) {
-        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]
-                                                 initWithTarget:self action:@selector(getImages)];
-        [tapRecognizer setNumberOfTouchesRequired:1];
-        [tapRecognizer setDelegate:(id)self];
-        cell.userInteractionEnabled = YES;
-        [cell addGestureRecognizer:tapRecognizer];
-    }
     //加载图片
     if (choosenImages != nil) {
         if (indexPath.section==0) {
@@ -559,30 +538,6 @@ BOOL uploadOrignalImage;
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark locationManager delegate
-
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    
-    CLLocation *newLocation = locations[0];
-    [manager stopUpdatingLocation];
-    
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder reverseGeocodeLocation:newLocation
-                   completionHandler:^(NSArray *placemarks, NSError *error){
-                       
-                       for (CLPlacemark *place in placemarks) {
-                           locationString = [NSString stringWithFormat:@"%@%@",place.locality,place.subLocality];
-                           localtion.text = [NSString stringWithFormat:@"%@·%@",place.locality,place.subLocality];
-                       }
-                   }];
-    
-}
-
--(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"error");
-    localtion.text = @"定位失败";
 }
 
 /**

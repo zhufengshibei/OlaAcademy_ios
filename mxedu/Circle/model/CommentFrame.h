@@ -33,6 +33,8 @@ typedef enum
 @property (nonatomic, assign) CGRect textFrame;
 /**图片frame*/
 @property (nonatomic, assign) CGRect imageFrame;
+/**时间frame*/
+@property (nonatomic, assign) CGRect timeFrame;
 
 /**自定义cell的高度*/
 @property (nonatomic,assign) CGFloat cellHeight;

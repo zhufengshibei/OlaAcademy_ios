@@ -56,6 +56,8 @@
     self.title = @"报名通道";
     self.view.backgroundColor = RGBCOLOR(246, 247, 248);
     
+    currentOrgIndex = _optionIndex;
+    currentNameIndex = _nameIndex;
     [self setupData];
     
     wholeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
@@ -79,11 +81,11 @@
             }
             [subArray addObject:nameArray];
         }
+        selectedOrg = [orgList objectAtIndex:currentOrgIndex];
         
-        nameList = [subArray objectAtIndex:0];
+        nameList = [subArray objectAtIndex:currentOrgIndex];
+        selectedName = [nameList objectAtIndex:currentNameIndex];
         
-        selectedName = [nameList objectAtIndex:0];
-        selectedOrg = [orgList objectAtIndex:0];
         
         [self setUpView];
         
@@ -111,6 +113,7 @@
     comBox.backgroundColor = [UIColor clearColor];
     comBox.arrowImgName = @"ic_combox";
     comBox.titlesList = [NSMutableArray arrayWithArray:orgList];
+    comBox.defaultIndex = currentOrgIndex;
     comBox.delegate = self;
     comBox.supView = self.view;
     [comBox defaultSettings];
@@ -157,6 +160,7 @@
     nameComBox.backgroundColor = [UIColor clearColor];
     nameComBox.arrowImgName = @"ic_combox";
     nameComBox.titlesList = [NSMutableArray arrayWithArray:nameList];
+    nameComBox.defaultIndex = currentNameIndex;
     nameComBox.delegate = self;
     nameComBox.supView = self.view;
     [nameComBox defaultSettings];

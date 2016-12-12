@@ -26,15 +26,13 @@
 #import "MJRefresh.h"
 #import "Masonry.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-#import "MessageViewController.h"
+#import "StuGroupListController.h"
 #import "LoginViewController.h"
 #import "StuHomeworkController.h"
 #import "IAPVIPController.h"
 #import "VIPSubController.h"
 
 @interface QuestionViewController ()<HomeworkViewDelegate,ZSYPopoverListDatasource, ZSYPopoverListDelegate,UIActionSheetDelegate,UIAlertViewDelegate>
-
-@property (nonatomic) UIImageView *messageBtn;
 
 @property (nonatomic) NSArray *dataArray; //考点数据
 @property (nonatomic) NSArray *examArray; //模考或真题数据
@@ -64,7 +62,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden = NO;
-    [self fetchMessageCount]; //消息提醒
 }
 
 - (void)viewDidLoad
@@ -146,14 +143,14 @@
 
 
 -(void)setupRightButton{
-    _messageBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
-    _messageBtn.image = [UIImage imageNamed:@"icon_message"];
-    _messageBtn.userInteractionEnabled = YES;
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showMessageView)];
-    [_messageBtn addGestureRecognizer:singleTap];
-    [_messageBtn sizeToFit];
+    UIImageView *groupBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
+    groupBtn.image = [UIImage imageNamed:@"ic_group"];
+    groupBtn.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showGroupView)];
+    [groupBtn addGestureRecognizer:singleTap];
+    [groupBtn sizeToFit];
     
-    UIBarButtonItem *rightCunstomButtonView = [[UIBarButtonItem alloc] initWithCustomView:_messageBtn];
+    UIBarButtonItem *rightCunstomButtonView = [[UIBarButtonItem alloc] initWithCustomView:groupBtn];
     self.navigationItem.rightBarButtonItem = rightCunstomButtonView;
 }
 
@@ -209,22 +206,6 @@
                           }];
 }
 
--(void)fetchMessageCount{
-    AuthManager *am = [AuthManager sharedInstance];
-    if (am.isAuthenticated) {
-        MessageManager *mm = [[MessageManager alloc]init];
-        [mm fetchUnreadCountWithUserId:am.userInfo.userId Success:^(MessageUnreadResult *result) {
-            if (result.code==10000&result.count>0) {
-                _messageBtn.image = [UIImage imageNamed:@"icon_message_tip"];
-            }else{
-                _messageBtn.image = [UIImage imageNamed:@"icon_message"];
-            }
-        } Failure:^(NSError *error) {
-            
-        }];
-    }
-}
-
 -(void)showQuestionWebView{
     OLA_LOGIN;
     if (_homework) {
@@ -240,15 +221,15 @@
     }
 }
 
--(void)showMessageView{
+-(void)showGroupView{
     AuthManager *am = [AuthManager sharedInstance];
     if (!am.isAuthenticated) {
         [self showLoginView];
         return;
     }
-    MessageViewController *messageVC = [[MessageViewController alloc]init];
-    messageVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:messageVC animated:YES];
+    StuGroupListController *groupVC = [[StuGroupListController alloc]init];
+    groupVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:groupVC animated:YES];
 }
 
 -(void)showLoginView{

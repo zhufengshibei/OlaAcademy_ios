@@ -247,4 +247,36 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
            }];
 }
 
+/**
+ * 老师列表
+ */
+-(void)fetchTeacherListSuccess:(void (^)(GroupMemberResult *result))success
+                       Failure:(void(^)(NSError* error))failure{
+    DataMappingManager *dm = GetDataManager();
+    
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.memberListResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
+    // 通过shareManager 共享 baseurl及请求头等
+    RKObjectManager* om = [RKObjectManager sharedManager];
+    
+    [om addResponseDescriptor:responseDescriptor];
+    [om postObject:nil path:@"/ola/user/getTeacherList" parameters:nil
+           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+               if ([mappingResult.firstObject isKindOfClass:[GroupMemberResult class]]){
+                   GroupMemberResult *result = mappingResult.firstObject;
+                   if (result.code==10000) {
+                       if (success != nil) {
+                           success(result);
+                       }
+                   }else{
+                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:result.message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                       [alert show];
+                   }
+               }
+           } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+               if (failure != nil) {
+                   failure(error);
+               }
+           }];
+}
+
 @end
