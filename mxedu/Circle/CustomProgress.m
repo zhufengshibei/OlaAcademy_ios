@@ -60,12 +60,12 @@
         [self addSubview:presentlab];
 
         //添加动画
-        self.messageVoiceStatusImageView.frame = CGRectMake(10, 15, 20, 20);
+        self.messageVoiceStatusImageView.frame = CGRectMake(10, GENERAL_SIZE(20), GENERAL_SIZE(40), GENERAL_SIZE(40));
         [self addSubview:self.messageVoiceStatusImageView];
         
         
         //添加转菊花
-        self.indicatorview.frame = CGRectMake(self.frame.size.width - 25, 15, 20, 20);
+        self.indicatorview.frame = CGRectMake(self.frame.size.width - 25, GENERAL_SIZE(20), GENERAL_SIZE(40), GENERAL_SIZE(40));
         
         [self addSubview:self.indicatorview];
         

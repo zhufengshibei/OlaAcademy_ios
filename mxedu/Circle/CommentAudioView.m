@@ -13,6 +13,8 @@
 #import "SysCommon.h"
 #import "mediaModel.h"
 #import "LCAudioManager.h"
+#import "LCAudioRecord.h"
+#import "LCAudioPlay.h"
 
 
 @implementation NSString (TimeString)
@@ -43,6 +45,7 @@
 @implementation CommentAudioView
 {
     //Recording
+    AVAudioRecorder *_audioRecorder;
     NSString *_recordingFilePath;
     NSString *_fileName;
     CADisplayLink *meterUpdateDisplayLink;
@@ -50,6 +53,7 @@
     UIImageView *recordBG;
     
     //Playing
+    AVAudioPlayer *_audioPlayer;
     CADisplayLink *playProgressDisplayLink;
     
     UIButton *_recordButton;
@@ -99,7 +103,7 @@
         [_trashButton setTitle:@"重录" forState:UIControlStateNormal];
         [_trashButton setTitleColor:RGBCOLOR(83, 83,83) forState:UIControlStateNormal];
         _trashButton.titleLabel.font = LabelFont(24);
-        [_trashButton addTarget:self action:@selector(deleteAction:) forControlEvents:UIControlEventTouchDown];
+        [_trashButton addTarget:self action:@selector(deleteAction) forControlEvents:UIControlEventTouchDown];
         [self addSubview:_trashButton];
         
         [_trashButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -177,7 +181,8 @@
         
         //开始录音
         [[LCAudioManager manager]startRecordingWithFileName:_fileName completion:^(NSError *error) {
-            
+            _audioRecorder = [LCAudioRecord sharedInstance].recorder;
+            _audioRecorder.meteringEnabled = YES;
         }];
         
         if (_delegate) {
@@ -199,7 +204,7 @@
         
         [[LCAudioManager manager]stopRecordingWithCompletion:^(NSString *recordPath, NSInteger aDuration, NSError *error) {
             _recordingFilePath = recordPath;
-            [_playButton setTitle:[NSString stringWithFormat:@"%lf", [LCAudioManager durationWithAudio:[NSURL fileURLWithPath:_recordingFilePath]]] forState:UIControlStateNormal];
+            [_playButton setTitle:recordingTime.text forState:UIControlStateNormal];
             // 用于上传服务器
             mediaModel *audioModel = [[mediaModel alloc] init];
             audioModel.type = @"2";
@@ -224,6 +229,7 @@
             _recordButton.enabled = YES;
             _trashButton.enabled = YES;
         }];
+        _audioPlayer = [LCAudioPlay sharedInstance].player;
         //UI Update
         {
             _recordButton.enabled = NO;
@@ -232,7 +238,7 @@
         
         //Start regular update
         {
-//            [_playButton setTitle:[NSString timeStringForTimeInterval:(_audioPlayer.duration-_audioPlayer.currentTime)] forState:UIControlStateNormal];
+            [_playButton setTitle:[NSString timeStringForTimeInterval:(_audioPlayer.duration-_audioPlayer.currentTime)] forState:UIControlStateNormal];
             
             [playProgressDisplayLink invalidate];
             playProgressDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updatePlayProgress)];
@@ -256,35 +262,37 @@
     }
 }
 
--(void)deleteAction:(UIButton*)item
+-(void)deleteAction
 {
-    [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath error:nil];
-    
-    _recordButton.hidden = NO;
-    _playButton.hidden = YES;
-    _trashButton.hidden = YES;
-
+    if (_recordingFilePath) {
+        [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath error:nil];
+        _recordingFilePath = nil;
+        
+        _recordButton.hidden = NO;
+        _playButton.hidden = YES;
+        _trashButton.hidden = YES;
+    }
 }
 
 #pragma mark - Update Meters
 
 - (void)updateMeters
 {
-//    [_audioRecorder updateMeters];
-//    
-//    CGFloat normalizedValue = pow (10, [_audioRecorder averagePowerForChannel:0] / 20);
-//    
-//    if (_audioRecorder.isRecording)
-//    {
-//        recordingTime.text = [NSString timeStringForTimeInterval:_audioRecorder.currentTime];
-//    }
+    if(_audioRecorder){
+        [_audioRecorder updateMeters];
+        
+        if (_audioRecorder.isRecording)
+        {
+            recordingTime.text = [NSString timeStringForTimeInterval:_audioRecorder.currentTime];
+        }
+    }
 }
 
 #pragma mark - Update Play Progress
 
 -(void)updatePlayProgress
 {
-//    [_playButton setTitle:[NSString timeStringForTimeInterval:(_audioPlayer.duration-_audioPlayer.currentTime)] forState:UIControlStateNormal];
+    [_playButton setTitle:[NSString timeStringForTimeInterval:(_audioPlayer.duration-_audioPlayer.currentTime)] forState:UIControlStateNormal];
 }
 
 

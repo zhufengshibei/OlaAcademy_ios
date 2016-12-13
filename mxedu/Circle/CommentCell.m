@@ -72,13 +72,22 @@
         audioProgress.presentlab.textColor = [UIColor whiteColor];
         audioProgress.delegate = self;
         [self addSubview:audioProgress];
+        
+        UILabel *audioL = [[UILabel alloc]init];
+        audioL.text = @"¥0.00 学习一下";
+        audioL.font = LabelFont(28);
+        audioL.textColor = [UIColor whiteColor];
+        [audioProgress addSubview:audioL];
+        
+        [audioL mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(audioProgress).offset(GENERAL_SIZE(60));
+            make.centerY.equalTo(audioProgress);
+        }];
+        
         self.audioProgress = audioProgress;
         
         //视频
         UIImageView *mediaView = [[UIImageView alloc]init];
-        mediaView.layer.masksToBounds = YES;
-        mediaView.layer.cornerRadius = GENERAL_SIZE(40);
-        mediaView.backgroundColor = COMMONBLUECOLOR;
         mediaView.userInteractionEnabled = YES;
         UITapGestureRecognizer *mediaTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didClickMediaView)];
         [mediaView addGestureRecognizer:mediaTap];
@@ -91,8 +100,10 @@
             make.center.equalTo(mediaView);
         }];
         
+        self.mediaView = mediaView;
+        
         UILabel *mediaL = [[UILabel alloc]init];
-        mediaL.text = @"¥1.00 学习一下";
+        mediaL.text = @"¥0.00 学习一下";
         mediaL.font = LabelFont(28);
         mediaL.textColor = [UIColor whiteColor];
         [mediaView addSubview:mediaL];
@@ -193,6 +204,12 @@
         self.audioProgress.hidden = NO;
     }else{
         self.audioProgress.hidden = YES;
+    }
+    if(_comment.videoImgs&&![_comment.videoImgs isEqualToString:@""]){
+        [self.mediaView sd_setImageWithURL:[NSURL URLWithString: [BASIC_Movie_URL stringByAppendingString:_comment.videoImgs]] placeholderImage:[UIImage imageNamed:@"ic_video"]];
+        self.mediaView.hidden = NO;
+    }else{
+        self.mediaView.hidden = YES;
     }
 
     if (_comment.profile_image) {

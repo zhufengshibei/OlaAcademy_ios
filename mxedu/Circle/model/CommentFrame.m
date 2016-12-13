@@ -57,7 +57,7 @@
 
     self.textFrame = (CGRect){{textX,textY},textSize};
     
-    //设置音视频frame
+    //设置音频frame
     CGFloat audioX = GENERAL_SIZE(30);
     CGFloat audioY = CGRectGetMaxY(self.textFrame)+5;
     CGFloat audioW = SCREEN_WIDTH-GENERAL_SIZE(120);
@@ -67,7 +67,7 @@
     }
     self.audioFrame = CGRectMake(audioX, audioY, audioW, audioH);
     
-    //设置音视频frame
+    //设置视频frame
     CGFloat mediaX = GENERAL_SIZE(30);
     CGFloat mediaY = CGRectGetMaxY(self.textFrame)+5;
     CGFloat mediaW = GENERAL_SIZE(375);

@@ -15,6 +15,7 @@
 #import "ShareSheetView.h"
 
 #import "JRPlayerViewController.h"
+#import "LoginViewController.h"
 
 #import "mediaModel.h"
 #import "PhotoManager.h"
@@ -60,14 +61,14 @@
 
 @property (nonatomic) NSString *currentUrl; //当前正在播放的音频
 
+@property (nonatomic) NSMutableArray *mediaDataArray;//多媒体数组
+
 @end
 
 @implementation CommentViewController
 {
     NSMutableArray *_photoNames;
     NSMutableArray *_dataSource;//储存图片model
-    
-    NSMutableArray *_mediaDataArray;//多媒体数组
     
     NSString *imgIDs;
     NSString *audioIDs;
@@ -78,6 +79,17 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    // 监听键盘
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillAppear:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillDisappear:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
     [self setUpForDismissKeyboard];
 }
 
@@ -121,16 +133,6 @@
         make.width.equalTo(@(SCREEN_WIDTH));
     }];
     
-    // 监听键盘
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillAppear:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillDisappear:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
     [self loadCircleDetail];
 }
 
@@ -146,56 +148,86 @@
     
     __weak CommentViewController* wself = self;
     _inputView.audioAction = ^{
-        int height;
-        if (wself.audioViewShow) {
-            wself.audioViewShow = NO;
-            wself.mediaViewShow = NO;
-            wself.audioView.hidden = YES;
-            wself.mediaView.hidden = YES;
-            height = 0;
+        if([wself checkLoginState]){
+            int height;
+            if (wself.audioViewShow) {
+                wself.audioViewShow = NO;
+                wself.mediaViewShow = NO;
+                wself.audioView.hidden = YES;
+                wself.mediaView.hidden = YES;
+                height = 0;
+            }else{
+                wself.audioViewShow = YES;
+                wself.mediaViewShow = NO;
+                height = GENERAL_SIZE(180);
+                wself.audioView.hidden = NO;
+                wself.mediaView.hidden = YES;
+            }
+            [wself.view endEditing:YES];
+            [wself.inputView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(wself.view);
+                make.right.equalTo(wself.view.mas_right);
+                make.bottom.equalTo(wself.view).offset(-height);
+            }];
         }else{
-            wself.audioViewShow = YES;
-            wself.mediaViewShow = NO;
-            height = GENERAL_SIZE(180);
-            wself.audioView.hidden = NO;
-            wself.mediaView.hidden = YES;
+            LoginViewController *loginVC = [[LoginViewController alloc]init];
+            UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:loginVC];
+            [wself.navigationController presentViewController:rootNav animated:YES completion:^{
+            }];
         }
-        [wself.view endEditing:YES];
-        [wself.inputView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(wself.view);
-            make.right.equalTo(wself.view.mas_right);
-            make.bottom.equalTo(wself.view).offset(-height);
-        }];
     };
     
     _inputView.mediaAction = ^{
-        int height;
-        if (wself.mediaViewShow) {
-            wself.mediaViewShow = NO;
-            wself.audioViewShow = NO;
-            wself.audioView.hidden = YES;
-            wself.mediaView.hidden = YES;
-            height = 0;
+        if ([wself checkLoginState]) {
+            int height;
+            if (wself.mediaViewShow) {
+                wself.mediaViewShow = NO;
+                wself.audioViewShow = NO;
+                wself.audioView.hidden = YES;
+                wself.mediaView.hidden = YES;
+                height = 0;
+            }else{
+                wself.mediaViewShow = YES;
+                wself.audioViewShow = NO;
+                height = GENERAL_SIZE(180);
+                wself.audioView.hidden = YES;
+                wself.mediaView.hidden = NO;
+            }
+            [wself.view endEditing:YES];
+            [wself.inputView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(wself.view);
+                make.right.equalTo(wself.view.mas_right);
+                make.bottom.equalTo(wself.view).offset(-height);
+            }];
         }else{
-            wself.mediaViewShow = YES;
-            wself.audioViewShow = NO;
-            height = GENERAL_SIZE(180);
-            wself.audioView.hidden = YES;
-            wself.mediaView.hidden = NO;
+            LoginViewController *loginVC = [[LoginViewController alloc]init];
+            UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:loginVC];
+            [wself.navigationController presentViewController:rootNav animated:YES completion:^{
+            }];
         }
-        [wself.view endEditing:YES];
-        [wself.inputView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(wself.view);
-            make.right.equalTo(wself.view.mas_right);
-            make.bottom.equalTo(wself.view).offset(-height);
-        }];
     };
     
     _inputView.sendAction = ^{
-        
-        // 发表评论
-        [wself saveComment];
+        if([wself checkLoginState]){
+            if(wself.inputView.text.length==0&&[wself.mediaDataArray count]==0){
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请输入评论内容" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [alert show];
+            }else{
+                // 发表评论
+                [wself saveComment];
+            }
+        }
+        else{
+            LoginViewController *loginVC = [[LoginViewController alloc]init];
+            UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:loginVC];
+            [wself.navigationController presentViewController:rootNav animated:YES completion:^{
+            }];
+        }
     };
+}
+
+-(BOOL)checkLoginState{
+    return [AuthManager sharedInstance].isAuthenticated;
 }
 
 #pragma method
@@ -299,7 +331,7 @@
 {
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)keyboardWillAppear:(NSNotification *)note
@@ -478,6 +510,7 @@
         }
         
         if ([_mediaDataArray count]>0) {
+            [_audioView deleteAction];
             [_mediaDataArray removeAllObjects];
         }
         
@@ -575,6 +608,7 @@
     [self dismissViewControllerAnimated:YES completion:^{
         if ([_mediaDataArray count]>0) {
             [_mediaDataArray removeAllObjects];
+            [_audioView deleteAction];
         }
         if (image) {
             mediaModel *audioModel = [[mediaModel alloc] init];

@@ -21,4 +21,6 @@
 
 @property (nonatomic) id<CommentAudioViewDelegate> delegate;
 
+-(void)deleteAction;
+
 @end

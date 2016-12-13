@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import <AVFoundation/AVFoundation.h>
+
 @interface LCAudioPlay : NSObject
+
+@property (strong, nonatomic) AVAudioPlayer *player;
 
 + (instancetype)sharedInstance;
 

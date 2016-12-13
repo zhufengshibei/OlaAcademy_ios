@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import <AVFoundation/AVFoundation.h>
+
 @interface LCAudioRecord : NSObject
+
+@property (nonatomic, strong) AVAudioRecorder *recorder;
 
 + (instancetype)sharedInstance;
 

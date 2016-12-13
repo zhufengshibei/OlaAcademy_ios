@@ -7,14 +7,12 @@
 //
 
 #import "LCAudioPlay.h"
-#import <AVFoundation/AVFoundation.h>
 
 #define audioFileNotFound -106
 #define audioPlayerInitFilure -107
 
 @interface LCAudioPlay ()<AVAudioPlayerDelegate>
 
-@property (strong, nonatomic) AVAudioPlayer *player;
 @property (copy, nonatomic) void(^completion)(NSError *);
 
 @end

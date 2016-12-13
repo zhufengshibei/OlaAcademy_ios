@@ -7,13 +7,11 @@
 //
 
 #import "LCAudioRecord.h"
-#import <AVFoundation/AVFoundation.h>
 
 #define recorderInitFailure -105
 
 @interface LCAudioRecord ()<AVAudioRecorderDelegate>
 
-@property (nonatomic, strong) AVAudioRecorder *recorder;
 @property (nonatomic, strong) NSDictionary *recordSetting;
 @property (copy, nonatomic) void(^completion)(NSString *recordPath);
 
