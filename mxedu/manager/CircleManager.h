@@ -11,6 +11,7 @@
 #import "CommonResult.h"
 #import "VideoHistoryResult.h"
 #import "CircleDetailResult.h"
+#import "PraiseListResult.h"
 
 @interface CircleManager : NSObject
 
@@ -45,6 +46,7 @@
  *  @param failure <#failure description#>
  */
 -(void)fetchCircleDetailWithId:(NSString*)circleId
+                        UserId:(NSString*)userId
                        Success:(void(^)(CircleDetailResult *result))success
                        Failure:(void(^)(NSError* error))failure;
 
@@ -58,4 +60,15 @@
                           Success:(void(^)(CommonResult *result))success
                           Failure:(void(^)(NSError* error))failure;
 
+/**
+ *  点赞列表
+ *
+ *  @param success <#success description#>
+ *  @param failure <#failure description#>
+ */
+-(void)fetchPraiseListWithUserId:(NSString*)userId
+                        PraiseId:(NSString*)praiseId
+                        PageSize:(NSString*)pageSize
+                         Success:(void(^)(PraiseListResult *result))success
+                         Failure:(void(^)(NSError* error))failure;
 @end

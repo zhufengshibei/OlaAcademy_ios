@@ -16,14 +16,14 @@
 #import "CircleListTableCell.h"
 #import "DeployViewController.h"
 #import "CommentViewController.h"
-#import "MessageViewController.h"
+#import "MessageMainController.h"
 #import "ShareSheetView.h"
 #import "LoginViewController.h"
 #import "OtherUserController.h"
 
 #import "Masonry.h"
 
-@interface CircleViewController ()<UITableViewDataSource,UITableViewDelegate,UMSocialUIDelegate,ShareSheetDelegate>
+@interface CircleViewController ()<UITableViewDataSource,UITableViewDelegate,UMSocialUIDelegate,ShareSheetDelegate,CircleListTableCellDelegate>
 
 @property (nonatomic) UIImageView *messageBtn;
 
@@ -31,6 +31,8 @@
 @property (nonatomic) NSMutableArray *dataArray;
 
 @property (nonatomic) OlaCircle *sharedCircle;
+
+@property (nonatomic) MessageCount *messageCount;
 
 @end
 
@@ -107,7 +109,8 @@
         [self showLoginView];
         return;
     }
-    MessageViewController *messageVC = [[MessageViewController alloc]init];
+    MessageMainController *messageVC = [[MessageMainController alloc]init];
+    messageVC.messageCount = _messageCount;
     messageVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:messageVC animated:YES];
 }
@@ -117,7 +120,8 @@
     if (am.isAuthenticated) {
         MessageManager *mm = [[MessageManager alloc]init];
         [mm fetchUnreadCountWithUserId:am.userInfo.userId Success:^(MessageUnreadResult *result) {
-            if (result.code==10000&result.count>0) {
+            _messageCount = result.messageCount;
+            if (result.code==10000&_messageCount.systemCount+_messageCount.circleCount+_messageCount.praiseCount>0) {
                 _messageBtn.image = [UIImage imageNamed:@"icon_message_tip"];
             }else{
                 _messageBtn.image = [UIImage imageNamed:@"icon_message"];
@@ -274,6 +278,7 @@
     }
     circleCell.selectionStyle = UITableViewCellSelectionStyleNone;
     OlaCircle *circle = self.dataArray[indexPath.row];
+    circleCell.delegate = self;
     [circleCell setupCellWithModel:circle];
     return circleCell;
 }
@@ -294,39 +299,28 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     OlaCircle *circle = self.dataArray[indexPath.row];
-    NSString* contetxt = [circle.title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString* contetxt = [circle.content stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     //根据普通文本计算正文的范围
     NSMutableParagraphStyle *style =  [[NSMutableParagraphStyle alloc] init];
-    style.lineSpacing = 5.0f;
+    style.lineSpacing = 3.0f;
     NSDictionary *attributes = @{NSFontAttributeName: LabelFont(30),NSParagraphStyleAttributeName:style};
     CGRect rect = [contetxt boundingRectWithSize:CGSizeMake(SCREEN_WIDTH-GENERAL_SIZE(40), MAXFLOAT)
                                          options:NSStringDrawingUsesLineFragmentOrigin
                                       attributes:attributes
                                          context:nil];
     if (circle.imageGids&&![circle.imageGids isEqualToString:@""]) {
-        return rect.size.height+GENERAL_SIZE(475);
+        return rect.size.height+GENERAL_SIZE(560);
     }
-    return rect.size.height+GENERAL_SIZE(145);
+    return rect.size.height+GENERAL_SIZE(230);
 }
 
-#pragma CircleDetailView Delegate
+#pragma Delegate
 // 点击头像
 -(void)didClickUserAvatar:(User *)userInfo{
     OtherUserController * otherVC = [[OtherUserController alloc]init];
     otherVC.userInfo = userInfo;
     otherVC.hidesBottomBarWhenPushed = YES;
-    //[self.navigationController pushViewController:otherVC animated:YES];
-}
-
-#pragma Toolbar Delegate(暂未使用)
-// 点赞
--(void) didClickLove:(OlaCircle *)circle{
-    CircleManager *cm = [[CircleManager alloc]init];
-    [cm praiseCirclePostWithCircle:circle.circleId Success:^(CommonResult *result) {
-        [self updatePraiseNumber:circle];
-    } Failure:^(NSError *error) {
-        
-    }];
+    [self.navigationController pushViewController:otherVC animated:YES];
 }
 
 -(void)updatePraiseNumber:(OlaCircle*)circle{
@@ -351,18 +345,6 @@
     
     ShareSheetView *lxActivity = [[ShareSheetView alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
     [lxActivity showInView:self.view];
-}
-
--(void) didClickComment:(OlaCircle *)circle{
-    CommentViewController *commentVC = [[CommentViewController alloc]init];
-    commentVC.postId = circle.circleId;
-    commentVC.successFunc = ^void(OlaCircle *circle,int type){
-        if (type==1) {
-            [self updatePraiseNumber:circle];
-        }
-    };
-    commentVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:commentVC animated:YES];
 }
 
 #pragma mark - LXActivityDelegate

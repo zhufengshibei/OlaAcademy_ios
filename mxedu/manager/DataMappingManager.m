@@ -95,6 +95,9 @@
 #import "Comment.h"
 #import "CommentListResult.h"
 
+#import "CirclePraise.h"
+#import "PraiseListResult.h"
+
 #import "Message.h"
 #import "MessageListResult.h"
 #import "MessageUnreadResult.h"
@@ -161,6 +164,7 @@
     [self setupVideoHistoryListMapping];
     [self setupCircleDetailMapping];
     [self setupCommentListMapping];
+    [self setupPraiseListMapping];
     [self setupStatisticsListMapping];
     [self setupBannerList];
     [self setupStatusMapping];
@@ -976,6 +980,8 @@
                                                           @"imageGids": @"imageGids",
                                                           @"location": @"location",
                                                           @"praiseNumber": @"praiseNumber",
+                                                          @"readNumber": @"readNumber",
+                                                          @"commentNumber": @"commentNumber",
                                                           @"time": @"time",
                                                           @"type": @"type"
                                                           }];
@@ -1001,6 +1007,8 @@
                                                           @"imageGids": @"imageGids",
                                                           @"location": @"location",
                                                           @"praiseNumber": @"praiseNumber",
+                                                          @"readNumber": @"readNumber",
+                                                          @"commentNumber": @"commentNumber",
                                                           @"time": @"time",
                                                           @"type": @"type"
                                                           }];
@@ -1020,6 +1028,8 @@
                                                           @"userId":       @"userId",
                                                           @"userName":     @"username",
                                                           @"content":      @"content",
+                                                          @"postId":       @"postId",
+                                                          @"title":        @"title",
                                                           @"imageIds":     @"imageIds",
                                                           @"videoUrls":    @"videoUrls",
                                                           @"videoImgs":    @"videoImgs",
@@ -1030,7 +1040,8 @@
                                                           @"time":      @"passtime",
                                                           @"toUserId":      @"rpyToUserId",
                                                           @"toUserName":    @"rpyToUserName",
-                                                          @"praiseReply" :@"isPraised"
+                                                          @"praiseReply" :@"isPraised",
+                                                          @"isRead"      :@"isRead"
                                                           }];
     
     _commentListResultMapping = [RKObjectMapping mappingForClass:[CommentListResult class]];
@@ -1042,6 +1053,30 @@
 
 }
 
+// 点赞列表
+-(void)setupPraiseListMapping{
+    RKObjectMapping *praiseMapping = [RKObjectMapping mappingForClass:[CirclePraise class]];
+    [praiseMapping addAttributeMappingsFromDictionary:@{
+                                                         @"praiseId":    @"praiseId",
+                                                         @"postId":      @"postId",
+                                                         @"title":       @"title",
+                                                         @"userId":      @"userId",
+                                                         @"userAvatar" : @"userAvatar",
+                                                         @"userName" :   @"userName",
+                                                         @"time":      @"time",
+                                                         @"isRead":    @"isRead"
+                                                         }];
+    
+    _praiseListResultMapping = [RKObjectMapping mappingForClass:[PraiseListResult class]];
+    [_praiseListResultMapping addAttributeMappingsFromDictionary:@{
+                                                                    @"message":  @"message",
+                                                                    @"apicode":  @"code"
+                                                                    }];
+    [_praiseListResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"praiseArray" withMapping:praiseMapping]];
+    
+}
+
+// 系统消息列表
 -(void)setupMessageListMapping{
     RKObjectMapping *messageMapping = [RKObjectMapping mappingForClass:[Message class]];
     [messageMapping addAttributeMappingsFromDictionary:@{
@@ -1067,12 +1102,19 @@
 
 -(void)setupUnreadMessageMapping{
     
+    RKObjectMapping *countMapping = [RKObjectMapping mappingForClass:[MessageCount class]];
+    [countMapping addAttributeMappingsFromDictionary:@{
+                                                         @"systemCount":   @"systemCount",
+                                                         @"circleCount":   @"circleCount",
+                                                         @"praiseCount":   @"praiseCount"
+                                                         }];
+    
     _unreadMessageResultMapping = [RKObjectMapping mappingForClass:[MessageUnreadResult class]];
     [_unreadMessageResultMapping addAttributeMappingsFromDictionary:@{
-                                                                    @"message":     @"message",
-                                                                    @"apicode":     @"code",
-                                                                    @"result":      @"count"
+                                                                    @"message":  @"message",
+                                                                    @"apicode":  @"code"
                                                                     }];
+    [_unreadMessageResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"messageCount" withMapping:countMapping]];
 }
 
 -(void)setupStatisticsListMapping{

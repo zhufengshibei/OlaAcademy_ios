@@ -15,6 +15,7 @@
 
 @implementation CircleListTableCell{
     UILabel *_titleL;
+    UILabel *_contextL;
     UIImageView *_imageV;
     UIImageView *_avatar;
     UILabel *_nameL;
@@ -34,6 +35,9 @@
         _avatar = [[UIImageView alloc]initWithFrame:CGRectMake(GENERAL_SIZE(20), GENERAL_SIZE(30), GENERAL_SIZE(50), GENERAL_SIZE(50))];
         _avatar.layer.masksToBounds = YES;
         _avatar.layer.cornerRadius = GENERAL_SIZE(25);
+        _avatar.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didClickHeadImage)];
+        [_avatar addGestureRecognizer:tap];
         [self addSubview:_avatar];
         
         _nameL = [[UILabel alloc] init];
@@ -58,15 +62,31 @@
             make.centerY.equalTo(_nameL);
         }];
 
-        
-        _titleL = [[UILabel alloc]init];
-        _titleL.font = LabelFont(34);
+        _titleL = [[UILabel alloc]initWithFrame:CGRectMake(GENERAL_SIZE(20), CGRectGetMaxY(_avatar.frame)+GENERAL_SIZE(20), SCREEN_WIDTH-GENERAL_SIZE(40), GENERAL_SIZE(30))];
+        _titleL.font = LabelFont(32);
         _titleL.textColor = RGBCOLOR(39, 42, 54);
-        _titleL.numberOfLines = 0;
+        _titleL.numberOfLines = 1;
         [self addSubview:_titleL];
         
         _imageV = [[UIImageView alloc]init];
         [self addSubview:_imageV];
+        
+        _contextL = [[UILabel alloc]init];
+        _contextL.font = LabelFont(30);
+        _contextL.textColor = RGBCOLOR(51, 51, 51);
+        _contextL.numberOfLines = 0;
+        [self addSubview:_contextL];
+        
+        _numberL = [[UILabel alloc]init];
+        _numberL.font = LabelFont(28);
+        _numberL.textColor = [UIColor colorWhthHexString:@"#a4a6a9"];
+        [self addSubview:_numberL];
+        
+        [_numberL mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.mas_bottom).offset(-GENERAL_SIZE(20));
+            make.height.equalTo(@(GENERAL_SIZE(30)));
+            make.left.equalTo(self).offset(GENERAL_SIZE(20));
+        }];
         
         UIView *lineView = [[UIView alloc]init];
         lineView.backgroundColor = RGBCOLOR(235,235, 235);
@@ -82,7 +102,7 @@
 }
 
 -(void)setupCellWithModel:(OlaCircle*)circle{
-    
+    _olaCircle = circle;
     if(circle.userAvatar) {
         if ([circle.userAvatar rangeOfString:@".jpg"].location == NSNotFound) {
             [_avatar sd_setImageWithURL:[NSURL URLWithString: [BASIC_IMAGE_URL stringByAppendingString:circle.userAvatar]] placeholderImage:[UIImage imageNamed:@"ic_avatar"]];
@@ -95,19 +115,8 @@
     _nameL.text = circle.userName;
     
     _timeL.text = circle.time;
-    
-    //标题
-    NSString* contetxt = [circle.title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    //根据普通文本计算正文的范围
-    NSMutableParagraphStyle *style =  [[NSMutableParagraphStyle alloc] init];
-    style.lineSpacing = 5.0f;
-    NSDictionary *attributes = @{NSFontAttributeName: LabelFont(30),NSParagraphStyleAttributeName:style};
-    CGRect rect = [contetxt boundingRectWithSize:CGSizeMake(SCREEN_WIDTH-GENERAL_SIZE(40), MAXFLOAT)
-                                         options:NSStringDrawingUsesLineFragmentOrigin
-                                      attributes:attributes
-                                         context:nil];
-    _titleL.frame = CGRectMake(GENERAL_SIZE(20), CGRectGetMaxY(_avatar.frame)+GENERAL_SIZE(30), SCREEN_WIDTH-GENERAL_SIZE(40), rect.size.height);
     _titleL.text = circle.title;
+    
     // 图片
     if (circle.imageGids&&![circle.imageGids isEqualToString:@""]) {
         _imageV.frame = CGRectMake(0, CGRectGetMaxY(_titleL.frame)+GENERAL_SIZE(30), SCREEN_WIDTH, GENERAL_SIZE(300));
@@ -130,6 +139,35 @@
         }];
     }else{
         _imageV.frame = CGRectMake(0, CGRectGetMaxY(_titleL.frame), SCREEN_WIDTH, 0);
+    }
+    
+    //内容
+    NSString* contetxt = [circle.content stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    //根据普通文本计算正文的范围
+    NSMutableParagraphStyle *style =  [[NSMutableParagraphStyle alloc] init];
+    style.lineSpacing = 3.0f;
+    NSDictionary *attributes = @{NSFontAttributeName: LabelFont(30),NSParagraphStyleAttributeName:style};
+    CGRect rect = [contetxt boundingRectWithSize:CGSizeMake(SCREEN_WIDTH-GENERAL_SIZE(40), MAXFLOAT)
+                                         options:NSStringDrawingUsesLineFragmentOrigin
+                                      attributes:attributes
+                                         context:nil];
+    _contextL.frame = CGRectMake(GENERAL_SIZE(20), CGRectGetMaxY(_imageV.frame)+GENERAL_SIZE(30), SCREEN_WIDTH-GENERAL_SIZE(40), rect.size.height);
+    
+    // 行间距
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:contetxt];
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, [contetxt length])];
+    _contextL.attributedText = attributedString;
+    
+    _numberL.text = [NSString stringWithFormat:@"%@人浏览 · %@人评论",circle.readNumber,circle.commentNumber];
+}
+
+-(void)didClickHeadImage{
+    User *userInfo = [[User alloc]init];
+    userInfo.userId = _olaCircle.userId;
+    userInfo.avatar = _olaCircle.userAvatar;
+    userInfo.name = _olaCircle.userName;
+    if (_delegate) {
+        [_delegate didClickUserAvatar:userInfo];
     }
 }
 

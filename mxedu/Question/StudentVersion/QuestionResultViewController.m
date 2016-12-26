@@ -9,7 +9,6 @@
 #import "QuestionResultViewController.h"
 
 #import "AuthManager.h"
-#import "ItemView.h"
 #import "SysCommon.h"
 #import "Masonry.h"
 #import "Correctness.h"
@@ -19,9 +18,8 @@
 
 @interface QuestionResultViewController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic) ItemView *finishedItem;
-@property (nonatomic) ItemView *correctItem;
-@property (nonatomic) ItemView *defectItem;
+@property (nonatomic) UILabel *correctItem;
+@property (nonatomic) UILabel *defectItem;
 
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) NSArray *videoArray;
@@ -33,7 +31,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"答题报告";
-    [self setupBackButton];
 
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -50,31 +47,22 @@
     [self submitAnswerToServer];
 }
 
-- (void)setupBackButton
-{
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
-    [backBtn sizeToFit];
-    [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
-}
-
--(void)backButtonClicked{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 -(void)setupHeadView{
     
-    UIImageView *bgImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg_report"]];
+    UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, GENERAL_SIZE(470))];
+    bgImageView.backgroundColor = COMMONBLUECOLOR;
     
-    UIImageView *tipView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ic_rightanswer"]];
+    UIImageView *tipView = [[UIImageView alloc]init];
+    tipView.layer.cornerRadius = GENERAL_SIZE(150);
+    tipView.layer.masksToBounds = YES;
+    tipView.backgroundColor = [UIColor whiteColor];
     [bgImageView addSubview:tipView];
     
     [tipView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(bgImageView.mas_top).offset(30);
+        make.top.equalTo(bgImageView.mas_top).offset(GENERAL_SIZE(60));
         make.centerX.equalTo(bgImageView);
+        make.width.equalTo(@(GENERAL_SIZE(300)));
+        make.height.equalTo(@(GENERAL_SIZE(300)));
     }];
     
     UILabel *correctLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)];
@@ -82,42 +70,37 @@
     NSString *correct = [NSString stringWithFormat:@"%d",[self numberOfCorrect]];
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:result];
     [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:40.0] range:NSMakeRange(0, [correct length])];
-    [str addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(144, 144, 144) range:NSMakeRange([correct length], [result length]-[correct length])];
+    [str addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(164, 192, 250) range:NSMakeRange([correct length], [result length]-[correct length])];
     [str addAttribute:NSForegroundColorAttributeName value:COMMONBLUECOLOR range:NSMakeRange(0,[correct length])];
     correctLabel.attributedText = str;
     correctLabel.textAlignment = NSTextAlignmentCenter;
     [bgImageView addSubview:correctLabel];
     
     [correctLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(tipView.mas_bottom).offset(15);
-        make.centerX.equalTo(bgImageView);
+        make.center.equalTo(tipView);
     }];
     
-    UIImageView *divideView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 115, SCREEN_WIDTH-40, 20)];
-    [bgImageView addSubview:divideView];
-    UIGraphicsBeginImageContext(divideView.frame.size);   //开始画线
-    [divideView.image drawInRect:CGRectMake(0, 0, divideView.frame.size.width, divideView.frame.size.height)];
-    CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);  //设置线条终点形状
-    CGFloat lengths[] = {10,5};
-    CGContextRef line = UIGraphicsGetCurrentContext();
-    CGContextSetStrokeColorWithColor(line, RGBCOLOR(144, 144, 144).CGColor);
-    CGContextSetLineDash(line, 0, lengths, 2);  //画虚线
-    CGContextMoveToPoint(line, 0.0, 20.0);    //开始画线
-    CGContextAddLineToPoint(line, SCREEN_WIDTH-20, 20.0);
-    CGContextStrokePath(line);
-    divideView.image = UIGraphicsGetImageFromCurrentImageContext();
+    UILabel *label = [[UILabel alloc]init];
+    label.text = @"您共答对";
+    label.textColor = RGBCOLOR(164, 192, 250);
+    label.font = LabelFont(24);
+    [bgImageView addSubview:label];
     
-    UIView *countView = [[UIView alloc] initWithFrame:CGRectMake(0, 130, SCREEN_WIDTH, GENERAL_SIZE(160))];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(tipView);
+        make.bottom.equalTo(tipView.mas_bottom).offset(-GENERAL_SIZE(40));
+    }];
+    
+    UIView *countView = [[UIView alloc] initWithFrame:CGRectMake(0, GENERAL_SIZE(310), SCREEN_WIDTH, GENERAL_SIZE(160))];
     [bgImageView addSubview:countView];
     
-    _finishedItem = [[ItemView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH/3.0, 70)];
-    [_finishedItem setcount:[NSString stringWithFormat:@"%d",[self numberOfFinished]] Title:@"已答题目"];
+    _correctItem = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH/2.0, GENERAL_SIZE(160))];
+    _correctItem.font = LabelFont(30);
+    _correctItem.textAlignment = NSTextAlignmentCenter;
+    _correctItem.textColor = [UIColor whiteColor];
+    _correctItem.text = [NSString stringWithFormat:@"%d％ | 正确率", [self numberOfCorrect]*100/(int)[_answerArray count]];
     
-    _correctItem = [[ItemView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/3.0, 0, SCREEN_WIDTH/3.0, 70)];
-    NSString *corrcetness=[NSString stringWithFormat:@"%d％", [self numberOfCorrect]*100/(int)[_answerArray count]];
-    [_correctItem setcount:corrcetness Title:@"正确率"];
-    
-    _defectItem = [[ItemView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH/3.0)*2, 0, SCREEN_WIDTH/3.0, 70)];
+    _defectItem = [[UILabel alloc] initWithFrame:CGRectMake((SCREEN_WIDTH/2.0), 0, SCREEN_WIDTH/2.0, GENERAL_SIZE(160))];
     NSString *defeatNum = @"60";
     if ([self numberOfCorrect]==0) {
         defeatNum = @"0%";
@@ -127,19 +110,13 @@
         int n = arc4random() % 35+60;
         defeatNum = [NSString stringWithFormat:@"%d％",n];
     }
-    [_defectItem setcount:defeatNum Title:@"打败考生"];
+    _defectItem.textAlignment = NSTextAlignmentCenter;
+    _defectItem.font = LabelFont(30);
+    _defectItem.textColor = [UIColor whiteColor];
+    _defectItem.text = [NSString stringWithFormat:@"%@ | 打败考生",defeatNum];
     
-    UIView *lineview1 = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/3.0, 25, 1, 30)];
-    lineview1.backgroundColor = BACKGROUNDCOLOR;
-    
-    UIView *lineview2 = [[UIView alloc] initWithFrame:CGRectMake(2*SCREEN_WIDTH/3.0, 25, 1, 30)];
-    lineview2.backgroundColor = BACKGROUNDCOLOR;
-    
-    [countView addSubview:_finishedItem];
     [countView addSubview:_correctItem];
     [countView addSubview:_defectItem];
-    [countView addSubview:lineview1];
-    [countView addSubview:lineview2];
     
     _tableView.tableHeaderView = bgImageView;
     _tableView.tableHeaderView.backgroundColor = COMMONBLUECOLOR;
@@ -317,17 +294,17 @@
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
-    sectionView.backgroundColor = [UIColor whiteColor];
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+    if (section==0) {
+        sectionView.backgroundColor = [UIColor whiteColor];
+    }else{
+        sectionView.backgroundColor = RGBCOLOR(248, 248, 248);
+    }
     
-    UIView *dividerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 10)];
-    dividerView.backgroundColor = RGBCOLOR(240, 240, 240);
-    [sectionView addSubview:dividerView];
-    
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 20, 20, 20)];
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 20, 20)];
     [sectionView addSubview:imageView];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(40, 10, 200, 40)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(40, 0, 200, 40)];
     if (section==0) {
         imageView.image = [UIImage imageNamed:@"icon_choice"];
         label.text = @"选择题";
@@ -356,7 +333,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if([_videoArray count]==0&&section==1)
         return 0.01;
-    return 50;
+    return 40;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{

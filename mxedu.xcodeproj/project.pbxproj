@@ -216,7 +216,6 @@
 		3D7BE8CF1BDF7ADB003AC768 /* SearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7BE8CE1BDF7ADB003AC768 /* SearchResultCell.m */; };
 		3D7C9ED41CC790710040DE5A /* VIPSubController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7C9ED31CC790710040DE5A /* VIPSubController.m */; };
 		3D8285F41CBB414400242B26 /* CourseBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8285F31CBB414400242B26 /* CourseBarView.m */; };
-		3D8531981D34D48C00105444 /* CircleToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8531971D34D48C00105444 /* CircleToolbar.m */; };
 		3D8600AA1C0E864D00C0C69C /* EnrollDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8600A91C0E864D00C0C69C /* EnrollDetailViewController.m */; };
 		3D8600B81C12CA1D00C0C69C /* SKSplashIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8600B51C12CA1D00C0C69C /* SKSplashIcon.m */; };
 		3D8600B91C12CA1D00C0C69C /* SKSplashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8600B71C12CA1D00C0C69C /* SKSplashView.m */; };
@@ -404,11 +403,26 @@
 		3DC597C21DD4A24700720D9B /* MistakeListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC597C11DD4A24700720D9B /* MistakeListResult.m */; };
 		3DC597C51DD4A50E00720D9B /* Mistake.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC597C41DD4A50E00720D9B /* Mistake.m */; };
 		3DC597C81DD4A88E00720D9B /* MistakeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC597C71DD4A88E00720D9B /* MistakeTableCell.m */; };
+		3DC6ED501E00E1540062E542 /* MessageMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC6ED4F1E00E1540062E542 /* MessageMainController.m */; };
+		3DC6ED571E00F7C20062E542 /* CommentMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC6ED561E00F7C20062E542 /* CommentMessageController.m */; };
+		3DC6ED5A1E0116150062E542 /* MessageCommonTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC6ED591E0116150062E542 /* MessageCommonTableCell.m */; };
+		3DC6ED5D1E07C4480062E542 /* CirclePraise.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC6ED5C1E07C4480062E542 /* CirclePraise.m */; };
+		3DC6ED601E07C7420062E542 /* PraiseListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC6ED5F1E07C7420062E542 /* PraiseListResult.m */; };
+		3DC6ED661E07C93B0062E542 /* PraiseMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC6ED651E07C93B0062E542 /* PraiseMessageViewController.m */; };
 		3DD371C31DD2BBEF00FFA2DF /* CommodityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DD371C21DD2BBEF00FFA2DF /* CommodityView.m */; };
 		3DD4B92D1D2CA5B5002FDC0E /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DD4B92C1D2CA5B5002FDC0E /* Util.m */; };
 		3DD4B9301D2DEB74002FDC0E /* CircleDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DD4B92F1D2DEB74002FDC0E /* CircleDetailView.m */; };
 		3DF69E061C994BBA002F33DC /* Correctness.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF69E051C994BBA002F33DC /* Correctness.m */; };
 		3DF69E0A1C9995A2002F33DC /* THProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF69E091C9995A2002F33DC /* THProgressView.m */; };
+		3DF6B1161E07DE3700399F94 /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF6B1151E07DE3700399F94 /* MessageModel.m */; };
+		3DF6B1191E07E3C500399F94 /* MessageCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF6B1181E07E3C500399F94 /* MessageCount.m */; };
+		3DF6B11C1E0A459D00399F94 /* MessageMainTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF6B11B1E0A459D00399F94 /* MessageMainTableCell.m */; };
+		3DF6B1331E0D2E5C00399F94 /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3DF6B1241E0D2E5C00399F94 /* amrFileCodec.mm */; };
+		3DF6B1341E0D2E5C00399F94 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF6B1261E0D2E5C00399F94 /* libopencore-amrnb.a */; };
+		3DF6B1351E0D2E5C00399F94 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF6B1271E0D2E5C00399F94 /* libopencore-amrwb.a */; };
+		3DF6B1361E0D2E5C00399F94 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 3DF6B12E1E0D2E5C00399F94 /* README.md */; };
+		3DF6B1371E0D2E5C00399F94 /* Voice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3DF6B1301E0D2E5C00399F94 /* Voice.mm */; };
+		3DF6B1381E0D2E5C00399F94 /* VoiceConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3DF6B1321E0D2E5C00399F94 /* VoiceConverter.mm */; };
 		3DFB6BF61B6DC23B0072D175 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFB6BF51B6DC23B0072D175 /* main.m */; };
 		3DFB6BF91B6DC23B0072D175 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFB6BF81B6DC23B0072D175 /* AppDelegate.m */; };
 		3DFB6C011B6DC23B0072D175 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DFB6C001B6DC23B0072D175 /* Images.xcassets */; };
@@ -921,8 +935,6 @@
 		3D7C9ED31CC790710040DE5A /* VIPSubController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIPSubController.m; sourceTree = "<group>"; };
 		3D8285F21CBB414400242B26 /* CourseBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseBarView.h; sourceTree = "<group>"; };
 		3D8285F31CBB414400242B26 /* CourseBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseBarView.m; sourceTree = "<group>"; };
-		3D8531961D34D48C00105444 /* CircleToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleToolbar.h; sourceTree = "<group>"; };
-		3D8531971D34D48C00105444 /* CircleToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleToolbar.m; sourceTree = "<group>"; };
 		3D8600A81C0E864D00C0C69C /* EnrollDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnrollDetailViewController.h; sourceTree = "<group>"; };
 		3D8600A91C0E864D00C0C69C /* EnrollDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnrollDetailViewController.m; sourceTree = "<group>"; };
 		3D8600B41C12CA1D00C0C69C /* SKSplashIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSplashIcon.h; sourceTree = "<group>"; };
@@ -1280,6 +1292,18 @@
 		3DC597C41DD4A50E00720D9B /* Mistake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mistake.m; sourceTree = "<group>"; };
 		3DC597C61DD4A88E00720D9B /* MistakeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MistakeTableCell.h; sourceTree = "<group>"; };
 		3DC597C71DD4A88E00720D9B /* MistakeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MistakeTableCell.m; sourceTree = "<group>"; };
+		3DC6ED4E1E00E1540062E542 /* MessageMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageMainController.h; sourceTree = "<group>"; };
+		3DC6ED4F1E00E1540062E542 /* MessageMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageMainController.m; sourceTree = "<group>"; };
+		3DC6ED551E00F7C20062E542 /* CommentMessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentMessageController.h; sourceTree = "<group>"; };
+		3DC6ED561E00F7C20062E542 /* CommentMessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentMessageController.m; sourceTree = "<group>"; };
+		3DC6ED581E0116150062E542 /* MessageCommonTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCommonTableCell.h; sourceTree = "<group>"; };
+		3DC6ED591E0116150062E542 /* MessageCommonTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCommonTableCell.m; sourceTree = "<group>"; };
+		3DC6ED5B1E07C4480062E542 /* CirclePraise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CirclePraise.h; sourceTree = "<group>"; };
+		3DC6ED5C1E07C4480062E542 /* CirclePraise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CirclePraise.m; sourceTree = "<group>"; };
+		3DC6ED5E1E07C7420062E542 /* PraiseListResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PraiseListResult.h; sourceTree = "<group>"; };
+		3DC6ED5F1E07C7420062E542 /* PraiseListResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PraiseListResult.m; sourceTree = "<group>"; };
+		3DC6ED641E07C93B0062E542 /* PraiseMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PraiseMessageViewController.h; sourceTree = "<group>"; };
+		3DC6ED651E07C93B0062E542 /* PraiseMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PraiseMessageViewController.m; sourceTree = "<group>"; };
 		3DD371C11DD2BBEF00FFA2DF /* CommodityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommodityView.h; sourceTree = "<group>"; };
 		3DD371C21DD2BBEF00FFA2DF /* CommodityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommodityView.m; sourceTree = "<group>"; };
 		3DD4B92B1D2CA5B5002FDC0E /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
@@ -1290,6 +1314,25 @@
 		3DF69E051C994BBA002F33DC /* Correctness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Correctness.m; sourceTree = "<group>"; };
 		3DF69E081C9995A2002F33DC /* THProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THProgressView.h; sourceTree = "<group>"; };
 		3DF69E091C9995A2002F33DC /* THProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THProgressView.m; sourceTree = "<group>"; };
+		3DF6B1141E07DE3700399F94 /* MessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageModel.h; sourceTree = "<group>"; };
+		3DF6B1151E07DE3700399F94 /* MessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageModel.m; sourceTree = "<group>"; };
+		3DF6B1171E07E3C500399F94 /* MessageCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCount.h; sourceTree = "<group>"; };
+		3DF6B1181E07E3C500399F94 /* MessageCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCount.m; sourceTree = "<group>"; };
+		3DF6B11A1E0A459D00399F94 /* MessageMainTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageMainTableCell.h; sourceTree = "<group>"; };
+		3DF6B11B1E0A459D00399F94 /* MessageMainTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageMainTableCell.m; sourceTree = "<group>"; };
+		3DF6B1231E0D2E5C00399F94 /* amrFileCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amrFileCodec.h; sourceTree = "<group>"; };
+		3DF6B1241E0D2E5C00399F94 /* amrFileCodec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = amrFileCodec.mm; sourceTree = "<group>"; };
+		3DF6B1261E0D2E5C00399F94 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
+		3DF6B1271E0D2E5C00399F94 /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
+		3DF6B1291E0D2E5C00399F94 /* interf_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_dec.h; sourceTree = "<group>"; };
+		3DF6B12A1E0D2E5C00399F94 /* interf_enc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_enc.h; sourceTree = "<group>"; };
+		3DF6B12C1E0D2E5C00399F94 /* dec_if.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dec_if.h; sourceTree = "<group>"; };
+		3DF6B12D1E0D2E5C00399F94 /* if_rom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = if_rom.h; sourceTree = "<group>"; };
+		3DF6B12E1E0D2E5C00399F94 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		3DF6B12F1E0D2E5C00399F94 /* Voice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voice.h; sourceTree = "<group>"; };
+		3DF6B1301E0D2E5C00399F94 /* Voice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Voice.mm; sourceTree = "<group>"; };
+		3DF6B1311E0D2E5C00399F94 /* VoiceConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceConverter.h; sourceTree = "<group>"; };
+		3DF6B1321E0D2E5C00399F94 /* VoiceConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VoiceConverter.mm; sourceTree = "<group>"; };
 		3DFB6BF01B6DC23B0072D175 /* mxedu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mxedu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DFB6BF41B6DC23B0072D175 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DFB6BF51B6DC23B0072D175 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1511,10 +1554,12 @@
 				3D92FDF81D03CF4B008E602F /* libiconv.tbd in Frameworks */,
 				3D92FDF61D03CF32008E602F /* Security.framework in Frameworks */,
 				3D76A89C1CB69A0900128955 /* VideoToolbox.framework in Frameworks */,
+				3DF6B1351E0D2E5C00399F94 /* libopencore-amrwb.a in Frameworks */,
 				3D76A89A1CB699F400128955 /* AudioToolbox.framework in Frameworks */,
 				3D92FDE21D03CEEA008E602F /* libUMSocial_Sdk_5.2.1.a in Frameworks */,
 				3D76A8981CB699E600128955 /* CoreMedia.framework in Frameworks */,
 				3D6F6C931CAEADCD00097DD0 /* CoreMotion.framework in Frameworks */,
+				3DF6B1341E0D2E5C00399F94 /* libopencore-amrnb.a in Frameworks */,
 				3D6F6C901CAEAC4600097DD0 /* QuartzCore.framework in Frameworks */,
 				3D6F6C8E1CAEAC2E00097DD0 /* CoreText.framework in Frameworks */,
 				3D6F6C8D1CAEAC1B00097DD0 /* CoreGraphics.framework in Frameworks */,
@@ -1826,9 +1871,16 @@
 		3D31C34C1D3E25FF008882C3 /* Message */ = {
 			isa = PBXGroup;
 			children = (
+				3DF6B1131E07DE2C00399F94 /* model */,
 				3D31C35E1D3E6838008882C3 /* view */,
+				3DC6ED4E1E00E1540062E542 /* MessageMainController.h */,
+				3DC6ED4F1E00E1540062E542 /* MessageMainController.m */,
 				3D31C34D1D3E262E008882C3 /* MessageViewController.h */,
 				3D31C34E1D3E262E008882C3 /* MessageViewController.m */,
+				3DC6ED551E00F7C20062E542 /* CommentMessageController.h */,
+				3DC6ED561E00F7C20062E542 /* CommentMessageController.m */,
+				3DC6ED641E07C93B0062E542 /* PraiseMessageViewController.h */,
+				3DC6ED651E07C93B0062E542 /* PraiseMessageViewController.m */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -1849,6 +1901,8 @@
 			children = (
 				3D31C3581D3E5E5B008882C3 /* Message.h */,
 				3D31C3591D3E5E5B008882C3 /* Message.m */,
+				3DF6B1171E07E3C500399F94 /* MessageCount.h */,
+				3DF6B1181E07E3C500399F94 /* MessageCount.m */,
 			);
 			name = message;
 			sourceTree = "<group>";
@@ -1858,6 +1912,10 @@
 			children = (
 				3D31C35F1D3E6862008882C3 /* MessageTableCell.h */,
 				3D31C3601D3E6862008882C3 /* MessageTableCell.m */,
+				3DC6ED581E0116150062E542 /* MessageCommonTableCell.h */,
+				3DC6ED591E0116150062E542 /* MessageCommonTableCell.m */,
+				3DF6B11A1E0A459D00399F94 /* MessageMainTableCell.h */,
+				3DF6B11B1E0A459D00399F94 /* MessageMainTableCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -2376,8 +2434,6 @@
 				3DC31F941DFBB2F0000A15DF /* CircleListTableCell.m */,
 				3D1D24851D2CA2BF00A7F418 /* CircleTableViewCell.h */,
 				3D1D24861D2CA2BF00A7F418 /* CircleTableViewCell.m */,
-				3D8531961D34D48C00105444 /* CircleToolbar.h */,
-				3D8531971D34D48C00105444 /* CircleToolbar.m */,
 				3DD4B92E1D2DEB74002FDC0E /* CircleDetailView.h */,
 				3DD4B92F1D2DEB74002FDC0E /* CircleDetailView.m */,
 				3DC31F8A1DF940A4000A15DF /* CustomProgress.h */,
@@ -2773,6 +2829,8 @@
 				3DA372CD1CD2523E0075F93C /* OlaCircle.m */,
 				3D7169DC1D339C83004B3ED6 /* Comment.h */,
 				3D7169DD1D339C83004B3ED6 /* Comment.m */,
+				3DC6ED5B1E07C4480062E542 /* CirclePraise.h */,
+				3DC6ED5C1E07C4480062E542 /* CirclePraise.m */,
 			);
 			name = circle;
 			sourceTree = "<group>";
@@ -2784,6 +2842,8 @@
 				3DA372D11CD252510075F93C /* VideoHistoryResult.m */,
 				3D68CDCA1D6F3A9F005CA17F /* CircleDetailResult.h */,
 				3D68CDCB1D6F3A9F005CA17F /* CircleDetailResult.m */,
+				3DC6ED5E1E07C7420062E542 /* PraiseListResult.h */,
+				3DC6ED5F1E07C7420062E542 /* PraiseListResult.m */,
 			);
 			name = circle;
 			sourceTree = "<group>";
@@ -3098,6 +3158,67 @@
 			path = THProgressView;
 			sourceTree = "<group>";
 		};
+		3DF6B1131E07DE2C00399F94 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				3DF6B1141E07DE3700399F94 /* MessageModel.h */,
+				3DF6B1151E07DE3700399F94 /* MessageModel.m */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
+		3DF6B1211E0D2E5C00399F94 /* AMRVoiceRecorder */ = {
+			isa = PBXGroup;
+			children = (
+				3DF6B1221E0D2E5C00399F94 /* amrwapper */,
+				3DF6B1251E0D2E5C00399F94 /* lib */,
+				3DF6B1281E0D2E5C00399F94 /* opencore-amrnb */,
+				3DF6B12B1E0D2E5C00399F94 /* opencore-amrwb */,
+				3DF6B12E1E0D2E5C00399F94 /* README.md */,
+				3DF6B12F1E0D2E5C00399F94 /* Voice.h */,
+				3DF6B1301E0D2E5C00399F94 /* Voice.mm */,
+				3DF6B1311E0D2E5C00399F94 /* VoiceConverter.h */,
+				3DF6B1321E0D2E5C00399F94 /* VoiceConverter.mm */,
+			);
+			path = AMRVoiceRecorder;
+			sourceTree = "<group>";
+		};
+		3DF6B1221E0D2E5C00399F94 /* amrwapper */ = {
+			isa = PBXGroup;
+			children = (
+				3DF6B1231E0D2E5C00399F94 /* amrFileCodec.h */,
+				3DF6B1241E0D2E5C00399F94 /* amrFileCodec.mm */,
+			);
+			path = amrwapper;
+			sourceTree = "<group>";
+		};
+		3DF6B1251E0D2E5C00399F94 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				3DF6B1261E0D2E5C00399F94 /* libopencore-amrnb.a */,
+				3DF6B1271E0D2E5C00399F94 /* libopencore-amrwb.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		3DF6B1281E0D2E5C00399F94 /* opencore-amrnb */ = {
+			isa = PBXGroup;
+			children = (
+				3DF6B1291E0D2E5C00399F94 /* interf_dec.h */,
+				3DF6B12A1E0D2E5C00399F94 /* interf_enc.h */,
+			);
+			path = "opencore-amrnb";
+			sourceTree = "<group>";
+		};
+		3DF6B12B1E0D2E5C00399F94 /* opencore-amrwb */ = {
+			isa = PBXGroup;
+			children = (
+				3DF6B12C1E0D2E5C00399F94 /* dec_if.h */,
+				3DF6B12D1E0D2E5C00399F94 /* if_rom.h */,
+			);
+			path = "opencore-amrwb";
+			sourceTree = "<group>";
+		};
 		3DFB6BE71B6DC23B0072D175 = {
 			isa = PBXGroup;
 			children = (
@@ -3244,6 +3365,7 @@
 		3DFB6C341B6DC9690072D175 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				3DF6B1211E0D2E5C00399F94 /* AMRVoiceRecorder */,
 				3DC31F5A1DF9343F000A15DF /* AFSoundManager */,
 				3DC31F661DF9343F000A15DF /* Audio */,
 				3DC31F6F1DF9343F000A15DF /* HSDownloadManager */,
@@ -4078,6 +4200,7 @@
 				3D1D246D1D2A3B9B00A7F418 /* QYImageUtil.m in Sources */,
 				3D9CB80C1D98CFFB00A3C9A1 /* QCSlideSwitchView.m in Sources */,
 				3DC597C51DD4A50E00720D9B /* Mistake.m in Sources */,
+				3DF6B1381E0D2E5C00399F94 /* VoiceConverter.mm in Sources */,
 				3DA967301D87F064001217C5 /* UIBaseViewController.m in Sources */,
 				3DFB6D511B6DD5050072D175 /* NSDate+MJ.m in Sources */,
 				3D11D5841BD49F2B00789D1F /* XLCycleScrollView.m in Sources */,
@@ -4098,13 +4221,13 @@
 				3D1D24691D2A3B9B00A7F418 /* PhotoPickerController.m in Sources */,
 				3D9D35B51C01E9FB007CE085 /* PopPickerView.m in Sources */,
 				3DBB189C1DC3852D003E8A65 /* GroupMemberController.m in Sources */,
-				3D8531981D34D48C00105444 /* CircleToolbar.m in Sources */,
 				3D1D24601D2A3B9B00A7F418 /* CXPhoto.m in Sources */,
 				3DA372CE1CD2523E0075F93C /* OlaCircle.m in Sources */,
 				3D1D24651D2A3B9B00A7F418 /* CXZoomingScrollView.m in Sources */,
 				3D6E71FA1CE31B03003ABA1C /* MJRefreshAutoStateFooter.m in Sources */,
 				3D6E720C1CE45FAE003ABA1C /* BannerListResult.m in Sources */,
 				3D6E71FD1CE31B03003ABA1C /* MJRefreshBackStateFooter.m in Sources */,
+				3DF6B1361E0D2E5C00399F94 /* README.md in Sources */,
 				3D9CB8071D97B5DD00A3C9A1 /* SUIBoundsRoundButton.m in Sources */,
 				3D9D35DE1C0892BA007CE085 /* PICircularProgressView.m in Sources */,
 				3DFB6D0F1B6DCAC40072D175 /* BSPhotoCell.m in Sources */,
@@ -4170,12 +4293,15 @@
 				3D68CE131D77C868005CA17F /* SubjectTableCell.m in Sources */,
 				3D461F981DCF5410004D3194 /* OrgInfoList.m in Sources */,
 				3D0AA3771D51DC7200D73D81 /* Homework.m in Sources */,
+				3DC6ED5D1E07C4480062E542 /* CirclePraise.m in Sources */,
 				3D11D5C61BD4D9AD00789D1F /* ASIFormDataRequest.m in Sources */,
 				3D6E72091CE36B7E003ABA1C /* VIPView.m in Sources */,
 				3D400ACC1DE94168009AFE61 /* mediaModel.m in Sources */,
+				3DF6B11C1E0A459D00399F94 /* MessageMainTableCell.m in Sources */,
 				3DFB6D081B6DCAC40072D175 /* BSPreviewCollectionViewCellFactory.m in Sources */,
 				3D9CB8161D9BA09600A3C9A1 /* CourseTableViewCell.m in Sources */,
 				3DFB6DA81B6DE2C10072D175 /* UserViewController.m in Sources */,
+				3DC6ED571E00F7C20062E542 /* CommentMessageController.m in Sources */,
 				3D11D5C21BD4D9AD00789D1F /* ASIAuthenticationDialog.m in Sources */,
 				3D2F0BBE1CE220D200C84CF0 /* VideoBoxResult.m in Sources */,
 				3DFB6CF41B6DCAC40072D175 /* BSShrinkAnimator.m in Sources */,
@@ -4203,6 +4329,7 @@
 				3D68CDD41D740B01005CA17F /* GroupTableCell.m in Sources */,
 				3DB122001BD798A7003D9437 /* VideoInfoResult.m in Sources */,
 				3D3B5F441BDE6FEC00652CF3 /* SearchResultController.m in Sources */,
+				3DC6ED601E07C7420062E542 /* PraiseListResult.m in Sources */,
 				3DFB6D281B6DCADB0072D175 /* MJPhoto.m in Sources */,
 				3DFB6D771B6DD5AA0072D175 /* LocationResult.m in Sources */,
 				3D1D24771D2A3CD800A7F418 /* ImageCell.m in Sources */,
@@ -4241,6 +4368,7 @@
 				3D68CE211D77C872005CA17F /* ChoiceTableCell.m in Sources */,
 				3D9CB8261D9E67AA00A3C9A1 /* DWBubbleMenuButton.m in Sources */,
 				3D9CB83D1DB1EA7C00A3C9A1 /* HomeworkStatisticsController.m in Sources */,
+				3DF6B1161E07DE3700399F94 /* MessageModel.m in Sources */,
 				3DFB6D5D1B6DD52C0072D175 /* UIBarButtonItem+Extension.m in Sources */,
 				3DFB6D731B6DD5AA0072D175 /* AuthResult.m in Sources */,
 				3DFB6C2D1B6DC92F0072D175 /* AuthManager.m in Sources */,
@@ -4256,6 +4384,7 @@
 				3D461F9B1DCF5496004D3194 /* OrgInfoListResult.m in Sources */,
 				3D31C34F1D3E262E008882C3 /* MessageViewController.m in Sources */,
 				3D68CE041D77C7FB005CA17F /* CreateGroupController.m in Sources */,
+				3DF6B1371E0D2E5C00399F94 /* Voice.mm in Sources */,
 				3D9D35C01C05825F007CE085 /* FeedbackViewController.m in Sources */,
 				3D6E71F71CE31B03003ABA1C /* MJRefreshHeader.m in Sources */,
 				3D9D35E41C0AED11007CE085 /* MyEnrollViewController.m in Sources */,
@@ -4307,6 +4436,7 @@
 				3DFB6C1C1B6DC91A0072D175 /* SysCommon.m in Sources */,
 				3D9CB8371DB1DCA700A3C9A1 /* ExchangeManager.m in Sources */,
 				3DAF99301CCE209F007835E3 /* AliPayResult.m in Sources */,
+				3DC6ED501E00E1540062E542 /* MessageMainController.m in Sources */,
 				3D9D296A1CE0B6B900F58E57 /* ExamFilterView.m in Sources */,
 				3DA372E41CDA285B0075F93C /* CollectionVideo.m in Sources */,
 				3DC31F561DF2B0DD000A15DF /* CommentViewController.m in Sources */,
@@ -4324,6 +4454,7 @@
 				3D68CDB91D655450005CA17F /* HomeTableCell.m in Sources */,
 				3D44E4971CBF73C800B34990 /* ApiXml.mm in Sources */,
 				3DFB6D571B6DD5190072D175 /* NSString+ContentCheck.m in Sources */,
+				3DF6B1191E07E3C500399F94 /* MessageCount.m in Sources */,
 				3D78EA691BF07B9900A0B111 /* OrganizationResult.m in Sources */,
 				3D7C9ED41CC790710040DE5A /* VIPSubController.m in Sources */,
 				3D68CDAD1D6447FE005CA17F /* Banner.m in Sources */,
@@ -4340,6 +4471,7 @@
 				3D400AD21DE941E3009AFE61 /* MediaCollectionViewCell.m in Sources */,
 				3D68CD9C1D61CA66005CA17F /* CourseListTableCell.m in Sources */,
 				3D400ADE1DEBF798009AFE61 /* MediaUploadResult.m in Sources */,
+				3DC6ED5A1E0116150062E542 /* MessageCommonTableCell.m in Sources */,
 				3D3B5F3E1BDE0DE400652CF3 /* ImageUtils.m in Sources */,
 				3D11D5C81BD4D9AE00789D1F /* ASIInputStream.m in Sources */,
 				3D9CB7DD1D97A67700A3C9A1 /* NSString+expand.m in Sources */,
@@ -4357,6 +4489,7 @@
 				3D9D35EA1C0B250F007CE085 /* CollectionListResult.m in Sources */,
 				3D67808A1BE893CF00F5055B /* CollectionSubController.m in Sources */,
 				3D68CDF41D77C776005CA17F /* HomeworkTableCell.m in Sources */,
+				3DF6B1331E0D2E5C00399F94 /* amrFileCodec.mm in Sources */,
 				3D1D245E1D2A3B9B00A7F418 /* CXBrowserNavBarView.m in Sources */,
 				3D1D24661D2A3B9B00A7F418 /* PhotoManager.m in Sources */,
 				3D3C46DF1CF9456400BF66CD /* CourBuyViewController.m in Sources */,
@@ -4461,6 +4594,7 @@
 				3DB121FA1BD73DBA003D9437 /* CoursePoint.m in Sources */,
 				3DA372D21CD252510075F93C /* VideoHistoryResult.m in Sources */,
 				3D68CDD81D741C42005CA17F /* GroupManager.m in Sources */,
+				3DC6ED661E07C93B0062E542 /* PraiseMessageViewController.m in Sources */,
 				3DFD14F51DB759DC0061F1EB /* CoinRuleController.m in Sources */,
 				3DBBE3B81CF6FA970038F29E /* DownloadModal.m in Sources */,
 				3DD4B9301D2DEB74002FDC0E /* CircleDetailView.m in Sources */,
@@ -4554,7 +4688,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -4592,7 +4726,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -4643,6 +4777,7 @@
 					"$(PROJECT_DIR)/mxedu/Course/ucloud/lib/Player",
 					"$(PROJECT_DIR)/mxedu/ThirdParty/UMessage_Sdk_1.3.0",
 					"$(PROJECT_DIR)/mxedu/ThirdParty/Audio",
+					"$(PROJECT_DIR)/mxedu/ThirdParty/AMRVoiceRecorder/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.michen.olaxueyuan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4695,6 +4830,7 @@
 					"$(PROJECT_DIR)/mxedu/Course/ucloud/lib/Player",
 					"$(PROJECT_DIR)/mxedu/ThirdParty/UMessage_Sdk_1.3.0",
 					"$(PROJECT_DIR)/mxedu/ThirdParty/Audio",
+					"$(PROJECT_DIR)/mxedu/ThirdParty/AMRVoiceRecorder/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.michen.olaxueyuan;
 				PRODUCT_NAME = "$(TARGET_NAME)";

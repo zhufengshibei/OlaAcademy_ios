@@ -33,6 +33,8 @@ typedef enum
 @property (nonatomic, assign) CGRect textFrame;
 /**图片frame*/
 @property (nonatomic, assign) CGRect imageFrame;
+/**点赞frame*/
+@property (nonatomic, assign) CGRect praiseFrame;
 /**时间frame*/
 @property (nonatomic, assign) CGRect timeFrame;
 

@@ -9,8 +9,19 @@
 #import <UIKit/UIKit.h>
 
 #import "OlaCircle.h"
+#import "User.h"
+
+@protocol CircleListTableCellDelegate <NSObject>
+
+-(void)didClickUserAvatar:(User*)userInfo;
+
+@end
 
 @interface CircleListTableCell : UITableViewCell
+
+@property (nonatomic) id<CircleListTableCellDelegate> delegate;
+
+@property (nonatomic) OlaCircle *olaCircle;
 
 -(void)setupCellWithModel:(OlaCircle*)circle;
 

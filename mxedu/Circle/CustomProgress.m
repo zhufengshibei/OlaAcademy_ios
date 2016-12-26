@@ -52,11 +52,11 @@
         [leftimg.layer setMasksToBounds:YES];
         [self addSubview:leftimg];
         
-        presentlab = [[UILabel alloc] initWithFrame:bgimg.bounds];
-        presentlab.textAlignment = NSTextAlignmentCenter;
+        presentlab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width-15, self.frame.size.height)];
+        presentlab.textAlignment = NSTextAlignmentRight;
         
         presentlab.textColor = [UIColor whiteColor];
-        presentlab.font = [UIFont systemFontOfSize:16];
+        presentlab.font = [UIFont systemFontOfSize:15];
         [self addSubview:presentlab];
 
         //添加动画
@@ -410,7 +410,7 @@
     
     //赋值..
     
-    presentlab.text = [NSString stringWithFormat:@"%.1f/%.1f",present,self.maxValue];
+    presentlab.text = [NSString stringWithFormat:@"%.1f",self.maxValue-present];
     leftimg.frame = CGRectMake(0, 0, self.frame.size.width/self.maxValue*present, self.frame.size.height);
 }
 

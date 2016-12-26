@@ -30,7 +30,7 @@
 @property (nonatomic, weak) UIImageView *mediaView;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, weak) UILabel *timeLabel;
-@property (nonatomic, weak) UILabel *localLabel;
+@property (nonatomic, weak) UIButton *praiseBtn;
 
 @end
 @implementation CommentCell
@@ -80,7 +80,7 @@
         [audioProgress addSubview:audioL];
         
         [audioL mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(audioProgress).offset(GENERAL_SIZE(60));
+            make.left.equalTo(audioProgress).offset(GENERAL_SIZE(70));
             make.centerY.equalTo(audioProgress);
         }];
         
@@ -136,17 +136,18 @@
         
         UILabel *timeL = [[UILabel alloc] init];
         timeL.font = LabelFont(24);
-        timeL.textColor = [UIColor grayColor];
+        timeL.textColor = RGBCOLOR(165, 165, 165);
         timeL.textAlignment = NSTextAlignmentRight;
         [self addSubview:timeL];
         self.timeLabel = timeL;
         
-        UILabel *localL = [[UILabel alloc] init];
-        localL.font = [UIFont systemFontOfSize:12.0];
-        localL.textColor = [UIColor grayColor];
-        localL.contentMode = UIViewContentModeTopRight;
-        [self addSubview:localL];
-        self.localLabel = localL;
+        UIButton *praiseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [praiseBtn setImage:[UIImage imageNamed:@"ic_praise"] forState:UIControlStateNormal];
+        [praiseBtn setImageEdgeInsets:UIEdgeInsetsMake(0.0, -GENERAL_SIZE(10), 0.0, 0.0)];
+        praiseBtn.titleLabel.font = LabelFont(24);
+        [praiseBtn setTitleColor:RGBCOLOR(165, 165, 165) forState:UIControlStateNormal];
+        [self addSubview:praiseBtn];
+        self.praiseBtn = praiseBtn;
         
         UIView *lineView =[[UIView alloc]init];
         lineView.backgroundColor = RGBCOLOR(235, 235, 235);
@@ -198,6 +199,7 @@
     self.collectionView.frame = commentR.imageFrame;
     self.audioProgress.frame = commentR.audioFrame;
     self.timeLabel.frame = commentR.timeFrame;
+    self.praiseBtn.frame = commentR.praiseFrame;
     self.audioProgress.sdmodel = _comment;
     
     if (_comment.audioUrls&&![_comment.audioUrls isEqualToString:@""]) {
@@ -228,7 +230,7 @@
         self.content.text = _comment.content;
     }
     self.timeLabel.text = _comment.passtime;
-    self.localLabel.text = _comment.local;
+    [self.praiseBtn setTitle:_comment.like_count forState:UIControlStateNormal];
     // 图片
     picArray = [NSMutableArray arrayWithCapacity:0];
     NSArray *array = [_comment.imageIds componentsSeparatedByString:@","];

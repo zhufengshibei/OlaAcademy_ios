@@ -83,6 +83,9 @@
 @property (nonatomic, strong, readonly) RKObjectMapping* messageListResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* unreadMessageResultMapping;
 
+//消息 － 点赞列表
+@property (nonatomic, strong, readonly) RKObjectMapping* praiseListResultMapping;
+
 @property (nonatomic, strong, readonly) RKObjectMapping* statusResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* thirdPayResultMapping;
 

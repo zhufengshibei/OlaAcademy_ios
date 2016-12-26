@@ -39,9 +39,11 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
 
+#import "OtherUserController.h"
+
 #define COMMENT_INPUTVIEW_OFFSET_FOR_KEYBOARD 0
 
-@interface CommentViewController ()<UITableViewDataSource,UITableViewDelegate,CommentAudioViewDelegate,CommentMediaViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UMSocialUIDelegate,ShareSheetDelegate,CircleToolbarDelegate,CommentCellDelegate,CustomProgressDelegate>
+@interface CommentViewController ()<UITableViewDataSource,UITableViewDelegate,CommentAudioViewDelegate,CommentMediaViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UMSocialUIDelegate,ShareSheetDelegate,CommentCellDelegate,CustomProgressDelegate,CircleViewDelegate>
 
 @property (nonatomic) CircleFrame* circleFrame;
 
@@ -234,7 +236,13 @@
 
 -(void)loadCircleDetail{
     CircleManager *cm = [[CircleManager alloc] init];
-    [cm fetchCircleDetailWithId:_postId Success:^(CircleDetailResult *result) {
+    NSString *userId = @"";
+    AuthManager *am = [AuthManager sharedInstance];
+    if (am.isAuthenticated) {
+        userId = am.userInfo.userId;
+    }
+    [cm fetchCircleDetailWithId:_postId UserId: userId
+                        Success:^(CircleDetailResult *result) {
         CircleFrame *frame = [[CircleFrame alloc]init];
         frame.result = result.circleDetail;
         self.circleFrame = frame;
@@ -412,7 +420,7 @@
         if (self.circleFrame) {
             detail.statusFrame = self.circleFrame;
         }
-        detail.detailView.toolBar.delegate = self;
+        detail.detailView.delegate = self;
         return detail;
     }
     CommentCell *cell = [CommentCell cellWithTableView:tableView];
@@ -427,7 +435,7 @@
     if (section==0) {
         return 0.01;
     }else{
-        return 35;
+        return GENERAL_SIZE(80);
     }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -436,20 +444,15 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     if(section==1){
-        UIView *dividerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 2)];
-        dividerView.backgroundColor = BACKGROUNDCOLOR;
         
-        UIImageView *messageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 5, 3, 20)];
-        messageView.backgroundColor = [UIColor redColor];
         UILabel *myLabel = [[UILabel alloc] init];
-        myLabel.frame = CGRectMake(15, 6, 100, 20);
-        myLabel.font = [UIFont boldSystemFontOfSize:14];
+        myLabel.frame = CGRectMake(GENERAL_SIZE(20), 0, 100, GENERAL_SIZE(80));
+        myLabel.font = LabelFont(28);
+        myLabel.textColor = RGBCOLOR(81, 81, 81);
         myLabel.text = @"全部评论";
         
         UIView *headerView = [[UIView alloc] init];
-        headerView.backgroundColor = [UIColor whiteColor];
-        [headerView addSubview:dividerView];
-        [headerView addSubview:messageView];
+        headerView.backgroundColor = RGBCOLOR(235, 235, 235);
         [headerView addSubview:myLabel];
         
         return headerView;
@@ -672,7 +675,15 @@
     return result;
 }
 
-#pragma Toolbar Delegate
+#pragma CircleViewDelegate
+// 点击头像
+-(void)didClickUserAvatar:(User *)userInfo{
+    OtherUserController * otherVC = [[OtherUserController alloc]init];
+    otherVC.userInfo = userInfo;
+    otherVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:otherVC animated:YES];
+}
+
 // 点赞
 -(void) didClickLove:(OlaCircle *)circle{
     CircleManager *cm = [[CircleManager alloc]init];

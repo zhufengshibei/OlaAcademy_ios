@@ -11,6 +11,7 @@
 #import "LCAudioRecord.h"
 #import <AVFoundation/AVFoundation.h>
 #import "lame.h"
+#import "VoiceConverter.h"
 
 #define audioRecordDurationTooShort -100
 #define audioRecordStoping -101
@@ -169,25 +170,43 @@ typedef NS_ENUM(NSInteger, audioSession){
     
     [self setCategory:audioSessionPlay isActive:YES];
     
-    NSString *mp3FilePath = [self MP3FilePath:recordPath];
-    
-    if (![[NSFileManager defaultManager] fileExistsAtPath:mp3FilePath]) { // 如果没有转化成功,尝试再次转换
-        BOOL convertResult = [self convertWAV:recordPath toMP3:mp3FilePath];
-        if (convertResult) {
-            // 删除录的wav
+    //处理android amr
+    if([[recordPath pathExtension] isEqualToString:@"amr"]){
+        int convertResult = [VoiceConverter ConvertAmrToWav:recordPath wavSavePath:[self WAVFilePath:recordPath]];
+        if (convertResult==1) {
+            // 删除录的amr
             [[NSFileManager defaultManager] removeItemAtPath:recordPath error:nil];
         } else {
             if (completion) completion([NSError errorWithDomain:NSLocalizedString(@"LCAudio.recordConvertionFailure", @"转换文件失败") code:audioRecordConvertionFailure userInfo:nil]);
             
             return;
         }
+        //从第几秒开始 播放..
+        [[LCAudioPlay sharedInstance] playingWithPath:[self WAVFilePath:recordPath] atTime:time completion:^(NSError *error) {
+            [self setCategory:audioSessionDefault isActive:NO];
+            if (completion) completion(error);
+        }];
+    }else{
+        NSString *mp3FilePath = [self MP3FilePath:recordPath];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:mp3FilePath]) { // 如果没有转化成功,尝试再次转换
+            BOOL convertResult = [self convertWAV:recordPath toMP3:mp3FilePath];
+            if (convertResult) {
+                // 删除录的wav
+                [[NSFileManager defaultManager] removeItemAtPath:recordPath error:nil];
+            } else {
+                if (completion) completion([NSError errorWithDomain:NSLocalizedString(@"LCAudio.recordConvertionFailure", @"转换文件失败") code:audioRecordConvertionFailure userInfo:nil]);
+                
+                return;
+            }
+        }
+        
+        //从第几秒开始 播放..
+        [[LCAudioPlay sharedInstance] playingWithPath:[self MP3FilePath:recordPath] atTime:time completion:^(NSError *error) {
+            [self setCategory:audioSessionDefault isActive:NO];
+            if (completion) completion(error);
+        }];
+
     }
-    
-    //从第几秒开始 播放..
-    [[LCAudioPlay sharedInstance] playingWithPath:[self MP3FilePath:recordPath] atTime:time completion:^(NSError *error) {
-        [self setCategory:audioSessionDefault isActive:NO];
-        if (completion) completion(error);
-    }];
 }
 
 

@@ -106,6 +106,7 @@
  *  @param failure <#failure description#>
  */
 -(void)fetchCircleDetailWithId:(NSString*)circleId
+                        UserId:(NSString*)userId
                        Success:(void(^)(CircleDetailResult *result))success
                        Failure:(void(^)(NSError* error))failure{
     DataMappingManager *dm = GetDataManager();
@@ -115,7 +116,9 @@
     
     [om addResponseDescriptor:responseDescriptor];
     // 采用post方式，get方式可能产生中文乱码
-    [om postObject:nil path:@"/ola/circle/queryCircleDetail" parameters:@{@"circleId": circleId
+    [om postObject:nil path:@"/ola/circle/queryCircleDetail" parameters:@{
+                                                                    @"circleId": circleId,
+                                                                    @"userId":   userId
                                                                          }
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                if ([mappingResult.firstObject isKindOfClass:[CircleDetailResult class]]) {
@@ -166,6 +169,44 @@
                }
            }];
     
+}
+
+/**
+ *  点赞列表
+ *
+ *  @param success <#success description#>
+ *  @param failure <#failure description#>
+ */
+-(void)fetchPraiseListWithUserId:(NSString*)userId
+                        PraiseId:(NSString*)praiseId
+                        PageSize:(NSString*)pageSize
+                         Success:(void(^)(PraiseListResult *result))success
+                         Failure:(void(^)(NSError* error))failure{
+    DataMappingManager *dm = GetDataManager();
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.praiseListResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
+    // 通过shareManager 共享 baseurl及请求头等
+    RKObjectManager* om = [RKObjectManager sharedManager];
+    
+    [om addResponseDescriptor:responseDescriptor];
+    // 采用post方式，get方式可能产生中文乱码
+    [om postObject:nil path:@"/ola/circle/getPraiseList" parameters:@{@"userId": userId,
+                                                                      @"praiseId": praiseId,
+                                                                      @"pageSize": pageSize
+                                                                        }
+           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+               if ([mappingResult.firstObject isKindOfClass:[PraiseListResult class]]) {
+                   PraiseListResult *result = mappingResult.firstObject;
+                   if (success != nil) {
+                       success(result);
+                   }
+               }
+               
+           }
+           failure:^(RKObjectRequestOperation *operation, NSError *error) {
+               if (failure != nil) {
+                   failure(error);
+               }
+           }];
 }
 
 

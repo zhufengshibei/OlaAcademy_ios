@@ -42,6 +42,8 @@ typedef enum
 @property(nonatomic,copy)NSString *opproveStatus;
 
 @property(nonatomic,copy)NSString *content;//评论内容
+@property(nonatomic,copy)NSString *postId;//帖子ID
+@property(nonatomic,copy)NSString *title;//帖子标题
 
 @property(nonatomic,copy)NSString *imageIds;
 @property(nonatomic,copy)NSString *videoUrls;
@@ -53,12 +55,14 @@ typedef enum
 @property(nonatomic,copy)NSString *passtime;//发帖时间
 
 @property(nonatomic,copy)NSString *like_count;//点赞数
+@property(nonatomic,copy)NSString *isPraised; //是否对回复点赞
 
 @property(nonatomic,copy)NSString *data_id;//评论 的ID
 
 @property(nonatomic,copy)NSString *rpyToUserId; //被回复人id
 @property(nonatomic,copy)NSString *rpyToUserName;// 被回复人name
-@property(nonatomic,copy)NSString *isPraised; //是否对回复点赞
+
+@property(nonatomic,copy)NSString *isRead; //是否已读
 
 @property (nonatomic,assign) SoundType type;
 @property (nonatomic,copy) NSString * recordPath;

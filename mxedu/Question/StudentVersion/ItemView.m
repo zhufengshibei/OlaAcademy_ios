@@ -27,7 +27,7 @@
     {
         countLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 15, SCREEN_WIDTH/3.0, 20)];
         countLabel.textColor = RGBCOLOR(255, 102, 90);
-        titileLabel.font = LabelFont(36);
+        countLabel.font = LabelFont(36);
         countLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:countLabel];
         

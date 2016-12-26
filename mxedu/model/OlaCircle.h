@@ -22,6 +22,7 @@
 @property (nonatomic) NSString *imageGids;
 @property (nonatomic) NSString *praiseNumber;
 @property (nonatomic) NSString *readNumber;
+@property (nonatomic) NSString *commentNumber;
 @property (nonatomic) NSString *type; // 1 观看记录 2 发帖
 @property (nonatomic) NSString *time;
 

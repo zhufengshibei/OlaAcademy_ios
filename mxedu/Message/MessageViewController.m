@@ -33,12 +33,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"消息中心";
-    [self setupBackButton];
+    self.title = @"系统消息";
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-UI_NAVIGATION_BAR_HEIGHT-UI_STATUS_BAR_HEIGHT)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
+    _tableView.backgroundColor = RGBCOLOR(235, 235, 235);
     [self.view addSubview:_tableView];
     
     _dataArray = [NSMutableArray arrayWithCapacity:0];
@@ -55,21 +55,6 @@
     }];
     
     [self setupData:@""];
-}
-
-- (void)setupBackButton
-{
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:[UIImage imageNamed:@"ic_back"] forState:UIControlStateNormal];
-    [backBtn sizeToFit];
-    [backBtn addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
-}
-
--(void)backButtonClicked{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)setupData:(NSString*)messageId{

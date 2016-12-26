@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QuestionResultViewController : UIViewController
+#import "UIBaseViewController.h"
+
+@interface QuestionResultViewController : UIBaseViewController
 
 @property (nonatomic) NSArray *answerArray;
 @property (nonatomic) NSString *objectId;
