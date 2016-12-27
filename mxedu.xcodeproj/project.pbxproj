@@ -413,6 +413,7 @@
 		3DD371C31DD2BBEF00FFA2DF /* CommodityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DD371C21DD2BBEF00FFA2DF /* CommodityView.m */; };
 		3DD4B92D1D2CA5B5002FDC0E /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DD4B92C1D2CA5B5002FDC0E /* Util.m */; };
 		3DD4B9301D2DEB74002FDC0E /* CircleDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DD4B92F1D2DEB74002FDC0E /* CircleDetailView.m */; };
+		3DF139A41E12A8DC00DB47B6 /* UserPostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF139A31E12A8DC00DB47B6 /* UserPostTableCell.m */; };
 		3DF69E061C994BBA002F33DC /* Correctness.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF69E051C994BBA002F33DC /* Correctness.m */; };
 		3DF69E0A1C9995A2002F33DC /* THProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF69E091C9995A2002F33DC /* THProgressView.m */; };
 		3DF6B1161E07DE3700399F94 /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF6B1151E07DE3700399F94 /* MessageModel.m */; };
@@ -1317,6 +1318,8 @@
 		3DD4B92C1D2CA5B5002FDC0E /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
 		3DD4B92E1D2DEB74002FDC0E /* CircleDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleDetailView.h; sourceTree = "<group>"; };
 		3DD4B92F1D2DEB74002FDC0E /* CircleDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleDetailView.m; sourceTree = "<group>"; };
+		3DF139A21E12A8DC00DB47B6 /* UserPostTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPostTableCell.h; sourceTree = "<group>"; };
+		3DF139A31E12A8DC00DB47B6 /* UserPostTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPostTableCell.m; sourceTree = "<group>"; };
 		3DF69E041C994BBA002F33DC /* Correctness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Correctness.h; sourceTree = "<group>"; };
 		3DF69E051C994BBA002F33DC /* Correctness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Correctness.m; sourceTree = "<group>"; };
 		3DF69E081C9995A2002F33DC /* THProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THProgressView.h; sourceTree = "<group>"; };
@@ -2457,6 +2460,8 @@
 				3D7169E01D339D02004B3ED6 /* CommentCell.m */,
 				3D9CB7941D94F64D00A3C9A1 /* OtherHeadView.h */,
 				3D9CB7951D94F64D00A3C9A1 /* OtherHeadView.m */,
+				3DF139A21E12A8DC00DB47B6 /* UserPostTableCell.h */,
+				3DF139A31E12A8DC00DB47B6 /* UserPostTableCell.m */,
 				3D400AD01DE941E3009AFE61 /* MediaCollectionViewCell.h */,
 				3D400AD11DE941E3009AFE61 /* MediaCollectionViewCell.m */,
 				3D0C49811D3499F400E752B1 /* CustomInputView.h */,
@@ -4226,6 +4231,7 @@
 				3D461F881DC77858004D3194 /* MaterialBrowseController.m in Sources */,
 				3D1D246A1D2A3B9B00A7F418 /* QYViewController+PhotoPicker.m in Sources */,
 				3DA967261D87A1CD001217C5 /* UserCellModel.m in Sources */,
+				3DF139A41E12A8DC00DB47B6 /* UserPostTableCell.m in Sources */,
 				3D68CDF51D77C776005CA17F /* HomeworkTableViewObject.m in Sources */,
 				3DA3A8DF1BF7331300670675 /* Teacher.m in Sources */,
 				3D1D24691D2A3B9B00A7F418 /* PhotoPickerController.m in Sources */,

@@ -15,9 +15,11 @@
 #import "AttentionManager.h"
 #import "HMSegmentedControl.h"
 #import "CircleManager.h"
+#import "UserPostTableCell.h"
 
 @interface OtherUserController ()<UITableViewDelegate,UITableViewDataSource>
 
+@property (nonatomic) UserPost *userPost;
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) NSArray *dataArray;
 @property (nonatomic) OtherHeadView *headView;
@@ -46,7 +48,9 @@
 -(void)fetchUserData{
     CircleManager *cm = [[CircleManager alloc]init];
     [cm fetchUserPostListWithUserId:_userInfo.userId Success:^(UserPostResult *result) {
-        
+        _userPost = result.userPost;
+        _dataArray = result.userPost.deployList;
+        [_tableView reloadData];
     } Failure:^(NSError *error) {
         
     }];
@@ -86,8 +90,17 @@
     segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     segmentedControl.backgroundColor = [UIColor whiteColor];
     segmentedControl.segmentWidthStyle = HMSegmentedControlSegmentWidthStyleFixed;
-    
+        
     [view addSubview:segmentedControl];
+    
+    [segmentedControl setIndexChangeBlock:^(NSInteger index) {
+        if (index==0) {
+            _dataArray = _userPost.deployList;
+        }else{
+            _dataArray = _userPost.replyList;
+        }
+        [_tableView reloadData];
+    }];
     return view;
 }
 
@@ -96,11 +109,14 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return nil;
+    UserPostTableCell *cell = [[UserPostTableCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"userPostTableCell"];
+    OlaCircle *circle = [_dataArray objectAtIndex:indexPath.row];
+    [cell setupCell:circle];
+    return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return GENERAL_SIZE(320);
+    return GENERAL_SIZE(130);
 }
 
 - (void)didReceiveMemoryWarning {
