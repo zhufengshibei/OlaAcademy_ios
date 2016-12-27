@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2CED9B1FF46FE387603D627F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1637B2E5C404FE6BC5180B3 /* libPods.a */; };
 		3D05E9D01D8E2C3800BFC309 /* PDFView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D05E9CF1D8E2C3800BFC309 /* PDFView.m */; };
 		3D06A6281CA7A26D00DA379E /* SDGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D06A61E1CA7A26D00DA379E /* SDGroupCell.m */; };
 		3D06A6291CA7A26D00DA379E /* SDGroupCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D06A61F1CA7A26D00DA379E /* SDGroupCell.xib */; };
@@ -525,6 +524,7 @@
 		3DFD14FB1DB7A4950061F1EB /* CoinHistoryListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD14FA1DB7A4950061F1EB /* CoinHistoryListResult.m */; };
 		3DFD14FE1DB7A4C70061F1EB /* CoinHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD14FD1DB7A4C70061F1EB /* CoinHistory.m */; };
 		3DFD15011DB8C0310061F1EB /* CoinHistoryTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD15001DB8C0310061F1EB /* CoinHistoryTableCell.m */; };
+		9603FE3105D2A2DC2CD094FD /* libPods-mxedu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 086002AE60181BFE4DF1D0B1 /* libPods-mxedu.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -538,6 +538,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		086002AE60181BFE4DF1D0B1 /* libPods-mxedu.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mxedu.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D05E9CE1D8E2C3800BFC309 /* PDFView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFView.h; sourceTree = "<group>"; };
 		3D05E9CF1D8E2C3800BFC309 /* PDFView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFView.m; sourceTree = "<group>"; };
 		3D06A61D1CA7A26D00DA379E /* SDGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDGroupCell.h; path = ../SDNestedTable/SDGroupCell.h; sourceTree = "<group>"; };
@@ -1541,9 +1542,8 @@
 		3DFD14FD1DB7A4C70061F1EB /* CoinHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoinHistory.m; sourceTree = "<group>"; };
 		3DFD14FF1DB8C0310061F1EB /* CoinHistoryTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoinHistoryTableCell.h; sourceTree = "<group>"; };
 		3DFD15001DB8C0310061F1EB /* CoinHistoryTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoinHistoryTableCell.m; sourceTree = "<group>"; };
-		6E6F1B37F787F7E058AF8789 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		75D2527A35C8627F4FF53FD6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		A1637B2E5C404FE6BC5180B3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E2B9AB13312D1523BACB905 /* Pods-mxedu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mxedu.release.xcconfig"; path = "Pods/Target Support Files/Pods-mxedu/Pods-mxedu.release.xcconfig"; sourceTree = "<group>"; };
+		E7CC2CC5BC95CEAF093BE42E /* Pods-mxedu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mxedu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mxedu/Pods-mxedu.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1587,7 +1587,7 @@
 				3D44E49A1CBF73C800B34990 /* libWeChatSDK.a in Frameworks */,
 				3D6F6C871CAEA8F600097DD0 /* libssl.a in Frameworks */,
 				3D92FDF21D03CEEA008E602F /* libSocialWechat.a in Frameworks */,
-				2CED9B1FF46FE387603D627F /* libPods.a in Frameworks */,
+				9603FE3105D2A2DC2CD094FD /* libPods-mxedu.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1601,6 +1601,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15794BC670932387D91E03F2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E7CC2CC5BC95CEAF093BE42E /* Pods-mxedu.debug.xcconfig */,
+				5E2B9AB13312D1523BACB905 /* Pods-mxedu.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		279170BD8F854FD447C42044 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1627,7 +1636,7 @@
 				3D6F6C741CAEA75E00097DD0 /* AlipaySDK.framework */,
 				3D3B5F391BDDF09000652CF3 /* AVFoundation.framework */,
 				3D3B5F371BDDF08200652CF3 /* CoreMedia.framework */,
-				A1637B2E5C404FE6BC5180B3 /* libPods.a */,
+				086002AE60181BFE4DF1D0B1 /* libPods-mxedu.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3235,8 +3244,8 @@
 				3DFB6BF21B6DC23B0072D175 /* mxedu */,
 				3DFB6C0C1B6DC23B0072D175 /* mxeduTests */,
 				3DFB6BF11B6DC23B0072D175 /* Products */,
-				5C057EFB7DDE7D6F599D82ED /* Pods */,
 				279170BD8F854FD447C42044 /* Frameworks */,
+				15794BC670932387D91E03F2 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -3966,15 +3975,6 @@
 			name = Intro;
 			sourceTree = "<group>";
 		};
-		5C057EFB7DDE7D6F599D82ED /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				75D2527A35C8627F4FF53FD6 /* Pods.debug.xcconfig */,
-				6E6F1B37F787F7E058AF8789 /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3982,12 +3982,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3DFB6C131B6DC23B0072D175 /* Build configuration list for PBXNativeTarget "mxedu" */;
 			buildPhases = (
-				7C366CDB3566EB1E70541D4A /* Check Pods Manifest.lock */,
+				A4A521EFC3FA92A730BAEFEF /* [CP] Check Pods Manifest.lock */,
 				3DFB6BEC1B6DC23B0072D175 /* Sources */,
 				3DFB6BED1B6DC23B0072D175 /* Frameworks */,
 				3DFB6BEE1B6DC23B0072D175 /* Resources */,
-				D3DE81BEDD6B07BEF935F206 /* Copy Pods Resources */,
-				F1E99EBE953FF809EE8964D3 /* Embed Pods Frameworks */,
+				A8278FBC12F9D38157D12E3C /* [CP] Embed Pods Frameworks */,
+				82EF9B3DBD8942A9B0EA1D96 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -4028,7 +4028,7 @@
 					3DFB6BEF1B6DC23B0072D175 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 5Z4N7H7ALF;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.OMC = {
 								enabled = 1;
@@ -4131,49 +4131,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7C366CDB3566EB1E70541D4A /* Check Pods Manifest.lock */ = {
+		82EF9B3DBD8942A9B0EA1D96 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mxedu/Pods-mxedu-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D3DE81BEDD6B07BEF935F206 /* Copy Pods Resources */ = {
+		A4A521EFC3FA92A730BAEFEF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		F1E99EBE953FF809EE8964D3 /* Embed Pods Frameworks */ = {
+		A8278FBC12F9D38157D12E3C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mxedu/Pods-mxedu-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -4747,7 +4747,7 @@
 		};
 		3DFB6C141B6DC23B0072D175 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 75D2527A35C8627F4FF53FD6 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = E7CC2CC5BC95CEAF093BE42E /* Pods-mxedu.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mxedu/mxedu.entitlements;
@@ -4793,19 +4793,19 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.michen.olaxueyuan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "848dd8b0-97cc-4fff-8194-fcfb8f28e069";
+				PROVISIONING_PROFILE_SPECIFIER = dev_olaxueyuan;
 			};
 			name = Debug;
 		};
 		3DFB6C151B6DC23B0072D175 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6E6F1B37F787F7E058AF8789 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 5E2B9AB13312D1523BACB905 /* Pods-mxedu.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mxedu/mxedu.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 5Z4N7H7ALF;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4846,8 +4846,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.michen.olaxueyuan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "4502872b-7eca-4d59-a6bf-cfa8994e1f06";
+				PROVISIONING_PROFILE_SPECIFIER = adhoc_olaxueyuan;
 			};
 			name = Release;
 		};
