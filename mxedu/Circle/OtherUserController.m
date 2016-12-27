@@ -26,7 +26,9 @@
 
 @end
 
-@implementation OtherUserController
+@implementation OtherUserController{
+    HMSegmentedControl *segmentedControl;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -76,31 +78,33 @@
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, GENERAL_SIZE(100))];
     view.backgroundColor = RGBCOLOR(235, 235, 235);
     
-    HMSegmentedControl *segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, GENERAL_SIZE(20), SCREEN_WIDTH, GENERAL_SIZE(78))];
-    segmentedControl.sectionTitles = @[@"TA的提问",@"TA的回答"];
-    segmentedControl.selectedSegmentIndex = 0;
-    
-    segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : RGBCOLOR(81, 84, 93), NSFontAttributeName : LabelFont(32)};
-    segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : COMMONBLUECOLOR, NSFontAttributeName: LabelFont(32)};
-    segmentedControl.selectionIndicatorColor = COMMONBLUECOLOR;
-    segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
-    segmentedControl.selectionIndicatorHeight = 2;
-    segmentedControl.selectionIndicatorBoxOpacity = 0;
-    
-    segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-    segmentedControl.backgroundColor = [UIColor whiteColor];
-    segmentedControl.segmentWidthStyle = HMSegmentedControlSegmentWidthStyleFixed;
+    if (!segmentedControl) {
+        segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, GENERAL_SIZE(20), SCREEN_WIDTH, GENERAL_SIZE(78))];
+        segmentedControl.sectionTitles = @[@"TA的提问",@"TA的回答"];
+        segmentedControl.selectedSegmentIndex = 0;
         
+        segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : RGBCOLOR(81, 84, 93), NSFontAttributeName : LabelFont(32)};
+        segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : COMMONBLUECOLOR, NSFontAttributeName: LabelFont(32)};
+        segmentedControl.selectionIndicatorColor = COMMONBLUECOLOR;
+        segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
+        segmentedControl.selectionIndicatorHeight = 2;
+        segmentedControl.selectionIndicatorBoxOpacity = 0;
+        
+        segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+        segmentedControl.backgroundColor = [UIColor whiteColor];
+        segmentedControl.segmentWidthStyle = HMSegmentedControlSegmentWidthStyleFixed;
+        
+        __weak OtherUserController* wself = self;
+        [segmentedControl setIndexChangeBlock:^(NSInteger index) {
+            if (index==0) {
+                _dataArray = _userPost.deployList;
+            }else{
+                _dataArray = _userPost.replyList;
+            }
+            [wself.tableView reloadData];
+        }];
+    }
     [view addSubview:segmentedControl];
-    
-    [segmentedControl setIndexChangeBlock:^(NSInteger index) {
-        if (index==0) {
-            _dataArray = _userPost.deployList;
-        }else{
-            _dataArray = _userPost.replyList;
-        }
-        [_tableView reloadData];
-    }];
     return view;
 }
 
