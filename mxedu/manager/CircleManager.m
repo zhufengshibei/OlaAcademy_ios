@@ -100,6 +100,41 @@
 }
 
 /**
+ *  个人主页
+ *
+ *  @param success <#success description#>
+ *  @param failure <#failure description#>
+ */
+-(void)fetchUserPostListWithUserId:(NSString*)userId
+                           Success:(void(^)(UserPostResult *result))success
+                           Failure:(void(^)(NSError* error))failure{
+    DataMappingManager *dm = GetDataManager();
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:dm.userPostResultMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
+    // 通过shareManager 共享 baseurl及请求头等
+    RKObjectManager* om = [RKObjectManager sharedManager];
+    
+    [om addResponseDescriptor:responseDescriptor];
+    // 采用post方式，get方式可能产生中文乱码
+    [om postObject:nil path:@"/ola/circle/getUserPostList" parameters:@{@"userId": userId
+                                                                      }
+           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+               if ([mappingResult.firstObject isKindOfClass:[UserPostResult class]]) {
+                   UserPostResult *result = mappingResult.firstObject;
+                   if (success != nil) {
+                       success(result);
+                   }
+               }
+               
+           }
+           failure:^(RKObjectRequestOperation *operation, NSError *error) {
+               if (failure != nil) {
+                   failure(error);
+               }
+           }];
+}
+
+
+/**
  *  帖子详情
  *
  *  @param success <#success description#>

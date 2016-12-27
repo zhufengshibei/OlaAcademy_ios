@@ -216,6 +216,8 @@
 		3D7BE8CF1BDF7ADB003AC768 /* SearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7BE8CE1BDF7ADB003AC768 /* SearchResultCell.m */; };
 		3D7C9ED41CC790710040DE5A /* VIPSubController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7C9ED31CC790710040DE5A /* VIPSubController.m */; };
 		3D8285F41CBB414400242B26 /* CourseBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8285F31CBB414400242B26 /* CourseBarView.m */; };
+		3D82ECD21E12715B001352A6 /* UserPostResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D82ECD11E12715B001352A6 /* UserPostResult.m */; };
+		3D82ECD51E127673001352A6 /* UserPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D82ECD41E127673001352A6 /* UserPost.m */; };
 		3D8600AA1C0E864D00C0C69C /* EnrollDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8600A91C0E864D00C0C69C /* EnrollDetailViewController.m */; };
 		3D8600B81C12CA1D00C0C69C /* SKSplashIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8600B51C12CA1D00C0C69C /* SKSplashIcon.m */; };
 		3D8600B91C12CA1D00C0C69C /* SKSplashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8600B71C12CA1D00C0C69C /* SKSplashView.m */; };
@@ -935,6 +937,10 @@
 		3D7C9ED31CC790710040DE5A /* VIPSubController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIPSubController.m; sourceTree = "<group>"; };
 		3D8285F21CBB414400242B26 /* CourseBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseBarView.h; sourceTree = "<group>"; };
 		3D8285F31CBB414400242B26 /* CourseBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseBarView.m; sourceTree = "<group>"; };
+		3D82ECD01E12715B001352A6 /* UserPostResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPostResult.h; sourceTree = "<group>"; };
+		3D82ECD11E12715B001352A6 /* UserPostResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPostResult.m; sourceTree = "<group>"; };
+		3D82ECD31E127673001352A6 /* UserPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPost.h; sourceTree = "<group>"; };
+		3D82ECD41E127673001352A6 /* UserPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPost.m; sourceTree = "<group>"; };
 		3D8600A81C0E864D00C0C69C /* EnrollDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnrollDetailViewController.h; sourceTree = "<group>"; };
 		3D8600A91C0E864D00C0C69C /* EnrollDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnrollDetailViewController.m; sourceTree = "<group>"; };
 		3D8600B41C12CA1D00C0C69C /* SKSplashIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSplashIcon.h; sourceTree = "<group>"; };
@@ -2831,6 +2837,8 @@
 				3D7169DD1D339C83004B3ED6 /* Comment.m */,
 				3DC6ED5B1E07C4480062E542 /* CirclePraise.h */,
 				3DC6ED5C1E07C4480062E542 /* CirclePraise.m */,
+				3D82ECD31E127673001352A6 /* UserPost.h */,
+				3D82ECD41E127673001352A6 /* UserPost.m */,
 			);
 			name = circle;
 			sourceTree = "<group>";
@@ -2844,6 +2852,8 @@
 				3D68CDCB1D6F3A9F005CA17F /* CircleDetailResult.m */,
 				3DC6ED5E1E07C7420062E542 /* PraiseListResult.h */,
 				3DC6ED5F1E07C7420062E542 /* PraiseListResult.m */,
+				3D82ECD01E12715B001352A6 /* UserPostResult.h */,
+				3D82ECD11E12715B001352A6 /* UserPostResult.m */,
 			);
 			name = circle;
 			sourceTree = "<group>";
@@ -4320,6 +4330,7 @@
 				3D7BE8CF1BDF7ADB003AC768 /* SearchResultCell.m in Sources */,
 				3DFB6D091B6DCAC40072D175 /* BSAssetModel.m in Sources */,
 				3D9CB8101D9A574700A3C9A1 /* SignInStatusResult.m in Sources */,
+				3D82ECD51E127673001352A6 /* UserPost.m in Sources */,
 				3D68CE141D77C868005CA17F /* ZSYPopoverListView.m in Sources */,
 				3D31C3561D3E292B008882C3 /* MessageListResult.m in Sources */,
 				3D9CB84C1DB49C0500A3C9A1 /* WorkStatisticsTableCell.m in Sources */,
@@ -4480,6 +4491,7 @@
 				3DC31F951DFBB2F0000A15DF /* CircleListTableCell.m in Sources */,
 				3D9CB8131D9A576800A3C9A1 /* SignInStatus.m in Sources */,
 				3DFB6D741B6DD5AA0072D175 /* CommonResult.m in Sources */,
+				3D82ECD21E12715B001352A6 /* UserPostResult.m in Sources */,
 				3DFB6CFE1B6DCAC40072D175 /* BSTableController+BSItemsModel.m in Sources */,
 				3D6F6C9F1CB25F1B00097DD0 /* CommodityPayVC.m in Sources */,
 				3DFB6C2C1B6DC92F0072D175 /* DataMappingManager.m in Sources */,

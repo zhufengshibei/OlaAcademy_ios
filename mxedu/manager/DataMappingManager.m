@@ -92,6 +92,9 @@
 #import "CircleDetailResult.h"
 #import "StatisticsListResult.h"
 
+#import "UserPost.h"
+#import "UserPostResult.h"
+
 #import "Comment.h"
 #import "CommentListResult.h"
 
@@ -163,6 +166,7 @@
     [self setupAliPayResultMapping];
     [self setupVideoHistoryListMapping];
     [self setupCircleDetailMapping];
+    [self setupUserPostMapping];
     [self setupCommentListMapping];
     [self setupPraiseListMapping];
     [self setupStatisticsListMapping];
@@ -1018,6 +1022,44 @@
                                                                     @"apicode":   @"code"
                                                                     }];
     [_circleDetailResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"circleDetail" withMapping:circleMapping]];
+    
+}
+
+// 个人主页
+-(void)setupUserPostMapping{
+    RKObjectMapping* circleMapping = [RKObjectMapping mappingForClass:[OlaCircle class]];
+    [circleMapping addAttributeMappingsFromDictionary:@{
+                                                        @"id":       @"circleId",
+                                                        @"userName": @"userName",
+                                                        @"userAvatar": @"userAvatar",
+                                                        @"videoId": @"videoId",
+                                                        @"courseId": @"courseId",
+                                                        @"title": @"title",
+                                                        @"content": @"content",
+                                                        @"imageGids": @"imageGids",
+                                                        @"location": @"location",
+                                                        @"praiseNumber": @"praiseNumber",
+                                                        @"readNumber": @"readNumber",
+                                                        @"commentNumber": @"commentNumber",
+                                                        @"time": @"time",
+                                                        @"type": @"type"
+                                                        }];
+    RKObjectMapping* userPostMapping = [RKObjectMapping mappingForClass:[UserPost class]];
+    [userPostMapping addAttributeMappingsFromDictionary:@{
+                                                        @"id":       @"userId",
+                                                        @"name":     @"name",
+                                                        @"avator":   @"avator",
+                                                        @"sign":     @"sign"
+                                                        }];
+    [userPostMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"deployList" toKeyPath:@"deployList" withMapping:circleMapping]];
+    [userPostMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"replyList" toKeyPath:@"replyList" withMapping:circleMapping]];
+    
+    _userPostResultMapping = [RKObjectMapping mappingForClass:[UserPostResult class]];
+    [_userPostResultMapping addAttributeMappingsFromDictionary:@{
+                                                                     @"message":   @"message",
+                                                                     @"apicode":   @"code"
+                                                                     }];
+    [_userPostResultMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"result" toKeyPath:@"userPost" withMapping:userPostMapping]];
     
 }
 

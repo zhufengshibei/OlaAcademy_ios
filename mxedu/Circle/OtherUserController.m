@@ -13,6 +13,8 @@
 #import "AuthManager.h"
 #import "LoginViewController.h"
 #import "AttentionManager.h"
+#import "HMSegmentedControl.h"
+#import "CircleManager.h"
 
 @interface OtherUserController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -26,13 +28,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"个人主页";
     
     _tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
     
-    _headView = [[OtherHeadView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, GENERAL_SIZE(300))];
+    _headView = [[OtherHeadView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, GENERAL_SIZE(350))];
      [_headView updateWithUser:_userInfo];
     _tableView.tableHeaderView = _headView;
     
@@ -40,7 +44,12 @@
 }
 
 -(void)fetchUserData{
-   
+    CircleManager *cm = [[CircleManager alloc]init];
+    [cm fetchUserPostListWithUserId:_userInfo.userId Success:^(UserPostResult *result) {
+        
+    } Failure:^(NSError *error) {
+        
+    }];
 }
 
 -(void)attendUser:(NSString*)type{
@@ -54,6 +63,33 @@
 }
 
 #pragma tableview
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return GENERAL_SIZE(100);
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, GENERAL_SIZE(100))];
+    view.backgroundColor = RGBCOLOR(235, 235, 235);
+    
+    HMSegmentedControl *segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, GENERAL_SIZE(20), SCREEN_WIDTH, GENERAL_SIZE(78))];
+    segmentedControl.sectionTitles = @[@"TA的提问",@"TA的回答"];
+    segmentedControl.selectedSegmentIndex = 0;
+    
+    segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : RGBCOLOR(81, 84, 93), NSFontAttributeName : LabelFont(32)};
+    segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : COMMONBLUECOLOR, NSFontAttributeName: LabelFont(32)};
+    segmentedControl.selectionIndicatorColor = COMMONBLUECOLOR;
+    segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
+    segmentedControl.selectionIndicatorHeight = 2;
+    segmentedControl.selectionIndicatorBoxOpacity = 0;
+    
+    segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    segmentedControl.backgroundColor = [UIColor whiteColor];
+    segmentedControl.segmentWidthStyle = HMSegmentedControlSegmentWidthStyleFixed;
+    
+    [view addSubview:segmentedControl];
+    return view;
+}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [_dataArray count];

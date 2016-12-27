@@ -12,6 +12,7 @@
 #import "VideoHistoryResult.h"
 #import "CircleDetailResult.h"
 #import "PraiseListResult.h"
+#import "UserPostResult.h"
 
 @interface CircleManager : NSObject
 
@@ -38,6 +39,16 @@
                                       Type:(NSString*)type
                                    Success:(void(^)(VideoHistoryResult *result))success
                                    Failure:(void(^)(NSError* error))failure;
+
+/**
+ *  个人主页
+ *
+ *  @param success <#success description#>
+ *  @param failure <#failure description#>
+ */
+-(void)fetchUserPostListWithUserId:(NSString*)userId
+                           Success:(void(^)(UserPostResult *result))success
+                           Failure:(void(^)(NSError* error))failure;
 
 /**
  *  帖子详情

@@ -86,6 +86,9 @@
 //消息 － 点赞列表
 @property (nonatomic, strong, readonly) RKObjectMapping* praiseListResultMapping;
 
+//个人主页
+@property (nonatomic, strong, readonly) RKObjectMapping* userPostResultMapping;
+
 @property (nonatomic, strong, readonly) RKObjectMapping* statusResultMapping;
 @property (nonatomic, strong, readonly) RKObjectMapping* thirdPayResultMapping;
 
