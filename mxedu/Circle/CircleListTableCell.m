@@ -44,7 +44,7 @@
         _nameL.font = LabelFont(24);
         _nameL.numberOfLines = 0;
         _nameL.lineBreakMode = NSLineBreakByWordWrapping;
-        _nameL.textColor = RGBCOLOR(81, 83, 93);
+        _nameL.textColor = [UIColor colorWhthHexString:@"#a4a6a9"];
         [self addSubview:_nameL];
         
         [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -72,7 +72,7 @@
         [self addSubview:_imageV];
         
         _contextL = [[UILabel alloc]init];
-        _contextL.font = LabelFont(30);
+        _contextL.font = LabelFont(28);
         _contextL.textColor = RGBCOLOR(51, 51, 51);
         _contextL.numberOfLines = 0;
         [self addSubview:_contextL];
@@ -83,7 +83,7 @@
         [self addSubview:_numberL];
         
         [_numberL mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.mas_bottom).offset(-GENERAL_SIZE(20));
+            make.bottom.equalTo(self.mas_bottom).offset(-GENERAL_SIZE(30));
             make.height.equalTo(@(GENERAL_SIZE(30)));
             make.left.equalTo(self).offset(GENERAL_SIZE(20));
         }];
@@ -146,7 +146,7 @@
     //根据普通文本计算正文的范围
     NSMutableParagraphStyle *style =  [[NSMutableParagraphStyle alloc] init];
     style.lineSpacing = 3.0f;
-    NSDictionary *attributes = @{NSFontAttributeName: LabelFont(30),NSParagraphStyleAttributeName:style};
+    NSDictionary *attributes = @{NSFontAttributeName: LabelFont(28),NSParagraphStyleAttributeName:style};
     CGRect rect = [contetxt boundingRectWithSize:CGSizeMake(SCREEN_WIDTH-GENERAL_SIZE(40), MAXFLOAT)
                                          options:NSStringDrawingUsesLineFragmentOrigin
                                       attributes:attributes

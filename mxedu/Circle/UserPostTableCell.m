@@ -48,7 +48,7 @@
         }];
         
         [_orgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.mas_bottom).offset(-GENERAL_SIZE(40));
+            make.bottom.equalTo(self.mas_bottom).offset(-GENERAL_SIZE(20));
             make.left.equalTo(self).offset(10);
             make.right.equalTo(self.mas_right).offset(-10);
         }];
@@ -69,8 +69,12 @@
     
 }
 
--(void)setupCell:(OlaCircle*)circle{
-    _nameLabel.text = [NSString stringWithFormat:@"%@ 在问答中回复了你",circle.userName];
+-(void)setupCell:(OlaCircle*)circle Type:(NSInteger)type{
+    if (type==0) {
+        _nameLabel.text = [NSString stringWithFormat:@"%@ 发表了问答",circle.userName];
+    }else{
+        _nameLabel.text = [NSString stringWithFormat:@"%@ 回复了问答",circle.userName];
+    }
     _orgLabel.text = circle.title;
 }
 

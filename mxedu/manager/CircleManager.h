@@ -68,6 +68,7 @@
  *  @param failure <#failure description#>
  */
 -(void)praiseCirclePostWithCircle:(NSString*)circleId
+                           UserId:(NSString*)userId
                           Success:(void(^)(CommonResult *result))success
                           Failure:(void(^)(NSError* error))failure;
 

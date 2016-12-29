@@ -20,6 +20,7 @@
 @property (nonatomic) NSString *content;
 @property (nonatomic) NSString *location;
 @property (nonatomic) NSString *imageGids;
+@property (nonatomic) NSString *isPraised;
 @property (nonatomic) NSString *praiseNumber;
 @property (nonatomic) NSString *readNumber;
 @property (nonatomic) NSString *commentNumber;

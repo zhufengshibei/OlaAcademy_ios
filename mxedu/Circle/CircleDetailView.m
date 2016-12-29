@@ -63,7 +63,7 @@ AuthManager *am;
         
         //添加 标题按钮
         UILabel *titleLabel = [[UILabel alloc]init];
-        titleLabel.font = LabelFont(28);
+        titleLabel.font = LabelFont(32);
         titleLabel.textColor = RGBCOLOR(41, 42, 47);
         [self addSubview:titleLabel];
         self.titleLabel = titleLabel;
@@ -185,7 +185,11 @@ AuthManager *am;
 - (void)setupAddone:(CGRect)rect
 {
     UILabel *label = [[UILabel alloc] init];
-    label.text = @"+1";
+    if ([_statusFrame.result.isPraised isEqualToString:@"1"]) {
+        label.text = @"-1";
+    }else{
+        label.text = @"+1";
+    }
     label.textColor = [UIColor redColor];
     label.font = [UIFont systemFontOfSize:10];
     label.backgroundColor = [UIColor clearColor];
@@ -286,7 +290,13 @@ AuthManager *am;
     
     self.praiseBtn.frame = statusFrame.praiseFrame;
     [self.praiseBtn setTitle:result.praiseNumber forState:UIControlStateNormal];
-    [self.praiseBtn setImage:[UIImage imageNamed:@"ic_praise"] forState:UIControlStateNormal];
+    if([result.isPraised isEqualToString:@"1"]){
+        [self.praiseBtn setImage:[UIImage imageNamed:@"ic_praised"] forState:UIControlStateNormal];
+        [self.praiseBtn setTitleColor:RGBACOLOR(18, 112, 255,0.8) forState:UIControlStateNormal];
+    }else{
+        [self.praiseBtn setImage:[UIImage imageNamed:@"ic_praise"] forState:UIControlStateNormal];
+        [self.praiseBtn setTitleColor:RGBACOLOR(175, 176, 179,0.8) forState:UIControlStateNormal];
+    }
     [self.praiseBtn setImageEdgeInsets:UIEdgeInsetsMake(0.0, -GENERAL_SIZE(10), 0.0, 0.0)];
     
     self.toolBar.frame = statusFrame.toolFrame;

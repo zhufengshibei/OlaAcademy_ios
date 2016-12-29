@@ -15,6 +15,9 @@
 #import "PraiseMessageViewController.h"
 #import "MessageViewController.h"
 
+#import "AuthManager.h"
+#import "MessageManager.h"
+
 @interface MessageMainController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic) UITableView *tableView;
@@ -23,6 +26,10 @@
 @end
 
 @implementation MessageMainController
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self fetchMessageCount];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,6 +41,20 @@
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
+}
+
+-(void)fetchMessageCount{
+    AuthManager *am = [AuthManager sharedInstance];
+    if (am.isAuthenticated) {
+        MessageManager *mm = [[MessageManager alloc]init];
+        [mm fetchUnreadCountWithUserId:am.userInfo.userId Success:^(MessageUnreadResult *result) {
+            _messageCount = result.messageCount;
+            [self setupData];
+            [_tableView reloadData];
+        } Failure:^(NSError *error) {
+            
+        }];
+    }
 }
 
 -(void)setupData{

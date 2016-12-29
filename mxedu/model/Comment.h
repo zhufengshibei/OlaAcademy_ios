@@ -26,6 +26,14 @@ typedef enum
     
 }FileState;
 
+typedef enum
+{
+    Playing = 0,
+    Paused = 1,
+    Stop = 2
+    
+}PlayState;
+
 
 @interface Comment : NSObject
 @property(nonatomic,copy)NSString *total;
@@ -63,6 +71,8 @@ typedef enum
 @property(nonatomic,copy)NSString *rpyToUserName;// 被回复人name
 
 @property(nonatomic,copy)NSString *isRead; //是否已读
+
+@property (nonatomic,assign) PlayState playstate;
 
 @property (nonatomic,assign) SoundType type;
 @property (nonatomic,copy) NSString * recordPath;

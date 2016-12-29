@@ -16,17 +16,15 @@
 #import "MJPhoto.h"
 #import "ImageCell.h"
 #import "Util.h"
-#import "CustomProgress.h"
 #import <AVFoundation/AVFoundation.h>
 
-@interface CommentCell ()<UICollectionViewDataSource,UICollectionViewDelegate,CustomProgressDelegate>
+@interface CommentCell ()<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     NSMutableArray *picArray;//图片数组
 }
 @property (nonatomic, weak) UIImageView *iconView;
 @property (nonatomic, weak) UILabel *nameLabel;
 @property (nonatomic, weak) UILabel *content;
-@property (nonatomic) CustomProgress *audioProgress;
 @property (nonatomic, weak) UIImageView *mediaView;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, weak) UILabel *timeLabel;
@@ -37,8 +35,7 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
+    if (self = [super initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier]) {
         UIImageView *icon = [[UIImageView alloc] init];
         icon.userInteractionEnabled=YES;
         icon.layer.cornerRadius = GENERAL_SIZE(40);
@@ -62,29 +59,6 @@
         content.textColor = [UIColor colorWhthHexString:@"#333333"];
         [self addSubview:content];
         self.content = content;
-        
-        //音频
-        CustomProgress *audioProgress = [[CustomProgress alloc] initWithFrame:CGRectMake(GENERAL_SIZE(30), 0, SCREEN_WIDTH-GENERAL_SIZE(120), GENERAL_SIZE(80))];
-        audioProgress.maxValue = 60;
-        //设置背景色
-        audioProgress.bgimg.backgroundColor =[UIColor colorWithRed:19/255.0 green:127/255.0 blue:251/255.0 alpha:1];
-        audioProgress.leftimg.backgroundColor =[UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:0.35];
-        audioProgress.presentlab.textColor = [UIColor whiteColor];
-        audioProgress.delegate = self;
-        [self addSubview:audioProgress];
-        
-        UILabel *audioL = [[UILabel alloc]init];
-        audioL.text = @"¥0.00 学习一下";
-        audioL.font = LabelFont(28);
-        audioL.textColor = [UIColor whiteColor];
-        [audioProgress addSubview:audioL];
-        
-        [audioL mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(audioProgress).offset(GENERAL_SIZE(70));
-            make.centerY.equalTo(audioProgress);
-        }];
-        
-        self.audioProgress = audioProgress;
         
         //视频
         UIImageView *mediaView = [[UIImageView alloc]init];
@@ -143,6 +117,7 @@
         
         UIButton *praiseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [praiseBtn setImage:[UIImage imageNamed:@"ic_praise"] forState:UIControlStateNormal];
+        [praiseBtn setTitleColor:RGBACOLOR(175, 176, 179,0.8) forState:UIControlStateNormal];
         [praiseBtn setImageEdgeInsets:UIEdgeInsetsMake(0.0, -GENERAL_SIZE(10), 0.0, 0.0)];
         praiseBtn.titleLabel.font = LabelFont(24);
         [praiseBtn setTitleColor:RGBCOLOR(165, 165, 165) forState:UIControlStateNormal];
@@ -165,6 +140,13 @@
 }
 
 -(void)didClickHeadImage{
+    if (_cellDelegate) {
+        User *userInfo = [[User alloc]init];
+        userInfo.userId = _comment.userId;
+        userInfo.name = _comment.username;
+        userInfo.avatar = _comment.profile_image;
+        [_cellDelegate didClickUserAvatar:userInfo];
+    }
 }
 
 -(void)didClickAudioView{
@@ -197,16 +179,9 @@
     self.content.frame = commentR.textFrame;
     self.mediaView.frame = commentR.mediaFrame;
     self.collectionView.frame = commentR.imageFrame;
-    self.audioProgress.frame = commentR.audioFrame;
     self.timeLabel.frame = commentR.timeFrame;
     self.praiseBtn.frame = commentR.praiseFrame;
-    self.audioProgress.sdmodel = _comment;
     
-    if (_comment.audioUrls&&![_comment.audioUrls isEqualToString:@""]) {
-        self.audioProgress.hidden = NO;
-    }else{
-        self.audioProgress.hidden = YES;
-    }
     if(_comment.videoImgs&&![_comment.videoImgs isEqualToString:@""]){
         [self.mediaView sd_setImageWithURL:[NSURL URLWithString: [BASIC_Movie_URL stringByAppendingString:_comment.videoImgs]] placeholderImage:[UIImage imageNamed:@"ic_video"]];
         self.mediaView.hidden = NO;
@@ -240,14 +215,6 @@
         }
     }
     [_collectionView reloadData];
-}
-
-#pragma mark -- 实现代理方法..
--(void)customProgressDidTapWithPlayState:(PlayState)state andWithUrl:(NSString *)urlString
-{
-    if ([self.delegate respondsToSelector:@selector(customProgressDidTapWithPlayState:andWithUrl:)]) {
-        [self.delegate customProgressDidTapWithPlayState:state andWithUrl:urlString];
-    }
 }
 
 #pragma mark - UICollectionView Datasource

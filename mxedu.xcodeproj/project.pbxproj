@@ -115,6 +115,7 @@
 		3D461F941DCF4ED5004D3194 /* LMComBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D461F911DCF4ED5004D3194 /* LMComBoxView.m */; };
 		3D461F981DCF5410004D3194 /* OrgInfoList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D461F971DCF5410004D3194 /* OrgInfoList.m */; };
 		3D461F9B1DCF5496004D3194 /* OrgInfoListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D461F9A1DCF5496004D3194 /* OrgInfoListResult.m */; };
+		3D4DDD5E1E14AC93008A1B91 /* CommentAudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4DDD5B1E14AC93008A1B91 /* CommentAudioCell.m */; };
 		3D6780841BE753D300F5055B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6780831BE753D300F5055B /* LoginViewController.m */; };
 		3D67808A1BE893CF00F5055B /* CollectionSubController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6780891BE893CF00F5055B /* CollectionSubController.m */; };
 		3D68CD891D61A512005CA17F /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D68CD881D61A512005CA17F /* HomeViewController.m */; };
@@ -762,6 +763,8 @@
 		3D461F971DCF5410004D3194 /* OrgInfoList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrgInfoList.m; sourceTree = "<group>"; };
 		3D461F991DCF5496004D3194 /* OrgInfoListResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrgInfoListResult.h; sourceTree = "<group>"; };
 		3D461F9A1DCF5496004D3194 /* OrgInfoListResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrgInfoListResult.m; sourceTree = "<group>"; };
+		3D4DDD5A1E14AC93008A1B91 /* CommentAudioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentAudioCell.h; sourceTree = "<group>"; };
+		3D4DDD5B1E14AC93008A1B91 /* CommentAudioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentAudioCell.m; sourceTree = "<group>"; };
 		3D6780821BE753D300F5055B /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		3D6780831BE753D300F5055B /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		3D6780881BE893CF00F5055B /* CollectionSubController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionSubController.h; sourceTree = "<group>"; };
@@ -2458,6 +2461,8 @@
 				3DC31F8B1DF940A4000A15DF /* CustomProgress.m */,
 				3D7169DF1D339D02004B3ED6 /* CommentCell.h */,
 				3D7169E01D339D02004B3ED6 /* CommentCell.m */,
+				3D4DDD5A1E14AC93008A1B91 /* CommentAudioCell.h */,
+				3D4DDD5B1E14AC93008A1B91 /* CommentAudioCell.m */,
 				3D9CB7941D94F64D00A3C9A1 /* OtherHeadView.h */,
 				3D9CB7951D94F64D00A3C9A1 /* OtherHeadView.m */,
 				3DF139A21E12A8DC00DB47B6 /* UserPostTableCell.h */,
@@ -4545,6 +4550,7 @@
 				3DC31F7B1DF93440000A15DF /* AFSoundPlayback.m in Sources */,
 				3D0EB29D1CCB4E9700C95B80 /* FilterView.m in Sources */,
 				3D68CE0D1D77C845005CA17F /* QuestionViewController.m in Sources */,
+				3D4DDD5E1E14AC93008A1B91 /* CommentAudioCell.m in Sources */,
 				3D9D36171C0DA669007CE085 /* CheckInListResult.m in Sources */,
 				3D9CB7C01D979C4800A3C9A1 /* SUIButton.m in Sources */,
 				3D461F8B1DCC34BD004D3194 /* MemberTableCell.m in Sources */,

@@ -1002,6 +1002,7 @@
     RKObjectMapping* circleMapping = [RKObjectMapping mappingForClass:[OlaCircle class]];
     [circleMapping addAttributeMappingsFromDictionary:@{
                                                           @"id":       @"circleId",
+                                                          @"userId":   @"userId",
                                                           @"userName": @"userName",
                                                           @"userAvatar": @"userAvatar",
                                                           @"videoId": @"videoId",
@@ -1010,6 +1011,7 @@
                                                           @"content": @"content",
                                                           @"imageGids": @"imageGids",
                                                           @"location": @"location",
+                                                          @"isPraised": @"isPraised",
                                                           @"praiseNumber": @"praiseNumber",
                                                           @"readNumber": @"readNumber",
                                                           @"commentNumber": @"commentNumber",

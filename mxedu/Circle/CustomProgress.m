@@ -407,11 +407,18 @@
 
 -(void)setPresent:(CGFloat)present
 {
-    
     //赋值..
-    
-    presentlab.text = [NSString stringWithFormat:@"%.1f",self.maxValue-present];
+    presentlab.text = [self timeFormatted:self.maxValue-present];
     leftimg.frame = CGRectMake(0, 0, self.frame.size.width/self.maxValue*present, self.frame.size.height);
+}
+
+- (NSString *)timeFormatted:(int)totalSeconds
+{
+    int seconds = totalSeconds % 60;
+    int minutes = (totalSeconds / 60) % 60;
+    int hours = totalSeconds / 3600;
+    
+    return [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
 }
 
 - (UIImageView *)messageVoiceStatusImageView {

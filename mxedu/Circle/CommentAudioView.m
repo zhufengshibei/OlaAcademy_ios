@@ -83,6 +83,7 @@
         _playButton.layer.masksToBounds = YES;
         _playButton.backgroundColor = RGBCOLOR(187,222,251);
         [_playButton setImage:[UIImage imageNamed:@"ic_broadcasting"] forState:UIControlStateNormal];
+        [_playButton setImageEdgeInsets:UIEdgeInsetsMake(0.0, -GENERAL_SIZE(10), 0.0, 0.0)];
         [_playButton setTitleColor:RGBCOLOR(88, 147, 244) forState:UIControlStateNormal];
         _playButton.titleLabel.font = LabelFont(24);
         [_playButton addTarget:self action:@selector(playAction:) forControlEvents:UIControlEventTouchDown];
@@ -128,7 +129,7 @@
         
         [recordBG mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_recordButton.mas_right).offset(-10);
-            make.bottom.equalTo(_recordButton.mas_top).offset(15);
+            make.bottom.equalTo(_recordButton.mas_top).offset(GENERAL_SIZE(36));
         }];
         
         recordingTime = [[UILabel alloc]init];

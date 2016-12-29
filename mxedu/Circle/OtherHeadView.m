@@ -46,7 +46,7 @@
         [self addSubview:_profileLabel];
         
         [_avatarImageview mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(self).offset(-GENERAL_SIZE(20));
+            make.centerY.equalTo(self).offset(-GENERAL_SIZE(30));
             make.centerX.equalTo(self);
             make.width.equalTo(@(GENERAL_SIZE(150)));
             make.height.equalTo(@(GENERAL_SIZE(150)));
@@ -81,6 +81,7 @@
             _avatarImageview.image = [UIImage imageNamed:@"ic_avatar"];
         }
         _nameLabel.text = user.name;
+        _profileLabel.text  = user.signature;
     }else{
         _avatarImageview.image = [UIImage imageNamed:@"ic_avatar"];
         _nameLabel.text = @"小欧";

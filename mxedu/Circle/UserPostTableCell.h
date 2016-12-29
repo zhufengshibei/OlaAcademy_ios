@@ -12,6 +12,6 @@
 
 @interface UserPostTableCell : UITableViewCell
 
--(void)setupCell:(OlaCircle*)circle;
+-(void)setupCell:(OlaCircle*)circle Type:(NSInteger)type;
 
 @end

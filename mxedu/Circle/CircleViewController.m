@@ -303,15 +303,15 @@
     //根据普通文本计算正文的范围
     NSMutableParagraphStyle *style =  [[NSMutableParagraphStyle alloc] init];
     style.lineSpacing = 3.0f;
-    NSDictionary *attributes = @{NSFontAttributeName: LabelFont(30),NSParagraphStyleAttributeName:style};
+    NSDictionary *attributes = @{NSFontAttributeName: LabelFont(28),NSParagraphStyleAttributeName:style};
     CGRect rect = [contetxt boundingRectWithSize:CGSizeMake(SCREEN_WIDTH-GENERAL_SIZE(40), MAXFLOAT)
                                          options:NSStringDrawingUsesLineFragmentOrigin
                                       attributes:attributes
                                          context:nil];
     if (circle.imageGids&&![circle.imageGids isEqualToString:@""]) {
-        return rect.size.height+GENERAL_SIZE(560);
+        return rect.size.height+GENERAL_SIZE(580);
     }
-    return rect.size.height+GENERAL_SIZE(230);
+    return rect.size.height+GENERAL_SIZE(250);
 }
 
 #pragma Delegate

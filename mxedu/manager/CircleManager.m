@@ -178,6 +178,7 @@
  *  @param failure <#failure description#>
  */
 -(void)praiseCirclePostWithCircle:(NSString*)circleId
+                           UserId:(NSString*)userId
                           Success:(void(^)(CommonResult *result))success
                           Failure:(void(^)(NSError* error))failure{
     DataMappingManager *dm = GetDataManager();
@@ -187,8 +188,11 @@
     
     [om addResponseDescriptor:responseDescriptor];
     // 采用post方式，get方式可能产生中文乱码
-    [om postObject:nil path:@"/ola/circle/praiseCirclePost" parameters:@{@"circleId": circleId
-                                                                      }
+    [om postObject:nil path:@"/ola/circle/praiseCirclePost" parameters:
+                                                     @{
+                                                        @"circleId": circleId,
+                                                        @"userId" : userId
+                                                      }
            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                if ([mappingResult.firstObject isKindOfClass:[CommonResult class]]) {
                    CommonResult *result = mappingResult.firstObject;

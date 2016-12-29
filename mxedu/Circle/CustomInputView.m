@@ -41,12 +41,13 @@
         [self addSubview:self.textView];
         
         self.sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.sendButton.backgroundColor = COMMONBLUECOLOR;
         self.sendButton.layer.borderWidth = 1.0f;
         self.sendButton.layer.borderColor = [COMMONBLUECOLOR CGColor];
-        self.sendButton.layer.cornerRadius = 3.0f;
+        self.sendButton.layer.cornerRadius = 5.0f;
         self.sendButton.titleLabel.font = LabelFont(24);
         [self.sendButton setTitle:@"发送" forState:UIControlStateNormal];
-        [self.sendButton setTitleColor:COMMONBLUECOLOR forState:UIControlStateNormal];
+        [self.sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.sendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:self.sendButton];
         

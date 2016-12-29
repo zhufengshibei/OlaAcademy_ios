@@ -31,6 +31,7 @@
 
 #import "CircleTableViewCell.h"
 #import "CommentCell.h"
+#import "CommentAudioCell.h"
 
 #import "Masonry.h"
 #import "SVProgressHUD.h"
@@ -261,9 +262,8 @@
         for (Comment *comment in result.commentArray) {
             CommentFrame *m = [[CommentFrame alloc]init];
             if (comment.audioUrls) {
-                m.urlString = [BASIC_Movie_URL stringByAppendingString:comment.audioUrls];
-                m.playstate = Stop;
-                comment.urlString = m.urlString;
+                comment.playstate = Stop;
+                comment.urlString = [BASIC_Movie_URL stringByAppendingString:comment.audioUrls];
                 comment.isReset = NO;
                 comment.currentState = Stop;
             }
@@ -423,11 +423,26 @@
         detail.detailView.delegate = self;
         return detail;
     }
-    CommentCell *cell = [CommentCell cellWithTableView:tableView];
     CommentFrame *commentF = self.dataArray[indexPath.row];
+    Comment * comment = commentF.comment;
+    //音频
+    if (comment.audioUrls&&![comment.audioUrls isEqualToString:@""]) {
+        CommentAudioCell * cell = [tableView dequeueReusableCellWithIdentifier:@"audioCell"];
+        if(cell == nil)
+        {
+            cell = [[CommentAudioCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"audioCell"];
+            
+        }
+        cell.delegate = self;
+        cell.cellDelegate = self;
+        cell.sdModel = comment;
+        return cell;
+    }
+    // 其他
+    CommentCell *cell = [CommentCell cellWithTableView:tableView];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell setupCellWithFrame:commentF];
     cell.cellDelegate = self;
-    cell.delegate = self; //音频
     return cell;
 }
 
@@ -465,15 +480,32 @@
     
     if (indexPath.section == 0) {
         return self.circleFrame.cellHeigth;
+    }
+    CommentFrame *commentF = self.dataArray[indexPath.row];
+    //音频
+    if (commentF.comment.audioUrls&&![commentF.comment.audioUrls isEqualToString:@""]){
+        CGFloat maxW = 0.0;
+        
+        NSString* contetxt = [commentF.comment.content stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
+        contetxt = [contetxt stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+        contetxt = [contetxt stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        //根据普通文本计算正文的范围
+        maxW = SCREEN_WIDTH - 2*GENERAL_SIZE(30);
+        NSMutableParagraphStyle *style =  [[NSMutableParagraphStyle alloc] init];
+        style.lineSpacing = 3.0f;
+        NSDictionary *attributes = @{NSFontAttributeName: LabelFont(30),NSParagraphStyleAttributeName:style};
+        CGRect rect = [contetxt boundingRectWithSize:CGSizeMake(maxW, MAXFLOAT)
+                                             options:NSStringDrawingUsesLineFragmentOrigin
+                                          attributes:attributes
+                                             context:nil];
+        return (contetxt.length==0?0:rect.size.height) + GENERAL_SIZE(300);
     }else{
-        CommentFrame *commentF = self.dataArray[indexPath.row];
         return commentF.cellHeight;
     }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];// 取消选中
     AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated && indexPath.section==1) {
         CommentFrame *frame = self.dataArray[indexPath.row];
@@ -686,16 +718,24 @@
 
 // 点赞
 -(void) didClickLove:(OlaCircle *)circle{
+    AuthManager * am = [AuthManager sharedInstance];
+    NSString *userId = @"";
+    if (am.isAuthenticated) {
+        userId = am.userInfo.userId;
+    }
     CircleManager *cm = [[CircleManager alloc]init];
-    [cm praiseCirclePostWithCircle:circle.circleId Success:^(CommonResult *result) {
+    [cm praiseCirclePostWithCircle:circle.circleId UserId:userId Success:^(CommonResult *result) {
         OlaCircle *circle = _circleFrame.result;
-        if (_successFunc) {
-            _successFunc(circle,1);
+        int praiseNumber;
+        if([circle.isPraised isEqualToString:@"1"]){
+            circle.isPraised = @"0";
+            praiseNumber = [circle.praiseNumber intValue]-1;
         }else{
-            // 首页进入详情
-            circle.praiseNumber = [NSString stringWithFormat:@"%d",[circle.praiseNumber intValue]+1];
-            _circleFrame.result = circle;
+            circle.isPraised = @"1";
+            praiseNumber = [circle.praiseNumber intValue]+1;
         }
+        circle.praiseNumber = [NSString stringWithFormat:@"%d",praiseNumber];
+        _circleFrame.result = circle;
         [_tableView reloadData];
     } Failure:^(NSError *error) {
         
@@ -750,13 +790,14 @@
             for (NSInteger i = 0; i < self.dataArray.count;i++) {
                 
                 CommentFrame * m = self.dataArray[i];
+                Comment *comment = m.comment;
                 
-                if ([m.urlString isEqualToString:self.currentUrl]) {
+                if ([comment.urlString isEqualToString:self.currentUrl]) {
                     
                     //如何清空数据.. 通过获取数据源 修改数据源的数据 来清空timer..
-                    m.comment.currentPalyTime = 0;
-                    m.comment.isReset = YES;
-                    m.comment.currentState = Stop;
+                    comment.currentPalyTime = 0;
+                    comment.isReset = YES;
+                    comment.currentState = Stop;
                     
                     [self.tableView reloadData];
                     

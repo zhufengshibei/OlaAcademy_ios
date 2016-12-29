@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-#import "CommentFrame.h"
-
 #import "CustomProgress.h"
 #import "CommentFrame.h"
 
+#import "User.h"
+
 @class CommentCell;
 @protocol CommentCellDelegate <NSObject>
+
+-(void)didClickUserAvatar:(User *)userInfo;
 
 //点击点赞按钮
 -(void)didPraiseAction:(CommentCell *)seletedCell;
@@ -29,8 +31,6 @@
 
 @property (nonatomic,strong) CommentFrame * rdmanager;
 @property (nonatomic,strong) Comment * sdModel;
-
-@property (nonatomic,weak) id<CustomProgressDelegate> delegate;
 
 - (void)setupCellWithFrame:(CommentFrame *)commentR;
 

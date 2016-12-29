@@ -28,14 +28,14 @@
     
     //设置昵称frame
     CGFloat nameX = CGRectGetMaxX(self.iconFrame) + mgr;
-    CGFloat nameY = iconY+5;
+    CGFloat nameY = GENERAL_SIZE(16);
     CGFloat nameW = 220;
-    CGFloat nameH = 20;
+    CGFloat nameH = GENERAL_SIZE(80);
     self.nameFrame = CGRectMake(nameX, nameY, nameW, nameH);
     
     //设置正文的frame
     CGFloat textX = GENERAL_SIZE(30);
-    CGFloat textY = CGRectGetMaxY(self.iconFrame)+mgr/2;
+    CGFloat textY = CGRectGetMaxY(self.iconFrame)+GENERAL_SIZE(20);
     
     CGFloat maxW = 0.0;
     CGSize textSize;
@@ -53,19 +53,9 @@
                                       attributes:attributes
                                          context:nil];
     textSize.width=maxW;
-    textSize.height=rect.size.height;
+    textSize.height=contetxt.length==0?0:rect.size.height;
 
     self.textFrame = (CGRect){{textX,textY},textSize};
-    
-    //设置音频frame
-    CGFloat audioX = GENERAL_SIZE(30);
-    CGFloat audioY = CGRectGetMaxY(self.textFrame)+5;
-    CGFloat audioW = SCREEN_WIDTH-GENERAL_SIZE(120);
-    CGFloat audioH = 0;
-    if(comment.audioUrls&&![comment.audioUrls isEqualToString:@""]){
-        audioH = GENERAL_SIZE(80);
-    }
-    self.audioFrame = CGRectMake(audioX, audioY, audioW, audioH);
     
     //设置视频frame
     CGFloat mediaX = GENERAL_SIZE(30);
@@ -85,7 +75,7 @@
     }
     
     CGFloat imageX = GENERAL_SIZE(30);
-    CGFloat imageY = CGRectGetMaxY(self.audioFrame) + (count==0?0:mgr);
+    CGFloat imageY = CGRectGetMaxY(self.textFrame) + (count==0?0:mgr);
     if (comment.videoUrls&&![comment.videoUrls isEqualToString:@""]) {
         imageY = CGRectGetMaxY(self.mediaFrame) + (count==0?0:mgr);
     }
@@ -108,14 +98,14 @@
     
     //点赞
     CGFloat praiseX = GENERAL_SIZE(30);
-    CGFloat praiseY = CGRectGetMaxY(self.imageFrame)+(imageH==0?0:GENERAL_SIZE(15));
+    CGFloat praiseY = CGRectGetMaxY(self.imageFrame)+GENERAL_SIZE(20);
     CGFloat praiseW = GENERAL_SIZE(60);
     CGFloat praiseH = GENERAL_SIZE(50);
     self.praiseFrame = CGRectMake(praiseX, praiseY, praiseW, praiseH);
     
     //时间
     CGFloat timeX = SCREEN_WIDTH-GENERAL_SIZE(230);
-    CGFloat timeY = CGRectGetMaxY(self.imageFrame)+(imageH==0?0:GENERAL_SIZE(15));
+    CGFloat timeY = CGRectGetMaxY(self.imageFrame)+GENERAL_SIZE(20);
     CGFloat timeW = GENERAL_SIZE(200);
     CGFloat timeH = GENERAL_SIZE(50);
     self.timeFrame = CGRectMake(timeX, timeY, timeW, timeH);
