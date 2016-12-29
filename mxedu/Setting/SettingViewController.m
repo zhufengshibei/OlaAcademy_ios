@@ -43,6 +43,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
 
     self.manager = [[RETableViewManager alloc] initWithTableView:self.tableView delegate:self];
+    self.manager.tableView.backgroundColor = RGBCOLOR(235, 235, 235);
     
     [self setupVersionSection];
     [self setupClearSection];
@@ -51,9 +52,7 @@
     [self setupEvaluationSection];
     [self setupAboutSection];
     
-    if ([AuthManager sharedInstance].isAuthenticated) {
-        [self setupLogout];
-    }
+    [self setupLogout];
 }
 
 - (void)setupBackButton
@@ -75,18 +74,8 @@
 }
 
 -(void)setupVersionSection{
-    UIView *dividerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 35)];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 200, 35)];
-    label.textColor = RGBCOLOR(128, 128, 128);
-    label.text = @"版本";
-    dividerView.backgroundColor = RGBCOLOR(230, 230, 230);
-    [dividerView addSubview:label];
-    UILabel *versionLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-150, 10, 135, 20)];
-    versionLabel.textColor = RGBCOLOR(128, 128, 128);
-    versionLabel.textAlignment=NSTextAlignmentRight;
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    versionLabel.text = [NSString stringWithFormat:@"V %@",[infoDictionary objectForKey:@"CFBundleShortVersionString"]];
-    [dividerView addSubview:versionLabel];
+    UIView *dividerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, GENERAL_SIZE(20))];
+    dividerView.backgroundColor = RGBCOLOR(235, 235, 235);
     
     RETableViewSection* section = [RETableViewSection sectionWithHeaderView:dividerView];
     
@@ -110,12 +99,8 @@
 }
 
 -(void)setupClearSection{
-    UIView *dividerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 35)];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 200, 35)];
-    label.textColor = RGBCOLOR(128, 128, 128);
-    label.text = @"通用";
-    dividerView.backgroundColor = RGBCOLOR(230, 230, 230);
-    [dividerView addSubview:label];
+    UIView *dividerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, GENERAL_SIZE(20))];
+    dividerView.backgroundColor = RGBCOLOR(235, 235, 235);
 
     NSInteger cacheSize = [[SDImageCache sharedImageCache] getSize];
     NSString *cacheText = @"0.0";
@@ -149,7 +134,7 @@
 
 -(void)setupDownloadSection{
     UIView *dividerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
-    dividerView.backgroundColor = RGBCOLOR(230, 230, 230);
+    dividerView.backgroundColor = RGBCOLOR(235, 235, 235);
     
     UIView *downloadView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
     UILabel *cacheLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 100, 30)];
@@ -182,12 +167,8 @@
 }
 
 -(void)setupRecommendection{
-    UIView *dividerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 35)];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 200, 35)];
-    label.textColor = RGBCOLOR(128, 128, 128);
-    label.text = @"更多";
-    dividerView.backgroundColor = RGBCOLOR(230, 230, 230);
-    [dividerView addSubview:label];
+    UIView *dividerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, GENERAL_SIZE(20))];
+    dividerView.backgroundColor = RGBCOLOR(235, 235, 235);
     RETableViewSection* section = [RETableViewSection sectionWithHeaderView:dividerView];
     
     RETableViewItem *titleAndImageItem = [RETableViewItem itemWithTitle:@"推荐给好友" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
@@ -230,16 +211,22 @@
 }
 
 -(void)setupLogout{
-    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 100)];
-    UIButton *logoutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    logoutBtn.frame =  CGRectMake(20, 60, SCREEN_WIDTH-40, 40);
-    [logoutBtn setBackgroundImage:[UIImage imageNamed:@"btn_logout"] forState:UIControlStateNormal];
-    [logoutBtn setTitle:@"退出登陆" forState:UIControlStateNormal];
-    [logoutBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [logoutBtn addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchDown];
-    [footerView addSubview:logoutBtn];
-    
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, GENERAL_SIZE(600))];
+    footerView.backgroundColor = [UIColor clearColor];
     self.tableView.tableFooterView = footerView;
+    
+    if ([AuthManager sharedInstance].isAuthenticated) {
+        UIButton *logoutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        logoutBtn.frame =  CGRectMake(GENERAL_SIZE(80), GENERAL_SIZE(450), SCREEN_WIDTH-GENERAL_SIZE(160), GENERAL_SIZE(80));
+        logoutBtn.layer.masksToBounds = YES;
+        logoutBtn.layer.cornerRadius = GENERAL_SIZE(40);
+        logoutBtn.layer.borderWidth = GENERAL_SIZE(2);
+        logoutBtn.layer.borderColor = [RGBCOLOR(236, 97, 86) CGColor];
+        [logoutBtn setTitleColor:RGBCOLOR(236, 97, 86) forState:UIControlStateNormal];
+        [logoutBtn setTitle:@"退出登陆" forState:UIControlStateNormal];
+        [logoutBtn addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchDown];
+        [footerView addSubview:logoutBtn];
+    }
 }
 
 #pragma 设置下载类型
