@@ -249,6 +249,16 @@
     _segmentedControl.segmentWidthStyle = HMSegmentedControlSegmentWidthStyleFixed;
     [self.view addSubview:_segmentedControl];
     
+    UIView *lineView = [[UIView alloc]init];
+    lineView.backgroundColor = RGBCOLOR(238, 238, 238);
+    [self.view addSubview:lineView];
+    
+    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_segmentedControl.mas_bottom);
+        make.width.equalTo(@(SCREEN_WIDTH));
+        make.height.equalTo(@1);
+    }];
+    
     __weak CourSectionViewController *weakSelf =self;
     [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
         _currentIndex = (int)index;
@@ -277,8 +287,7 @@
 
 -(void)setupTableView{
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_segmentedControl.frame), SCREEN_WIDTH, SCREEN_HEIGHT-CGRectGetMaxY(_segmentedControl.frame)-43) style:UITableViewStylePlain];
-    _tableView.backgroundColor = RGBCOLOR(240, 240, 240);
-    _tableView.separatorStyle = NO;
+    _tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
@@ -618,6 +627,10 @@
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     [self switchCurrentVideo:indexPath];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return GENERAL_SIZE(100);
 }
 
 // 切换视频

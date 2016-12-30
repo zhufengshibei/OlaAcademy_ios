@@ -56,6 +56,7 @@
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     versionLabel.text = [NSString stringWithFormat:@"Version %@",[infoDictionary objectForKey:@"CFBundleShortVersionString"]];
     versionLabel.textColor = RGBCOLOR(153, 153, 153);
+    versionLabel.font = LabelFont(32);
     [versionLabel sizeToFit];
     [self.view addSubview:versionLabel];
     
@@ -67,6 +68,7 @@
     UILabel *rightsLabel = [UILabel new];
     rightsLabel.text = @"Copyright @ 2016 All right reserved";
     rightsLabel.textColor = RGBCOLOR(153, 153, 153);
+    rightsLabel.font = LabelFont(32);
     [rightsLabel sizeToFit];
     [self.view addSubview:rightsLabel];
     
@@ -78,6 +80,7 @@
     UILabel *contactLabel = [UILabel new];
     contactLabel.text = @"service@olaxueyuan.com";
     contactLabel.textColor = RGBCOLOR(153, 153, 153);
+    contactLabel.font = LabelFont(32);
     [contactLabel sizeToFit];
     [self.view addSubview:contactLabel];
     

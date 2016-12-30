@@ -42,7 +42,7 @@
     scrollView.showsHorizontalScrollIndicator = NO;
     [self addSubview:scrollView];
     
-    nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, 20)];
+    nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, SCREEN_WIDTH-20, 20)];
     nameLabel.font = LabelFont(32);
     [scrollView addSubview:nameLabel];
     

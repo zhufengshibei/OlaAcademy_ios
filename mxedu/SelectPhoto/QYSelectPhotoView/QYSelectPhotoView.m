@@ -264,14 +264,14 @@ static CGFloat const kSpace = 15;
     
     if (self.isEnable) {
         //默认显示『拍照按钮』
-        UIImage *image = [UIImage imageNamed:@"Photo_Camera"];
+        UIImage *image = [UIImage imageNamed:@"ic_choose_photo"];
         
         if (_dataSource.count > 0) {
             
             if (_dataSource.count == indexPath.row) {
                 //如果已经选择图片，最后一个cell，显示『添加按钮』
                 
-                image = [UIImage imageNamed:@"Photo_AddPhoto"];
+                image = [UIImage imageNamed:@"ic_choose_photo"];
                 cell.imageView.image = image;
                 return cell;
                 

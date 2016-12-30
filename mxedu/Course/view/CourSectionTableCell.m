@@ -27,26 +27,22 @@
     if (self) {
         
         _nameL = [UILabel new];
-        _nameL.font = [UIFont systemFontOfSize:16.0];
+        _nameL.font = LabelFont(32);
         [self addSubview:_nameL];
         
         [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(self);
+            make.centerY.equalTo(self).offset(GENERAL_SIZE(5));
             make.left.equalTo(self.mas_left).offset(20);
         }];
         
         _timeL = [UILabel new];
-        _timeL.font = [UIFont systemFontOfSize:14.0];
+        _timeL.font = LabelFont(28);
         [self addSubview:_timeL];
         
         [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(self);
+            make.centerY.equalTo(self).offset(GENERAL_SIZE(5));
             make.right.equalTo(self.mas_right).offset(-20);
         }];
-        
-        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(10, self.frame.size.height-1, SCREEN_WIDTH-10, 1)];
-        line.backgroundColor = RGBCOLOR(225, 225, 225);
-        [self addSubview:line];
         
     }
     return self;

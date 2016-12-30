@@ -120,18 +120,15 @@ BOOL uploadOrignalImage;
     
     editText = [UITextView new];
     editText.tag=1002;
-    editText.frame = CGRectMake(5, CGRectGetMaxY(dividerLine.frame)+5, SCREEN_WIDTH-10, GENERAL_SIZE(220));
+    editText.frame = CGRectMake(5, CGRectGetMaxY(dividerLine.frame)+5, SCREEN_WIDTH-10, GENERAL_SIZE(160));
     editText.font=[UIFont systemFontOfSize:16];
     editText.backgroundColor = [UIColor whiteColor];
     editText.delegate = self;
     [editText addSubview:label];
     [scrollView addSubview:editText];
     
-    UIView *dividerLine3 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(editText.frame), SCREEN_WIDTH, 5)];
-    dividerLine3.backgroundColor = BACKGROUNDCOLOR;
-    [scrollView addSubview:dividerLine3];
-    
-    orgiView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(dividerLine3.frame)+5, SCREEN_WIDTH, 35)];
+    orgiView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(editText.frame)+5, SCREEN_WIDTH, 0)];
+    orgiView.hidden = YES; //暂时取消上传原图功能
     orgiView.backgroundColor = [UIColor whiteColor];
     UILabel *oriLabel = [[UILabel alloc]init];
     oriLabel.text = @"上传原图";
@@ -181,7 +178,7 @@ BOOL uploadOrignalImage;
     dividerLine5.backgroundColor = BACKGROUNDCOLOR;
     [assignView addSubview:dividerLine5];
     
-    UILabel *assignL = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 100, GENERAL_SIZE(80))];
+    UILabel *assignL = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 100, GENERAL_SIZE(90))];
     assignL.text = @"指定回答";
     assignL.textColor = RGBCOLOR(87, 87, 87);
     [assignView addSubview:assignL];
@@ -197,15 +194,15 @@ BOOL uploadOrignalImage;
         make.right.equalTo(assignView.mas_right).offset(-10);
     }];
     
-    inviteView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(assignL.frame), SCREEN_WIDTH, 82)];
+    inviteView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(assignL.frame), SCREEN_WIDTH, GENERAL_SIZE(190))];
     [inviteView setHidden:YES];
     [assignView addSubview:inviteView];
     
-    UIView *lineView1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
+    UIView *lineView1 = [[UIView alloc]initWithFrame:CGRectMake(GENERAL_SIZE(10), 0, SCREEN_WIDTH-GENERAL_SIZE(20), GENERAL_SIZE(5))];
     lineView1.backgroundColor = BACKGROUNDCOLOR;
     [inviteView addSubview:lineView1];
     
-    UILabel *inviteL = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(lineView1.frame), SCREEN_WIDTH-10, GENERAL_SIZE(80))];
+    UILabel *inviteL = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(lineView1.frame), SCREEN_WIDTH-10, GENERAL_SIZE(90))];
     inviteL.text = @"邀请回答";
     inviteL.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseTeacher)];
@@ -230,11 +227,11 @@ BOOL uploadOrignalImage;
         make.right.equalTo(nextIV.mas_left).offset(-10);
     }];
     
-    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(inviteL.frame), SCREEN_WIDTH, 1)];
+    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(GENERAL_SIZE(10), CGRectGetMaxY(inviteL.frame), SCREEN_WIDTH-GENERAL_SIZE(20), GENERAL_SIZE(5))];
     lineView2.backgroundColor = BACKGROUNDCOLOR;
     [inviteView addSubview:lineView2];
     
-    UILabel *publicL = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(lineView2.frame), 100, GENERAL_SIZE(80))];
+    UILabel *publicL = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(lineView2.frame), 100, GENERAL_SIZE(90))];
     publicL.text = @"是否公开";
     publicL.textColor = RGBCOLOR(87, 87, 87);
     [inviteView addSubview:publicL];
