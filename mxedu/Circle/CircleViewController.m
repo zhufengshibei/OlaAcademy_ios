@@ -25,7 +25,7 @@
 
 @interface CircleViewController ()<UITableViewDataSource,UITableViewDelegate,UMSocialUIDelegate,ShareSheetDelegate,CircleListTableCellDelegate>
 
-@property (nonatomic) UIImageView *messageBtn;
+@property (nonatomic) UILabel *redL;
 
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) NSMutableArray *dataArray;
@@ -92,14 +92,31 @@
 }
 
 -(void)setupRightButton{
-    _messageBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
-    _messageBtn.image = [UIImage imageNamed:@"icon_message"];
-    _messageBtn.userInteractionEnabled = YES;
+    UIImageView *messageBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
+    messageBtn.image = [UIImage imageNamed:@"icon_message"];
+    messageBtn.userInteractionEnabled = YES;
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showMessageView)];
-    [_messageBtn addGestureRecognizer:singleTap];
-    [_messageBtn sizeToFit];
+    [messageBtn addGestureRecognizer:singleTap];
+    [messageBtn sizeToFit];
     
-    UIBarButtonItem *rightCunstomButtonView = [[UIBarButtonItem alloc] initWithCustomView:_messageBtn];
+    _redL = [[UILabel alloc]init];
+    _redL.layer.masksToBounds = YES;
+    _redL.layer.cornerRadius = GENERAL_SIZE(10);
+    _redL.backgroundColor = [UIColor redColor];
+    _redL.font = LabelFont(14);
+    _redL.textAlignment = NSTextAlignmentCenter;
+    _redL.textColor = [UIColor whiteColor];
+    _redL.hidden = YES;
+    [messageBtn addSubview:_redL];
+    
+    [_redL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(messageBtn.mas_right).offset(GENERAL_SIZE(10));
+        make.top.equalTo(messageBtn).offset(-GENERAL_SIZE(10));
+        make.width.equalTo(@(GENERAL_SIZE(20)));
+        make.height.equalTo(@(GENERAL_SIZE(20)));
+    }];
+    
+    UIBarButtonItem *rightCunstomButtonView = [[UIBarButtonItem alloc] initWithCustomView:messageBtn];
     self.navigationItem.rightBarButtonItem = rightCunstomButtonView;
 }
 
@@ -121,10 +138,12 @@
         MessageManager *mm = [[MessageManager alloc]init];
         [mm fetchUnreadCountWithUserId:am.userInfo.userId Success:^(MessageUnreadResult *result) {
             _messageCount = result.messageCount;
-            if (result.code==10000&_messageCount.systemCount+_messageCount.circleCount+_messageCount.praiseCount>0) {
-                _messageBtn.image = [UIImage imageNamed:@"icon_message_tip"];
+            int totalCount = _messageCount.systemCount+_messageCount.circleCount+_messageCount.praiseCount;
+            if (result.code==10000&totalCount>0) {
+                _redL.hidden = NO;
+                _redL.text = [NSString stringWithFormat:@"%d",totalCount];
             }else{
-                _messageBtn.image = [UIImage imageNamed:@"icon_message"];
+                _redL.hidden = YES;
             }
         } Failure:^(NSError *error) {
             

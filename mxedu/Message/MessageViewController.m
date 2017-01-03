@@ -36,22 +36,15 @@
     self.title = @"系统消息";
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-UI_NAVIGATION_BAR_HEIGHT-UI_STATUS_BAR_HEIGHT)];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.dataSource = self;
     _tableView.delegate = self;
-    _tableView.backgroundColor = RGBCOLOR(235, 235, 235);
     [self.view addSubview:_tableView];
     
     _dataArray = [NSMutableArray arrayWithCapacity:0];
     
     self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self setupData:@""];
-    }];
-    
-    self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        Message *message = [_dataArray lastObject];
-        if (message) {
-            [self setupData:message.messageId];
-        }
     }];
     
     [self setupData:@""];
@@ -62,6 +55,14 @@
     MessageManager *mm = [[MessageManager alloc]init];
     [mm fetchMessageListWithMessageId:messageId UserId:am.userInfo.userId PageSize:@"20" Success:^(MessageListResult *result) {
         if ([messageId isEqualToString:@""]) {
+            if ([result.messageArray count]==20) {
+                self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+                    Message *message = [_dataArray lastObject];
+                    if (message) {
+                        [self setupData:message.messageId];
+                    }
+                }];
+            }
             [_dataArray removeAllObjects];
         }
         [_dataArray addObjectsFromArray:result.messageArray];

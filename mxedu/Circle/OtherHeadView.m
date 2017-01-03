@@ -43,10 +43,12 @@
         _profileLabel = [[UILabel alloc]init];
         _profileLabel.textColor = RGBCOLOR(160, 161, 163);
         _profileLabel.font = LabelFont(24);
+        _profileLabel.textAlignment = NSTextAlignmentCenter;
+        _profileLabel.numberOfLines = 2;
         [self addSubview:_profileLabel];
         
         [_avatarImageview mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(self).offset(-GENERAL_SIZE(30));
+            make.centerY.equalTo(self).offset(-GENERAL_SIZE(40));
             make.centerX.equalTo(self);
             make.width.equalTo(@(GENERAL_SIZE(150)));
             make.height.equalTo(@(GENERAL_SIZE(150)));
@@ -58,6 +60,8 @@
         }];
         
         [_profileLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self).offset(GENERAL_SIZE(30));
+            make.right.equalTo(self.mas_right).offset(-GENERAL_SIZE(30));
             make.top.equalTo(_nameLabel.mas_bottom).offset(GENERAL_SIZE(20));
             make.centerX.equalTo(self);
         }];

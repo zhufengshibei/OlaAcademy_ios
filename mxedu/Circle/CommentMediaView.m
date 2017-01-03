@@ -50,7 +50,7 @@
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     
-    mediaListView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, GENERAL_SIZE(180)) collectionViewLayout:flowLayout];
+    mediaListView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, GENERAL_SIZE(20), SCREEN_WIDTH, GENERAL_SIZE(210)) collectionViewLayout:flowLayout];
     mediaListView.delegate=self;
     mediaListView.dataSource = self;
     mediaListView.backgroundColor = [UIColor clearColor];
@@ -59,7 +59,7 @@
 }
 
 -(void)setupChoiceView{
-    choiceView = [[CustomChoiceView alloc] initWithFrame:CGRectMake(0, GENERAL_SIZE(30), SCREEN_WIDTH, GENERAL_SIZE(120))];
+    choiceView = [[CustomChoiceView alloc] initWithFrame:CGRectMake(0, GENERAL_SIZE(25), SCREEN_WIDTH, GENERAL_SIZE(150))];
     choiceView.choiceDelegate=self;
     [self addSubview:choiceView];
 }

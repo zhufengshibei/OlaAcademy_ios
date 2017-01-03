@@ -34,7 +34,7 @@
         
         _nameLabel = [UILabel new];
         _nameLabel.textColor = RGBCOLOR(164, 166, 170);
-        _nameLabel.font = LabelFont(24);
+        _nameLabel.font = LabelFont(26);
         [self addSubview:_nameLabel];
         
         _readLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, GENERAL_SIZE(12), GENERAL_SIZE(12))];
@@ -46,7 +46,7 @@
         _orgLabel = [UILabel new];
         _orgLabel.numberOfLines = 1;
         _orgLabel.textColor = RGBCOLOR(39, 43, 54);
-        _orgLabel.font = LabelFont(28);
+        _orgLabel.font = LabelFont(30);
         [self addSubview:_orgLabel];
         
         [_readLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -62,7 +62,7 @@
         }];
         
         [_orgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.mas_bottom).offset(-GENERAL_SIZE(40));
+            make.bottom.equalTo(self.mas_bottom).offset(-GENERAL_SIZE(20));
             make.left.equalTo(self).offset(10);
             make.right.equalTo(self.mas_right).offset(-10);
         }];
@@ -75,7 +75,7 @@
             make.bottom.equalTo(self.mas_bottom);
             make.left.equalTo(self);
             make.right.equalTo(self.mas_right);
-            make.height.equalTo(@(GENERAL_SIZE(20)));
+            make.height.equalTo(@(GENERAL_SIZE(2)));
         }];
         
     }

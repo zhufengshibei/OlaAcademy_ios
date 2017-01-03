@@ -99,14 +99,14 @@
     //点赞
     CGFloat praiseX = GENERAL_SIZE(30);
     CGFloat praiseY = CGRectGetMaxY(self.imageFrame)+GENERAL_SIZE(20);
-    CGFloat praiseW = GENERAL_SIZE(60);
+    CGFloat praiseW = GENERAL_SIZE(200);
     CGFloat praiseH = GENERAL_SIZE(50);
     self.praiseFrame = CGRectMake(praiseX, praiseY, praiseW, praiseH);
     
     //时间
-    CGFloat timeX = SCREEN_WIDTH-GENERAL_SIZE(230);
+    CGFloat timeX = SCREEN_WIDTH-GENERAL_SIZE(250);
     CGFloat timeY = CGRectGetMaxY(self.imageFrame)+GENERAL_SIZE(20);
-    CGFloat timeW = GENERAL_SIZE(200);
+    CGFloat timeW = GENERAL_SIZE(220);
     CGFloat timeH = GENERAL_SIZE(50);
     self.timeFrame = CGRectMake(timeX, timeY, timeW, timeH);
     

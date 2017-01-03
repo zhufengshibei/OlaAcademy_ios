@@ -28,7 +28,7 @@
 @property (nonatomic, weak) UIImageView *mediaView;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, weak) UILabel *timeLabel;
-@property (nonatomic, weak) UIButton *praiseBtn;
+@property (nonatomic, weak) UILabel *commentL;
 
 @end
 @implementation CommentCell
@@ -46,9 +46,8 @@
         self.iconView = icon;
         
         UILabel *nameL = [[UILabel alloc] init];
-        nameL.font = [UIFont systemFontOfSize:16.0];
-        //nameL.contentMode = UIViewContentModeTop;
-        nameL.textColor = [UIColor colorWhthHexString:@"#000000"];
+        nameL.font = LabelFont(28);
+        nameL.textColor = RGBCOLOR(40, 42, 50);
         [self addSubview:nameL];
         self.nameLabel = nameL;
         
@@ -115,14 +114,12 @@
         [self addSubview:timeL];
         self.timeLabel = timeL;
         
-        UIButton *praiseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [praiseBtn setImage:[UIImage imageNamed:@"ic_praise"] forState:UIControlStateNormal];
-        [praiseBtn setTitleColor:RGBACOLOR(175, 176, 179,0.8) forState:UIControlStateNormal];
-        [praiseBtn setImageEdgeInsets:UIEdgeInsetsMake(0.0, -GENERAL_SIZE(10), 0.0, 0.0)];
-        praiseBtn.titleLabel.font = LabelFont(24);
-        [praiseBtn setTitleColor:RGBCOLOR(165, 165, 165) forState:UIControlStateNormal];
-        [self addSubview:praiseBtn];
-        self.praiseBtn = praiseBtn;
+        UILabel *commentL = [[UILabel alloc]init];
+        commentL.textAlignment = NSTextAlignmentLeft;
+        commentL.font = LabelFont(24);
+        commentL.textColor = RGBCOLOR(165, 165, 165);
+        [self addSubview:commentL];
+        self.commentL = commentL;
         
         UIView *lineView =[[UIView alloc]init];
         lineView.backgroundColor = RGBCOLOR(235, 235, 235);
@@ -180,7 +177,7 @@
     self.mediaView.frame = commentR.mediaFrame;
     self.collectionView.frame = commentR.imageFrame;
     self.timeLabel.frame = commentR.timeFrame;
-    self.praiseBtn.frame = commentR.praiseFrame;
+    self.commentL.frame = commentR.praiseFrame;
     
     if(_comment.videoImgs&&![_comment.videoImgs isEqualToString:@""]){
         [self.mediaView sd_setImageWithURL:[NSURL URLWithString: [BASIC_Movie_URL stringByAppendingString:_comment.videoImgs]] placeholderImage:[UIImage imageNamed:@"ic_video"]];
@@ -205,7 +202,7 @@
         self.content.text = _comment.content;
     }
     self.timeLabel.text = _comment.passtime;
-    [self.praiseBtn setTitle:_comment.like_count forState:UIControlStateNormal];
+    self.commentL.text = [NSString stringWithFormat:@"回复 %@",_comment.subCount];
     // 图片
     picArray = [NSMutableArray arrayWithCapacity:0];
     NSArray *array = [_comment.imageIds componentsSeparatedByString:@","];

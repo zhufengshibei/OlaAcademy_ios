@@ -34,7 +34,7 @@
         UIView *itemView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/4.0*i, 0, SCREEN_WIDTH/4.0, 50)];
         UIButton *itemButton = [UIButton buttonWithType:UIButtonTypeCustom];
         itemButton.tag=100+i;
-        itemButton.frame=CGRectMake(SCREEN_WIDTH/10.0-SCREEN_WIDTH/20.0, 0, GENERAL_SIZE(90), GENERAL_SIZE(120));
+        itemButton.frame=CGRectMake(SCREEN_WIDTH/10.0-SCREEN_WIDTH/20.0, 0, GENERAL_SIZE(120), GENERAL_SIZE(160));
         [itemButton setImage:[UIImage imageNamed:imagesNormal[i]] forState:UIControlStateNormal];
         [itemButton setImage:[UIImage imageNamed:imageSeclected[i]] forState:UIControlStateSelected];
         [itemButton addTarget:self action:@selector(didClickitemView:) forControlEvents:UIControlEventTouchUpInside];

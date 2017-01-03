@@ -44,7 +44,7 @@
         _nameL.font = LabelFont(24);
         _nameL.numberOfLines = 0;
         _nameL.lineBreakMode = NSLineBreakByWordWrapping;
-        _nameL.textColor = [UIColor colorWhthHexString:@"#a4a6a9"];
+        _nameL.textColor = RGBCOLOR(40, 42, 50);
         [self addSubview:_nameL];
         
         [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {

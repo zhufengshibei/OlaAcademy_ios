@@ -39,7 +39,6 @@
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-UI_NAVIGATION_BAR_HEIGHT-UI_STATUS_BAR_HEIGHT)];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.backgroundColor = RGBCOLOR(235, 235, 235);
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
@@ -50,13 +49,6 @@
         [self setupData:@""];
     }];
     
-    self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        CirclePraise *praise = [_dataArray lastObject];
-        if (praise) {
-            [self setupData:praise.praiseId];
-        }
-    }];
-    
     [self setupData:@""];
 }
 
@@ -65,6 +57,14 @@
     CircleManager *cm = [[CircleManager alloc]init];
     [cm fetchPraiseListWithUserId:am.userInfo.userId PraiseId:priaseId PageSize:@"20" Success:^(PraiseListResult *result) {
         if ([priaseId isEqualToString:@""]) {
+            if ([result.praiseArray count]==20) {
+                self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+                    CirclePraise *praise = [_dataArray lastObject];
+                    if (praise) {
+                        [self setupData:praise.praiseId];
+                    }
+                }];
+            }
             [_dataArray removeAllObjects];
         }
         [_dataArray addObjectsFromArray:result.praiseArray];
@@ -103,7 +103,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return GENERAL_SIZE(140);
+    return GENERAL_SIZE(120);
 }
 
 - (void)didReceiveMemoryWarning {

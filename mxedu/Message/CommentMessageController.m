@@ -39,7 +39,6 @@
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-UI_NAVIGATION_BAR_HEIGHT-UI_STATUS_BAR_HEIGHT)];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.backgroundColor = RGBCOLOR(235, 235, 235);
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
@@ -50,13 +49,6 @@
         [self setupData:@""];
     }];
     
-    self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        Comment *comment = [_dataArray lastObject];
-        if (comment) {
-            [self setupData:comment.data_id];
-        }
-    }];
-    
     [self setupData:@""];
 }
 
@@ -65,6 +57,14 @@
     MessageManager *mm = [[MessageManager alloc]init];
     [mm fetchCommentMessageListWithCommentId:commentId UserId:am.userInfo.userId PageSize:@"20" Success:^(CommentListResult *result) {
         if ([commentId isEqualToString:@""]) {
+            if ([result.commentArray count]==20) {
+                self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+                    Comment *comment = [_dataArray lastObject];
+                    if (comment) {
+                        [self setupData:comment.data_id];
+                    }
+                }];
+            }
             [_dataArray removeAllObjects];
         }
         [_dataArray addObjectsFromArray:result.commentArray];
@@ -116,7 +116,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return GENERAL_SIZE(140);
+    return GENERAL_SIZE(120);
 }
 
 - (void)didReceiveMemoryWarning {

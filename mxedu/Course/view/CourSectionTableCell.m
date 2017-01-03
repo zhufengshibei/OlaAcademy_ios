@@ -14,11 +14,13 @@
 @implementation CourSectionTableCell
 
 {
+    UIImageView *_playingIV;
     UILabel *_nameL;
     UILabel *_timeL;
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     // Initialization code
 }
 
@@ -26,13 +28,21 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
+        _playingIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon_playing"]];
+        [self addSubview:_playingIV];
+        
+        [_playingIV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self).offset(GENERAL_SIZE(5));
+            make.left.equalTo(self.mas_left).offset(20);
+        }];
+        
         _nameL = [UILabel new];
         _nameL.font = LabelFont(32);
         [self addSubview:_nameL];
         
         [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self).offset(GENERAL_SIZE(5));
-            make.left.equalTo(self.mas_left).offset(20);
+            make.left.equalTo(_playingIV.mas_left).offset(20);
         }];
         
         _timeL = [UILabel new];
@@ -53,9 +63,11 @@
     _nameL.text = point.name;
     _timeL.text = point.timeSpan;
     if (point.isChosen==1) {
+        _playingIV.hidden = NO;
         _nameL.textColor = COMMONBLUECOLOR;
         _timeL.textColor = COMMONBLUECOLOR;
     }else{
+        _playingIV.hidden = YES;
         _nameL.textColor = RGBCOLOR(153, 153, 153);
         _timeL.textColor = RGBCOLOR(153, 153, 153);
     }

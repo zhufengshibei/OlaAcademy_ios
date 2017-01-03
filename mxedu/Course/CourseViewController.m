@@ -94,7 +94,7 @@ static const CGFloat kNavigtionHeight = 30.0;
 
 -(void)setupSegment{
     HMSegmentedControl *segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH-40, GENERAL_SIZE(80))];
-    segmentedControl.sectionTitles = @[@"数学",@"英语", @"逻辑", @"写作"];
+    segmentedControl.sectionTitles = @[@"数学",@"英语", @"逻辑", @"写作", @"面试"];
     segmentedControl.selectedSegmentIndex = 0;
     
     segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : RGBCOLOR(81, 84, 93), NSFontAttributeName : LabelFont(32)};

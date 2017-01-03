@@ -75,7 +75,7 @@
         self.textView.font=[UIFont systemFontOfSize:17];
         self.textView.textColor=[UIColor blackColor];
         self.textView.layer.cornerRadius = 5;
-        self.textView.placeholder = @"请输入评论";
+        self.textView.placeholder = @"";
         
         self.textView.layer.borderWidth = 1.0f;
         self.textView.layer.borderColor = [[UIColor lightGrayColor] CGColor];

@@ -63,6 +63,7 @@ typedef enum
 @property(nonatomic,copy)NSString *passtime;//发帖时间
 
 @property(nonatomic,copy)NSString *like_count;//点赞数
+@property(nonatomic,copy)NSString *subCount;//对评论的回复数
 @property(nonatomic,copy)NSString *isPraised; //是否对回复点赞
 
 @property(nonatomic,copy)NSString *data_id;//评论 的ID

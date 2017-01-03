@@ -88,8 +88,7 @@
     [hm fetchHomeworkListWithHomeworkId:homeworkId PageSize:@"20" UserId:_userId Type:@"1" Success:^(HomeworkListResult *result) {
         
         if ([homeworkId isEqualToString:@""]) {
-            [_dataSource removeAllObjects];
-            if ([_dataSource count]==20) {
+            if ([result.homeworkArray count]==20) {
                 self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
                     Homework *homework = [_dataSource lastObject];
                     if (homework) {
@@ -97,6 +96,7 @@
                     }
                 }];
             }
+            [_dataSource removeAllObjects];
         }
         [_dataSource addObjectsFromArray:result.homeworkArray];
         _tableViewObject.dataSource = [self configDataWithArray:_dataSource];

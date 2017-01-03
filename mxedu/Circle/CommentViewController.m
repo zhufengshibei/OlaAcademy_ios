@@ -120,7 +120,7 @@
     [self.view addSubview:_audioView];
     [_audioView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view.mas_bottom);
-        make.height.equalTo(@(GENERAL_SIZE(180)));
+        make.height.equalTo(@(GENERAL_SIZE(210)));
         make.width.equalTo(@(SCREEN_WIDTH));
     }];
     
@@ -132,7 +132,7 @@
     
     [_mediaView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view.mas_bottom);
-        make.height.equalTo(@(GENERAL_SIZE(180)));
+        make.height.equalTo(@(GENERAL_SIZE(210)));
         make.width.equalTo(@(SCREEN_WIDTH));
     }];
     
@@ -162,7 +162,7 @@
             }else{
                 wself.audioViewShow = YES;
                 wself.mediaViewShow = NO;
-                height = GENERAL_SIZE(180);
+                height = GENERAL_SIZE(210);
                 wself.audioView.hidden = NO;
                 wself.mediaView.hidden = YES;
             }
@@ -192,7 +192,7 @@
             }else{
                 wself.mediaViewShow = YES;
                 wself.audioViewShow = NO;
-                height = GENERAL_SIZE(180);
+                height = GENERAL_SIZE(210);
                 wself.audioView.hidden = YES;
                 wself.mediaView.hidden = NO;
             }

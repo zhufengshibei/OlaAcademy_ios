@@ -58,7 +58,7 @@
     CGFloat imageX = GENERAL_SIZE(20);
     CGFloat imageY = CGRectGetMaxY(self.titleFrame) + ([result.imageGids length]==0?0:mgr/2);
     CGFloat imageW = (SCREEN_WIDTH-GENERAL_SIZE(80))/3 *(count<3?count:3) + (count<3?count:4) * 5; 
-    CGFloat imageH = 0;
+    CGFloat imageH = GENERAL_SIZE(10);
     
     //图片
     if (count==1) {

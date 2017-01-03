@@ -49,10 +49,6 @@
         _readLabel.backgroundColor = [UIColor redColor];
         [self addSubview:_readLabel];
         
-        UIView *lineView1 = [[UIView alloc]init];
-        lineView1.backgroundColor = RGBCOLOR(236, 236, 236);
-        [self addSubview:lineView1];
-        
         _orgLabel = [UILabel new];
         _orgLabel.numberOfLines = 0;
         _orgLabel.textColor = RGBCOLOR(101, 101, 101);
@@ -89,6 +85,17 @@
         [_checkinButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(_avatarImage);
             make.right.equalTo(self).offset(-15);
+        }];
+        
+        UIView *lineView = [[UIView alloc]init];
+        lineView.backgroundColor = RGBCOLOR(235, 235, 235);
+        [self addSubview:lineView];
+        
+        [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.mas_bottom);
+            make.left.equalTo(self).offset(GENERAL_SIZE(20));
+            make.right.equalTo(self.mas_right);
+            make.height.equalTo(@(GENERAL_SIZE(2)));
         }];
         
     }

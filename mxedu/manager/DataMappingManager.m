@@ -1080,6 +1080,7 @@
                                                           @"audioUrls":    @"audioUrls",
                                                           @"location" : @"local",
                                                           @"praiseNumber" :@"like_count",
+                                                          @"subCount" :@"subCount",
                                                           @"userAvatar":    @"profile_image",
                                                           @"time":      @"passtime",
                                                           @"toUserId":      @"rpyToUserId",

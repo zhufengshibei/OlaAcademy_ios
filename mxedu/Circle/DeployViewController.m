@@ -92,9 +92,9 @@ BOOL uploadOrignalImage;
     scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview: scrollView];
     
-    title = [[UILabel alloc]initWithFrame:CGRectMake(3, 0, 160, 40)];
+    title = [[UILabel alloc]initWithFrame:CGRectMake(3, 0, 200, 40)];
     title.enabled = NO;
-    title.text = @"标题 2-20个字";
+    title.text = @"请输入标题... (2-20个字)";
     title.font =  [UIFont systemFontOfSize:16];
     title.textColor = [UIColor blackColor];
     
@@ -112,9 +112,9 @@ BOOL uploadOrignalImage;
     dividerLine.backgroundColor = BACKGROUNDCOLOR;
     [scrollView addSubview:dividerLine];
     
-    label = [[UILabel alloc]initWithFrame:CGRectMake(3, 5, 180, 20)];
+    label = [[UILabel alloc]initWithFrame:CGRectMake(3, 5, 200, 20)];
     label.enabled = NO;
-    label.text = @"内容 2-140个字";
+    label.text = @"请输入内容... (2-140个字)";
     label.font =  [UIFont systemFontOfSize:16];
     label.textColor = [UIColor blackColor];
     
