@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 #import "AppDelegate.h"
 #import "DataMappingManager.h"
+#import "UIView+Positioning.h"
 
 @interface SysCommon : NSObject
 

@@ -54,6 +54,15 @@
             make.right.equalTo(self.mas_right).offset(-20);
         }];
         
+        UIView *slideView = [[UIView alloc] init];//WithFrame:CGRectMake(20, CGRectGetMaxY(_nameL.frame)+3, SCREEN_WIDTH-40, 1)];
+        slideView.backgroundColor = RGBCOLOR(227, 227, 230);
+        [self.contentView addSubview:slideView];
+        [slideView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.mas_left).offset(20);
+            make.right.equalTo(self.mas_right).offset(-20);
+            make.bottom.equalTo(self.mas_bottom).offset(0);
+            make.height.mas_equalTo(@1);
+        }];
     }
     return self;
     

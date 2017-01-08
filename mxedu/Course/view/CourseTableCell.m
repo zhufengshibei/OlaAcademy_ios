@@ -73,6 +73,8 @@
         _line = [[UIImageView alloc]initWithFrame:CGRectMake(0, GENERAL_SIZE(375), SCREEN_WIDTH, GENERAL_SIZE(20))];
         _line.backgroundColor = RGBCOLOR(230, 230, 230);
         [self addSubview:_line];
+        
+        
 
     }
     return self;
