@@ -53,7 +53,7 @@
             make.centerY.equalTo(self).offset(GENERAL_SIZE(5));
             make.right.equalTo(self.mas_right).offset(-20);
         }];
-        
+        //cell 之间的分割线
         UIView *slideView = [[UIView alloc] init];//WithFrame:CGRectMake(20, CGRectGetMaxY(_nameL.frame)+3, SCREEN_WIDTH-40, 1)];
         slideView.backgroundColor = RGBCOLOR(227, 227, 230);
         [self.contentView addSubview:slideView];
@@ -77,8 +77,8 @@
         _timeL.textColor = COMMONBLUECOLOR;
     }else{
         _playingIV.hidden = YES;
-        _nameL.textColor = RGBCOLOR(153, 153, 153);
-        _timeL.textColor = RGBCOLOR(153, 153, 153);
+        _nameL.textColor = RGBCOLOR(125, 125, 125);
+        _timeL.textColor = RGBCOLOR(125, 125, 125);
     }
 }
 

@@ -50,6 +50,7 @@ extern "C" {
 
 #define defaultWith 750 //根据iphone6而来 可根据具体情况修改
 #define LabelFont(I)  [UIFont systemFontOfSize:(int)(SCREEN_WIDTH/defaultWith*I)]
+
 #define GENERAL_SIZE(I)  (int)(SCREEN_WIDTH/defaultWith*I)
 
 //#define BASIC_URL @"http://123.59.129.137:8080"

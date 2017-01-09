@@ -26,8 +26,9 @@
 #import "QuestionResultViewController.h"
 #import "MobClick.h"
 #import <WebViewJavascriptBridge.h>
+#import "ShareSheetView.h"
 
-@interface QuestionWebController ()<UIAlertViewDelegate>
+@interface QuestionWebController ()<UIAlertViewDelegate,ShareSheetDelegate>
 
 @property (nonatomic) WebViewJavascriptBridge* bridge;
 @property (nonatomic) UIWebView *webView;
@@ -225,6 +226,25 @@
     
     self.navigationItem.titleView=titleView;
     
+    UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [shareBtn setImage:[UIImage imageNamed:@"ic_share"] forState:UIControlStateNormal];
+    [shareBtn sizeToFit];
+    [shareBtn addTarget:self action:@selector(shareButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
+    self.navigationItem.rightBarButtonItem = shareButtonItem;
+    
+}
+//分享
+-(void)shareButtonClicked {
+    NSArray *shareButtonTitleArray = [[NSArray alloc] init];
+    NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
+    
+    shareButtonTitleArray = @[@"微信好友",@"微信朋友圈",@"新浪微博",@"QQ好友",@"QQ空间"];
+    shareButtonImageNameArray = @[@"wechat",@"wetimeline",@"sina",@"qq",@"qzone"];
+    
+    ShareSheetView *lxActivity = [[ShareSheetView alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
+    [lxActivity showInView:self.view];
 }
 
 -(void)backButtonClicked{
