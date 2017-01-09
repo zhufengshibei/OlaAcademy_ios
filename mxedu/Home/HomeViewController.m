@@ -121,7 +121,7 @@
     [secView addSubview:hLine];
     
     _nameL = [[UILabel alloc] initWithFrame:CGRectMake(17, GENERAL_SIZE(40), 200, GENERAL_SIZE(30))];
-    _nameL.font = LabelFont(30);
+    _nameL.font = [UIFont boldSystemFontOfSize:GENERAL_SIZE(34)];
     _nameL.text = [_nameArray objectAtIndex:section];
     _nameL.textColor = [UIColor colorWhthHexString:@"#272b36"];
     _nameL.contentMode = UIViewContentModeTop;

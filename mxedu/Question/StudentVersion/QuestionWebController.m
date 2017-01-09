@@ -235,16 +235,9 @@
     self.navigationItem.rightBarButtonItem = shareButtonItem;
     
 }
-//分享
+//分享点击事件
 -(void)shareButtonClicked {
-    NSArray *shareButtonTitleArray = [[NSArray alloc] init];
-    NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
-    
-    shareButtonTitleArray = @[@"微信好友",@"微信朋友圈",@"新浪微博",@"QQ好友",@"QQ空间"];
-    shareButtonImageNameArray = @[@"wechat",@"wetimeline",@"sina",@"qq",@"qzone"];
-    
-    ShareSheetView *lxActivity = [[ShareSheetView alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
-    [lxActivity showInView:self.view];
+
 }
 
 -(void)backButtonClicked{

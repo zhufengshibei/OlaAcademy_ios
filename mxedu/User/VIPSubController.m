@@ -74,7 +74,7 @@
     
     UILabel *typeLabel = [[UILabel alloc]initWithFrame:CGRectMake(17, 0, SCREEN_WIDTH, 40)];
     typeLabel.text = @"会员套餐";
-    typeLabel.font = [UIFont boldSystemFontOfSize:GENERAL_SIZE(34)];
+    typeLabel.font = LabelFont(34);
     [chooseVipView addSubview:typeLabel];
     
     UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(10, 40, SCREEN_WIDTH-20, 1)];
@@ -243,7 +243,7 @@
     
     UILabel *payLabel = [[UILabel alloc]initWithFrame:CGRectMake(17, 0, SCREEN_WIDTH, 40)];
     payLabel.text = @"支付方式";
-    payLabel.font = [UIFont boldSystemFontOfSize:GENERAL_SIZE(34)];
+    payLabel.font = LabelFont(34);
     [payView addSubview:payLabel];
     
     UIView *lineView6 = [[UIView alloc]initWithFrame:CGRectMake(10, 40, SCREEN_WIDTH-20, 1)];
@@ -334,7 +334,7 @@
     [vipLV addSubview:markV3];
     UILabel *vipL = [[UILabel alloc]initWithFrame:CGRectMake(17, 0, 200, 40)];
     vipL.text = @"会员特权";
-    vipL.font = [UIFont boldSystemFontOfSize:GENERAL_SIZE(34)];
+    vipL.font = LabelFont(34);
     [vipLV addSubview:vipL];
     
     [chooseVipView addSubview:vipLV];
