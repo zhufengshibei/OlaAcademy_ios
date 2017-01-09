@@ -118,7 +118,7 @@
         _avatar.image = [UIImage imageNamed:@"ic_avatar"];
     }
     _nameL.text = user.name;
-    _examtype.text = @"MBA";
+    _examtype.text = @"职业";
     _indroLabel.text = @"自我介绍";
     
 }
