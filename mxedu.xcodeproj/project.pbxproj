@@ -527,6 +527,9 @@
 		3DFD14FE1DB7A4C70061F1EB /* CoinHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD14FD1DB7A4C70061F1EB /* CoinHistory.m */; };
 		3DFD15011DB8C0310061F1EB /* CoinHistoryTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD15001DB8C0310061F1EB /* CoinHistoryTableCell.m */; };
 		9603FE3105D2A2DC2CD094FD /* libPods-mxedu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 086002AE60181BFE4DF1D0B1 /* libPods-mxedu.a */; };
+		F04B20211E25CBB600CDDB66 /* TeachersCertifyController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04B20201E25CBB600CDDB66 /* TeachersCertifyController.m */; };
+		F04B20241E25E2DF00CDDB66 /* teacherCertifyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F04B20231E25E2DF00CDDB66 /* teacherCertifyCell.m */; };
+		F04B20281E260E3300CDDB66 /* teacherCertifyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F04B20271E260E3300CDDB66 /* teacherCertifyModel.m */; };
 		F08CE40D1E236A5800ADADFF /* MyLable.m in Sources */ = {isa = PBXBuildFile; fileRef = F08CE40C1E236A5800ADADFF /* MyLable.m */; };
 /* End PBXBuildFile section */
 
@@ -1551,6 +1554,12 @@
 		3DFD15001DB8C0310061F1EB /* CoinHistoryTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoinHistoryTableCell.m; sourceTree = "<group>"; };
 		5E2B9AB13312D1523BACB905 /* Pods-mxedu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mxedu.release.xcconfig"; path = "Pods/Target Support Files/Pods-mxedu/Pods-mxedu.release.xcconfig"; sourceTree = "<group>"; };
 		E7CC2CC5BC95CEAF093BE42E /* Pods-mxedu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mxedu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mxedu/Pods-mxedu.debug.xcconfig"; sourceTree = "<group>"; };
+		F04B201F1E25CBB600CDDB66 /* TeachersCertifyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeachersCertifyController.h; sourceTree = "<group>"; };
+		F04B20201E25CBB600CDDB66 /* TeachersCertifyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeachersCertifyController.m; sourceTree = "<group>"; };
+		F04B20221E25E2DF00CDDB66 /* teacherCertifyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = teacherCertifyCell.h; sourceTree = "<group>"; };
+		F04B20231E25E2DF00CDDB66 /* teacherCertifyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = teacherCertifyCell.m; sourceTree = "<group>"; };
+		F04B20261E260E3300CDDB66 /* teacherCertifyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = teacherCertifyModel.h; sourceTree = "<group>"; };
+		F04B20271E260E3300CDDB66 /* teacherCertifyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = teacherCertifyModel.m; sourceTree = "<group>"; };
 		F08CE40B1E236A5800ADADFF /* MyLable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLable.h; sourceTree = "<group>"; };
 		F08CE40C1E236A5800ADADFF /* MyLable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLable.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2889,6 +2898,8 @@
 				3DA967251D87A1CD001217C5 /* UserCellModel.m */,
 				3DA9672A1D87ACFC001217C5 /* ModelConfig.h */,
 				3DA9672B1D87ACFC001217C5 /* ModelConfig.m */,
+				F04B20261E260E3300CDDB66 /* teacherCertifyModel.h */,
+				F04B20271E260E3300CDDB66 /* teacherCertifyModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -3867,6 +3878,8 @@
 				3D67808E1BE8944200F5055B /* subcontroller */,
 				3DFB6D961B6DE2C10072D175 /* UserViewController.h */,
 				3DFB6D971B6DE2C10072D175 /* UserViewController.m */,
+				F04B201F1E25CBB600CDDB66 /* TeachersCertifyController.h */,
+				F04B20201E25CBB600CDDB66 /* TeachersCertifyController.m */,
 				3DFB6D981B6DE2C10072D175 /* ForgetPassViewController.h */,
 				3DFB6D991B6DE2C10072D175 /* ForgetPassViewController.m */,
 				3DFB6D9B1B6DE2C10072D175 /* ModifyPassViewController.h */,
@@ -3918,6 +3931,8 @@
 				3DFD15001DB8C0310061F1EB /* CoinHistoryTableCell.m */,
 				3DC597C61DD4A88E00720D9B /* MistakeTableCell.h */,
 				3DC597C71DD4A88E00720D9B /* MistakeTableCell.m */,
+				F04B20221E25E2DF00CDDB66 /* teacherCertifyCell.h */,
+				F04B20231E25E2DF00CDDB66 /* teacherCertifyCell.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -4293,6 +4308,7 @@
 				3D9CB8191D9CC46600A3C9A1 /* HomeworkWebController.m in Sources */,
 				3DC31F841DF93440000A15DF /* HSSessionModel.m in Sources */,
 				3DA372D81CD71CA30075F93C /* StatisticsListResult.m in Sources */,
+				F04B20211E25CBB600CDDB66 /* TeachersCertifyController.m in Sources */,
 				3D2830DE1C9EC96600C2326D /* ExamCollectionView.m in Sources */,
 				3D68CDF91D77C78E005CA17F /* MonthHomework.m in Sources */,
 				3D9D35BD1C058195007CE085 /* AboutViewController.m in Sources */,
@@ -4360,12 +4376,14 @@
 				3DFB6CF91B6DCAC40072D175 /* BSCollectionController+UICollectionView.m in Sources */,
 				3D910C321BD5CE3E007B092E /* OrganizationManager.m in Sources */,
 				3D7BE8CF1BDF7ADB003AC768 /* SearchResultCell.m in Sources */,
+				F04B20241E25E2DF00CDDB66 /* teacherCertifyCell.m in Sources */,
 				3DFB6D091B6DCAC40072D175 /* BSAssetModel.m in Sources */,
 				3D9CB8101D9A574700A3C9A1 /* SignInStatusResult.m in Sources */,
 				3D82ECD51E127673001352A6 /* UserPost.m in Sources */,
 				3D68CE141D77C868005CA17F /* ZSYPopoverListView.m in Sources */,
 				3D31C3561D3E292B008882C3 /* MessageListResult.m in Sources */,
 				3D9CB84C1DB49C0500A3C9A1 /* WorkStatisticsTableCell.m in Sources */,
+				F04B20281E260E3300CDDB66 /* teacherCertifyModel.m in Sources */,
 				3DC597C81DD4A88E00720D9B /* MistakeTableCell.m in Sources */,
 				3DBBE3B71CF6FA970038F29E /* DownloadManager.m in Sources */,
 				3D31C3781D40795D008882C3 /* FPPopoverView.m in Sources */,

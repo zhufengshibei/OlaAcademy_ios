@@ -35,6 +35,8 @@
 #import "Masonry.h"
 #import "UIColor+HexColor.h"
 
+#import "TeachersCertifyController.h"
+
 @interface UserViewController() <UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic) UITableView *tableView;
@@ -226,14 +228,20 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
 
 -(void)showSettingView{
     
-    SettingViewController *settingVC = [[SettingViewController alloc]init];
-    settingVC.logoutSuccess = ^{
-        [_userView refreshUserInfo];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"NEEDREFRESH" object:nil];
-    };
-    settingVC.hidesBottomBarWhenPushed = YES;
+    TeachersCertifyController *teacherVC = [[TeachersCertifyController alloc] init];
+    teacherVC.hidesBottomBarWhenPushed = YES;
     self.navigationController.navigationBarHidden = NO;
-    [self.navigationController pushViewController:settingVC animated:YES];
+
+    [self.navigationController pushViewController:teacherVC animated:YES];
+    
+//    SettingViewController *settingVC = [[SettingViewController alloc]init];
+//    settingVC.logoutSuccess = ^{
+//        [_userView refreshUserInfo];
+//        [[NSNotificationCenter defaultCenter]postNotificationName:@"NEEDREFRESH" object:nil];
+//    };
+//    settingVC.hidesBottomBarWhenPushed = YES;
+//    self.navigationController.navigationBarHidden = NO;
+//    [self.navigationController pushViewController:settingVC animated:YES];
 }
 
 @end

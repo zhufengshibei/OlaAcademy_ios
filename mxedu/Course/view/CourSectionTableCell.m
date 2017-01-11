@@ -72,13 +72,15 @@
     _nameL.text = point.name;
     _timeL.text = point.timeSpan;
     if (point.isChosen==1) {
+        ///正在播放的条目字体颜色为黑色
         _playingIV.hidden = NO;
         _nameL.textColor = COMMONBLUECOLOR;
         _timeL.textColor = COMMONBLUECOLOR;
     }else{
+        ///未播放的条目字体颜色为黑色
         _playingIV.hidden = YES;
-        _nameL.textColor = RGBCOLOR(125, 125, 125);
-        _timeL.textColor = RGBCOLOR(125, 125, 125);
+        _nameL.textColor = [UIColor blackColor];
+        _timeL.textColor = [UIColor blackColor];;
     }
 }
 
