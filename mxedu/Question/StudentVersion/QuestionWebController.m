@@ -28,6 +28,8 @@
 #import <WebViewJavascriptBridge.h>
 #import "ShareSheetView.h"
 
+#import "AnswerQuestionsCardController.h"
+
 @interface QuestionWebController ()<UIAlertViewDelegate,ShareSheetDelegate>
 
 @property (nonatomic) WebViewJavascriptBridge* bridge;
@@ -241,7 +243,39 @@
 }
 
 -(void)backButtonClicked{
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+    
+    AnswerQuestionsCardController *answerCardVC = [[AnswerQuestionsCardController alloc] init];
+    
+//    QuestionResultViewController *resultVC = [[QuestionResultViewController alloc]init];
+//    answerCardVC.type = _type;
+//    if (_type==1) {
+//        answerCardVC.objectId = _objectId;
+//        answerCardVC.url = _course.address;
+//    }else{
+//        answerCardVC.analysisCallback = ^{
+//            _currentIndex = 0;
+//            preButton.hidden = YES;
+//            [nextButton setTitle:@"下一题" forState:UIControlStateNormal];
+//            subjectNoLabel.text = [NSString stringWithFormat:@"%d/%ld",_currentIndex+1,[_questionArray count]];
+//            _showAnswer = 1;
+//            [self setupQuestion:_questionArray Index:_currentIndex];
+//        };
+//    }
+//    answerCardVC.callbackBlock = ^{
+//        if(_callbackBlock){
+//            _callbackBlock(); //刷新首页答题情况
+//        }
+//    };
+    answerCardVC.hidesBottomBarWhenPushed = YES;
+    self.navigationController.navigationBarHidden = NO;
+    answerCardVC.answersArray = _correctnessArray;
+    [self.navigationController pushViewController:answerCardVC animated:YES];
+    
+//    answerCardVC.hidesBottomBarWhenPushed = YES;
+//    self.navigationController.navigationBarHidden = NO;
+//    
+//    [self.navigationController pushViewController:answerCardVC animated:YES];
 }
 
 -(void)subjectButtonClicked{

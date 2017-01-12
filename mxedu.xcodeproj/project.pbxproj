@@ -530,6 +530,7 @@
 		F04B20211E25CBB600CDDB66 /* TeachersCertifyController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04B20201E25CBB600CDDB66 /* TeachersCertifyController.m */; };
 		F04B20241E25E2DF00CDDB66 /* teacherCertifyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F04B20231E25E2DF00CDDB66 /* teacherCertifyCell.m */; };
 		F04B20281E260E3300CDDB66 /* teacherCertifyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F04B20271E260E3300CDDB66 /* teacherCertifyModel.m */; };
+		F04B202B1E26321D00CDDB66 /* AnswerQuestionsCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04B202A1E26321D00CDDB66 /* AnswerQuestionsCardController.m */; };
 		F08CE40D1E236A5800ADADFF /* MyLable.m in Sources */ = {isa = PBXBuildFile; fileRef = F08CE40C1E236A5800ADADFF /* MyLable.m */; };
 /* End PBXBuildFile section */
 
@@ -1560,6 +1561,8 @@
 		F04B20231E25E2DF00CDDB66 /* teacherCertifyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = teacherCertifyCell.m; sourceTree = "<group>"; };
 		F04B20261E260E3300CDDB66 /* teacherCertifyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = teacherCertifyModel.h; sourceTree = "<group>"; };
 		F04B20271E260E3300CDDB66 /* teacherCertifyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = teacherCertifyModel.m; sourceTree = "<group>"; };
+		F04B20291E26321C00CDDB66 /* AnswerQuestionsCardController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerQuestionsCardController.h; sourceTree = "<group>"; };
+		F04B202A1E26321D00CDDB66 /* AnswerQuestionsCardController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerQuestionsCardController.m; sourceTree = "<group>"; };
 		F08CE40B1E236A5800ADADFF /* MyLable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLable.h; sourceTree = "<group>"; };
 		F08CE40C1E236A5800ADADFF /* MyLable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLable.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2189,6 +2192,8 @@
 				3D68CE091D77C845005CA17F /* QuestionViewController.m */,
 				3D68CE0A1D77C845005CA17F /* QuestionWebController.h */,
 				3D68CE0B1D77C845005CA17F /* QuestionWebController.m */,
+				F04B20291E26321C00CDDB66 /* AnswerQuestionsCardController.h */,
+				F04B202A1E26321D00CDDB66 /* AnswerQuestionsCardController.m */,
 				3D68CE311D782E8B005CA17F /* StuGroupListController.h */,
 				3D68CE321D782E8B005CA17F /* StuGroupListController.m */,
 				3D9CB81D1D9E02C400A3C9A1 /* StuHomeworkController.h */,
@@ -4628,6 +4633,7 @@
 				3DA9672C1D87ACFC001217C5 /* ModelConfig.m in Sources */,
 				3D910C401BD5EC8A007B092E /* SearchTableCell.m in Sources */,
 				3DAF99331CCE2107007835E3 /* PayManager.m in Sources */,
+				F04B202B1E26321D00CDDB66 /* AnswerQuestionsCardController.m in Sources */,
 				3D6E72041CE31B03003ABA1C /* UIScrollView+MJRefresh.m in Sources */,
 				3DA3A8E21BF7336300670675 /* TeacherResult.m in Sources */,
 				3D6E71FF1CE31B03003ABA1C /* MJRefreshNormalHeader.m in Sources */,

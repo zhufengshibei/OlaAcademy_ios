@@ -48,10 +48,15 @@
 -(void)createdSubViews {
     //头像
     _avatar = [UIImageView new];
-    _avatar = [[UIImageView alloc]initWithFrame:CGRectMake(10, GENERAL_SIZE(20), GENERAL_SIZE(140), GENERAL_SIZE(140))];
+    _avatar = [[UIImageView alloc]init];//WithFrame:CGRectMake(10, GENERAL_SIZE(20), GENERAL_SIZE(140), GENERAL_SIZE(140))];
     _avatar.layer.masksToBounds = YES;
-    _avatar.layer.cornerRadius = GENERAL_SIZE(70);
+    _avatar.layer.cornerRadius = GENERAL_SIZE(75);
     [self addSubview:_avatar];
+    [_avatar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.mas_centerY);
+        make.left.equalTo(self.mas_left).offset(GENERAL_SIZE(20));
+        make.width.height.mas_equalTo(GENERAL_SIZE(150));
+    }];
 
     //标题
     _nameL = [[MyLable alloc] init];
@@ -82,12 +87,13 @@
     _indroLabel = [MyLable new];
     _indroLabel.font = LabelFont(24);
     _indroLabel.numberOfLines = 0;
-    _indroLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _indroLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _indroLabel.textColor = [UIColor colorWhthHexString:@"#CFCFCF"];
     _indroLabel.verticalAlignment = VerticalAlignmentTop;
     [self.contentView addSubview:_indroLabel];
     [_indroLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_avatar.mas_right).offset(GENERAL_SIZE(20));
+        make.right.equalTo(self.mas_right).offset(-GENERAL_SIZE(150));
         make.top.equalTo(_examtype.mas_bottom).offset(GENERAL_SIZE(10));
     }];
     //关注按钮
@@ -118,8 +124,8 @@
         _avatar.image = [UIImage imageNamed:@"ic_avatar"];
     }
     _nameL.text = user.name;
-    _examtype.text = @"职业";
-    _indroLabel.text = @"自我介绍";
+    _examtype.text = user.examType;
+    _indroLabel.text = user.signature;
     
 }
 

@@ -60,7 +60,7 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
 -(void) viewDidLoad{
     [super viewDidLoad];
     
-    _dataArray = [ModelConfig confgiModelDataWithCoin:@"" ShowSignIn:0];
+    _dataArray = [ModelConfig confgiModelDataWithCoin:@"" BuyCount:nil CollectCount:nil ShowSignIn:0];
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -20, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
     _tableView.dataSource = self;
@@ -101,8 +101,9 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
     AuthManager *am = [AuthManager sharedInstance];
     if (am.isAuthenticated) {
         [sm fetchSignInStatusWithUserId:am.userInfo.userId Success:^(SignInStatusResult *result) {
+            
             int showSignIn = result.signInStatus.status==1?0:1;
-            _dataArray = [ModelConfig confgiModelDataWithCoin:am.userInfo.coin ShowSignIn:showSignIn];
+            _dataArray = [ModelConfig confgiModelDataWithCoin:am.userInfo.coin BuyCount:[NSString stringWithFormat:@"%d",result.signInStatus.coursBuyNum] CollectCount:[NSString stringWithFormat:@"%d",result.signInStatus.courseCollectNum] ShowSignIn:showSignIn];
             [_tableView reloadData];
         } Failure:^(NSError *error) {
             
@@ -186,6 +187,13 @@ static NSString* storeKeyUserInfo = @"NTUserInfo";
         {
             MyDownloadListViewController *downVC = [[MyDownloadListViewController alloc]init];
             [self pushToViewController:downVC];
+            break;
+        }
+        case 6:
+        {
+            TeachersCertifyController *teacherVC = [[TeachersCertifyController alloc] init];
+            
+            [self pushToViewController:teacherVC];
             break;
         }
     }
