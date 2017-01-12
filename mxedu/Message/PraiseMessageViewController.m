@@ -103,7 +103,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return GENERAL_SIZE(120);
+    return GENERAL_SIZE(148);
 }
 
 - (void)didReceiveMemoryWarning {
